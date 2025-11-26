@@ -14,12 +14,24 @@ function Navigation() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-navy">
-      <div className="max-w-7xl mx-auto px-6 py-4">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? "bg-white/80 backdrop-blur-xl" 
+        : "bg-navy"
+    }`}>
+      <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-center">
           {/* Logo */}
-          <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
-            <span className="text-white text-lg font-display">N</span>
+          <div className={`w-14 h-14 rounded-lg flex items-center justify-center transition-colors ${
+            isScrolled 
+              ? "bg-mint" 
+              : "bg-mint"
+          }`}>
+            <span className={`text-2xl font-display font-bold transition-colors ${
+              isScrolled 
+                ? "text-navy" 
+                : "text-navy"
+            }`}>N</span>
           </div>
         </div>
       </div>
@@ -30,10 +42,10 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="bg-white pt-28 pb-24 relative">
+    <section className="bg-white pt-40 pb-24 relative">
       <div className="max-w-5xl mx-auto px-6 text-center">
         {/* Tagline */}
-        <p className="text-navy/50 text-sm font-medium tracking-wide mb-4">MEET NUMO</p>
+        <p className="text-navy/50 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
 
         {/* Main Headline */}
         <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-navy leading-[0.9] mb-8 max-w-5xl mx-auto font-bold">
@@ -339,7 +351,7 @@ function SupportedWallets() {
             SUPPORTED WALLETS
           </h2>
           <p className="text-lg text-gray-600 max-w-lg mx-auto">
-            Works with any Cashu-compatible wallet. More wallets adding support every day.
+            Numo is a full Lightning POS system. Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
           </p>
         </div>
 
@@ -562,20 +574,24 @@ function FAQ() {
                   className="w-full py-5 flex items-center justify-between text-left group"
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
-                  <span className="font-display text-lg md:text-xl text-navy pr-6 group-hover:text-navy/70 transition-colors">
+                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/70 transition-colors">
                     {faq.q}
                   </span>
-                  <div className="flex-shrink-0 w-9 h-9 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-colors">
-                    <span className={`text-navy/50 group-hover:text-white text-lg leading-none transition-all ${openIndex === index ? "rotate-45" : ""}`}>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-colors">
+                    <span className={`text-navy/50 group-hover:text-white text-xl leading-none transition-all duration-300 ${openIndex === index ? "rotate-45" : ""}`}>
                       +
                     </span>
                   </div>
                 </button>
-                {openIndex === index && (
-                  <div className="pb-5 text-gray-500 leading-relaxed pr-16">
+                <div 
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
                     {faq.a}
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -590,11 +606,11 @@ function Footer() {
   return (
     <footer id="get-started" className="bg-navy pt-20 pb-0 relative">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[0.9] mb-6 font-bold">
+        <h2 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 font-bold">
           START ACCEPTING<br/>
           BITCOIN TODAY.
         </h2>
-        <p className="text-white/40 mb-8">Free to download. Free to use. No fees, ever.</p>
+        <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
         
         <div className="flex flex-col sm:flex-row justify-center gap-3 mb-12">
           <a href="#" className="flex items-center justify-center gap-2 px-6 py-3 bg-mint rounded-full text-navy font-medium hover:bg-white transition-colors">
