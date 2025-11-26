@@ -140,6 +140,38 @@ body {
   animation-delay: 500ms;
 }
 
+/* Lightning/electricity animation - continuous streaming effect */
+@keyframes lightning {
+  0% { 
+    opacity: 0;
+    transform: scale(0.4) translate(0, 0) rotate(var(--rot));
+  }
+  10% { 
+    opacity: 1;
+    transform: scale(0.8) translate(calc(var(--tx) * 0.2), calc(var(--ty) * 0.2)) rotate(calc(var(--rot) + 3deg));
+  }
+  30% { 
+    opacity: 1;
+    transform: scale(1) translate(calc(var(--tx) * 0.5), calc(var(--ty) * 0.5)) rotate(calc(var(--rot) + 8deg));
+  }
+  60% { 
+    opacity: 0.8;
+    transform: scale(1.1) translate(calc(var(--tx) * 0.9), calc(var(--ty) * 0.9)) rotate(calc(var(--rot) + 12deg));
+  }
+  90% { 
+    opacity: 0.4;
+    transform: scale(1.2) translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5)) rotate(calc(var(--rot) + 18deg));
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(1.3) translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) rotate(calc(var(--rot) + 25deg));
+  }
+}
+
+.animate-lightning {
+  animation: lightning 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

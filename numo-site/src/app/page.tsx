@@ -399,9 +399,37 @@ function SupportedWallets() {
             );
           })}
           
-          {/* +Many More */}
-          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-navy/5 border-2 border-navy/20">
-            <span className="font-medium text-navy">+ Many More</span>
+          {/* + ALL BITCOIN LIGHTNING WALLETS */}
+          <div className="group relative flex items-center gap-3 px-5 py-3 rounded-full bg-navy/5 border-2 border-navy/20 hover:border-yellow-400 transition-all cursor-pointer overflow-visible">
+            {/* Lightning bolts continuously streaming out - multiple instances for continuous flow */}
+            {[
+              { tx: '-20px', ty: '-20px', rot: '-25deg', size: 'w-6 h-6', pos: '-top-4 -left-4', delays: ['0s', '0.27s', '0.53s'] },
+              { tx: '25px', ty: '-25px', rot: '45deg', size: 'w-5 h-5', pos: '-top-3 -right-5', delays: ['0.1s', '0.37s', '0.63s'] },
+              { tx: '35px', ty: '0px', rot: '90deg', size: 'w-7 h-7', pos: 'top-0 -right-8', delays: ['0.2s', '0.47s', '0.73s'] },
+              { tx: '-25px', ty: '25px', rot: '-135deg', size: 'w-6 h-6', pos: '-bottom-4 -left-3', delays: ['0.15s', '0.41s', '0.67s'] },
+              { tx: '20px', ty: '20px', rot: '135deg', size: 'w-5 h-5', pos: '-bottom-3 -right-4', delays: ['0.05s', '0.31s', '0.57s'] },
+              { tx: '-35px', ty: '0px', rot: '-90deg', size: 'w-7 h-7', pos: 'top-1/2 -left-8 -translate-y-1/2', delays: ['0.12s', '0.38s', '0.64s'] },
+              { tx: '0px', ty: '-35px', rot: '0deg', size: 'w-6 h-6', pos: '-top-5 left-1/2 -translate-x-1/2', delays: ['0.08s', '0.34s', '0.6s'] },
+              { tx: '0px', ty: '35px', rot: '180deg', size: 'w-6 h-6', pos: '-bottom-5 left-1/2 -translate-x-1/2', delays: ['0.18s', '0.44s', '0.7s'] },
+            ].map((bolt, boltIndex) => 
+              bolt.delays.map((delay, instanceIndex) => (
+                <div 
+                  key={`${boltIndex}-${instanceIndex}`}
+                  className={`absolute ${bolt.pos} hidden group-hover:block group-hover:animate-lightning`}
+                  style={{
+                    '--tx': bolt.tx,
+                    '--ty': bolt.ty,
+                    '--rot': bolt.rot,
+                    animationDelay: delay,
+                  } as React.CSSProperties}
+                >
+                  <svg className={`${bolt.size} text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]`} fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              ))
+            )}
+            <span className="font-medium text-navy group-hover:text-navy transition-colors uppercase relative z-10">+ ALL BITCOIN LIGHTNING WALLETS</span>
           </div>
         </div>
       </div>
