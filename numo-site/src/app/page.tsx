@@ -22,16 +22,8 @@ function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-center">
           {/* Logo */}
-          <div className={`w-14 h-14 rounded-lg flex items-center justify-center transition-colors ${
-            isScrolled 
-              ? "bg-mint" 
-              : "bg-mint"
-          }`}>
-            <span className={`text-2xl font-display font-bold transition-colors ${
-              isScrolled 
-                ? "text-navy" 
-                : "text-navy"
-            }`}>N</span>
+          <div className="w-14 h-14 rounded-lg flex items-center justify-center bg-mint hover:scale-105 transition-transform cursor-pointer">
+            <span className="text-2xl font-display font-bold text-navy">N</span>
           </div>
         </div>
       </div>
@@ -89,16 +81,17 @@ function Hero() {
 // Bento Box Feature Section - Abode-style layout
 function BentoFeatures() {
   return (
-    <section className="bg-white py-16 px-4">
+    <section className="bg-white py-20 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Bento Grid - Abode style */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
-          {/* Row 1 - Left: Tap to Pay with mini feature cards */}
+          {/* Row 1 - Left: Tap to Pay with Cashu wallet support */}
           <div className="bg-cream rounded-[2rem] p-8 flex flex-col">
             <div className="flex items-start justify-between mb-6 gap-4">
               <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
-                Tap to pay, just like Apple Pay
+                TAP TO PAY<br/>
+                Just like Apple Pay
               </h3>
               <div className="flex gap-2 flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-mint flex items-center justify-center">
@@ -116,36 +109,13 @@ function BentoFeatures() {
               </div>
             </div>
             
-            {/* Mini feature cards grid */}
-            <div className="grid grid-cols-2 gap-3 mt-auto">
-              <div className="bg-white/80 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-mint/40 flex items-center justify-center mb-2">
-                  <span className="text-lg">⚡</span>
-                </div>
-                <p className="font-display text-sm text-navy">Instant</p>
-                <p className="text-xs text-gray-500">Sub-second payments</p>
-              </div>
-              <div className="bg-white/80 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-mint/40 flex items-center justify-center mb-2">
-                  <span className="text-lg">🔐</span>
-                </div>
-                <p className="font-display text-sm text-navy">Self-custody</p>
-                <p className="text-xs text-gray-500">Your keys, your Bitcoin</p>
-              </div>
-              <div className="bg-white/80 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center mb-2">
-                  <span className="text-lg">📴</span>
-                </div>
-                <p className="font-display text-sm text-navy">Offline</p>
-                <p className="text-xs text-gray-500">Works without internet</p>
-              </div>
-              <div className="bg-white/80 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center mb-2">
-                  <span className="text-lg">💸</span>
-                </div>
-                <p className="font-display text-sm text-navy">Zero Fees</p>
-                <p className="text-xs text-gray-500">Keep what you earn</p>
-              </div>
+            {/* Description text */}
+            <div className="mt-auto">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Numo supports tap-to-pay UX for Cashu wallets, delivering a superior payment experience. 
+                No more scanning QR codes or sending to Lightning invoices—unless you want to. 
+                Lightning payments are fully supported, giving you the flexibility to choose how your customers pay.
+              </p>
             </div>
           </div>
 
@@ -166,22 +136,22 @@ function BentoFeatures() {
             </p>
             
             {/* Visual illustration - payment animation */}
-            <div className="mt-auto bg-mint/20 rounded-2xl p-6 relative overflow-hidden">
+            <div className="mt-auto bg-white/60 backdrop-blur-sm rounded-2xl p-6 relative overflow-hidden shadow-lg">
               <div className="flex items-center justify-between">
-                <div className="bg-white rounded-xl p-3 shadow-lg">
+                <div className="bg-white rounded-xl p-3 shadow-lg hover:scale-105 transition-transform">
                   <div className="w-10 h-10 bg-navy rounded-lg flex items-center justify-center mb-2">
                     <span className="text-white font-display">N</span>
                   </div>
                   <p className="font-display text-navy text-sm">$42.00</p>
                 </div>
                 <div className="flex-1 flex items-center justify-center">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 rounded-full bg-navy animate-pulse"></div>
-                    <div className="w-2 h-2 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2 h-2 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.4s'}}></div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl p-3 shadow-lg">
+                <div className="bg-white rounded-xl p-3 shadow-lg hover:scale-105 transition-transform">
                   <div className="w-10 h-10 bg-mint rounded-full flex items-center justify-center mb-2">
                     <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -193,37 +163,58 @@ function BentoFeatures() {
             </div>
           </div>
 
-          {/* Row 2 - Left: Accept Anywhere */}
+          {/* Row 2 - Left: Open Source & Free */}
           <div className="bg-cream-warm rounded-[2rem] p-8 flex flex-col">
             <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
-              Accept payments anywhere
+              Fully open-source and free
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Coffee shops, food trucks, farmers markets, pop-ups. Your phone is your POS.
+              No vendor lock-in, no hidden fees, no subscriptions. Built by the Bitcoin community, 
+              for the Bitcoin community. You own your payment infrastructure.
             </p>
             
             {/* Illustration - multiple merchant types */}
             <div className="mt-auto relative">
               <div className="flex flex-wrap gap-3">
-                <div className="bg-white rounded-xl p-3 shadow-md transform -rotate-3">
-                  <span className="text-2xl">☕</span>
-                  <p className="text-xs text-gray-600 mt-1">Café</p>
+                <div className="bg-white rounded-xl p-3 shadow-lg transform -rotate-3 hover:rotate-0 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-cream-warm flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">Café</p>
                 </div>
-                <div className="bg-mint-soft rounded-xl p-3 shadow-md transform rotate-2">
-                  <span className="text-2xl">🚚</span>
-                  <p className="text-xs text-gray-600 mt-1">Food Truck</p>
+                <div className="bg-mint-soft rounded-xl p-3 shadow-lg transform rotate-2 hover:rotate-0 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-mint/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h8m-8 5h8m-4-9v18m-7-4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">Food Truck</p>
                 </div>
-                <div className="bg-white rounded-xl p-3 shadow-md transform -rotate-2">
-                  <span className="text-2xl">🥬</span>
-                  <p className="text-xs text-gray-600 mt-1">Market</p>
+                <div className="bg-white rounded-xl p-3 shadow-lg transform -rotate-2 hover:rotate-0 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-cream-warm flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">Market</p>
                 </div>
-                <div className="bg-gray-100 rounded-xl p-3 shadow-md transform rotate-3">
-                  <span className="text-2xl">🎨</span>
-                  <p className="text-xs text-gray-600 mt-1">Pop-up</p>
+                <div className="bg-gray-100 rounded-xl p-3 shadow-lg transform rotate-3 hover:rotate-0 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">Pop-up</p>
                 </div>
-                <div className="bg-mint-soft rounded-xl p-3 shadow-md transform -rotate-1">
-                  <span className="text-2xl">💻</span>
-                  <p className="text-xs text-gray-600 mt-1">Online</p>
+                <div className="bg-mint-soft rounded-xl p-3 shadow-lg transform -rotate-1 hover:rotate-0 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-mint/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">Online</p>
                 </div>
               </div>
             </div>
@@ -234,21 +225,21 @@ function BentoFeatures() {
             {/* Self custody card */}
             <div className="bg-mint-pale rounded-[2rem] p-8 flex-1">
               <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3">
-                True self-custody
+                Automatic self-custody
               </h3>
               <p className="text-lg text-gray-600 mb-4">
-                We never touch your funds. Bitcoin goes directly to your wallet. You control your keys.
+                Set a threshold amount. Once your ecash balance reaches it, we automatically transfers funds to your Lightning address.
               </p>
               {/* Mini notification style */}
-              <div className="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-mint/30 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 shadow-lg flex items-center gap-3 hover:scale-[1.02] transition-transform">
+                <div className="w-10 h-10 rounded-full bg-mint flex items-center justify-center">
                   <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-navy text-sm">Payment received!</p>
-                  <p className="text-xs text-gray-500">0.00042 BTC → Your wallet</p>
+                  <p className="font-medium text-navy text-sm">Threshold reached!</p>
+                  <p className="text-sm text-gray-600">Auto-transferring to your wallet</p>
                 </div>
               </div>
             </div>
@@ -261,12 +252,18 @@ function BentoFeatures() {
               <p className="text-lg text-gray-600 mb-4">
                 Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
               </p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1.5 bg-white rounded-full text-navy text-xs font-medium shadow-sm">
-                  📴 No WiFi needed
+              <div className="flex gap-2 flex-wrap">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-navy text-sm font-medium shadow-lg">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+                  </svg>
+                  No WiFi needed
                 </span>
-                <span className="px-3 py-1.5 bg-white rounded-full text-navy text-xs font-medium shadow-sm">
-                  🔄 Auto-sync
+                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-navy text-sm font-medium shadow-lg">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Auto-sync
                 </span>
               </div>
             </div>
@@ -285,9 +282,11 @@ function BentoFeatures() {
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-mint flex items-center justify-center">
-                  <span className="text-3xl">💰</span>
+                  <svg className="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-                <a href="#get-started" className="px-6 py-3 bg-navy rounded-full text-white font-medium hover:bg-navy/80 transition-colors">
+                <a href="#get-started" className="px-8 py-4 bg-navy rounded-full text-white font-medium hover:bg-navy-light hover:scale-105 transition-all shadow-lg">
                   Get Started Free
                 </a>
               </div>
@@ -374,16 +373,16 @@ function SupportedWallets() {
           {wallets.map((wallet, index) => {
             const colors = walletColors[index];
             return (
-              <div key={index} className="flex items-center gap-2">
+              <div key={index} className="flex items-center gap-1.5 group">
                 {/* Wallet icon - outside pill, to the left */}
-                <div className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center relative`}>
-                  <span className="text-xs text-navy font-medium">
+                <div className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
+                  <span className="text-xs text-navy font-bold">
                     {wallet.name.charAt(0)}
                   </span>
                 </div>
                 {/* Pill */}
                 <div 
-                  className={`flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all hover:scale-105 ${colors.bg} ${colors.border}`}
+                  className={`flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all group-hover:scale-105 ${colors.bg} ${colors.border}`}
                 >
                   <span className="font-medium text-navy">{wallet.name}</span>
                   {wallet.nfc && (
@@ -432,38 +431,38 @@ function SimpleFeatures() {
           
           {/* Text Content - Column 2 */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
-              Bitcoin payments<br/>
-              made simple
+            <h2 className="font-display text-5xl md:text-6xl text-[#EA580C] leading-[0.9] mb-6 font-bold">
+              Lightning and ecash, unified
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              No QR codes to scan. No addresses to copy. Just tap your phone and go. 
-              Bitcoin payments should feel as normal as using a credit card.
+              Numo isn&apos;t just an ecash POS—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
+              If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
+              You get the benefits of both systems in one platform.
             </p>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-mint flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <ul className="space-y-5">
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Tap-to-Pay, Just Like Apple Pay</span>
+                <span className="text-lg text-[#EA580C]">Tap-to-pay with ecash wallets</span>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-mint flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Instant Settlement, No Chargebacks</span>
+                <span className="text-lg text-[#EA580C]">Full Lightning Network support</span>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-mint flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Self-Custody, Your Keys, Your Bitcoin</span>
+                <span className="text-lg text-[#EA580C]">Best of both payment systems</span>
               </li>
             </ul>
           </div>
@@ -473,38 +472,37 @@ function SimpleFeatures() {
         <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center">
           {/* Text Content - Column 1, aligns with top image column */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
-              Your phone is<br/>
-              your POS
+            <h2 className="font-display text-5xl md:text-6xl text-[#065f46] leading-[0.9] mb-6 font-bold">
+              Your phone is your POS
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Accept Bitcoin payments anywhere. Coffee shops, food trucks, farmers markets, pop-ups. 
-              Set up takes seconds. Start accepting payments immediately.
+              Built-in inventory management makes selling easy. Create categories for items and sizes, 
+              then tap to request a pre-determined payment. Track everything you sell.
             </p>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            <ul className="space-y-5">
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 13a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Works Offline, Syncs When Online</span>
+                <span className="text-lg text-[#065f46]">Organize items by category and size</span>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Zero Platform Fees, Keep 100%</span>
+                <span className="text-lg text-[#065f46]">Tap to request pre-determined payments</span>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Set Up in Seconds, Start Accepting Now</span>
+                <span className="text-lg text-[#065f46]">Export sales reports by item</span>
               </li>
             </ul>
           </div>
@@ -512,7 +510,7 @@ function SimpleFeatures() {
           {/* Phone Mockup - Column 2, aligns with top text column */}
           <div className="flex justify-center">
             <div className="relative w-full max-w-md h-[680px]">
-              <Image
+            <Image
                 src="/b2.jpg"
                 alt="Numo POS payment received confirmation"
                 fill
@@ -538,7 +536,7 @@ function FAQ() {
     },
     {
       q: "Do my customers need a special app?",
-      a: "They just need any Bitcoin wallet that supports NFC payments. Most modern Bitcoin wallets do. They tap, they pay, done.",
+      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet such as Cashu.me or Macadamia.",
     },
     {
       q: "Is it really free?",
@@ -559,11 +557,11 @@ function FAQ() {
   ];
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white py-20">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Fully rounded FAQ container */}
         <div className="bg-cream rounded-[3rem] p-8 md:p-12">
-          <h2 className="font-display text-4xl md:text-5xl text-navy text-center mb-10 leading-[0.9] font-bold">
+          <h2 className="font-display text-5xl md:text-6xl text-navy text-center mb-10 leading-[0.9] font-bold">
             OUR FAQS
           </h2>
           
@@ -612,15 +610,15 @@ function Footer() {
         </h2>
         <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
         
-        <div className="flex flex-col sm:flex-row justify-center gap-3 mb-12">
-          <a href="#" className="flex items-center justify-center gap-2 px-6 py-3 bg-mint rounded-full text-navy font-medium hover:bg-white transition-colors">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+          <a href="#" className="flex items-center justify-center gap-3 px-8 py-4 bg-mint rounded-full text-navy text-base font-medium hover:bg-white hover:scale-105 transition-all shadow-lg">
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
             App Store
           </a>
-          <a href="#" className="flex items-center justify-center gap-2 px-6 py-3 border border-white/30 rounded-full text-white font-medium hover:bg-white hover:text-navy transition-colors">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <a href="#" className="flex items-center justify-center gap-3 px-8 py-4 border-2 border-white/40 rounded-full text-white text-base font-medium hover:bg-white hover:text-navy hover:scale-105 transition-all">
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-4.31c.34.27.64.71.64 1.19s-.3.92-.64 1.19L17.69 15l-2.5-2.5 2.5-2.5 2.47 1.81zM6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/>
             </svg>
             Google Play
@@ -652,6 +650,6 @@ export default function Home() {
       <SimpleFeatures />
       <FAQ />
       <Footer />
-    </main>
+      </main>
   );
 }
