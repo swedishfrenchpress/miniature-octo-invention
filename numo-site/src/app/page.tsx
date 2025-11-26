@@ -41,15 +41,15 @@ function Hero() {
         </h1>
 
         {/* App Store Buttons */}
-        <div className="flex justify-center gap-3 mb-12">
-          <a href="#" className="flex items-center gap-2 px-5 py-2.5 bg-navy rounded-full text-white text-sm font-medium hover:bg-navy/80 transition-colors">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+        <div className="flex justify-center gap-4 mb-12">
+          <a href="#" className="flex items-center gap-3 px-8 py-4 bg-mint rounded-full text-navy text-base font-medium hover:bg-mint/80 transition-colors shadow-lg">
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
             App Store
           </a>
-          <a href="#" className="flex items-center gap-2 px-5 py-2.5 border border-navy/30 rounded-full text-navy text-sm font-medium hover:bg-navy hover:text-white transition-colors">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+          <a href="#" className="flex items-center gap-3 px-8 py-4 bg-navy rounded-full text-white text-base font-medium hover:bg-navy/80 transition-colors shadow-lg">
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-4.31c.34.27.64.71.64 1.19s-.3.92-.64 1.19L17.69 15l-2.5-2.5 2.5-2.5 2.47 1.81zM6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/>
             </svg>
             Google Play
@@ -149,7 +149,7 @@ function BentoFeatures() {
                 </svg>
               </div>
             </div>
-            <p className="text-navy/60 mb-6">
+            <p className="text-lg text-gray-600 mb-6">
               Settlement in seconds, not days. No chargebacks, no holds. Bitcoin moves at the speed of light.
             </p>
             
@@ -186,7 +186,7 @@ function BentoFeatures() {
             <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
               Accept payments anywhere
             </h3>
-            <p className="text-navy/60 mb-6">
+            <p className="text-lg text-gray-600 mb-6">
               Coffee shops, food trucks, farmers markets, pop-ups. Your phone is your POS.
             </p>
             
@@ -224,7 +224,7 @@ function BentoFeatures() {
               <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3">
                 True self-custody
               </h3>
-              <p className="text-navy/60 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 We never touch your funds. Bitcoin goes directly to your wallet. You control your keys.
               </p>
               {/* Mini notification style */}
@@ -246,7 +246,7 @@ function BentoFeatures() {
               <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3">
                 Works offline
               </h3>
-              <p className="text-navy/60 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
               </p>
               <div className="flex gap-2">
@@ -267,7 +267,7 @@ function BentoFeatures() {
                 <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-2">
                   Zero platform fees
                 </h3>
-                <p className="text-navy/60">
+                <p className="text-lg text-gray-600">
                   Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
                 </p>
               </div>
@@ -291,14 +291,15 @@ function BentoFeatures() {
 function SupportedWallets() {
   // Unique colors for each wallet that match design language
   const walletColors = [
-    { bg: "bg-mint/10", border: "border-mint", iconBg: "bg-mint/20" }, // Minibits
-    { bg: "bg-mint-soft", border: "border-mint", iconBg: "bg-mint/30" }, // eNuts
-    { bg: "bg-cream", border: "border-cream-warm", iconBg: "bg-cream-warm" }, // Cashu.me
-    { bg: "bg-mint-pale", border: "border-mint/50", iconBg: "bg-mint/20" }, // Nutstash
-    { bg: "bg-gray-100", border: "border-gray-200", iconBg: "bg-gray-200" }, // Macadamia
-    { bg: "bg-gray-100", border: "border-gray-200", iconBg: "bg-gray-200" }, // Boardwalk
-    { bg: "bg-gray-100", border: "border-gray-200", iconBg: "bg-gray-200" }, // Cashcrab
-    { bg: "bg-gray-100", border: "border-gray-200", iconBg: "bg-gray-200" }, // LNbits
+    // Each wallet gets a unique color from the palette
+    { bg: "bg-[#CCFBF1]", border: "border-[#5EEAD4]", iconBg: "bg-[#5EEAD4]/30" }, // Minibits - Teal
+    { bg: "bg-[#E0F2FE]", border: "border-[#7DD3FC]", iconBg: "bg-[#7DD3FC]/30" }, // eNuts - Blue
+    { bg: "bg-[#FEF3C7]", border: "border-[#FCD34D]", iconBg: "bg-[#FCD34D]/30" }, // Cashu.me - Yellow
+    { bg: "bg-[#FFEDD5]", border: "border-[#FDBA74]", iconBg: "bg-[#FDBA74]/30" }, // Nutstash - Orange
+    { bg: "bg-[#F3E8FF]", border: "border-[#C4B5FD]", iconBg: "bg-[#C4B5FD]/30" }, // Macadamia - Purple
+    { bg: "bg-[#FEE2E2]", border: "border-[#FCA5A5]", iconBg: "bg-[#FCA5A5]/30" }, // Boardwalk - Red
+    { bg: "bg-cream", border: "border-cream-warm", iconBg: "bg-cream-warm" }, // Cashcrab - Cream
+    { bg: "bg-gray-100", border: "border-gray-300", iconBg: "bg-gray-200" }, // LNbits - Gray
   ];
 
   const wallets = [
@@ -313,29 +314,46 @@ function SupportedWallets() {
   ];
 
   return (
-    <section className="bg-white py-20">
-      <div className="max-w-5xl mx-auto px-6">
+    <section className="bg-white py-20 relative overflow-hidden">
+      {/* Grass background covering entire section, fading out at bottom */}
+      <div className="absolute inset-0">
+        <Image
+          src="/grass.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+          style={{ opacity: 0.3 }}
+        />
+        <div 
+          className="absolute inset-0" 
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(255,255,255,0.3) 60%, rgba(255,255,255,0.6) 80%, white 100%)'
+          }}
+        ></div>
+      </div>
+      
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="font-display text-4xl md:text-5xl text-navy leading-[0.85] mb-4">
+          <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-4 font-bold">
             SUPPORTED WALLETS
           </h2>
-          <p className="text-gray-500 max-w-lg mx-auto">
+          <p className="text-lg text-gray-600 max-w-lg mx-auto">
             Works with any Cashu-compatible wallet. More wallets adding support every day.
           </p>
         </div>
 
         {/* Legend */}
-        <div className="flex justify-center gap-6 mb-10">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-mint flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-navy" viewBox="0 0 24 24" fill="currentColor">
+        <div className="flex justify-center mb-10">
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-mint flex items-center justify-center">
+              <svg className="w-5 h-5 text-navy" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.62 8.45c-3.45-3.45-9.04-3.45-12.49 0a.996.996 0 001.41 1.41c2.66-2.66 6.99-2.66 9.67 0a.996.996 0 101.41-1.41z"/>
                 <path d="M17.79 11.28a5.467 5.467 0 00-7.72 0 .996.996 0 001.41 1.41 3.488 3.488 0 014.9 0 .996.996 0 101.41-1.41z"/>
                 <circle cx="13.93" cy="15.93" r="2"/>
               </svg>
             </div>
-            <span className="text-sm text-navy font-medium">Tap-to-Pay (NFC)</span>
+            <span className="text-base text-navy font-medium">Tap-to-Pay (NFC)</span>
           </div>
         </div>
 
@@ -344,26 +362,28 @@ function SupportedWallets() {
           {wallets.map((wallet, index) => {
             const colors = walletColors[index];
             return (
-              <div 
-                key={index}
-                className={`flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all hover:scale-105 ${colors.bg} ${colors.border}`}
-              >
-                {/* Wallet icon placeholder */}
-                <div className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center`}>
+              <div key={index} className="flex items-center gap-2">
+                {/* Wallet icon - outside pill, to the left */}
+                <div className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center relative`}>
                   <span className="text-xs text-navy font-medium">
                     {wallet.name.charAt(0)}
                   </span>
                 </div>
-                <span className="font-medium text-navy">{wallet.name}</span>
-                {wallet.nfc && (
-                  <div className="w-5 h-5 rounded-full bg-mint flex items-center justify-center" title="Supports NFC Tap-to-Pay">
-                    <svg className="w-3 h-3 text-navy" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M20.62 8.45c-3.45-3.45-9.04-3.45-12.49 0a.996.996 0 001.41 1.41c2.66-2.66 6.99-2.66 9.67 0a.996.996 0 101.41-1.41z"/>
-                      <path d="M17.79 11.28a5.467 5.467 0 00-7.72 0 .996.996 0 001.41 1.41 3.488 3.488 0 014.9 0 .996.996 0 101.41-1.41z"/>
-                      <circle cx="13.93" cy="15.93" r="2"/>
-                    </svg>
-                  </div>
-                )}
+                {/* Pill */}
+                <div 
+                  className={`flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all hover:scale-105 ${colors.bg} ${colors.border}`}
+                >
+                  <span className="font-medium text-navy">{wallet.name}</span>
+                  {wallet.nfc && (
+                    <div className="w-5 h-5 rounded-full bg-mint flex items-center justify-center" title="Supports NFC Tap-to-Pay">
+                      <svg className="w-3 h-3 text-navy" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.62 8.45c-3.45-3.45-9.04-3.45-12.49 0a.996.996 0 001.41 1.41c2.66-2.66 6.99-2.66 9.67 0a.996.996 0 101.41-1.41z"/>
+                        <path d="M17.79 11.28a5.467 5.467 0 00-7.72 0 .996.996 0 001.41 1.41 3.488 3.488 0 014.9 0 .996.996 0 101.41-1.41z"/>
+                        <circle cx="13.93" cy="15.93" r="2"/>
+                      </svg>
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -400,7 +420,7 @@ function SimpleFeatures() {
           
           {/* Text Content - Column 2 */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6">
+            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
               Bitcoin payments<br/>
               made simple
             </h2>
@@ -441,7 +461,7 @@ function SimpleFeatures() {
         <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center">
           {/* Text Content - Column 1, aligns with top image column */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6">
+            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
               Your phone is<br/>
               your POS
             </h2>
@@ -531,7 +551,7 @@ function FAQ() {
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Fully rounded FAQ container */}
         <div className="bg-cream rounded-[3rem] p-8 md:p-12">
-          <h2 className="font-display text-4xl md:text-5xl text-navy text-center mb-10 leading-[0.85]">
+          <h2 className="font-display text-4xl md:text-5xl text-navy text-center mb-10 leading-[0.9] font-bold">
             OUR FAQS
           </h2>
           
@@ -570,7 +590,7 @@ function Footer() {
   return (
     <footer id="get-started" className="bg-navy pt-20 pb-0 relative">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[0.9] mb-6">
+        <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[0.9] mb-6 font-bold">
           START ACCEPTING<br/>
           BITCOIN TODAY.
         </h2>

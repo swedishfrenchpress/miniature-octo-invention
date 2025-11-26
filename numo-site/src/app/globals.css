@@ -16,6 +16,20 @@
   --cream: #FAF8F5;
   --cream-warm: #F5F0E8;
   
+  /* Extended palette for wallet pills */
+  --blue-soft: #E0F2FE;
+  --blue: #7DD3FC;
+  --yellow-soft: #FEF3C7;
+  --yellow: #FCD34D;
+  --red-soft: #FEE2E2;
+  --red: #FCA5A5;
+  --orange-soft: #FFEDD5;
+  --orange: #FDBA74;
+  --purple-soft: #F3E8FF;
+  --purple: #C4B5FD;
+  --teal-soft: #CCFBF1;
+  --teal: #5EEAD4;
+  
   /* Neutral: Grays - UI elements */
   --white: #FFFFFF;
   --gray-50: #FAFAFA;
@@ -40,6 +54,18 @@
   --color-mint-pale: var(--mint-pale);
   --color-cream: var(--cream);
   --color-cream-warm: var(--cream-warm);
+  --color-blue-soft: var(--blue-soft);
+  --color-blue: var(--blue);
+  --color-yellow-soft: var(--yellow-soft);
+  --color-yellow: var(--yellow);
+  --color-red-soft: var(--red-soft);
+  --color-red: var(--red);
+  --color-orange-soft: var(--orange-soft);
+  --color-orange: var(--orange);
+  --color-purple-soft: var(--purple-soft);
+  --color-purple: var(--purple);
+  --color-teal-soft: var(--teal-soft);
+  --color-teal: var(--teal);
   --color-white: var(--white);
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
