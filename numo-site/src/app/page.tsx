@@ -132,33 +132,33 @@ function AutoCustodyBento() {
   };
 
   return (
-    <div ref={containerRef} className="bg-mint-pale rounded-[2rem] p-8 flex-1 min-h-[380px] flex flex-col relative overflow-hidden">
-      <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3 text-center">
+    <div ref={containerRef} className="bg-mint-pale rounded-[2rem] p-6 flex-1 min-h-[320px] flex flex-col relative overflow-hidden">
+      <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-2 text-center">
         Automatic self-custody
       </h3>
-      <p className="text-lg text-gray-600 mb-4 text-center">
+      <p className="text-base text-gray-600 mb-2 text-center">
         Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your Lightning address.
       </p>
       
       {/* iOS-style stacked notifications container */}
-      <div className="flex-1 flex items-end justify-center pb-6 min-h-[200px]">
-        <div className="relative w-full max-w-[340px] h-[180px]">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="relative w-full max-w-[380px] h-[160px]">
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className="absolute bottom-0 left-0 right-0 flex rounded-2xl shadow-lg ring-1 ring-black/5 items-center p-4 gap-4 pointer-events-none select-none bg-white/95 backdrop-blur-sm"
+              className="absolute bottom-0 left-0 right-0 flex rounded-2xl shadow-lg ring-1 ring-black/5 items-center p-5 gap-4 pointer-events-none select-none bg-white/95 backdrop-blur-sm"
               style={{
                 ...getStackStyles(notification.position),
                 transition: "all 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
-              <div className="w-12 h-12 rounded-xl bg-mint flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-14 h-14 rounded-xl bg-mint flex items-center justify-center flex-shrink-0">
+                <svg className="w-7 h-7 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold text-navy">{notification.amount} threshold reached</p>
+                <p className="text-lg font-semibold text-navy">{notification.amount} Threshold Reached</p>
                 <p className="text-sm text-gray-500 truncate">Sent to {notification.address}</p>
               </div>
             </div>
