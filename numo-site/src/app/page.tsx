@@ -136,7 +136,7 @@ function AutoCustodyBento() {
       <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-2 text-center">
         Automatic self-custody
       </h3>
-      <p className="text-base text-gray-600 mb-2 text-center">
+      <p className="text-lg text-gray-600 mb-2 text-center">
         Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your Lightning address.
       </p>
       
@@ -377,56 +377,10 @@ function BentoFeatures() {
             <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
               Fully open-source and free
             </h3>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-600">
               No vendor lock-in, no hidden fees, no subscriptions. Built by the Bitcoin community, 
               for the Bitcoin community. You own your payment infrastructure.
             </p>
-            
-            {/* Illustration - multiple merchant types */}
-            <div className="mt-auto relative">
-              <div className="flex flex-wrap gap-3">
-                <div className="bg-white rounded-xl p-3 shadow-lg transform -rotate-3 hover:rotate-0 transition-transform">
-                  <div className="w-8 h-8 rounded-lg bg-cream-warm flex items-center justify-center">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Café</p>
-                </div>
-                <div className="bg-mint-soft rounded-xl p-3 shadow-lg transform rotate-2 hover:rotate-0 transition-transform">
-                  <div className="w-8 h-8 rounded-lg bg-mint/30 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h8m-8 5h8m-4-9v18m-7-4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Food Truck</p>
-                </div>
-                <div className="bg-white rounded-xl p-3 shadow-lg transform -rotate-2 hover:rotate-0 transition-transform">
-                  <div className="w-8 h-8 rounded-lg bg-cream-warm flex items-center justify-center">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Market</p>
-                </div>
-                <div className="bg-gray-100 rounded-xl p-3 shadow-lg transform rotate-3 hover:rotate-0 transition-transform">
-                  <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Pop-up</p>
-                </div>
-                <div className="bg-mint-soft rounded-xl p-3 shadow-lg transform -rotate-1 hover:rotate-0 transition-transform">
-                  <div className="w-8 h-8 rounded-lg bg-mint/30 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Online</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Row 2 - Right: Two stacked cards */}
@@ -449,12 +403,6 @@ function BentoFeatures() {
                   </svg>
                   No WiFi needed
                 </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-navy text-sm font-medium shadow-lg">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  Auto-sync
-                </span>
               </div>
             </div>
           </div>
@@ -469,16 +417,6 @@ function BentoFeatures() {
                 <p className="text-lg text-gray-600">
                   Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
                 </p>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-mint flex items-center justify-center">
-                  <svg className="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <a href="#get-started" className="px-8 py-4 bg-navy rounded-full text-white font-medium hover:bg-navy-light hover:scale-105 transition-all shadow-lg">
-                  Get Started Free
-                </a>
               </div>
             </div>
           </div>
