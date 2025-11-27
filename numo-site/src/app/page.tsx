@@ -60,6 +60,7 @@ function Hero() {
         // Handle autoplay restrictions
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentVideo]);
 
   return (
