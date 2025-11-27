@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 // Navigation
@@ -16,8 +16,8 @@ function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? "bg-white/80 backdrop-blur-xl" 
-        : "bg-transparent"
+        ? "backdrop-blur-xl" 
+        : ""
     }`}>
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-center">
@@ -33,9 +33,65 @@ function Navigation() {
 
 // Hero Section
 function Hero() {
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const videos = ["/1.mp4", "/2.mp4"];
+  const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
+
+  const handleVideoEnd = () => {
+    // Switch to the next video, loop back to first after the last one
+    const nextVideo = (currentVideo + 1) % videos.length;
+    setCurrentVideo(nextVideo);
+    
+    // Ensure the next video starts playing immediately
+    const nextVideoRef = videoRefs[nextVideo].current;
+    if (nextVideoRef) {
+      nextVideoRef.currentTime = 0;
+      nextVideoRef.play().catch(() => {
+        // Handle autoplay restrictions
+      });
+    }
+  };
+
+  // Ensure the current video is always playing
+  useEffect(() => {
+    const currentVideoRef = videoRefs[currentVideo].current;
+    if (currentVideoRef) {
+      currentVideoRef.play().catch(() => {
+        // Handle autoplay restrictions
+      });
+    }
+  }, [currentVideo]);
+
   return (
-    <section className="bg-white pt-40 pb-24 relative">
-      <div className="max-w-5xl mx-auto px-6 text-center">
+    <section className="bg-white pt-40 pb-24 relative overflow-hidden">
+      {/* Video Background - Full Width */}
+      <div className="absolute inset-0 top-0 bottom-0 overflow-hidden z-0">
+        {/* Video container - Full width */}
+        <div className="relative w-full h-full">
+          {videos.map((video, index) => (
+            <video
+              key={video}
+              ref={videoRefs[index]}
+              src={video}
+              autoPlay
+              muted
+              loop={false}
+              playsInline
+              onEnded={handleVideoEnd}
+              preload="auto"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                index === currentVideo ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+            />
+          ))}
+        </div>
+        
+        {/* Gradient overlay - bottom fade only, above video but below content */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-20 pointer-events-none" />
+      </div>
+
+      {/* Content - above everything */}
+      <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
         {/* Tagline */}
         <p className="text-navy/50 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
 
@@ -58,20 +114,6 @@ function Hero() {
             </svg>
             Google Play
           </a>
-        </div>
-
-        {/* Hero Image */}
-        <div className="relative flex justify-center items-center h-[500px]">
-          <div className="relative w-full max-w-4xl h-full">
-            <Image
-              src="/hero.png"
-              alt="Numo POS interface"
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 896px"
-              priority
-            />
-          </div>
         </div>
       </div>
     </section>
