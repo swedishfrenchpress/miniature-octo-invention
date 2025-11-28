@@ -374,244 +374,243 @@ body {
 
 /* Tap to Pay Animation Keyframes */
 
-/* Card floating and tap sequence - 5 second loop */
-@keyframes card-tap-sequence {
-  /* Initial floating (0-40% = 0-2s) - gentle up and down */
+/* Phone fade in and gentle hover - 5 second loop */
+@keyframes phone-hover {
+  /* Fade in (0-10% = 0-0.5s) */
   0% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(0) rotate(-2deg);
   }
-  12.5% {
-    bottom: 65px;
-    transform: translateX(-50%) translateY(-5px) rotate(-3deg);
+  10% {
     opacity: 1;
-  }
-  25% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
-    opacity: 1;
-  }
-  37.5% {
-    bottom: 65px;
-    transform: translateX(-50%) translateY(-5px) rotate(-3deg);
-    opacity: 1;
-  }
-  40% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
-    opacity: 1;
+    transform: translateY(0) rotate(-2deg);
   }
   
-  /* Tap down (40-50% = 2-2.5s) */
-  40% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
+  /* Gentle hover up (10-30% = 0.5-1.5s) */
+  10%, 30% {
     opacity: 1;
   }
-  45% {
-    bottom: 20px;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 1;
+  20% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+  30% {
+    transform: translateY(0) rotate(-2deg);
   }
   
-  /* Bounce on contact (50-52% = 2.5-2.6s) */
+  /* Gentle hover up (30-50% = 1.5-2.5s) */
+  40% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
   50% {
-    bottom: 15px;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  52% {
-    bottom: 20px;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 1;
+    transform: translateY(0) rotate(-2deg);
   }
   
-  /* Hold on terminal (52-60% = 2.6-3s) */
-  52%, 60% {
-    bottom: 20px;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  
-  /* Return to floating (60-70% = 3-3.5s) */
+  /* Gentle hover up (50-70% = 2.5-3.5s) */
   60% {
-    bottom: 20px;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 1;
+    transform: translateY(-6px) rotate(-2deg);
   }
   70% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
-    opacity: 1;
+    transform: translateY(0) rotate(-2deg);
   }
   
-  /* Continue floating (70-100% = 3.5-5s) */
-  70%, 100% {
-    bottom: 60px;
-    transform: translateX(-50%) translateY(0) rotate(-3deg);
+  /* Hold and fade out (70-100% = 3.5-5s) */
+  70%, 85% {
     opacity: 1;
+    transform: translateY(0) rotate(-2deg);
+  }
+  95%, 100% {
+    opacity: 0;
+    transform: translateY(0) rotate(-2deg);
   }
 }
 
 /* POS Screen Success State */
 @keyframes pos-screen-success {
-  /* Default dark screen (0-70% = 0-3.5s) */
-  0%, 70% {
+  /* Default dark screen (0-55% = 0-2.75s) */
+  0%, 55% {
     background-color: #0d0d0d;
   }
-  /* Success green (70-90% = 3.5-4.5s) */
-  70% {
+  /* Success green (55-85% = 2.75-4.25s) */
+  55% {
     background-color: #0d0d0d;
   }
-  72% {
+  58% {
     background-color: var(--mint);
   }
-  /* Hold green (72-88%) */
-  72%, 88% {
+  /* Hold green */
+  58%, 82% {
     background-color: var(--mint);
   }
-  /* Fade back to dark (88-100% = 4.4-5s) */
-  88% {
+  /* Fade back to dark (82-100%) */
+  82% {
     background-color: var(--mint);
   }
-  90%, 100% {
+  88%, 100% {
     background-color: #0d0d0d;
   }
 }
 
 /* Checkmark fade in */
 @keyframes checkmark-fade-in {
-  /* Hidden (0-70% = 0-3.5s) */
-  0%, 70% {
+  /* Hidden (0-55%) */
+  0%, 55% {
     opacity: 0;
     transform: scale(0);
   }
-  /* Appear with bounce (70-72% = 3.5-3.6s) */
-  70% {
+  /* Appear with bounce */
+  55% {
     opacity: 0;
     transform: scale(0);
   }
-  72% {
+  58% {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.15);
   }
-  /* Settle (72-88% = 3.6-4.4s) */
-  72%, 88% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  /* Fade out (88-100% = 4.4-5s) */
-  88% {
+  /* Settle and hold */
+  60%, 82% {
     opacity: 1;
     transform: scale(1);
   }
-  90%, 100% {
+  /* Fade out */
+  82% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  88%, 100% {
     opacity: 0;
     transform: scale(0);
   }
 }
 
-/* NFC Wave Container - appears when card taps */
-@keyframes nfc-waves {
-  /* Hidden (0-60% = 0-3s) */
-  0%, 60% {
+/* NFC Wave Container - visible during hover phase */
+@keyframes nfc-waves-visibility {
+  /* Fade in after phone appears (0-15%) */
+  0%, 12% {
     opacity: 0;
   }
-  /* Appear (60-62% = 3-3.1s) after card taps */
-  60% {
-    opacity: 0;
-  }
-  62% {
+  15% {
     opacity: 1;
   }
-  /* Visible during waves (62-70% = 3.1-3.5s) */
-  62%, 70% {
+  /* Visible during hover (15-55%) */
+  15%, 52% {
     opacity: 1;
   }
-  /* Fade out (70-100% = 3.5-5s) */
-  70% {
-    opacity: 1;
-  }
-  72%, 100% {
+  /* Fade out before checkmark (52-55%) */
+  55%, 100% {
     opacity: 0;
   }
 }
 
-/* NFC Wave 1 - first expanding circle */
-@keyframes nfc-wave-expand-1 {
-  /* Hidden (0-60% = 0-3s) */
-  0%, 60% {
-    transform: scale(0.5);
+/* NFC Wave 1 - pulsing circle */
+@keyframes nfc-pulse-1 {
+  0%, 12% {
+    transform: scale(0.3);
     opacity: 0;
   }
-  /* Expand (60-70% = 3-3.5s) */
-  60% {
+  15% {
     transform: scale(0.5);
+    opacity: 0.7;
+  }
+  25% {
+    transform: scale(1.8);
     opacity: 0;
   }
-  62% {
-    transform: scale(1);
+  /* Second pulse */
+  28% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  38% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  /* Third pulse */
+  41% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  51% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  52%, 100% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* NFC Wave 2 - pulsing circle (staggered) */
+@keyframes nfc-pulse-2 {
+  0%, 15% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  18% {
+    transform: scale(0.5);
     opacity: 0.6;
   }
-  66% {
-    transform: scale(1.5);
-    opacity: 0.4;
+  28% {
+    transform: scale(1.8);
+    opacity: 0;
   }
-  70%, 100% {
-    transform: scale(2);
+  /* Second pulse */
+  31% {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  41% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  /* Third pulse */
+  44% {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  54% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  55%, 100% {
+    transform: scale(0.3);
     opacity: 0;
   }
 }
 
-/* NFC Wave 2 - second expanding circle */
-@keyframes nfc-wave-expand-2 {
-  /* Hidden (0-62% = 0-3.1s) */
-  0%, 62% {
-    transform: scale(0.5);
+/* NFC Wave 3 - pulsing circle (more staggered) */
+@keyframes nfc-pulse-3 {
+  0%, 18% {
+    transform: scale(0.3);
     opacity: 0;
   }
-  /* Expand (62-72% = 3.1-3.6s) */
-  62% {
+  21% {
     transform: scale(0.5);
-    opacity: 0;
-  }
-  64% {
-    transform: scale(1);
     opacity: 0.5;
   }
-  68% {
-    transform: scale(1.5);
-    opacity: 0.3;
-  }
-  72%, 100% {
-    transform: scale(2);
+  31% {
+    transform: scale(1.8);
     opacity: 0;
   }
-}
-
-/* NFC Wave 3 - third expanding circle */
-@keyframes nfc-wave-expand-3 {
-  /* Hidden (0-64% = 0-3.2s) */
-  0%, 64% {
+  /* Second pulse */
+  34% {
     transform: scale(0.5);
+    opacity: 0.5;
+  }
+  44% {
+    transform: scale(1.8);
     opacity: 0;
   }
-  /* Expand (64-74% = 3.2-3.7s) */
-  64% {
+  /* Third pulse */
+  47% {
     transform: scale(0.5);
+    opacity: 0.5;
+  }
+  57% {
+    transform: scale(1.8);
     opacity: 0;
   }
-  66% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  70% {
-    transform: scale(1.5);
-    opacity: 0.2;
-  }
-  74%, 100% {
-    transform: scale(2);
+  58%, 100% {
+    transform: scale(0.3);
     opacity: 0;
   }
 }

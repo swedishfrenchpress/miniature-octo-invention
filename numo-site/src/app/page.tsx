@@ -316,27 +316,85 @@ function BentoFeatures() {
             </p>
             
             {/* Tap to Pay Animation */}
-            <div className="flex-1 flex items-center justify-center min-h-[200px] relative">
-              <div className="relative w-full max-w-[280px] h-[180px]">
-                {/* POS Terminal */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-20 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-xl shadow-xl">
-                  {/* Terminal Screen */}
-                  <div className="absolute top-2 left-2 right-2 h-10 bg-[#0d0d0d] rounded-lg overflow-hidden">
+            <div className="flex-1 flex items-center justify-center min-h-[280px] relative">
+              {/* Centered animation container */}
+              <div className="relative flex flex-col items-center">
+                {/* Phone (horizontal/landscape) - fades in and hovers gently */}
+                <div 
+                  className="relative z-10 mb-3"
+                  style={{
+                    animation: 'phone-hover 5s ease-in-out infinite'
+                  }}
+                >
+                  {/* Phone in landscape orientation */}
+                  <div className="w-36 h-[72px] bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-2xl shadow-2xl border-2 border-[#3a3a3a] relative overflow-hidden">
+                    {/* Phone screen bezel */}
+                    <div className="absolute inset-1.5 bg-gradient-to-br from-[#1a1a2a] to-[#0d0d15] rounded-xl flex items-center justify-center">
+                      {/* Bitcoin symbol on screen */}
+                      <span className="text-[#F7931A] font-bold text-4xl drop-shadow-[0_0_12px_rgba(247,147,26,0.6)]">₿</span>
+                    </div>
+                    {/* Dynamic Island / Notch area */}
+                    <div className="absolute top-1/2 -translate-y-1/2 left-2 w-1 h-3 bg-[#1a1a1a] rounded-full"></div>
+                    {/* Side button (power) */}
+                    <div className="absolute -right-0.5 top-4 w-1 h-5 bg-[#4a4a4a] rounded-l"></div>
+                    {/* Volume buttons */}
+                    <div className="absolute -left-0.5 top-3 w-1 h-3 bg-[#4a4a4a] rounded-r"></div>
+                    <div className="absolute -left-0.5 top-7 w-1 h-3 bg-[#4a4a4a] rounded-r"></div>
+                  </div>
+                </div>
+                
+                {/* NFC Signal Waves - pulse from between phone and POS */}
+                <div 
+                  className="absolute top-[72px] left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none z-20"
+                  style={{
+                    animation: 'nfc-waves-visibility 5s ease-in-out infinite'
+                  }}
+                >
+                  {/* Wave 1 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/60"
+                    style={{
+                      animation: 'nfc-pulse-1 5s ease-in-out infinite'
+                    }}
+                  ></div>
+                  {/* Wave 2 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/45"
+                    style={{
+                      animation: 'nfc-pulse-2 5s ease-in-out infinite'
+                    }}
+                  ></div>
+                  {/* Wave 3 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/30"
+                    style={{
+                      animation: 'nfc-pulse-3 5s ease-in-out infinite'
+                    }}
+                  ></div>
+                </div>
+
+                {/* POS Terminal - Black and Orange */}
+                <div className="relative w-44 h-56 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-3xl shadow-2xl border-2 border-[#F7931A]/40">
+                  {/* Orange accent strip at top */}
+                  <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded-t-3xl"></div>
+                  
+                  {/* Terminal Screen - Large display */}
+                  <div className="absolute top-5 left-4 right-4 h-28 bg-[#0a0a0a] rounded-2xl overflow-hidden border-2 border-[#333]">
                     {/* Screen content - shows checkmark on success */}
                     <div 
-                      className="absolute inset-1 rounded-md flex items-center justify-center transition-colors duration-300"
+                      className="absolute inset-2 rounded-xl flex items-center justify-center transition-colors duration-300"
                       style={{ 
-                        animation: 'pos-screen-success 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                        animation: 'pos-screen-success 5s ease-in-out infinite'
                       }}
                     >
                       {/* Checkmark appears on success */}
                       <svg 
-                        className="w-8 h-8 text-navy"
+                        className="w-16 h-16 text-navy"
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
                         style={{ 
-                          animation: 'checkmark-fade-in 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                          animation: 'checkmark-fade-in 5s ease-in-out infinite'
                         }}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -344,59 +402,18 @@ function BentoFeatures() {
                     </div>
                   </div>
                   
-                  {/* Keypad area */}
-                  <div className="absolute bottom-2 left-2 right-2 h-6 grid grid-cols-3 gap-1">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={i} className="bg-[#3a3a3a] rounded-sm"></div>
+                  {/* Keypad area - 3x4 grid like real POS */}
+                  <div className="absolute bottom-4 left-4 right-4 h-16 grid grid-cols-3 grid-rows-4 gap-1.5">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className="bg-[#2a2a2a] rounded-lg border border-[#F7931A]/15 shadow-inner"></div>
                     ))}
                   </div>
-                </div>
-                
-                {/* Payment Card - animated */}
-                <div 
-                  className="absolute left-1/2 -translate-x-1/2"
-                  style={{
-                    animation: 'card-tap-sequence 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
-                  }}
-                >
-                  {/* Card with subtle shadow and depth */}
-                  <div className="w-20 h-12 bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-lg shadow-lg border border-[#3a3a4e]/50 relative overflow-hidden">
-                    {/* Card chip */}
-                    <div className="absolute top-2 left-2 w-4 h-3 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-sm"></div>
-                    {/* Card lines */}
-                    <div className="absolute bottom-2 left-2 right-2 h-0.5 bg-white/20 rounded"></div>
-                    <div className="absolute bottom-4 left-2 w-8 h-0.5 bg-white/20 rounded"></div>
-                  </div>
-                </div>
-                
-                {/* NFC Signal Waves - concentric circles */}
-                <div 
-                  className="absolute left-1/2 -translate-x-1/2 bottom-10 w-16 h-16 pointer-events-none"
-                  style={{
-                    animation: 'nfc-waves 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
-                  }}
-                >
-                  {/* Wave 1 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-navy/40"
-                    style={{
-                      animation: 'nfc-wave-expand-1 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
-                    }}
-                  ></div>
-                  {/* Wave 2 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-navy/30"
-                    style={{
-                      animation: 'nfc-wave-expand-2 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
-                    }}
-                  ></div>
-                  {/* Wave 3 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-navy/20"
-                    style={{
-                      animation: 'nfc-wave-expand-3 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
-                    }}
-                  ></div>
+                  
+                  {/* Orange LED indicator */}
+                  <div className="absolute top-6 right-5 w-2.5 h-2.5 rounded-full bg-[#F7931A] shadow-[0_0_8px_#F7931A]"></div>
+                  
+                  {/* Card reader slot on right side */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-[#222] rounded-l-sm"></div>
                 </div>
               </div>
             </div>
@@ -410,35 +427,8 @@ function BentoFeatures() {
               </h3>
             </div>
             <p className="text-lg text-gray-600 mb-6">
-              Settlement in seconds, not days. No chargebacks, no holds. Bitcoin moves at the speed of light.
+              Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
             </p>
-            
-            {/* Visual illustration - payment animation */}
-            <div className="mt-auto bg-white/60 backdrop-blur-sm rounded-2xl p-6 relative overflow-hidden shadow-lg">
-              <div className="flex items-center justify-between">
-                <div className="bg-white rounded-xl p-3 shadow-lg hover:scale-105 transition-transform">
-                  <div className="w-10 h-10 bg-navy rounded-lg flex items-center justify-center mb-2">
-                    <span className="text-white font-display">N</span>
-                  </div>
-                  <p className="font-display text-navy text-sm">$42.00</p>
-                </div>
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-navy animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                  </div>
-                </div>
-                <div className="bg-white rounded-xl p-3 shadow-lg hover:scale-105 transition-transform">
-                  <div className="w-10 h-10 bg-mint rounded-full flex items-center justify-center mb-2">
-                    <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <p className="font-display text-navy text-sm">Done!</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Row 2 - Left: Works Offline with animation */}
