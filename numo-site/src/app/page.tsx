@@ -114,18 +114,19 @@ function AutoCustodyBento() {
   // Get styles based on position in stack
   const getStackStyles = (position: number) => {
     // Position: -1 = entering, 0 = front, 1 = middle, 2 = back, 3 = exiting
-    const stackConfigs: Record<number, { y: number; scale: number; opacity: number; zIndex: number }> = {
-      [-1]: { y: 60, scale: 1, opacity: 0, zIndex: 4 },      // Entering from below
-      0: { y: 0, scale: 1, opacity: 1, zIndex: 3 },          // Front (most visible)
-      1: { y: -12, scale: 0.96, opacity: 0.85, zIndex: 2 },  // Middle
-      2: { y: -24, scale: 0.92, opacity: 0.7, zIndex: 1 },   // Back
-      3: { y: -50, scale: 0.88, opacity: 0, zIndex: 0 },     // Exiting upward
+    // y values include -50% for centering
+    const stackConfigs: Record<number, { y: string; scale: number; opacity: number; zIndex: number }> = {
+      [-1]: { y: 'calc(-50% + 60px)', scale: 1, opacity: 0, zIndex: 4 },      // Entering from below
+      0: { y: '-50%', scale: 1, opacity: 1, zIndex: 3 },                       // Front (most visible)
+      1: { y: 'calc(-50% - 12px)', scale: 0.96, opacity: 0.85, zIndex: 2 },   // Middle
+      2: { y: 'calc(-50% - 24px)', scale: 0.92, opacity: 0.7, zIndex: 1 },    // Back
+      3: { y: 'calc(-50% - 50px)', scale: 0.88, opacity: 0, zIndex: 0 },      // Exiting upward
     };
 
     const config = stackConfigs[position] || stackConfigs[3];
     
     return {
-      transform: `translateY(${config.y}px) scale(${config.scale})`,
+      transform: `translateY(${config.y}) scale(${config.scale})`,
       opacity: config.opacity,
       zIndex: config.zIndex,
     };
@@ -142,11 +143,11 @@ function AutoCustodyBento() {
       
       {/* iOS-style stacked notifications container */}
       <div className="flex-1 flex items-center justify-center">
-        <div className="relative w-full max-w-[380px] h-[160px]">
+        <div className="relative w-full max-w-[380px] h-[140px]">
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className="absolute bottom-0 left-0 right-0 flex rounded-2xl shadow-lg ring-1 ring-black/5 items-center p-5 gap-4 pointer-events-none select-none bg-white/95 backdrop-blur-sm"
+              className="absolute top-1/2 left-0 right-0 flex rounded-2xl shadow-lg ring-1 ring-black/5 items-center p-5 gap-4 pointer-events-none select-none bg-white/95 backdrop-blur-sm"
               style={{
                 ...getStackStyles(notification.position),
                 transition: "all 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
