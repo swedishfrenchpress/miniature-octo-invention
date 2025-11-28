@@ -312,8 +312,94 @@ function BentoFeatures() {
               </div>
             </div>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Tap-to-pay for Cashu wallets. Skip the QR codes and Lightning invoices—unless you prefer them.
+            Apple Pay-like experience for Bitcoin payments.
             </p>
+            
+            {/* Tap to Pay Animation */}
+            <div className="flex-1 flex items-center justify-center min-h-[200px] relative">
+              <div className="relative w-full max-w-[280px] h-[180px]">
+                {/* POS Terminal */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-20 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-xl shadow-xl">
+                  {/* Terminal Screen */}
+                  <div className="absolute top-2 left-2 right-2 h-10 bg-[#0d0d0d] rounded-lg overflow-hidden">
+                    {/* Screen content - shows checkmark on success */}
+                    <div 
+                      className="absolute inset-1 rounded-md flex items-center justify-center transition-colors duration-300"
+                      style={{ 
+                        animation: 'pos-screen-success 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                      }}
+                    >
+                      {/* Checkmark appears on success */}
+                      <svg 
+                        className="w-8 h-8 text-navy"
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        style={{ 
+                          animation: 'checkmark-fade-in 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                        }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Keypad area */}
+                  <div className="absolute bottom-2 left-2 right-2 h-6 grid grid-cols-3 gap-1">
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} className="bg-[#3a3a3a] rounded-sm"></div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Payment Card - animated */}
+                <div 
+                  className="absolute left-1/2 -translate-x-1/2"
+                  style={{
+                    animation: 'card-tap-sequence 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                  }}
+                >
+                  {/* Card with subtle shadow and depth */}
+                  <div className="w-20 h-12 bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-lg shadow-lg border border-[#3a3a4e]/50 relative overflow-hidden">
+                    {/* Card chip */}
+                    <div className="absolute top-2 left-2 w-4 h-3 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-sm"></div>
+                    {/* Card lines */}
+                    <div className="absolute bottom-2 left-2 right-2 h-0.5 bg-white/20 rounded"></div>
+                    <div className="absolute bottom-4 left-2 w-8 h-0.5 bg-white/20 rounded"></div>
+                  </div>
+                </div>
+                
+                {/* NFC Signal Waves - concentric circles */}
+                <div 
+                  className="absolute left-1/2 -translate-x-1/2 bottom-10 w-16 h-16 pointer-events-none"
+                  style={{
+                    animation: 'nfc-waves 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                  }}
+                >
+                  {/* Wave 1 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-navy/40"
+                    style={{
+                      animation: 'nfc-wave-expand-1 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                    }}
+                  ></div>
+                  {/* Wave 2 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-navy/30"
+                    style={{
+                      animation: 'nfc-wave-expand-2 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                    }}
+                  ></div>
+                  {/* Wave 3 */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-navy/20"
+                    style={{
+                      animation: 'nfc-wave-expand-3 5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Row 1 - Right: Instant settlement */}
