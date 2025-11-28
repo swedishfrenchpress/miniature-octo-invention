@@ -393,7 +393,11 @@ function BentoFeatures() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-2">
-                  Zero platform fees
+                  Zero platform{" "}
+                  <span className="zero-slice-container">
+                    <span className="zero-slice-top">fees</span>
+                    <span className="zero-slice-bottom">fees</span>
+                  </span>
                 </h3>
                 <p className="text-lg text-gray-600">
                   Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.

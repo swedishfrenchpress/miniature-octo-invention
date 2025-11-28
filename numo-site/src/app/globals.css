@@ -184,6 +184,52 @@ body {
   }
 }
 
+/* Zero slice animation - text cut in half effect */
+@keyframes slice-top {
+  0%, 95% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+@keyframes slice-bottom {
+  0%, 95% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+.zero-slice-container {
+  position: relative;
+  display: inline-block;
+}
+
+.zero-slice-top,
+.zero-slice-bottom {
+  display: inline-block;
+}
+
+.zero-slice-top {
+  clip-path: inset(0 0 50% 0);
+  animation: slice-top 8.5s ease-out forwards;
+}
+
+.zero-slice-bottom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  clip-path: inset(50% 0 0 0);
+  animation: slice-bottom 8.5s ease-out forwards;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
