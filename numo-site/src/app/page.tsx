@@ -419,16 +419,97 @@ function BentoFeatures() {
             </div>
           </div>
 
-          {/* Row 1 - Right: Instant settlement */}
+          {/* Row 1 - Right: Zero platform fees */}
           <div className="bg-mint-soft rounded-[2rem] p-8 flex flex-col">
             <div className="flex items-start justify-between mb-4 gap-4">
               <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
-                Instant settlement
+                Zero platform{" "}
+                <span className="zero-slice-container">
+                  <span className="zero-slice-top">fees</span>
+                  <span className="zero-slice-bottom">fees</span>
+                </span>
               </h3>
             </div>
             <p className="text-lg text-gray-600 mb-6">
-              Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
+              Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
             </p>
+            
+            {/* Fee Slicing Animation */}
+            <div className="flex-1 relative min-h-[180px] overflow-hidden">
+              {/* First fee: 2.9% - positioned upper left, slight angle */}
+              <div 
+                className="absolute left-4 top-2"
+                style={{ 
+                  animation: 'fee-1-container 12s ease-in-out infinite',
+                  transform: 'rotate(-4deg)'
+                }}
+              >
+                <div className="relative inline-block">
+                  {/* Top half */}
+                  <span 
+                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    style={{ 
+                      clipPath: 'inset(0 0 50% 0)',
+                      animation: 'fee-1-slice-top 12s ease-in-out infinite'
+                    }}
+                  >
+                    2.9%
+                  </span>
+                  {/* Bottom half */}
+                  <span 
+                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    style={{ 
+                      clipPath: 'inset(50% 0 0 0)',
+                      animation: 'fee-1-slice-bottom 12s ease-in-out infinite'
+                    }}
+                  >
+                    2.9%
+                  </span>
+                </div>
+                {/* Slice line for first fee */}
+                <div 
+                  className="absolute left-0 right-0 top-1/2 h-1 bg-[#FF3B30] origin-left"
+                  style={{ animation: 'slice-line-1 12s ease-in-out infinite' }}
+                ></div>
+              </div>
+
+              {/* Second fee: 30¢ - positioned lower right, different angle */}
+              <div 
+                className="absolute right-4 bottom-2"
+                style={{ 
+                  animation: 'fee-2-container 12s ease-in-out infinite',
+                  transform: 'rotate(3deg)'
+                }}
+              >
+                <div className="relative inline-block">
+                  {/* Top half */}
+                  <span 
+                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    style={{ 
+                      clipPath: 'inset(0 0 50% 0)',
+                      animation: 'fee-2-slice-top 12s ease-in-out infinite'
+                    }}
+                  >
+                    30¢
+                  </span>
+                  {/* Bottom half */}
+                  <span 
+                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    style={{ 
+                      clipPath: 'inset(50% 0 0 0)',
+                      animation: 'fee-2-slice-bottom 12s ease-in-out infinite'
+                    }}
+                  >
+                    30¢
+                  </span>
+                </div>
+                {/* Slice line for second fee */}
+                <div 
+                  className="absolute left-0 right-0 top-1/2 h-1 bg-[#FF3B30] origin-left"
+                  style={{ animation: 'slice-line-2 12s ease-in-out infinite' }}
+                ></div>
+              </div>
+            </div>
           </div>
 
           {/* Row 2 - Left: Works Offline with animation */}
@@ -586,14 +667,10 @@ function BentoFeatures() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-2">
-                  Zero platform{" "}
-                  <span className="zero-slice-container">
-                    <span className="zero-slice-top">fees</span>
-                    <span className="zero-slice-bottom">fees</span>
-                  </span>
+                  Instant settlement
                 </h3>
                 <p className="text-lg text-gray-600">
-                  Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
+                  Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
                 </p>
               </div>
             </div>
