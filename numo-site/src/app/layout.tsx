@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Bebas_Neue, Dancing_Script, Grandstander } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 // Clean body font
@@ -48,6 +49,10 @@ export const metadata: Metadata = {
     title: "Numo - Bitcoin Payments Made Simple",
     description: "Accept Bitcoin payments with a tap. NFC-enabled POS that feels as natural as Apple Pay.",
   },
+  other: {
+    "font-preconnect-1": "https://fonts.googleapis.com",
+    "font-preconnect-2": "https://fonts.gstatic.com",
+  },
 };
 
 export default function RootLayout({
@@ -60,6 +65,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bebas.variable} ${dancing.variable} ${grandstander.variable} antialiased font-sans`}
       >
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet" />
         {children}
       </body>
     </html>

@@ -531,136 +531,132 @@ function BentoFeatures() {
 
 // Supported Wallets Section
 function SupportedWallets() {
-  // Unique colors for each wallet that match design language
-  const walletColors = [
-    // Each wallet gets a unique color from the palette
-    { bg: "bg-[#CCFBF1]", border: "border-[#5EEAD4]", iconBg: "bg-[#5EEAD4]/30" }, // Minibits - Teal
-    { bg: "bg-[#E0F2FE]", border: "border-[#7DD3FC]", iconBg: "bg-[#7DD3FC]/30" }, // eNuts - Blue
-    { bg: "bg-[#FEF3C7]", border: "border-[#FCD34D]", iconBg: "bg-[#FCD34D]/30" }, // Cashu.me - Yellow
-    { bg: "bg-[#FFEDD5]", border: "border-[#FDBA74]", iconBg: "bg-[#FDBA74]/30" }, // Nutstash - Orange
-    { bg: "bg-[#F3E8FF]", border: "border-[#C4B5FD]", iconBg: "bg-[#C4B5FD]/30" }, // Macadamia - Purple
-    { bg: "bg-[#FEE2E2]", border: "border-[#FCA5A5]", iconBg: "bg-[#FCA5A5]/30" }, // Boardwalk - Red
-    { bg: "bg-cream", border: "border-cream-warm", iconBg: "bg-cream-warm" }, // Cashcrab - Cream
-    { bg: "bg-gray-100", border: "border-gray-300", iconBg: "bg-gray-200" }, // LNbits - Gray
+  // NFC-enabled wallets (tap-to-pay) - featured prominently
+  const nfcWallets = [
+    { name: "eNuts", image: "/wallets/enuts.png" },
+    { name: "Sovran", image: "/wallets/sovran.jpg" },
+    { name: "Macadamia", image: "/wallets/macadamia.jpg" },
+    { name: "Cashu.me", image: "/wallets/cashume.png" },
   ];
 
-  const wallets = [
-    { name: "Minibits", nfc: true },
-    { name: "eNuts", nfc: true },
-    { name: "Cashu.me", nfc: true },
-    { name: "Nutstash", nfc: true },
-    { name: "Macadamia", nfc: false },
-    { name: "Boardwalk", nfc: false },
-    { name: "Cashcrab", nfc: false },
-    { name: "LNbits", nfc: false },
+  // Lightning wallets (standard support)
+  const lightningWallets = [
+    { name: "Alby", image: "/wallets/albygo.webp" },
+    { name: "Blink Wallet", image: "/wallets/blinkwallet.jpg" },
+    { name: "Boardwalk Cash", image: "/wallets/boardwalkcash.jpg" },
+    { name: "Cash App", image: "/wallets/cashapp.svg" },
+    { name: "Fedi", image: "/wallets/fedi.jpg" },
+    { name: "Minibits", image: "/wallets/minibits.jpg" },
+    { name: "Muun", image: "/wallets/muun.png" },
+    { name: "Phoenix", image: "/wallets/phoenix.jpg" },
+    { name: "Strike", image: "/wallets/strike.png" },
+    { name: "Wallet of Satoshi", image: "/wallets/walletofsatoshi.png" },
+    { name: "Zeus", image: "/wallets/zeus.jpg" },
   ];
 
   return (
-    <section className="bg-white py-20 relative overflow-hidden">
-      {/* Grass background covering entire section, fading out at bottom */}
-      <div className="absolute inset-0">
-        <Image
-          src="/grass.png"
-          alt=""
-          fill
-          className="object-cover object-center"
-          style={{ opacity: 0.3 }}
-        />
-        <div 
-          className="absolute inset-0" 
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(255,255,255,0.3) 60%, rgba(255,255,255,0.6) 80%, white 100%)'
-          }}
-        ></div>
-      </div>
-      
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-4 font-bold">
-            SUPPORTED WALLETS
-          </h2>
-          <p className="text-lg text-gray-600 max-w-lg mx-auto">
-            Numo is a full Lightning POS system. Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
-          </p>
-        </div>
-
-        {/* Legend */}
-        <div className="flex justify-center mb-10">
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-mint flex items-center justify-center">
-              <svg className="w-5 h-5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-                <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-                <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-              </svg>
-            </div>
-            <span className="text-base text-navy font-medium">Tap-to-Pay (NFC)</span>
+    <section className="bg-white py-20 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Bento-style container */}
+        <div className="bg-cream rounded-[2rem] p-8 md:p-12">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-4 font-bold">
+              SUPPORTED WALLETS
+            </h2>
+            <p className="text-lg text-gray-600">
+              Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
+            </p>
           </div>
-        </div>
 
-        {/* Wallets Grid */}
-        <div className="flex flex-wrap justify-center gap-4">
-          {wallets.map((wallet, index) => {
-            const colors = walletColors[index];
-            return (
-              <div key={index} className="flex items-center gap-1.5 group">
-                {/* Wallet icon - outside pill, to the left */}
-                <div className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
-                  <span className="text-xs text-navy font-bold">
-                    {wallet.name.charAt(0)}
-                  </span>
-                </div>
-                {/* Pill */}
-                <div 
-                  className={`flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all group-hover:scale-105 ${colors.bg} ${colors.border}`}
-                >
-                  <span className="font-medium text-navy">{wallet.name}</span>
-                  {wallet.nfc && (
-                    <div className="w-5 h-5 rounded-full bg-mint flex items-center justify-center" title="Supports NFC Tap-to-Pay">
-                      <svg className="w-3 h-3" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-                        <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-                        <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="#0A2540" fillOpacity="0.85"/>
-                      </svg>
-                    </div>
-                  )}
-                </div>
+          {/* NFC Wallets - Featured Section */}
+          <div className="mb-10">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
+                <svg className="w-4 h-4" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
+                  <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
+                  <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
+                </svg>
               </div>
-            );
-          })}
-          
-          {/* + ALL BITCOIN LIGHTNING WALLETS */}
-          <div className="group relative flex items-center gap-3 px-5 py-3 rounded-full bg-navy/5 border-2 border-navy/20 hover:border-yellow-400 transition-all cursor-pointer overflow-visible">
-            {/* Lightning bolts continuously streaming out - multiple instances for continuous flow */}
-            {[
-              { tx: '-20px', ty: '-20px', rot: '-25deg', size: 'w-6 h-6', pos: '-top-4 -left-4', delays: ['0s', '0.27s', '0.53s'] },
-              { tx: '25px', ty: '-25px', rot: '45deg', size: 'w-5 h-5', pos: '-top-3 -right-5', delays: ['0.1s', '0.37s', '0.63s'] },
-              { tx: '35px', ty: '0px', rot: '90deg', size: 'w-7 h-7', pos: 'top-0 -right-8', delays: ['0.2s', '0.47s', '0.73s'] },
-              { tx: '-25px', ty: '25px', rot: '-135deg', size: 'w-6 h-6', pos: '-bottom-4 -left-3', delays: ['0.15s', '0.41s', '0.67s'] },
-              { tx: '20px', ty: '20px', rot: '135deg', size: 'w-5 h-5', pos: '-bottom-3 -right-4', delays: ['0.05s', '0.31s', '0.57s'] },
-              { tx: '-35px', ty: '0px', rot: '-90deg', size: 'w-7 h-7', pos: 'top-1/2 -left-8 -translate-y-1/2', delays: ['0.12s', '0.38s', '0.64s'] },
-              { tx: '0px', ty: '-35px', rot: '0deg', size: 'w-6 h-6', pos: '-top-5 left-1/2 -translate-x-1/2', delays: ['0.08s', '0.34s', '0.6s'] },
-              { tx: '0px', ty: '35px', rot: '180deg', size: 'w-6 h-6', pos: '-bottom-5 left-1/2 -translate-x-1/2', delays: ['0.18s', '0.44s', '0.7s'] },
-            ].map((bolt, boltIndex) => 
-              bolt.delays.map((delay, instanceIndex) => (
+              <h3 className="font-display text-2xl md:text-3xl text-navy font-bold">TAP-TO-PAY</h3>
+            </div>
+            
+            {/* NFC Wallet Cards - Premium feel */}
+            <div className="flex flex-wrap justify-center gap-4">
+              {nfcWallets.map((wallet, index) => (
                 <div 
-                  key={`${boltIndex}-${instanceIndex}`}
-                  className={`absolute ${bolt.pos} hidden group-hover:block group-hover:animate-lightning`}
-                  style={{
-                    '--tx': bolt.tx,
-                    '--ty': bolt.ty,
-                    '--rot': bolt.rot,
-                    animationDelay: delay,
-                  } as React.CSSProperties}
+                  key={index} 
+                  className="relative bg-white rounded-2xl p-4 border-2 border-navy/20"
                 >
-                  <svg className={`${bolt.size} text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]`} fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                  {/* NFC Badge */}
+                  <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-navy flex items-center justify-center shadow-md z-10">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
+                      <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
+                      <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
+                    </svg>
+                  </div>
+                  
+                  <div className="flex items-center gap-4">
+                    {/* Large wallet icon */}
+                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+                      <Image
+                        src={wallet.image}
+                        alt={wallet.name}
+                        width={56}
+                        height={56}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="font-semibold text-navy text-lg">{wallet.name}</span>
+                  </div>
                 </div>
-              ))
-            )}
-            <span className="font-medium text-navy group-hover:text-navy transition-colors uppercase relative z-10">+ ALL BITCOIN LIGHTNING WALLETS</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 mb-8">
+            <div className="flex-1 h-px bg-navy/10"></div>
+            <span className="text-sm text-gray-500 font-medium">FULLY COMPATIBLE WITH</span>
+            <div className="flex-1 h-px bg-navy/10"></div>
+          </div>
+
+          {/* Lightning Wallets - Simpler presentation */}
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {lightningWallets.map((wallet, index) => (
+              <div 
+                key={index} 
+                className="flex items-center gap-3 bg-white rounded-full px-4 py-2.5"
+              >
+                {/* Wallet icon */}
+                <div className="w-10 h-10 rounded-full overflow-hidden">
+                  <Image
+                    src={wallet.image}
+                    alt={wallet.name}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="font-medium text-navy">{wallet.name}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Handwritten annotation */}
+          <div className="text-center">
+            <p 
+              className="text-navy text-2xl md:text-3xl"
+              style={{ 
+                fontFamily: 'Solitreo, cursive',
+                transform: 'rotate(-2deg)',
+                display: 'inline-block'
+              }}
+            >
+              + all bitcoin lightning wallets!
+            </p>
           </div>
         </div>
       </div>
@@ -690,7 +686,7 @@ function SimpleFeatures() {
           
           {/* Text Content - Column 2 */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-[#EA580C] leading-[0.9] mb-6 font-bold">
+            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
               Lightning and ecash, unified
             </h2>
             <p className="text-lg text-gray-600 mb-8">
@@ -700,28 +696,28 @@ function SimpleFeatures() {
             </p>
             <ul className="space-y-5">
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#EA580C]">Tap-to-pay with ecash wallets</span>
+                <span className="text-lg text-navy">Tap-to-pay with ecash wallets</span>
               </li>
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#EA580C]">Full Lightning Network support</span>
+                <span className="text-lg text-navy">Full Lightning Network support</span>
               </li>
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#FFEDD5] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#EA580C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#EA580C]">Best of both payment systems</span>
+                <span className="text-lg text-navy">Best of both payment systems</span>
               </li>
             </ul>
           </div>
@@ -731,8 +727,8 @@ function SimpleFeatures() {
         <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center">
           {/* Text Content - Column 1, aligns with top image column */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-[#065f46] leading-[0.9] mb-6 font-bold">
-              Your phone is your POS
+            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
+              Easy inventory management
             </h2>
             <p className="text-lg text-gray-600 mb-8">
               Built-in inventory management makes selling easy. Create categories for items and sizes, 
@@ -741,27 +737,27 @@ function SimpleFeatures() {
             <ul className="space-y-5">
               <li className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 13a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#065f46]">Organize items by category and size</span>
+                <span className="text-lg text-navy">Organize items by category and size</span>
               </li>
               <li className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#065f46]">Tap to request pre-determined payments</span>
+                <span className="text-lg text-navy">Tap to request pre-determined payments</span>
               </li>
               <li className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-[#065f46]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <span className="text-lg text-[#065f46]">Export sales reports by item</span>
+                <span className="text-lg text-navy">Export sales reports by item</span>
               </li>
             </ul>
           </div>
@@ -802,16 +798,16 @@ function FAQ() {
       a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
     },
     {
-      q: "What about security?",
-      a: "Bitcoin goes directly to your wallet—we never touch it. You control your keys, you control your money. Self-custody by default.",
+      q: "Is Numo custodial?",
+      a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
     },
     {
       q: "What if I have bad internet?",
-      a: "Numo works offline too. Payments sync when you're back online. No lost sales.",
+      a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
     },
     {
       q: "How do I get started?",
-      a: "Download Numo from the App Store or Google Play, set up your wallet, and you're ready to accept Bitcoin payments.",
+      a: "Download Numo from the Google Play, set up your wallet, and you're ready to accept Bitcoin payments.",
     },
   ];
 
