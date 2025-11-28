@@ -297,29 +297,24 @@ function BentoFeatures() {
           
           {/* Row 1 - Left: Tap to Pay with Cashu wallet support */}
           <div className="bg-cream rounded-[2rem] p-8 flex flex-col">
-            <div className="flex items-start justify-between mb-6 gap-4">
+            <div className="flex items-start justify-between mb-4 gap-4">
               <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
                 TAP TO PAY<br/>
                 Just like Apple Pay
               </h3>
               <div className="flex gap-2 flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.62 8.45c-3.45-3.45-9.04-3.45-12.49 0a.996.996 0 001.41 1.41c2.66-2.66 6.99-2.66 9.67 0a.996.996 0 101.41-1.41z"/>
-                    <path d="M17.79 11.28a5.467 5.467 0 00-7.72 0 .996.996 0 001.41 1.41 3.488 3.488 0 014.9 0 .996.996 0 101.41-1.41z"/>
-                    <circle cx="13.93" cy="15.93" r="2"/>
+                  <svg className="w-5 h-5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
+                    <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
+                    <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
                   </svg>
                 </div>
               </div>
             </div>
-            
-            {/* Description text */}
-            <div className="mt-auto">
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Numo supports tap-to-pay UX for Cashu wallets, delivering a superior payment experience. 
-                No more scanning QR codes or sending to Lightning invoices—unless you want to. 
-              </p>
-            </div>
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              Tap-to-pay for Cashu wallets. Skip the QR codes and Lightning invoices—unless you prefer them.
+            </p>
           </div>
 
           {/* Row 1 - Right: Instant settlement */}
