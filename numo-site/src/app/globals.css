@@ -230,73 +230,119 @@ body {
   animation: slice-bottom 8.5s ease-out forwards;
 }
 
-/* Offline payment animation - smooth continuous flow */
+/* Offline payment animation - staggered trail of bills */
 @keyframes money-fly-1 {
-  0%, 5% {
+  0%, 2% {
     opacity: 0;
     transform: translateX(0) translateY(0) rotate(-5deg);
   }
-  10% {
+  8% {
     opacity: 1;
-    transform: translateX(15px) translateY(-8px) rotate(-3deg);
+    transform: translateX(10px) translateY(-10px) rotate(-3deg);
   }
   50% {
     opacity: 1;
-    transform: translateX(75px) translateY(-18px) rotate(3deg);
+    transform: translateX(45px) translateY(-16px) rotate(2deg);
   }
-  85% {
+  88% {
     opacity: 1;
-    transform: translateX(130px) translateY(-6px) rotate(1deg);
+    transform: translateX(80px) translateY(-5px) rotate(0deg);
   }
-  90%, 100% {
+  94%, 100% {
     opacity: 0;
-    transform: translateX(145px) translateY(0) rotate(0deg);
+    transform: translateX(90px) translateY(0) rotate(0deg);
   }
 }
 
 @keyframes money-fly-2 {
-  0%, 15% {
+  0%, 12% {
     opacity: 0;
-    transform: translateX(0) translateY(0) rotate(5deg);
+    transform: translateX(0) translateY(0) rotate(4deg);
   }
-  20% {
+  18% {
     opacity: 1;
-    transform: translateX(15px) translateY(-12px) rotate(3deg);
+    transform: translateX(10px) translateY(-14px) rotate(2deg);
   }
   55% {
     opacity: 1;
-    transform: translateX(80px) translateY(-22px) rotate(-2deg);
+    transform: translateX(48px) translateY(-20px) rotate(-2deg);
   }
-  88% {
+  90% {
     opacity: 1;
-    transform: translateX(135px) translateY(-8px) rotate(-1deg);
+    transform: translateX(82px) translateY(-6px) rotate(0deg);
   }
-  93%, 100% {
+  96%, 100% {
     opacity: 0;
-    transform: translateX(150px) translateY(0) rotate(0deg);
+    transform: translateX(92px) translateY(0) rotate(0deg);
   }
 }
 
 @keyframes money-fly-3 {
-  0%, 25% {
+  0%, 22% {
     opacity: 0;
     transform: translateX(0) translateY(0) rotate(-3deg);
   }
-  30% {
+  28% {
     opacity: 1;
-    transform: translateX(15px) translateY(-6px) rotate(-1deg);
+    transform: translateX(10px) translateY(-8px) rotate(-1deg);
   }
   60% {
     opacity: 1;
-    transform: translateX(85px) translateY(-15px) rotate(2deg);
+    transform: translateX(50px) translateY(-14px) rotate(3deg);
   }
-  90% {
+  92% {
     opacity: 1;
-    transform: translateX(140px) translateY(-4px) rotate(0deg);
+    transform: translateX(84px) translateY(-4px) rotate(1deg);
   }
-  95%, 100% {
+  98%, 100% {
     opacity: 0;
-    transform: translateX(155px) translateY(0) rotate(0deg);
+    transform: translateX(94px) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes money-fly-4 {
+  0%, 32% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(5deg);
+  }
+  38% {
+    opacity: 1;
+    transform: translateX(10px) translateY(-12px) rotate(3deg);
+  }
+  65% {
+    opacity: 1;
+    transform: translateX(52px) translateY(-18px) rotate(-1deg);
+  }
+  94% {
+    opacity: 1;
+    transform: translateX(86px) translateY(-5px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(96px) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes money-fly-5 {
+  0%, 42% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(-4deg);
+  }
+  48% {
+    opacity: 1;
+    transform: translateX(10px) translateY(-6px) rotate(-2deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(54px) translateY(-12px) rotate(2deg);
+  }
+  96% {
+    opacity: 1;
+    transform: translateX(88px) translateY(-3px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(98px) translateY(0) rotate(0deg);
   }
 }
 
