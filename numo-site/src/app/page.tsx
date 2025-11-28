@@ -303,11 +303,6 @@ function BentoFeatures() {
                 Just like Apple Pay
               </h3>
               <div className="flex gap-2 flex-shrink-0">
-                <div className="w-10 h-10 rounded-full bg-mint flex items-center justify-center">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                </div>
                 <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20.62 8.45c-3.45-3.45-9.04-3.45-12.49 0a.996.996 0 001.41 1.41c2.66-2.66 6.99-2.66 9.67 0a.996.996 0 101.41-1.41z"/>
@@ -323,7 +318,6 @@ function BentoFeatures() {
               <p className="text-lg text-gray-600 leading-relaxed">
                 Numo supports tap-to-pay UX for Cashu wallets, delivering a superior payment experience. 
                 No more scanning QR codes or sending to Lightning invoices—unless you want to. 
-                Lightning payments are fully supported, giving you the flexibility to choose how your customers pay.
               </p>
             </div>
           </div>
@@ -334,11 +328,6 @@ function BentoFeatures() {
               <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
                 Instant settlement
               </h3>
-              <div className="w-12 h-12 rounded-full bg-mint flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
             </div>
             <p className="text-lg text-gray-600 mb-6">
               Settlement in seconds, not days. No chargebacks, no holds. Bitcoin moves at the speed of light.
@@ -375,11 +364,10 @@ function BentoFeatures() {
           {/* Row 2 - Left: Open Source & Free */}
           <div className="bg-cream-warm rounded-[2rem] p-8 flex flex-col">
             <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
-              Fully open-source and free
+              Works offline
             </h3>
             <p className="text-lg text-gray-600">
-              No vendor lock-in, no hidden fees, no subscriptions. Built by the Bitcoin community, 
-              for the Bitcoin community. You own your payment infrastructure.
+              Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
           </div>
 
@@ -391,19 +379,12 @@ function BentoFeatures() {
             {/* Works offline card */}
             <div className="bg-gray-100 rounded-[2rem] p-8 flex-1">
               <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3">
-                Works offline
+                Fully open-source and free
               </h3>
               <p className="text-lg text-gray-600 mb-4">
-                Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
+                No vendor lock-in, no hidden fees, no subscriptions. Built by the Bitcoin community, 
+                for the Bitcoin community. You own your payment infrastructure.
               </p>
-              <div className="flex gap-2 flex-wrap">
-                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-navy text-sm font-medium shadow-lg">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
-                  </svg>
-                  No WiFi needed
-                </span>
-              </div>
             </div>
           </div>
 
