@@ -230,6 +230,102 @@ body {
   animation: slice-bottom 8.5s ease-out forwards;
 }
 
+/* Offline payment animation - smooth continuous flow */
+@keyframes money-fly-1 {
+  0%, 5% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(-5deg);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(15px) translateY(-8px) rotate(-3deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(75px) translateY(-18px) rotate(3deg);
+  }
+  85% {
+    opacity: 1;
+    transform: translateX(130px) translateY(-6px) rotate(1deg);
+  }
+  90%, 100% {
+    opacity: 0;
+    transform: translateX(145px) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes money-fly-2 {
+  0%, 15% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(5deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(15px) translateY(-12px) rotate(3deg);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(80px) translateY(-22px) rotate(-2deg);
+  }
+  88% {
+    opacity: 1;
+    transform: translateX(135px) translateY(-8px) rotate(-1deg);
+  }
+  93%, 100% {
+    opacity: 0;
+    transform: translateX(150px) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes money-fly-3 {
+  0%, 25% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(-3deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(15px) translateY(-6px) rotate(-1deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(85px) translateY(-15px) rotate(2deg);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(140px) translateY(-4px) rotate(0deg);
+  }
+  95%, 100% {
+    opacity: 0;
+    transform: translateX(155px) translateY(0) rotate(0deg);
+  }
+}
+
+/* POS success - only activates after money arrives */
+@keyframes pos-success {
+  0%, 88% {
+    background-color: #1a1a2e;
+  }
+  92%, 100% {
+    background-color: var(--mint);
+  }
+}
+
+/* Checkmark appears only when money arrives */
+@keyframes checkmark-appear {
+  0%, 88% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  92% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  95%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

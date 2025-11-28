@@ -361,14 +361,119 @@ function BentoFeatures() {
             </div>
           </div>
 
-          {/* Row 2 - Left: Open Source & Free */}
+          {/* Row 2 - Left: Works Offline with animation */}
           <div className="bg-cream-warm rounded-[2rem] p-8 flex flex-col">
             <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
               Works offline
             </h3>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-600 mb-6">
               Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
+            
+            {/* Offline payment animation - no container boxes */}
+            <div className="mt-auto flex items-center justify-between gap-2 py-4">
+              {/* iPhone with airplane mode */}
+              <div className="relative flex-shrink-0">
+                {/* iPhone frame - realistic proportions */}
+                <div className="w-16 h-32 bg-[#1a1a2e] rounded-[1rem] relative overflow-hidden shadow-xl border-[3px] border-[#2a2a3e]">
+                  {/* Dynamic Island / Notch area */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-10 h-3 bg-black rounded-full z-10"></div>
+                  
+                  {/* iPhone screen */}
+                  <div className="absolute inset-[3px] bg-gradient-to-b from-[#1e1e3f] to-[#12122a] rounded-[0.8rem] flex flex-col items-center justify-center pt-4">
+                    {/* Airplane mode icon */}
+                    <div className="w-10 h-10 rounded-full bg-[#FF9500] flex items-center justify-center mb-1">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 16v-2l-8.5-5V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V9L2 14v2l8.5-2.5V19L8 20.5V22l4-1 4 1v-1.5L13.5 19v-5.5L22 16z"/>
+                      </svg>
+                    </div>
+                    <span className="text-white/80 text-[8px] font-medium">Airplane Mode</span>
+                  </div>
+                  
+                  {/* Home indicator */}
+                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-white/30 rounded-full"></div>
+                </div>
+                
+                {/* No WiFi badge */}
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-[#FF3B30] rounded-full flex items-center justify-center shadow-lg border-2 border-white z-20">
+                  <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Bitcoin money flying animation */}
+              <div className="flex-1 relative h-24 overflow-visible min-w-[120px]">
+                {/* Bill 1 - Orange Bitcoin */}
+                <div 
+                  className="absolute left-0 top-1/2 -translate-y-1/2"
+                  style={{ animation: 'money-fly-1 4s cubic-bezier(0.4, 0, 0.2, 1) infinite' }}
+                >
+                  <div className="w-11 h-6 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded-sm shadow-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm drop-shadow">₿</span>
+                  </div>
+                </div>
+                
+                {/* Bill 2 - Green */}
+                <div 
+                  className="absolute left-0 top-1/2 -translate-y-1/2"
+                  style={{ animation: 'money-fly-2 4s cubic-bezier(0.4, 0, 0.2, 1) infinite' }}
+                >
+                  <div className="w-10 h-5 bg-gradient-to-r from-[#34C759] to-[#5DD97C] rounded-sm shadow-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-xs drop-shadow">₿</span>
+                  </div>
+                </div>
+                
+                {/* Bill 3 - Orange Bitcoin */}
+                <div 
+                  className="absolute left-0 top-1/2 -translate-y-1/2"
+                  style={{ animation: 'money-fly-3 4s cubic-bezier(0.4, 0, 0.2, 1) infinite' }}
+                >
+                  <div className="w-9 h-5 bg-gradient-to-r from-[#F7931A] to-[#FFCC66] rounded-sm shadow-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-[10px] drop-shadow">₿</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Android POS Terminal - handheld style */}
+              <div className="relative flex-shrink-0">
+                {/* POS body - handheld terminal shape */}
+                <div className="w-16 h-28 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-xl relative shadow-xl">
+                  {/* Screen bezel */}
+                  <div className="absolute top-2 left-2 right-2 h-14 bg-[#0d0d0d] rounded-lg overflow-hidden">
+                    {/* POS screen - animates to green on success */}
+                    <div 
+                      className="absolute inset-1 rounded flex items-center justify-center"
+                      style={{ animation: 'pos-success 4s cubic-bezier(0.4, 0, 0.2, 1) infinite' }}
+                    >
+                      {/* Checkmark - appears when money arrives */}
+                      <svg 
+                        className="w-7 h-7 text-navy" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        style={{ animation: 'checkmark-appear 4s cubic-bezier(0.4, 0, 0.2, 1) infinite' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Keypad area */}
+                  <div className="absolute bottom-3 left-2 right-2 h-8 grid grid-cols-3 gap-0.5">
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} className="bg-[#3a3a3a] rounded-sm"></div>
+                    ))}
+                  </div>
+                  
+                  {/* Card reader slot on side */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#4a4a4a] rounded-l"></div>
+                </div>
+                
+                {/* POS base/handle */}
+                <div className="w-10 h-3 bg-gradient-to-b from-[#3d3d3d] to-[#252525] rounded-b-lg mx-auto -mt-0.5 shadow-lg"></div>
+              </div>
+            </div>
           </div>
 
           {/* Row 2 - Right: Two stacked cards */}
