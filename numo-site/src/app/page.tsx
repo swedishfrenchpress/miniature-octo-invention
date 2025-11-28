@@ -265,7 +265,7 @@ function Hero() {
 
         {/* Main Headline */}
         <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-8 max-w-5xl mx-auto font-bold drop-shadow-lg">
-          YOUR POCKET POS FOR ACCEPTING BITCOIN, ONE TAP AT A TIME.
+        BITCOIN PAYMENTS AS EASY AS APPLE PAY. <br></br>TAP. DONE.
         </h1>
 
         {/* App Store Buttons */}
@@ -824,15 +824,19 @@ function SimpleFeatures() {
       <div className="max-w-7xl mx-auto px-6">
         {/* First Row - Phone left, Text right */}
         <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center mb-24">
-          {/* Phone Mockup - Column 1 */}
+          {/* Video - Column 1 */}
           <div className="flex justify-center">
-            <div className="relative w-full max-w-md h-[680px]">
-              <Image
-                src="/b1.jpg"
-                alt="Numo POS ready to accept payment"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 448px"
+            <div className="relative w-full max-w-md aspect-[4/3]">
+              <video
+                src="/cart.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                disablePictureInPicture
+                controlsList="nodownload"
+                className="w-full h-full object-cover rounded-lg"
+                style={{ pointerEvents: 'none' }}
               />
             </div>
           </div>
@@ -915,15 +919,19 @@ function SimpleFeatures() {
             </ul>
           </div>
           
-          {/* Phone Mockup - Column 2, aligns with top text column */}
+          {/* Video - Column 2, aligns with top text column */}
           <div className="flex justify-center">
-            <div className="relative w-full max-w-md h-[680px]">
-            <Image
-                src="/b2.jpg"
-                alt="Numo POS payment received confirmation"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 448px"
+            <div className="relative w-full max-w-md aspect-[4/3]">
+              <video
+                src="/cart.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                disablePictureInPicture
+                controlsList="nodownload"
+                className="w-full h-full object-cover rounded-lg"
+                style={{ pointerEvents: 'none' }}
               />
             </div>
           </div>
@@ -940,11 +948,15 @@ function FAQ() {
   const faqs = [
     {
       q: "What is Numo?",
-      a: "Numo is a Bitcoin POS app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+      a: "Numo is a Bitcoin POS (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
     },
     {
       q: "Do my customers need a special app?",
-      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet such as Cashu.me or Macadamia.",
+      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
+    },
+    {
+      q: "Do I need any extra hardware?",
+      a: "No. All you need is an Android phone that supports NFC.",
     },
     {
       q: "Is it really free?",
@@ -1031,6 +1043,44 @@ function Footer() {
             </svg>
             Google Play
           </a>
+        </div>
+        
+        {/* Support acknowledgment and links */}
+        <div className="border-t border-white/10 pt-8 mb-8">
+          <p className="text-base text-white/50 mb-6 max-w-2xl mx-auto">
+            This project was built with support from OpenCash. To support open-source digital cash development, please consider{' '}
+            <a 
+              href="https://opencash.dev/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white/70 hover:text-white underline underline-offset-2 transition-colors"
+            >
+              donating to OpenCash
+            </a>.
+          </p>
+          
+          <div className="flex items-center justify-center gap-6">
+            <a 
+              href="https://cashu.space/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+            >
+              Visit Cashu.space
+            </a>
+            <span className="text-white/20">·</span>
+            <a 
+              href="https://x.com/cashubtc" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-white text-sm font-medium transition-colors flex items-center gap-1.5"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Follow Cashu
+            </a>
+          </div>
         </div>
       </div>
       
