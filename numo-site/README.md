@@ -1,6 +1,6 @@
-# Numo - Bitcoin Payments Made Simple
+# Terminal - Bitcoin Payments Made Simple
 
-A modern, welcoming landing page for Numo, a Bitcoin POS application that makes accepting Bitcoin payments as easy as tap-to-pay.
+A modern, welcoming landing page for Terminal, a Bitcoin POS application that makes accepting Bitcoin payments as easy as tap-to-pay.
 
 ## Features
 
@@ -43,7 +43,7 @@ npm start
 
 The easiest way to deploy this site is with [Vercel](https://vercel.com):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/numo-site)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/terminal-site)
 
 Or deploy manually:
 

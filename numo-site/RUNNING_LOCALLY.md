@@ -1,10 +1,10 @@
-# Running Numo Site Locally
+# Running Terminal Site Locally
 
 ## Quick Start
 
 1. **Navigate to the project directory:**
    ```bash
-   cd numo-site
+   cd terminal-site
    ```
 
 2. **Install dependencies (if you haven't already):**

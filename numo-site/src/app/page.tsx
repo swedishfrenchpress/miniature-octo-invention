@@ -254,6 +254,9 @@ function Hero() {
           ))}
         </div>
         
+        {/* Dark overlay - adds subtle darkness to improve text readability */}
+        <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
+        
         {/* Gradient overlay - bottom fade only, above video but below content */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-20 pointer-events-none" />
       </div>
@@ -261,7 +264,7 @@ function Hero() {
       {/* Content - above everything */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
         {/* Tagline */}
-        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
+        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET TERMINAL</p>
 
         {/* Main Headline */}
         <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-8 max-w-5xl mx-auto font-bold drop-shadow-lg">
@@ -519,7 +522,7 @@ function BentoFeatures() {
               Works offline
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
+              Bad signal? No problem. Terminal uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
@@ -847,7 +850,7 @@ function SimpleFeatures() {
               Lightning and ecash, unified
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Numo isn&apos;t just an ecash POS—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
+              Terminal isn&apos;t just an ecash POS—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
               If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
               You get the benefits of both systems in one platform.
             </p>
@@ -947,12 +950,12 @@ function FAQ() {
 
   const faqs = [
     {
-      q: "What is Numo?",
-      a: "Numo is a Bitcoin POS (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+      q: "What is Terminal?",
+      a: "Terminal is a Bitcoin POS (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
     },
     {
       q: "Do my customers need a special app?",
-      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
+      a: "They just need a Bitcoin Lightning wallet and Terminal will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
     },
     {
       q: "Do I need any extra hardware?",
@@ -960,19 +963,19 @@ function FAQ() {
     },
     {
       q: "Is it really free?",
-      a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
+      a: "Yes. Terminal is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
     },
     {
-      q: "Is Numo custodial?",
+      q: "Is Terminal custodial?",
       a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
     },
     {
       q: "What if I have bad internet?",
-      a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
+      a: "Terminal works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
     },
     {
       q: "How do I get started?",
-      a: "Download Numo from the Google Play, set up your wallet, and you're ready to accept Bitcoin payments.",
+      a: "Download Terminal from the Google Play, set up your wallet, and you're ready to accept Bitcoin payments.",
     },
   ];
 
@@ -1084,13 +1087,13 @@ function Footer() {
         </div>
       </div>
       
-      {/* Large NUMO text - full width, resting at bottom baseline */}
+      {/* Large TERMINAL text - full width, resting at bottom baseline */}
       <div className="w-full mt-4 relative overflow-hidden">
         <p 
           className="font-grandstander text-[12rem] md:text-[18rem] lg:text-[22rem] xl:text-[28rem] text-white/10 leading-none w-full text-center"
           style={{ letterSpacing: '-0.02em', marginBottom: '-0.25em', paddingBottom: '0' }}
         >
-          NUMO
+          TERMINAL
         </p>
       </div>
     </footer>
