@@ -1090,7 +1090,7 @@ function Footer() {
       {/* Large TERMINAL text - full width, resting at bottom baseline */}
       <div className="w-full mt-4 relative overflow-hidden">
         <p 
-          className="font-grandstander text-[12rem] md:text-[18rem] lg:text-[22rem] xl:text-[28rem] text-white/10 leading-none w-full text-center"
+          className="font-grandstander text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] text-white/10 leading-none w-full text-center"
           style={{ letterSpacing: '-0.02em', marginBottom: '-0.25em', paddingBottom: '0' }}
         >
           TERMINAL
