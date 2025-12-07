@@ -831,7 +831,7 @@ function SimpleFeatures() {
           <div className="flex justify-center">
             <div className="relative w-full max-w-md aspect-[4/3]">
               <video
-                src="/cart.mp4"
+                src="/ln-checkout.mp4"
                 autoPlay
                 loop
                 muted
@@ -1040,7 +1040,7 @@ function Footer() {
             </svg>
             Github
           </a>
-          <a href="#" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-white/40 rounded-full text-white text-base font-medium hover:bg-white hover:text-navy hover:scale-105 transition-all w-full sm:w-auto min-w-[200px] sm:min-w-0">
+          <a href="#" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#34C759] rounded-full text-white text-base font-medium hover:bg-white hover:text-[#34C759] hover:scale-105 transition-all shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-4.31c.34.27.64.71.64 1.19s-.3.92-.64 1.19L17.69 15l-2.5-2.5 2.5-2.5 2.47 1.81zM6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/>
             </svg>
