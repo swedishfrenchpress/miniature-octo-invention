@@ -1,6 +1,6 @@
-# Terminal - Bitcoin Payments Made Simple
+# Numo - Bitcoin Payments Made Simple
 
-A modern, welcoming landing page for Terminal, a Bitcoin POS application that makes accepting Bitcoin payments as easy as tap-to-pay.
+A modern, welcoming landing page for Numo, a Bitcoin POS application that makes accepting Bitcoin payments as easy as tap-to-pay.
 
 ## Features
 

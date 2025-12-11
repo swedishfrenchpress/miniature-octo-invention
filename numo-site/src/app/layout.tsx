@@ -24,7 +24,7 @@ const dancing = Dancing_Script({
   weight: ["400", "500", "600", "700"],
 });
 
-// Grandstander font for TERMINAL footer branding
+// Grandstander font for NUMO footer branding
 const grandstander = Grandstander({
   variable: "--font-grandstander",
   subsets: ["latin"],
@@ -32,21 +32,21 @@ const grandstander = Grandstander({
 });
 
 export const metadata: Metadata = {
-  title: "Terminal - Bitcoin Payments Made Simple",
+  title: "Numo - Bitcoin Payments Made Simple",
   description: "Accept Bitcoin payments with a tap. NFC-enabled POS that feels as natural as Apple Pay, powered entirely by Bitcoin.",
   keywords: ["bitcoin", "payments", "POS", "point of sale", "NFC", "tap to pay", "cashu", "lightning"],
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Terminal - Bitcoin Payments Made Simple",
+    title: "Numo - Bitcoin Payments Made Simple",
     description: "Accept Bitcoin payments with a tap. NFC-enabled POS that feels as natural as Apple Pay.",
     type: "website",
-    siteName: "Terminal",
+    siteName: "Numo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Terminal - Bitcoin Payments Made Simple",
+    title: "Numo - Bitcoin Payments Made Simple",
     description: "Accept Bitcoin payments with a tap. NFC-enabled POS that feels as natural as Apple Pay.",
   },
   other: {

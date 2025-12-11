@@ -1,4 +1,4 @@
-# Running Terminal Site Locally
+# Running Numo Site Locally
 
 ## Quick Start
 
