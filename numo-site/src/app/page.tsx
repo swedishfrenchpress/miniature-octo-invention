@@ -264,7 +264,7 @@ function Hero() {
       {/* Content - above everything */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
         {/* Tagline */}
-        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
+        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO TERMINAL</p>
 
         {/* Main Headline */}
         <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-8 max-w-5xl mx-auto font-bold drop-shadow-lg">
@@ -341,7 +341,7 @@ function BentoFeatures() {
                   </div>
                 </div>
                 
-                {/* NFC Signal Waves - pulse from between phone and POS */}
+                {/* NFC Signal Waves - pulse from between phone and Terminal */}
                 <div 
                   className="absolute top-[72px] left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none z-20"
                   style={{
@@ -371,7 +371,7 @@ function BentoFeatures() {
                   ></div>
                 </div>
 
-                {/* POS Terminal - Black and Orange */}
+                {/* Terminal - Black and Orange */}
                 <div className="relative w-44 h-56 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-3xl shadow-2xl border-2 border-[#F7931A]/40">
                   {/* Orange accent strip at top */}
                   <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded-t-3xl"></div>
@@ -400,7 +400,7 @@ function BentoFeatures() {
                     </div>
                   </div>
                   
-                  {/* Keypad area - 3x4 grid like real POS */}
+                  {/* Keypad area - 3x4 grid like real Terminal */}
                   <div className="absolute bottom-4 left-4 right-4 h-16 grid grid-cols-3 grid-rows-4 gap-1.5">
                     {[...Array(12)].map((_, i) => (
                       <div key={i} className="bg-[#2a2a2a] rounded-lg border border-[#F7931A]/15 shadow-inner"></div>
@@ -516,7 +516,7 @@ function BentoFeatures() {
               Works offline
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
+              Bad signal? No problem. Numo Terminal uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
@@ -603,13 +603,13 @@ function BentoFeatures() {
                 </div>
               </div>
 
-              {/* Android POS Terminal - larger, handheld style */}
+              {/* Android Terminal - larger, handheld style */}
               <div className="relative flex-shrink-0 z-10">
-                {/* POS body - significantly bigger handheld terminal */}
+                {/* Terminal body - significantly bigger handheld terminal */}
                 <div className="w-28 h-48 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-2xl relative shadow-2xl">
                   {/* Screen bezel */}
                   <div className="absolute top-4 left-3 right-3 bg-[#0d0d0d] rounded-xl overflow-hidden" style={{ height: '100px' }}>
-                    {/* POS screen - animates to green on success */}
+                    {/* Terminal screen - animates to green on success */}
                     <div 
                       className="absolute inset-2 rounded-lg flex items-center justify-center"
                       style={{ animation: 'pos-success 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
@@ -638,7 +638,7 @@ function BentoFeatures() {
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-10 bg-[#4a4a4a] rounded-l"></div>
                 </div>
                 
-                {/* POS base/handle */}
+                {/* Terminal base/handle */}
                 <div className="w-16 h-5 bg-gradient-to-b from-[#3d3d3d] to-[#252525] rounded-b-xl mx-auto -mt-0.5 shadow-lg"></div>
               </div>
             </div>
@@ -844,7 +844,7 @@ function SimpleFeatures() {
               Lightning and ecash, unified
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Numo isn&apos;t just an ecash POS—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
+              Numo Terminal isn&apos;t just an ecash Terminal—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
               If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
               You get the benefits of both systems in one platform.
             </p>
@@ -944,12 +944,12 @@ function FAQ() {
 
   const faqs = [
     {
-      q: "What is Numo?",
-      a: "Numo is a Bitcoin POS (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+      q: "What is Numo Terminal?",
+      a: "Numo Terminal is a Bitcoin Terminal (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
     },
     {
       q: "Do my customers need a special app?",
-      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
+      a: "They just need a Bitcoin Lightning wallet and Numo Terminal will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
     },
     {
       q: "Do I need any extra hardware?",
@@ -957,15 +957,15 @@ function FAQ() {
     },
     {
       q: "Is it really free?",
-      a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
+      a: "Yes. Numo Terminal is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
     },
     {
-      q: "Is Numo custodial?",
+      q: "Is Numo Terminal custodial?",
       a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
     },
     {
       q: "What if I have bad internet?",
-      a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
+      a: "Numo Terminal works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
     },
     {
       q: "How do I get started?",
@@ -980,13 +980,13 @@ function FAQ() {
           >
             APK release
           </a>{" "}
-          from the Numo GitHub repository. Once downloaded, set up your wallet and you're ready to accept Bitcoin payments.
+          from the Numo Terminal GitHub repository. Once downloaded, set up your wallet and you&apos;re ready to accept Bitcoin payments.
         </>
       ),
     },
     {
-      q: "Can I download Numo on the Google Play Store?",
-      a: "Numo will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
+      q: "Can I download Numo Terminal on the Google Play Store?",
+      a: "Numo Terminal will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
     },
   ];
 
@@ -1104,13 +1104,14 @@ function Footer() {
         </div>
       </div>
       
-      {/* Large NUMO text - full width, resting at bottom baseline */}
+      {/* Large NUMO TERMINAL text - full width, resting at bottom baseline */}
       <div className="w-full mt-4 relative overflow-hidden">
         <p 
-          className="font-grandstander text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] text-white/10 leading-none w-full text-center"
+          className="font-grandstander text-[6rem] sm:text-[6rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] text-white/10 leading-none w-full text-center break-words"
           style={{ letterSpacing: '-0.02em', marginBottom: '-0.25em', paddingBottom: '0' }}
         >
-          NUMO
+          <span className="block sm:inline">NUMO</span>{' '}
+          <span className="block sm:inline">TERMINAL</span>
         </p>
       </div>
     </footer>
