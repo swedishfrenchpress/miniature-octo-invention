@@ -264,7 +264,7 @@ function Hero() {
       {/* Content - above everything */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
         {/* Tagline */}
-        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO TERMINAL</p>
+        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
 
         {/* Main Headline */}
         <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-8 max-w-5xl mx-auto font-bold drop-shadow-lg">
@@ -516,7 +516,7 @@ function BentoFeatures() {
               Works offline
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Bad signal? No problem. Numo Terminal uses Cashu ecash. Payments sync when you&apos;re back online.
+              Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
@@ -688,6 +688,7 @@ function SupportedWallets() {
     { name: "Macadamia", image: "/wallets/macadamia.jpg" },
     { name: "Cashu.me", image: "/wallets/cashume.png" },
     { name: "Minibits", image: "/wallets/minibits.jpg" },
+    { name: "Phoenix", image: "/wallets/phoenix.jpg" },
   ];
 
   // Lightning wallets (standard support)
@@ -698,7 +699,6 @@ function SupportedWallets() {
     { name: "Cash App", image: "/wallets/cashapp.svg" },
     { name: "Fedi", image: "/wallets/fedi.jpg" },
     { name: "Muun", image: "/wallets/muun.png" },
-    { name: "Phoenix", image: "/wallets/phoenix.jpg" },
     { name: "Strike", image: "/wallets/strike.png" },
     { name: "Wallet of Satoshi", image: "/wallets/walletofsatoshi.png" },
     { name: "Zeus", image: "/wallets/zeus.jpg" },
@@ -842,7 +842,7 @@ function SimpleFeatures() {
               Lightning and ecash, unified
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Numo Terminal isn&apos;t just an ecash Terminal—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
+              Numo isn&apos;t just an ecash app—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
               If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
               You get the benefits of both systems in one platform.
             </p>
@@ -942,12 +942,12 @@ function FAQ() {
 
   const faqs = [
     {
-      q: "What is Numo Terminal?",
-      a: "Numo Terminal is a Bitcoin Terminal (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+      q: "What is Numo?",
+      a: "Numo is a Bitcoin (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
     },
     {
       q: "Do my customers need a special app?",
-      a: "They just need a Bitcoin Lightning wallet and Numo Terminal will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
+      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
     },
     {
       q: "Do I need any extra hardware?",
@@ -955,15 +955,15 @@ function FAQ() {
     },
     {
       q: "Is it really free?",
-      a: "Yes. Numo Terminal is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
+      a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
     },
     {
-      q: "Is Numo Terminal custodial?",
+      q: "Is Numo custodial?",
       a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
     },
     {
       q: "What if I have bad internet?",
-      a: "Numo Terminal works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
+      a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
     },
     {
       q: "How do I get started?",
@@ -978,13 +978,13 @@ function FAQ() {
           >
             APK release
           </a>{" "}
-          from the Numo Terminal GitHub repository. Once downloaded, set up your wallet and you&apos;re ready to accept Bitcoin payments.
+          from the Numo GitHub repository. Once downloaded, set up your wallet and you&apos;re ready to accept Bitcoin payments.
         </>
       ),
     },
     {
-      q: "Can I download Numo Terminal on the Google Play Store?",
-      a: "Numo Terminal will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
+      q: "Can I download Numo on the Google Play Store?",
+      a: "Numo will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
     },
   ];
 
@@ -1102,14 +1102,13 @@ function Footer() {
         </div>
       </div>
       
-      {/* Large NUMO TERMINAL text - full width, resting at bottom baseline */}
+      {/* Large NUMO text - full width, resting at bottom baseline */}
       <div className="w-full mt-4 relative overflow-hidden">
         <p 
           className="font-grandstander text-[6rem] sm:text-[6rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] text-white/10 leading-none w-full text-center break-words"
           style={{ letterSpacing: '-0.02em', marginBottom: '-0.25em', paddingBottom: '0' }}
         >
-          <span className="block sm:inline">NUMO</span>{' '}
-          <span className="block sm:inline">TERMINAL</span>
+          <span className="block sm:inline">NUMO</span>
         </p>
       </div>
     </footer>

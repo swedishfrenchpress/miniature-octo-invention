@@ -43,7 +43,7 @@ npm start
 
 The easiest way to deploy this site is with [Vercel](https://vercel.com):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/terminal-site)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/numo-site)
 
 Or deploy manually:
 
