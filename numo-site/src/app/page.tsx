@@ -20,6 +20,16 @@ interface StackNotification {
   position: number; // 0 = front/bottom, 1 = middle, 2 = back/top, 3 = exiting, -1 = entering
 }
 
+// Stack position configs - hoisted outside component for performance
+// Position: -1 = entering, 0 = front, 1 = middle, 2 = back, 3 = exiting
+const STACK_CONFIGS: Record<number, { y: string; scale: number; opacity: number; zIndex: number }> = {
+  [-1]: { y: 'calc(-50% + 60px)', scale: 1, opacity: 0, zIndex: 4 },      // Entering from below
+  0: { y: '-50%', scale: 1, opacity: 1, zIndex: 3 },                       // Front (most visible)
+  1: { y: 'calc(-50% - 12px)', scale: 0.96, opacity: 0.85, zIndex: 2 },   // Middle
+  2: { y: 'calc(-50% - 24px)', scale: 0.92, opacity: 0.7, zIndex: 1 },    // Back
+  3: { y: 'calc(-50% - 50px)', scale: 0.88, opacity: 0, zIndex: 0 },      // Exiting upward
+};
+
 // Animated Self Custody Bento Component with continuous iOS-style stacked notifications
 function AutoCustodyBento() {
   const [notifications, setNotifications] = useState<StackNotification[]>([]);
@@ -27,6 +37,7 @@ function AutoCustodyBento() {
   const containerRef = useRef<HTMLDivElement>(null);
   const idCounterRef = useRef(0);
   const dataIndexRef = useRef(0);
+  const isInitializedRef = useRef(false);
 
   // Intersection observer to start animation when in view
   useEffect(() => {
@@ -46,7 +57,10 @@ function AutoCustodyBento() {
 
   // Initialize stack with 3 notifications when coming into view
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView) {
+      isInitializedRef.current = false;
+      return;
+    }
 
     // Reset counters
     idCounterRef.current = 0;
@@ -65,21 +79,26 @@ function AutoCustodyBento() {
         dataIndexRef.current++;
       }
       setNotifications(initialStack);
+      isInitializedRef.current = true;
     });
 
     // Cleanup when going out of view
     return () => {
       cancelAnimationFrame(initTimeout);
       setNotifications([]);
+      isInitializedRef.current = false;
     };
   }, [isInView]);
 
   // Continuous cycling animation
   useEffect(() => {
-    if (!isInView || notifications.length === 0) return;
+    if (!isInView || !isInitializedRef.current) return;
 
     const cycleInterval = setInterval(() => {
       setNotifications(prev => {
+        // Skip if not initialized yet
+        if (prev.length === 0) return prev;
+        
         // Move all existing notifications up one position
         const updated = prev.map(n => ({
           ...n,
@@ -109,28 +128,17 @@ function AutoCustodyBento() {
     }, 2500); // New notification every 2.5 seconds
 
     return () => clearInterval(cycleInterval);
-  }, [isInView, notifications.length]);
+  }, [isInView]);
 
-  // Get styles based on position in stack
-  const getStackStyles = (position: number) => {
-    // Position: -1 = entering, 0 = front, 1 = middle, 2 = back, 3 = exiting
-    // y values include -50% for centering
-    const stackConfigs: Record<number, { y: string; scale: number; opacity: number; zIndex: number }> = {
-      [-1]: { y: 'calc(-50% + 60px)', scale: 1, opacity: 0, zIndex: 4 },      // Entering from below
-      0: { y: '-50%', scale: 1, opacity: 1, zIndex: 3 },                       // Front (most visible)
-      1: { y: 'calc(-50% - 12px)', scale: 0.96, opacity: 0.85, zIndex: 2 },   // Middle
-      2: { y: 'calc(-50% - 24px)', scale: 0.92, opacity: 0.7, zIndex: 1 },    // Back
-      3: { y: 'calc(-50% - 50px)', scale: 0.88, opacity: 0, zIndex: 0 },      // Exiting upward
-    };
-
-    const config = stackConfigs[position] || stackConfigs[3];
-    
+  // Get styles based on position in stack - uses hoisted config
+  const getStackStyles = useCallback((position: number) => {
+    const config = STACK_CONFIGS[position] || STACK_CONFIGS[3];
     return {
       transform: `translateY(${config.y}) scale(${config.scale})`,
       opacity: config.opacity,
       zIndex: config.zIndex,
     };
-  };
+  }, []);
 
   return (
     <div ref={containerRef} className="bg-mint-pale rounded-[2rem] p-6 flex-1 min-h-[320px] flex flex-col relative overflow-hidden noise-overlay">
@@ -176,7 +184,7 @@ function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -198,37 +206,31 @@ function Navigation() {
   );
 }
 
+// Hero video sources - hoisted outside component to avoid recreation
+const HERO_VIDEOS = ["/1.mp4", "/2.mp4"];
+
 // Hero Section
 function Hero() {
   const [currentVideo, setCurrentVideo] = useState(0);
-  const videos = ["/1.mp4", "/2.mp4"];
-  const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
+  const videoRef0 = useRef<HTMLVideoElement>(null);
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRefs = [videoRef0, videoRef1];
 
-  const handleVideoEnd = () => {
-    // Switch to the next video, loop back to first after the last one
-    const nextVideo = (currentVideo + 1) % videos.length;
-    setCurrentVideo(nextVideo);
-    
-    // Ensure the next video starts playing immediately
-    const nextVideoRef = videoRefs[nextVideo].current;
-    if (nextVideoRef) {
-      nextVideoRef.currentTime = 0;
-      nextVideoRef.play().catch(() => {
-        // Handle autoplay restrictions
-      });
-    }
-  };
+  const handleVideoEnd = useCallback(() => {
+    // Use functional setState to avoid stale closure
+    setCurrentVideo(curr => (curr + 1) % HERO_VIDEOS.length);
+  }, []);
 
   // Ensure the current video is always playing
   useEffect(() => {
     const currentVideoRef = videoRefs[currentVideo].current;
     if (currentVideoRef) {
+      currentVideoRef.currentTime = 0;
       currentVideoRef.play().catch(() => {
         // Handle autoplay restrictions
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentVideo]);
+  }, [currentVideo, videoRefs]);
 
   return (
     <section className="bg-white pt-40 pb-24 relative overflow-hidden">
@@ -236,7 +238,7 @@ function Hero() {
       <div className="absolute inset-0 top-0 bottom-0 overflow-hidden z-0">
         {/* Video container - Full width */}
         <div className="relative w-full h-full">
-          {videos.map((video, index) => (
+          {HERO_VIDEOS.map((video, index) => (
             <video
               key={video}
               ref={videoRefs[index]}
@@ -679,31 +681,31 @@ function BentoFeatures() {
   );
 }
 
+// NFC-enabled wallets (tap-to-pay) - hoisted outside component
+const NFC_WALLETS = [
+  { name: "eNuts", image: "/wallets/enuts.png" },
+  { name: "Sovran", image: "/wallets/sovran.jpg" },
+  { name: "Macadamia", image: "/wallets/macadamia.jpg" },
+  { name: "Cashu.me", image: "/wallets/cashume.png" },
+  { name: "Minibits", image: "/wallets/minibits.jpg" },
+  { name: "Phoenix", image: "/wallets/phoenix.jpg" },
+];
+
+// Lightning wallets (standard support) - hoisted outside component
+const LIGHTNING_WALLETS = [
+  { name: "Alby", image: "/wallets/albygo.webp" },
+  { name: "Blink Wallet", image: "/wallets/blinkwallet.jpg" },
+  { name: "Boardwalk Cash", image: "/wallets/boardwalkcash.jpg" },
+  { name: "Cash App", image: "/wallets/cashapp.svg" },
+  { name: "Fedi", image: "/wallets/fedi.jpg" },
+  { name: "Muun", image: "/wallets/muun.png" },
+  { name: "Strike", image: "/wallets/strike.png" },
+  { name: "Wallet of Satoshi", image: "/wallets/walletofsatoshi.png" },
+  { name: "Zeus", image: "/wallets/zeus.jpg" },
+];
+
 // Supported Wallets Section
 function SupportedWallets() {
-  // NFC-enabled wallets (tap-to-pay) - featured prominently
-  const nfcWallets = [
-    { name: "eNuts", image: "/wallets/enuts.png" },
-    { name: "Sovran", image: "/wallets/sovran.jpg" },
-    { name: "Macadamia", image: "/wallets/macadamia.jpg" },
-    { name: "Cashu.me", image: "/wallets/cashume.png" },
-    { name: "Minibits", image: "/wallets/minibits.jpg" },
-    { name: "Phoenix", image: "/wallets/phoenix.jpg" },
-  ];
-
-  // Lightning wallets (standard support)
-  const lightningWallets = [
-    { name: "Alby", image: "/wallets/albygo.webp" },
-    { name: "Blink Wallet", image: "/wallets/blinkwallet.jpg" },
-    { name: "Boardwalk Cash", image: "/wallets/boardwalkcash.jpg" },
-    { name: "Cash App", image: "/wallets/cashapp.svg" },
-    { name: "Fedi", image: "/wallets/fedi.jpg" },
-    { name: "Muun", image: "/wallets/muun.png" },
-    { name: "Strike", image: "/wallets/strike.png" },
-    { name: "Wallet of Satoshi", image: "/wallets/walletofsatoshi.png" },
-    { name: "Zeus", image: "/wallets/zeus.jpg" },
-  ];
-
   return (
     <section className="bg-white py-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -734,7 +736,7 @@ function SupportedWallets() {
             
             {/* NFC Wallet Cards */}
             <div className="flex flex-wrap justify-center gap-3">
-              {nfcWallets.map((wallet, index) => (
+              {NFC_WALLETS.map((wallet, index) => (
                 <div 
                   key={index} 
                   className="relative flex items-center gap-3 bg-white rounded-full px-4 py-2.5"
@@ -773,7 +775,7 @@ function SupportedWallets() {
 
           {/* Lightning Wallets - Simpler presentation */}
           <div className="flex flex-wrap justify-center gap-3 mb-6">
-            {lightningWallets.map((wallet, index) => (
+            {LIGHTNING_WALLETS.map((wallet, index) => (
               <div 
                 key={index} 
                 className="flex items-center gap-3 bg-white rounded-full px-4 py-2.5"
@@ -1107,19 +1109,20 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
   );
 }
 
+// BTCPay invoices data - hoisted outside component
+const BTCPAY_INVOICES = [
+  { date: "02/28/2026 3:05 PM", orderId: "PAY_REQUEST_cd4...", invoiceId: "EgxBnrivdT...", status: "Paid", amount: "0.00006150 BTC" },
+  { date: "02/28/2026 12:39 PM", orderId: "PAY_REQUEST_a9f...", invoiceId: "aP9FZtE3QK...", status: "Paid", amount: "0.00248731 BTC" },
+  { date: "02/28/2026 10:12 PM", orderId: "PAY_REQUEST_7d4...", invoiceId: "C5pNQZ6dWv...", status: "Paid", amount: "0.00090384 BTC" },
+  { date: "02/28/2026 08:09 PM", orderId: "PAY_REQUEST_f3b...", invoiceId: "WnZxQFJ5A6...", status: "Paid", amount: "0.01572946 BTC" },
+  { date: "02/27/2026 10:46 PM", orderId: "PAY_REQUEST_0c8...", invoiceId: "U8N9x5ZC2F...", status: "Paid", amount: "0.00001892 BTC" },
+];
+
 // Recreated BTCPay Server Interface Component
 function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' | null }) {
   // Only show the new row if paymentStatus is not null
   const showNewRow = paymentStatus !== null;
   const isPaid = paymentStatus === 'paid';
-
-  const invoices = [
-    { date: "02/28/2026 3:05 PM", orderId: "PAY_REQUEST_cd4...", invoiceId: "EgxBnrivdT...", status: "Paid", amount: "0.00006150 BTC" },
-    { date: "02/28/2026 12:39 PM", orderId: "PAY_REQUEST_a9f...", invoiceId: "aP9FZtE3QK...", status: "Paid", amount: "0.00248731 BTC" },
-    { date: "02/28/2026 10:12 PM", orderId: "PAY_REQUEST_7d4...", invoiceId: "C5pNQZ6dWv...", status: "Paid", amount: "0.00090384 BTC" },
-    { date: "02/28/2026 08:09 PM", orderId: "PAY_REQUEST_f3b...", invoiceId: "WnZxQFJ5A6...", status: "Paid", amount: "0.01572946 BTC" },
-    { date: "02/27/2026 10:46 PM", orderId: "PAY_REQUEST_0c8...", invoiceId: "U8N9x5ZC2F...", status: "Paid", amount: "0.00001892 BTC" },
-  ];
 
   return (
     <div className="bg-[#f8f9fa] rounded-lg shadow-xl overflow-hidden font-sans border border-gray-200 flex text-xs md:text-sm select-none h-[640px]">
@@ -1285,7 +1288,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                        )}
 
                        {/* Existing Invoices */}
-                       {invoices.map((inv, i) => (
+                       {BTCPAY_INVOICES.map((inv, i) => (
                           <tr key={i} className="bg-white hover:bg-gray-50 transition-colors duration-150">
                              <td className="py-3 px-4 align-middle">
                                 <input type="checkbox" className="rounded border-gray-300 text-[#51b13e] focus:ring-[#51b13e] w-4 h-4" />
@@ -1394,37 +1397,49 @@ function BTCPayIntegration() {
   );
 }
 
+// FAQ data - hoisted outside component (JSX items rendered inline)
+const FAQ_DATA = [
+  {
+    q: "What is Numo?",
+    a: "Numo is a Bitcoin (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+  },
+  {
+    q: "Do my customers need a special app?",
+    a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
+  },
+  {
+    q: "Do I need any extra hardware?",
+    a: "No. All you need is an Android phone that supports NFC.",
+  },
+  {
+    q: "Is it really free?",
+    a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
+  },
+  {
+    q: "Is Numo custodial?",
+    a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
+  },
+  {
+    q: "What if I have bad internet?",
+    a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
+  },
+  {
+    q: "How do I get started?",
+    a: null, // Rendered with JSX inline
+  },
+  {
+    q: "Can I download Numo on the Google Play Store?",
+    a: "Numo will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
+  },
+] as const;
+
 function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqs = [
-    {
-      q: "What is Numo?",
-      a: "Numo is a Bitcoin (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
-    },
-    {
-      q: "Do my customers need a special app?",
-      a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
-    },
-    {
-      q: "Do I need any extra hardware?",
-      a: "No. All you need is an Android phone that supports NFC.",
-    },
-    {
-      q: "Is it really free?",
-      a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
-    },
-    {
-      q: "Is Numo custodial?",
-      a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
-    },
-    {
-      q: "What if I have bad internet?",
-      a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
-    },
-    {
-      q: "How do I get started?",
-      a: (
+  // Render FAQ answer - handles the special case with JSX
+  const renderAnswer = (index: number, answer: string | null) => {
+    if (index === 6) {
+      return (
         <>
           You can download the official{" "}
           <a 
@@ -1437,13 +1452,10 @@ function FAQ() {
           </a>{" "}
           from the Numo GitHub repository. Once downloaded, set up your wallet and you&apos;re ready to accept Bitcoin payments.
         </>
-      ),
-    },
-    {
-      q: "Can I download Numo on the Google Play Store?",
-      a: "Numo will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
-    },
-  ];
+      );
+    }
+    return answer;
+  };
 
   return (
     <section className="bg-white py-20">
@@ -1455,7 +1467,7 @@ function FAQ() {
           </h2>
           
           <div className="space-y-0">
-            {faqs.map((faq, index) => (
+            {FAQ_DATA.map((faq, index) => (
               <div key={index} className="border-b border-gray-200 last:border-b-0">
                 <button
                   className="w-full py-5 flex items-center justify-between text-left group"
@@ -1477,7 +1489,7 @@ function FAQ() {
                 >
                   <div className="overflow-hidden">
                     <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
-                      {faq.a}
+                      {renderAnswer(index, faq.a)}
                     </div>
                   </div>
                 </div>
