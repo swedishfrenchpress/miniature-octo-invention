@@ -1029,7 +1029,7 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
                 <div className="text-5xl font-medium text-[#0A2540] flex items-baseline">
                   <span className="text-3xl text-gray-400 mr-1">$</span>
                   {amount || '0'}
-                  <span className={`w-0.5 h-8 bg-[#51b13e] ml-1 animate-pulse ${step === 'typing' ? 'opacity-100' : 'opacity-0'}`}></span>
+                  <span className={`w-0.5 h-8 bg-mint ml-1 animate-pulse ${step === 'typing' ? 'opacity-100' : 'opacity-0'}`}></span>
                 </div>
              </div>
 
@@ -1080,24 +1080,24 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
                  </g>
                </svg>
                {/* Center N Logo overlay */}
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#51b13e] rounded-lg flex items-center justify-center shadow-sm">
-                 <span className="font-display font-bold text-white text-xl">N</span>
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-mint rounded-lg flex items-center justify-center shadow-sm">
+                 <span className="font-display font-bold text-navy text-xl">N</span>
                </div>
              </div>
 
              <div className="flex gap-2 items-center text-gray-400 text-sm font-medium">
-               <svg className="w-5 h-5 animate-spin text-[#51b13e]" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+               <svg className="w-5 h-5 animate-spin text-mint" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                <span>Waiting for payment...</span>
              </div>
           </div>
 
           {/* Success View - Full Green Screen with elegant entrance */}
-          <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#51b13e] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${step === 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-mint transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${step === 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
              <div className={`flex flex-col items-center justify-center transition-all duration-400 delay-100 ease-out ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
                <div className={`w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-5 transition-transform duration-400 delay-150 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${step === 'success' ? 'scale-100' : 'scale-[0.9]'}`}>
-                 <svg className={`w-10 h-10 text-[#51b13e] transition-all duration-200 delay-300 ${step === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.9]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                 <svg className={`w-10 h-10 text-navy transition-all duration-200 delay-300 ${step === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.9]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                </div>
-               <div className={`text-white text-xl font-medium tracking-tight transition-all duration-200 delay-200 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'}`}>Payment Received</div>
+                <div className={`text-navy text-xl font-medium tracking-tight transition-all duration-200 delay-200 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'}`}>Payment Received</div>
              </div>
           </div>
 
