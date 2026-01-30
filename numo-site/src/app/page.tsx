@@ -189,7 +189,7 @@ function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-center">
           {/* Logo */}
-          <div className="w-14 h-14 rounded-lg flex items-center justify-center bg-mint hover:scale-105 transition-transform cursor-pointer">
+          <div className="w-14 h-14 rounded-lg flex items-center justify-center bg-mint hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150 cursor-pointer">
             <span className="text-2xl font-display font-bold text-navy">N</span>
           </div>
         </div>
@@ -273,7 +273,7 @@ function Hero() {
 
         {/* App Store Buttons */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
-          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-navy rounded-full text-white text-base font-medium hover:bg-white hover:text-navy hover:scale-105 transition-all shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
+          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-navy rounded-full text-white text-base font-medium hover:bg-white hover:text-navy hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
@@ -1092,12 +1092,12 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
           </div>
 
           {/* Success View - Full Green Screen with elegant entrance */}
-          <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#51b13e] transition-all duration-700 ease-out ${step === 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-             <div className={`flex flex-col items-center justify-center transition-all duration-500 delay-200 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-               <div className={`w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-5 transition-transform duration-500 delay-300 ${step === 'success' ? 'scale-100' : 'scale-0'}`}>
-                 <svg className={`w-10 h-10 text-[#51b13e] transition-all duration-300 delay-500 ${step === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+          <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#51b13e] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${step === 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+             <div className={`flex flex-col items-center justify-center transition-all duration-400 delay-100 ease-out ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
+               <div className={`w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-5 transition-transform duration-400 delay-150 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${step === 'success' ? 'scale-100' : 'scale-[0.9]'}`}>
+                 <svg className={`w-10 h-10 text-[#51b13e] transition-all duration-200 delay-300 ${step === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.9]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                </div>
-               <div className={`text-white text-xl font-medium tracking-tight transition-all duration-300 delay-400 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>Payment Received</div>
+               <div className={`text-white text-xl font-medium tracking-tight transition-all duration-200 delay-200 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'}`}>Payment Received</div>
              </div>
           </div>
 
@@ -1126,9 +1126,8 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
       {/* Sidebar */}
       <div className="w-[220px] bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0">
         <div className="p-4 flex items-center justify-between mb-2">
-           <div className="flex items-center gap-2">
-             <Image src="/btcpay-logo.svg" alt="BTCPay Server" width={28} height={28} />
-             <span className="font-bold text-gray-700 text-lg tracking-tight">BTCPay</span>
+           <div className="flex items-center">
+             <Image src="/btcpay-logo.svg" alt="BTCPay Server" width={100} height={28} />
            </div>
            <div className="relative cursor-pointer">
               <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
@@ -1146,11 +1145,11 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             </div>
 
             <div className="space-y-1 mb-6">
-                <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-200/50 rounded cursor-pointer transition-colors">
+                <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-200/50 rounded cursor-pointer transition-colors duration-150">
                     <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z" /></svg></div>
                     <span className="font-medium">Dashboard</span>
                 </div>
-                <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-200/50 rounded cursor-pointer transition-colors">
+                <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-200/50 rounded cursor-pointer transition-colors duration-150">
                     <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
                     <span className="font-medium">Settings</span>
                 </div>
@@ -1159,35 +1158,35 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             <div className="mb-6">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Wallets</p>
                 <div className="space-y-1">
-                  <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                     <div className="w-5 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-[#51b13e]"></div></div>
                     <span className="font-medium">Bitcoin</span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                     <div className="w-5 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-[#51b13e]"></div></div>
                     <span className="font-medium">Cashu</span>
                   </div>
-                  <div className="pl-11 pr-3 py-1.5 text-gray-500 hover:text-gray-800 cursor-pointer text-sm font-medium transition-colors">Wallet</div>
-                  <div className="pl-11 pr-3 py-1.5 text-gray-500 hover:text-gray-800 cursor-pointer text-sm font-medium transition-colors">Settings</div>
+                  <div className="pl-11 pr-3 py-1.5 text-gray-500 hover:text-gray-800 cursor-pointer text-sm font-medium transition-colors duration-150">Wallet</div>
+                  <div className="pl-11 pr-3 py-1.5 text-gray-500 hover:text-gray-800 cursor-pointer text-sm font-medium transition-colors duration-150">Settings</div>
                 </div>
             </div>
 
             <div className="mb-6">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Payments</p>
                 <div className="space-y-1">
-                    <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors">
+                    <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
                        <span className="font-medium">Requests</span>
                     </div>
-                     <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors">
+                     <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg></div>
                        <span className="font-medium">Pull Payments</span>
                     </div>
-                     <div className="flex items-center gap-3 px-3 py-2 text-[#51b13e] rounded cursor-pointer transition-colors">
+                     <div className="flex items-center gap-3 px-3 py-2 text-[#51b13e] rounded cursor-pointer transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg></div>
                        <span className="font-semibold">Invoices</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors">
+                    <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
                        <span className="font-medium">Payouts</span>
                     </div>
@@ -1205,7 +1204,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                  <h2 className="text-xl md:text-2xl font-bold text-gray-800">Invoices</h2>
                  <span className="text-gray-400 cursor-help bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center text-[10px]">?</span>
                </div>
-               <button className="bg-[#51b13e] hover:bg-[#469d34] text-white px-4 py-2 rounded shadow-sm font-medium text-sm transition-colors flex items-center gap-2">
+               <button className="bg-[#51b13e] hover:bg-[#469d34] active:scale-[0.98] text-white px-4 py-2 rounded shadow-sm font-medium text-sm transition-all duration-150 flex items-center gap-2">
                  <span>Create Invoice</span>
                </button>
             </div>
@@ -1287,7 +1286,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
 
                        {/* Existing Invoices */}
                        {invoices.map((inv, i) => (
-                          <tr key={i} className="bg-white hover:bg-gray-50 transition-colors">
+                          <tr key={i} className="bg-white hover:bg-gray-50 transition-colors duration-150">
                              <td className="py-3 px-4 align-middle">
                                 <input type="checkbox" className="rounded border-gray-300 text-[#51b13e] focus:ring-[#51b13e] w-4 h-4" />
                              </td>
@@ -1462,22 +1461,24 @@ function FAQ() {
                   className="w-full py-5 flex items-center justify-between text-left group"
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
-                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/70 transition-colors">
+                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/70 transition-colors duration-150">
                     {faq.q}
                   </span>
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-colors">
-                    <span className={`text-navy/50 group-hover:text-white text-xl leading-none transition-all duration-300 ${openIndex === index ? "rotate-45" : ""}`}>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-all duration-200 active:scale-95">
+                    <span className={`text-navy/50 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
                       +
                     </span>
                   </div>
                 </button>
                 <div 
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  className={`grid transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    openIndex === index ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
-                    {faq.a}
+                  <div className="overflow-hidden">
+                    <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
+                      {faq.a}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1501,7 +1502,7 @@ function Footer() {
         <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
         
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
-          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-mint rounded-full text-navy text-base font-medium hover:bg-white hover:text-navy hover:scale-105 transition-all shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
+          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-mint rounded-full text-navy text-base font-medium hover:bg-white hover:text-navy hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
@@ -1517,7 +1518,7 @@ function Footer() {
               href="https://opencash.dev/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-white underline underline-offset-2 transition-colors"
+              className="text-white/70 hover:text-white underline underline-offset-2 transition-colors duration-150"
             >
               donating to OpenCash
             </a>.
