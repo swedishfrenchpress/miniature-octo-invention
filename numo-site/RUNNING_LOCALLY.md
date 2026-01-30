@@ -4,7 +4,7 @@
 
 1. **Navigate to the project directory:**
    ```bash
-   cd terminal-site
+    cd numo-site
    ```
 
 2. **Install dependencies (if you haven't already):**
