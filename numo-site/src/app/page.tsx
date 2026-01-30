@@ -687,6 +687,7 @@ function SupportedWallets() {
     { name: "Sovran", image: "/wallets/sovran.jpg" },
     { name: "Macadamia", image: "/wallets/macadamia.jpg" },
     { name: "Cashu.me", image: "/wallets/cashume.png" },
+    { name: "Minibits", image: "/wallets/minibits.jpg" },
   ];
 
   // Lightning wallets (standard support)
@@ -696,7 +697,6 @@ function SupportedWallets() {
     { name: "Boardwalk Cash", image: "/wallets/boardwalkcash.jpg" },
     { name: "Cash App", image: "/wallets/cashapp.svg" },
     { name: "Fedi", image: "/wallets/fedi.jpg" },
-    { name: "Minibits", image: "/wallets/minibits.jpg" },
     { name: "Muun", image: "/wallets/muun.png" },
     { name: "Phoenix", image: "/wallets/phoenix.jpg" },
     { name: "Strike", image: "/wallets/strike.png" },
@@ -732,35 +732,33 @@ function SupportedWallets() {
               <h3 className="font-display text-2xl md:text-3xl text-navy font-bold">TAP-TO-PAY</h3>
             </div>
             
-            {/* NFC Wallet Cards - Premium feel */}
-            <div className="flex flex-wrap justify-center gap-4">
+            {/* NFC Wallet Cards */}
+            <div className="flex flex-wrap justify-center gap-3">
               {nfcWallets.map((wallet, index) => (
                 <div 
                   key={index} 
-                  className="relative bg-white rounded-full p-4 border-2 border-navy/20"
+                  className="relative flex items-center gap-3 bg-white rounded-full px-4 py-2.5"
                 >
                   {/* NFC Badge */}
-                  <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-navy flex items-center justify-center shadow-md z-10">
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-navy flex items-center justify-center shadow-md z-10">
+                    <svg className="w-2.5 h-2.5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
                       <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
                       <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
                     </svg>
                   </div>
                   
-                  <div className="flex items-center gap-4">
-                    {/* Large wallet icon */}
-                    <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
-                      <Image
-                        src={wallet.image}
-                        alt={wallet.name}
-                        width={56}
-                        height={56}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="font-semibold text-navy text-lg">{wallet.name}</span>
+                  {/* Wallet icon */}
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <Image
+                      src={wallet.image}
+                      alt={wallet.name}
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+                  <span className="font-medium text-navy">{wallet.name}</span>
                 </div>
               ))}
             </div>
