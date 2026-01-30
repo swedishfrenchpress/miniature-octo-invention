@@ -1367,7 +1367,7 @@ function BTCPayIntegration() {
             BTCPay Server x Numo Integration
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We're working on an integration between these two and it's coming soon.
+            A direct integration between BTCPay Server and Numo is currently under development. Coming soon.
           </p>
         </div>
 
