@@ -939,7 +939,7 @@ function SimpleFeatures() {
 
 
 // POS System Animation Component
-function POSSystem({ onPaymentComplete, onQRShown }: { onPaymentComplete: () => void, onQRShown?: () => void }) {
+function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplete: () => void, onQRShown?: () => void, onReset?: () => void }) {
   const [step, setStep] = useState<'idle' | 'typing' | 'qr' | 'success'>('idle');
   const [amount, setAmount] = useState('');
   const [showQR, setShowQR] = useState(false);
@@ -948,17 +948,24 @@ function POSSystem({ onPaymentComplete, onQRShown }: { onPaymentComplete: () => 
   // Store callbacks in refs to avoid re-triggering useEffect
   const onPaymentCompleteRef = useRef(onPaymentComplete);
   const onQRShownRef = useRef(onQRShown);
+  const onResetRef = useRef(onReset);
   
   useEffect(() => {
     onPaymentCompleteRef.current = onPaymentComplete;
     onQRShownRef.current = onQRShown;
-  }, [onPaymentComplete, onQRShown]);
+    onResetRef.current = onReset;
+  }, [onPaymentComplete, onQRShown, onReset]);
 
   useEffect(() => {
     // Reset state for new animation cycle
     setStep('idle');
     setAmount('');
     setShowQR(false);
+    
+    // Reset BTCPay status when animation restarts (but not on first load)
+    if (animationKey > 0 && onResetRef.current) {
+      onResetRef.current();
+    }
     
     const timeouts: NodeJS.Timeout[] = [];
     
@@ -1016,38 +1023,41 @@ function POSSystem({ onPaymentComplete, onQRShown }: { onPaymentComplete: () => 
           
           {/* Keypad View */}
           <div className={`absolute inset-0 flex flex-col bg-white transition-opacity duration-500 ${showQR ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-             {/* Display Area */}
-             <div className="flex-1 flex flex-col justify-end px-8 pb-8 bg-white">
-                <div className="text-gray-400 text-base font-medium mb-2">Enter amount</div>
-                <div className="text-6xl font-bold text-[#0A2540] flex items-baseline gap-1">
-                  <span className="text-4xl text-gray-300">$</span>
+             {/* Display Area - Centered */}
+             <div className="flex-1 flex flex-col items-center justify-center px-8 bg-white">
+                <div className="text-gray-400 text-sm font-medium mb-2">Enter amount</div>
+                <div className="text-5xl font-medium text-[#0A2540] flex items-baseline">
+                  <span className="text-3xl text-gray-400 mr-1">$</span>
                   {amount || '0'}
-                  <span className={`w-1 h-10 bg-[#51b13e] ml-1 animate-pulse ${step === 'typing' ? 'opacity-100' : 'opacity-0'}`}></span>
+                  <span className={`w-0.5 h-8 bg-[#51b13e] ml-1 animate-pulse ${step === 'typing' ? 'opacity-100' : 'opacity-0'}`}></span>
                 </div>
              </div>
 
-             {/* Keypad - Green Background */}
-             <div className="bg-[#51b13e] h-[65%] rounded-t-[3rem] p-8 pb-12 flex flex-col justify-center shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
-                <div className="grid grid-cols-3 gap-6 h-full w-full max-w-[240px] mx-auto">
+             {/* Keypad - White Background with Black Keys */}
+             <div className="bg-white h-[60%] p-6 pb-10 flex flex-col justify-center border-t border-gray-100">
+                <div className="grid grid-cols-3 gap-4 w-full max-w-[240px] mx-auto">
                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                      <div key={num} className="flex items-center justify-center">
                         <button 
-                          className={`w-16 h-16 rounded-full text-3xl font-medium text-white transition-all duration-150 active:scale-90 ${
+                          className={`w-14 h-14 rounded-full text-2xl font-medium text-[#0A2540] transition-all duration-150 active:scale-90 ${
                             (amount === '2' && num === 2) || (amount === '21' && num === 1) 
-                              ? 'bg-white/20 scale-90' 
-                              : 'hover:bg-white/10'
+                              ? 'bg-gray-200 scale-95' 
+                              : 'hover:bg-gray-100'
                           }`}
                         >
                           {num}
                         </button>
                      </div>
                    ))}
-                   <div className="flex items-center justify-center col-start-2">
-                      <button className="w-16 h-16 rounded-full text-3xl font-medium text-white hover:bg-white/10 active:scale-90">0</button>
+                   <div className="flex items-center justify-center">
+                      <button className="w-14 h-14 rounded-full text-2xl font-medium text-[#0A2540] hover:bg-gray-100 active:scale-90">.</button>
                    </div>
                    <div className="flex items-center justify-center">
-                      <button className="w-16 h-16 rounded-full flex items-center justify-center text-white hover:bg-white/10 active:scale-90">
-                        {/* Empty space - Thunderbolt removed */}
+                      <button className="w-14 h-14 rounded-full text-2xl font-medium text-[#0A2540] hover:bg-gray-100 active:scale-90">0</button>
+                   </div>
+                   <div className="flex items-center justify-center">
+                      <button className="w-14 h-14 rounded-full flex items-center justify-center text-[#0A2540] hover:bg-gray-100 active:scale-90">
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" /></svg>
                       </button>
                    </div>
                 </div>
@@ -1246,19 +1256,14 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                       {/* New Invoice Row Animation */}
-                       <tr 
-                         className={`bg-white transition-all duration-700 ease-out`}
-                         style={{
-                           display: showNewRow ? 'table-row' : 'none',
-                         }}
-                       >
+                       {/* New Invoice Row - Only rendered when active */}
+                       {showNewRow && (
+                       <tr className="bg-white">
                           <td className="py-3 px-4 align-middle">
                                <input type="checkbox" className="rounded border-gray-300 text-[#51b13e] w-4 h-4" />
                           </td>
-                          <td className="py-3 px-4 text-gray-700 align-middle whitespace-nowrap">
-                                <span className="hidden md:inline">Just now</span>
-                                <span className="md:hidden">Now</span>
+                          <td className="py-3 px-4 text-gray-700 align-middle whitespace-nowrap text-[13px]">
+                                Just now
                           </td>
                           <td className="py-3 px-4 text-[#51b13e] font-mono text-[11px] align-middle whitespace-nowrap">
                                 <div className="max-w-[120px] truncate">PAY_REQUEST_NEW</div>
@@ -1266,14 +1271,12 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                           <td className="py-3 px-4 text-gray-600 font-mono text-[11px] align-middle whitespace-nowrap hidden sm:table-cell">
                                 <div className="max-w-[120px] truncate">PENDING...</div>
                           </td>
-                          <td className="py-3 px-4 align-middle whitespace-nowrap">
-                                 <span className={`px-2 py-1 rounded text-[11px] font-bold transition-all duration-500 ${
-                                   isPaid 
-                                     ? "bg-[#d4edda] text-[#155724]" 
-                                     : "bg-[#fff3cd] text-[#856404]"
-                                 }`}>
-                                    {isPaid ? "Paid" : "Processing"}
-                                 </span>
+                          <td className="py-3 px-4 whitespace-nowrap align-middle">
+                                 {isPaid ? (
+                                    <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-bold">Paid</span>
+                                 ) : (
+                                    <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-bold">Processing</span>
+                                 )}
                            </td>
                           <td className="py-3 px-4 text-right text-gray-700 align-middle whitespace-nowrap font-mono text-[11px]">
                                 0.00150000 BTC
@@ -1284,6 +1287,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                                 </span>
                           </td>
                        </tr>
+                       )}
 
                        {/* Existing Invoices */}
                        {invoices.map((inv, i) => (
@@ -1346,13 +1350,17 @@ function BTCPayIntegration() {
     return () => observer.disconnect();
   }, []);
 
-  // Callbacks for the POS system - reset status when QR is shown (new payment cycle)
+  // Callbacks for the POS system
   const handleQRShown = useCallback(() => {
     setPaymentStatus('pending');
   }, []);
   
   const handlePaymentComplete = useCallback(() => {
     setPaymentStatus('paid');
+  }, []);
+  
+  const handleReset = useCallback(() => {
+    setPaymentStatus(null);
   }, []);
 
   return (
@@ -1380,7 +1388,8 @@ function BTCPayIntegration() {
               {isInView && (
                 <POSSystem 
                   onQRShown={handleQRShown}
-                  onPaymentComplete={handlePaymentComplete} 
+                  onPaymentComplete={handlePaymentComplete}
+                  onReset={handleReset}
                 />
               )}
            </div>
