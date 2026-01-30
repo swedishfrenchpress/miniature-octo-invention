@@ -34,10 +34,10 @@ const STACK_CONFIGS: Record<number, { y: string; scale: number; opacity: number;
 function AutoCustodyBento() {
   const [notifications, setNotifications] = useState<StackNotification[]>([]);
   const [isInView, setIsInView] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const idCounterRef = useRef(0);
   const dataIndexRef = useRef(0);
-  const isInitializedRef = useRef(false);
 
   // Intersection observer to start animation when in view
   useEffect(() => {
@@ -58,7 +58,8 @@ function AutoCustodyBento() {
   // Initialize stack with 3 notifications when coming into view
   useEffect(() => {
     if (!isInView) {
-      isInitializedRef.current = false;
+      setIsInitialized(false);
+      setNotifications([]);
       return;
     }
 
@@ -66,33 +67,24 @@ function AutoCustodyBento() {
     idCounterRef.current = 0;
     dataIndexRef.current = 0;
 
-    // Create initial stack of 3 (using requestAnimationFrame to satisfy linter)
-    const initTimeout = requestAnimationFrame(() => {
-      const initialStack: StackNotification[] = [];
-      for (let i = 0; i < 3; i++) {
-        const data = notificationPool[dataIndexRef.current % notificationPool.length];
-        initialStack.push({
-          id: idCounterRef.current++,
-          ...data,
-          position: 2 - i, // 2, 1, 0 (back to front)
-        });
-        dataIndexRef.current++;
-      }
-      setNotifications(initialStack);
-      isInitializedRef.current = true;
-    });
-
-    // Cleanup when going out of view
-    return () => {
-      cancelAnimationFrame(initTimeout);
-      setNotifications([]);
-      isInitializedRef.current = false;
-    };
+    // Create initial stack of 3
+    const initialStack: StackNotification[] = [];
+    for (let i = 0; i < 3; i++) {
+      const data = notificationPool[dataIndexRef.current % notificationPool.length];
+      initialStack.push({
+        id: idCounterRef.current++,
+        ...data,
+        position: 2 - i, // 2, 1, 0 (back to front)
+      });
+      dataIndexRef.current++;
+    }
+    setNotifications(initialStack);
+    setIsInitialized(true);
   }, [isInView]);
 
   // Continuous cycling animation
   useEffect(() => {
-    if (!isInView || !isInitializedRef.current) return;
+    if (!isInView || !isInitialized) return;
 
     const cycleInterval = setInterval(() => {
       setNotifications(prev => {
@@ -128,7 +120,7 @@ function AutoCustodyBento() {
     }, 2500); // New notification every 2.5 seconds
 
     return () => clearInterval(cycleInterval);
-  }, [isInView]);
+  }, [isInView, isInitialized]);
 
   // Get styles based on position in stack - uses hoisted config
   const getStackStyles = useCallback((position: number) => {
@@ -1200,7 +1192,21 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 bg-white md:bg-[#f8f9fa]">
+      <div className="flex-1 flex flex-col min-w-0 bg-white md:bg-[#f8f9fa] relative">
+         {/* Toast Notification - appears when payment is confirmed */}
+         <div 
+           className={`absolute top-4 right-4 z-50 flex items-center gap-2 bg-[#d4edda] border border-[#c3e6cb] text-[#155724] px-4 py-3 rounded-lg shadow-lg transition-all duration-300 ease-out ${
+             isPaid 
+               ? 'opacity-100 translate-y-0' 
+               : 'opacity-0 -translate-y-2 pointer-events-none'
+           }`}
+         >
+           <svg className="w-5 h-5 text-[#28a745] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>
+           <span className="text-sm font-medium">New payment received!</span>
+         </div>
+
          <div className="p-4 md:p-8 h-full overflow-y-auto [&::-webkit-scrollbar]:hidden">
             <div className="flex items-center justify-between gap-4 mb-6">
                <div className="flex items-center gap-2">
