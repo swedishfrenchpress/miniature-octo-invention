@@ -1127,11 +1127,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
       <div className="w-[220px] bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0">
         <div className="p-4 flex items-center justify-between mb-2">
            <div className="flex items-center gap-2">
-             <div className="w-7 h-7">
-               <svg viewBox="0 0 100 100" className="text-[#51b13e]" fill="currentColor">
-                  <path d="M78.3 27.2c-5.9 0-11 2.7-14.3 6.9l-26.6-47C35.9-9.8 17.5 1.5 17.5 1.5S1.4 11.3 5 35.1c0 0 1.2 10.7 7.7 20.8-1.2 2.9-1.9 6.1-1.9 9.5 0 13.5 11 24.5 24.5 24.5 12.8 0 23.3-9.9 24.4-22.5l22-38.6c3.2 3 7.5 4.9 12.2 4.9 9.8 0 17.7-8 17.7-17.7s-7.9-18.8-13.3-18.8zM35.3 83.1c-9.8 0-17.7-8-17.7-17.7s8-17.7 17.7-17.7c9.8 0 17.7 8 17.7 17.7s-7.9 17.7-17.7 17.7z" />
-               </svg>
-             </div>
+             <Image src="/btcpay-logo.svg" alt="BTCPay Server" width={28} height={28} />
              <span className="font-bold text-gray-700 text-lg tracking-tight">BTCPay</span>
            </div>
            <div className="relative cursor-pointer">
@@ -1241,18 +1237,18 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             {/* Table */}
             <div className="bg-white rounded border border-gray-200 overflow-hidden">
                <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden">
-                 <table className="w-full text-xs md:text-sm">
+                 <table className="w-full text-xs md:text-sm table-fixed">
                     <thead className="bg-[#f8f9fa]">
                       <tr className="text-gray-500 border-b border-gray-200">
-                         <th className="py-3 px-4 text-left w-10">
+                         <th className="py-3 px-4 text-left w-[40px]">
                             <input type="checkbox" className="rounded border-gray-300 text-[#51b13e] focus:ring-[#51b13e] w-4 h-4" />
                          </th>
-                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500">Date</th>
-                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-32 md:w-auto">Order ID</th>
-                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-32 md:w-auto hidden sm:table-cell">Invoice ID</th>
-                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500">Status</th>
-                         <th className="py-3 px-4 text-right font-semibold text-xs uppercase tracking-wider text-gray-500">Amount</th>
-                         <th className="py-3 px-4 text-right font-semibold text-xs uppercase tracking-wider text-gray-500">Actions</th>
+                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-[140px]">Date</th>
+                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-[130px]">Order ID</th>
+                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-[110px] hidden sm:table-cell">Invoice ID</th>
+                         <th className="py-3 px-4 text-left font-semibold text-xs uppercase tracking-wider text-gray-500 w-[90px]">Status</th>
+                         <th className="py-3 px-4 text-right font-semibold text-xs uppercase tracking-wider text-gray-500 w-[120px]">Amount</th>
+                         <th className="py-3 px-4 text-right w-[70px]"></th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -1279,7 +1275,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                                  )}
                            </td>
                           <td className="py-3 px-4 text-right text-gray-700 align-middle whitespace-nowrap font-mono text-[11px]">
-                                0.00150000 BTC
+                                0.00025439 BTC
                           </td>
                           <td className="py-3 px-4 text-right align-middle whitespace-nowrap">
                                 <span className="text-[#51b13e] cursor-pointer hover:underline text-xs font-medium flex items-center justify-end gap-1">
