@@ -1117,7 +1117,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
   const isPaid = paymentStatus === 'paid';
 
   return (
-    <div className="bg-[#f8f9fa] rounded-lg shadow-xl overflow-hidden font-sans border border-gray-200 flex text-xs md:text-sm select-none h-[640px]">
+    <div className="bg-[#f8f9fa] rounded-lg overflow-hidden font-sans border border-gray-200 border-b-0 flex text-xs md:text-sm select-none h-[640px]">
       {/* Sidebar */}
       <div className="w-[220px] bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0">
         <div className="p-4 flex items-center justify-between mb-2">
@@ -1383,8 +1383,10 @@ function BTCPayIntegration() {
         {/* Integration Demo Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-center">
            {/* Left: BTCPay UI */}
-           <div className="w-full">
+           <div className="w-full relative">
               <BTCPayInterface paymentStatus={paymentStatus} />
+              {/* White gradient fade overlay - sits on top of entire BTCPay illustration */}
+              <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none z-[9999]"></div>
            </div>
 
            {/* Right: POS Animation */}
