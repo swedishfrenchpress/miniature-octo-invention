@@ -1270,10 +1270,10 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                                 Just now
                           </td>
                           <td className="py-3 px-4 text-[#51b13e] font-mono text-[11px] align-middle whitespace-nowrap">
-                                <div className="max-w-[120px] truncate">PAY_REQUEST_NEW</div>
+                                <div className="max-w-[120px] truncate">NUMO_REQUEST</div>
                           </td>
                           <td className="py-3 px-4 text-gray-600 font-mono text-[11px] align-middle whitespace-nowrap hidden sm:table-cell">
-                                <div className="max-w-[120px] truncate">PENDING...</div>
+                                <div className="max-w-[120px] truncate">Nm8XkZq2Yw...</div>
                           </td>
                           <td className="py-3 px-4 whitespace-nowrap align-middle">
                                  {isPaid ? (
