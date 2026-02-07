@@ -190,11 +190,11 @@ function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? "backdrop-blur-xl bg-white/80 shadow-sm border-b border-gray-200/60" 
-        : ""
+        ? "backdrop-blur-xl bg-white/85 shadow-sm border-b border-gray-200/60" 
+        : "bg-gradient-to-b from-black/55 via-black/30 to-transparent"
     }`}>
       <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between gap-6">
+        <div className="relative flex items-center justify-between gap-6">
           {/* Logo */}
           <a
             href="#hero"
@@ -205,12 +205,18 @@ function Navigation() {
           </a>
 
           {/* Links */}
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-navy/70">
+          <div
+            className={`hidden md:flex items-center gap-6 text-sm font-medium absolute left-1/2 -translate-x-1/2 ${
+              isScrolled ? "text-navy/70" : "text-white/90"
+            }`}
+          >
             {NAV_LINKS.map(link => (
               <a
                 key={link.href}
                 href={link.href}
-                className="hover:text-navy transition-colors"
+                className={`transition-colors ${
+                  isScrolled ? "hover:text-navy" : "hover:text-white"
+                }`}
               >
                 {link.label}
               </a>
@@ -302,7 +308,7 @@ function Hero() {
         </h1>
 
         <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-10">
-          Accept Bitcoin with a tap on any NFC-enabled Android. Lightning and ecash, unified in a single checkout flow.
+          Accept Bitcoin with a tap on any NFC-enabled Android.
         </p>
 
         {/* App Store Buttons */}
@@ -315,7 +321,7 @@ function Hero() {
           </a>
           <a
             href="#features"
-            className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-white text-base font-medium border border-white/30 hover:border-white/60 hover:bg-white/10 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto min-w-[200px] sm:min-w-0"
+            className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-white text-base font-semibold border border-white/60 bg-white/10 hover:bg-white/15 hover:border-white/90 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto min-w-[200px] sm:min-w-0"
           >
             See how it works
           </a>
