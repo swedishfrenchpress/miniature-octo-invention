@@ -13,6 +13,13 @@ const notificationPool = [
   { amount: "$45.00", address: "eve@phoenix.io" },
 ];
 
+const NAV_LINKS = [
+  { label: "Features", href: "#features" },
+  { label: "Wallets", href: "#wallets" },
+  { label: "Integration", href: "#integration" },
+  { label: "FAQ", href: "#faq" },
+];
+
 interface StackNotification {
   id: number;
   amount: string;
@@ -183,14 +190,49 @@ function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? "backdrop-blur-xl" 
-        : ""
+        ? "backdrop-blur-xl bg-white/85 shadow-sm border-b border-gray-200/60" 
+        : "bg-gradient-to-b from-black/55 via-black/30 to-transparent"
     }`}>
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="flex items-center justify-center">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="relative flex items-center justify-between gap-6">
           {/* Logo */}
-          <div className="w-14 h-14 rounded-lg flex items-center justify-center bg-mint hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150 cursor-pointer">
+          <a
+            href="#hero"
+            className="w-12 h-12 rounded-lg flex items-center justify-center bg-mint hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150 cursor-pointer shadow-sm"
+            aria-label="Numo home"
+          >
             <span className="text-2xl font-display font-bold text-navy">N</span>
+          </a>
+
+          {/* Links */}
+          <div
+            className={`hidden md:flex items-center gap-6 text-sm font-medium absolute left-1/2 -translate-x-1/2 ${
+              isScrolled ? "text-navy/70" : "text-white/90"
+            }`}
+          >
+            {NAV_LINKS.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`transition-colors ${
+                  isScrolled ? "hover:text-navy" : "hover:text-white"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/cashubtc/Numo/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 bg-navy text-white rounded-full text-sm font-medium hover:bg-navy-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            >
+              Download APK
+            </a>
           </div>
         </div>
       </div>
@@ -225,7 +267,7 @@ function Hero() {
   }, [currentVideo, videoRefs]);
 
   return (
-    <section className="bg-white pt-40 pb-24 relative overflow-hidden">
+    <section id="hero" className="section-anchor bg-white pt-36 md:pt-40 pb-24 relative overflow-hidden">
       {/* Video Background - Full Width */}
       <div className="absolute inset-0 top-0 bottom-0 overflow-hidden z-0">
         {/* Video container - Full width */}
@@ -249,7 +291,7 @@ function Hero() {
         </div>
         
         {/* Dark overlay - adds subtle darkness to improve text readability */}
-        <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
         
         {/* Gradient overlay - bottom fade only, above video but below content */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-20 pointer-events-none" />
@@ -258,12 +300,16 @@ function Hero() {
       {/* Content - above everything */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
         {/* Tagline */}
-        <p className="text-white/80 text-base font-medium tracking-wide mb-4">MEET NUMO</p>
+        <p className="text-white/70 text-sm md:text-base font-semibold tracking-[0.3em] mb-4">MEET NUMO</p>
 
         {/* Main Headline */}
-        <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-8 max-w-5xl mx-auto font-bold drop-shadow-lg">
-        BITCOIN PAYMENTS AS EASY AS APPLE PAY. <br></br>TAP. DONE.
+        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 max-w-5xl mx-auto font-bold drop-shadow-lg">
+          BITCOIN PAYMENTS AS EASY AS APPLE PAY. <br />TAP. DONE.
         </h1>
+
+        <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-10">
+          Accept Bitcoin with a tap on any NFC-enabled Android.
+        </p>
 
         {/* App Store Buttons */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
@@ -271,7 +317,13 @@ function Hero() {
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
-            Download now
+            Download APK
+          </a>
+          <a
+            href="#features"
+            className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-white text-base font-semibold border border-white/60 bg-white/10 hover:bg-white/15 hover:border-white/90 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto min-w-[200px] sm:min-w-0"
+          >
+            See how it works
           </a>
         </div>
       </div>
@@ -282,7 +334,7 @@ function Hero() {
 // Bento Box Feature Section - Abode-style layout
 function BentoFeatures() {
   return (
-    <section className="bg-white py-20 px-4">
+    <section id="features" className="section-anchor bg-white py-20 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Bento Grid - Abode style */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -699,7 +751,7 @@ const LIGHTNING_WALLETS = [
 // Supported Wallets Section
 function SupportedWallets() {
   return (
-    <section className="bg-white py-20 px-4">
+    <section id="wallets" className="section-anchor bg-white py-20 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Bento-style container */}
         <div className="bg-cream rounded-[2rem] p-8 md:p-12 relative noise-overlay">
@@ -1368,7 +1420,7 @@ function BTCPayIntegration() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-20 px-4">
+    <section id="integration" ref={sectionRef} className="section-anchor bg-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -1466,7 +1518,7 @@ function FAQ() {
   };
 
   return (
-    <section className="bg-white py-20">
+    <section id="faq" className="section-anchor bg-white py-20">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Fully rounded FAQ container */}
         <div className="bg-cream rounded-[3rem] p-8 md:p-12 relative noise-overlay">
@@ -1513,7 +1565,7 @@ function FAQ() {
 // Footer CTA
 function Footer() {
   return (
-    <footer id="get-started" className="bg-navy pt-20 pb-0 relative">
+    <footer id="get-started" className="section-anchor bg-navy pt-20 pb-0 relative">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 font-bold">
           START ACCEPTING<br/>
@@ -1526,7 +1578,7 @@ function Footer() {
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
-            Download now
+            Download APK
           </a>
         </div>
         
@@ -1597,7 +1649,9 @@ function Footer() {
 // Main Page
 export default function Home() {
   return (
-    <main>
+    <>
+      <a href="#main-content" className="skip-link">Skip to content</a>
+      <main id="main-content">
       <Navigation />
       <Hero />
       <BentoFeatures />
@@ -1607,5 +1661,6 @@ export default function Home() {
       <FAQ />
       <Footer />
       </main>
+    </>
   );
 }

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue, Dancing_Script, Grandstander } from "next/font/google";
+import { Sora, Bebas_Neue, Dancing_Script, Grandstander } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
 // Clean body font
-const inter = Inter({
-  variable: "--font-inter",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${bebas.variable} ${dancing.variable} ${grandstander.variable} antialiased font-sans`}
+        className={`${sora.variable} ${bebas.variable} ${dancing.variable} ${grandstander.variable} antialiased font-sans`}
       >
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
