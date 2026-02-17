@@ -36,18 +36,32 @@ export const metadata: Metadata = {
   description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay, powered entirely by Bitcoin.",
   keywords: ["bitcoin", "payments", "terminal", "point of sale", "NFC", "tap to pay", "cashu", "lightning"],
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon/favicon.ico" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/favicon/apple-touch-icon.png",
   },
   openGraph: {
     title: "Numo - Bitcoin Payments Made Simple",
     description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay.",
     type: "website",
     siteName: "Numo",
+    images: [
+      {
+        url: "https://numopay.org/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Numo - Bitcoin Payments Made Simple",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Numo - Bitcoin Payments Made Simple",
     description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay.",
+    images: ["https://numopay.org/og-image.jpg"],
   },
   other: {
     "font-preconnect-1": "https://fonts.googleapis.com",
@@ -68,6 +82,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         {children}
       </body>
     </html>
