@@ -1477,7 +1477,7 @@ const FAQ_DATA = [
   },
   {
     q: "Is Numo custodial?",
-    a: "Bitcoin is stored in the form of ecash on a mint. You can withdraw it to your preferred lightning wallet at any time, or you can set a threshold amount and automatically transfer funds to your Lightning address when it's reached.",
+    a: "Yes. Your bitcoin stays in Numo until you're ready to move it. Withdraw to your Lightning wallet at any time, or set a payout threshold to do it automatically.",
   },
   {
     q: "What if I have bad internet?",
