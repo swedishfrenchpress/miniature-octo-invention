@@ -1607,7 +1607,7 @@ function Footer() {
             </a>
             <span className="text-white/20">·</span>
             <a 
-              href="https://x.com/cashubtc" 
+              href="https://x.com/numopayapp" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-white/50 hover:text-white text-sm font-medium transition-colors flex items-center gap-1.5"
