@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Bebas_Neue, Dancing_Script, Grandstander } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Clean body font
@@ -84,6 +85,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         {children}
+        <Analytics />
       </body>
     </html>
   );
