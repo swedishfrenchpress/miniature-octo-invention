@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "numo-site",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "numo-site", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}

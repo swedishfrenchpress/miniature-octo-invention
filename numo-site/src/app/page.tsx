@@ -737,7 +737,7 @@ const NFC_WALLETS = [
 
 // Lightning wallets (standard support) - hoisted outside component
 const LIGHTNING_WALLETS = [
-  { name: "Alby", image: "/wallets/albygo.webp" },
+  { name: "Alby Go", image: "/wallets/albygo.webp" },
   { name: "Blink Wallet", image: "/wallets/blinkwallet.jpg" },
   { name: "Boardwalk Cash", image: "/wallets/boardwalkcash.jpg" },
   { name: "Cash App", image: "/wallets/cashapp.svg" },
