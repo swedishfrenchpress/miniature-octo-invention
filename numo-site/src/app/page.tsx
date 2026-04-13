@@ -1603,10 +1603,17 @@ function Footer() {
             </a>.
           </p>
           
-          <div className="flex items-center justify-center gap-6">
-            <a 
-              href="https://cashu.space/" 
-              target="_blank" 
+          <div className="flex items-center justify-center gap-6 flex-wrap">
+            <a
+              href="/privacy"
+              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+            >
+              Privacy &amp; Terms
+            </a>
+            <span className="text-white/20">·</span>
+            <a
+              href="https://cashu.space/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-white/50 hover:text-white text-sm font-medium transition-colors"
             >
