@@ -44,7 +44,7 @@ export default function PrivacyPage() {
       <header className="bg-navy pt-16 pb-12 px-6">
         <div className="max-w-3xl mx-auto">
           <h1 className="font-display text-5xl md:text-6xl text-white leading-[0.9]">
-            NUMO WALLET
+            NUMO PAY
           </h1>
           <p className="font-display text-3xl md:text-4xl text-mint mt-2">
             PRIVACY POLICY
