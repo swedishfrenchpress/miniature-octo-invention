@@ -439,7 +439,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-1-slice-top 12s ease-in-out infinite'
@@ -449,7 +449,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-1-slice-bottom 12s ease-in-out infinite'
@@ -476,7 +476,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-2-slice-top 12s ease-in-out infinite'
@@ -486,7 +486,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-2-slice-bottom 12s ease-in-out infinite'
@@ -514,7 +514,8 @@ function BentoFeatures() {
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
-            <div className="flex-1 flex items-center justify-center gap-6">
+            <div className="flex-1 flex items-center justify-center overflow-hidden">
+              <div className="flex items-center gap-6 origin-center scale-[0.6] sm:scale-[0.8] md:scale-100">
               {/* iPhone with airplane mode - larger */}
               <div className="relative flex-shrink-0 z-10">
                 {/* iPhone frame - significantly bigger */}
@@ -634,6 +635,7 @@ function BentoFeatures() {
                 
                 {/* Terminal base/handle */}
                 <div className="w-16 h-5 bg-gradient-to-b from-[#3d3d3d] to-[#252525] rounded-b-xl mx-auto -mt-0.5 shadow-lg"></div>
+              </div>
               </div>
             </div>
           </BentoCard>

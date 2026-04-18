@@ -35,7 +35,7 @@ export default function ReleasesPage() {
           <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-mint mb-4">
             Releases
           </p>
-          <h1 className="font-display text-5xl md:text-7xl text-white leading-[0.9] font-bold">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-white leading-[0.9] font-bold">
             WHAT&apos;S NEW IN NUMO
           </h1>
           <p className="mt-5 text-base md:text-lg text-white/60 max-w-[52ch]">
