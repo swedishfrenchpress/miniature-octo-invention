@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { BentoCard } from "@/components/BentoCard";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Button } from "@/components/Button";
+import { Navigation } from "@/components/Navigation";
 
 // Notification data pool - cycles through these
 const notificationPool = [
@@ -11,13 +15,6 @@ const notificationPool = [
   { amount: "$100.00", address: "carol@coinos.io" },
   { amount: "$75.00", address: "dave@getalby.com" },
   { amount: "$45.00", address: "eve@phoenix.io" },
-];
-
-const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "Wallets", href: "#wallets" },
-  { label: "Integration", href: "#integration" },
-  { label: "FAQ", href: "#faq" },
 ];
 
 interface StackNotification {
@@ -140,11 +137,16 @@ function AutoCustodyBento() {
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-mint-pale rounded-[2rem] p-6 flex-1 min-h-[320px] flex flex-col relative overflow-hidden noise-overlay">
-      <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-2 text-center">
+    <BentoCard
+      ref={containerRef}
+      variant="mint-pale"
+      size="sm"
+      className="flex-1 min-h-[320px] flex flex-col overflow-hidden"
+    >
+      <SectionHeading as="h3" size="sm" align="center" className="mb-2">
         Automatic self-custody
-      </h3>
-      <p className="text-lg text-gray-600 mb-2 text-center">
+      </SectionHeading>
+      <p className="text-lg text-navy/75 mb-2 text-center">
         Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your Lightning address.
       </p>
       
@@ -167,77 +169,13 @@ function AutoCustodyBento() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-lg font-semibold text-navy">{notification.amount} Threshold Reached</p>
-                <p className="text-sm text-gray-500 truncate">Sent to {notification.address}</p>
+                <p className="text-sm text-navy/55 truncate">Sent to {notification.address}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
-  );
-}
-
-// Navigation
-function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? "backdrop-blur-xl bg-white/85 shadow-sm border-b border-gray-200/60" 
-        : "bg-gradient-to-b from-black/55 via-black/30 to-transparent"
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="relative flex items-center justify-between gap-6">
-          {/* Logo */}
-          <a
-            href="#hero"
-            className="w-12 h-12 rounded-lg flex items-center justify-center bg-mint hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150 cursor-pointer shadow-sm"
-            aria-label="Numo home"
-          >
-            <span className="text-2xl font-display font-bold text-navy">N</span>
-          </a>
-
-          {/* Links */}
-          <div
-            style={{ fontFamily: "var(--font-display)" }}
-            className={`hidden md:flex items-center gap-7 lg:gap-9 uppercase text-[15px] lg:text-[16px] tracking-[0.22em] font-semibold absolute left-1/2 -translate-x-1/2 ${
-              isScrolled ? "text-navy/80" : "text-white/95"
-            }`}
-          >
-	            {NAV_LINKS.map(link => (
-	              <a
-	                key={link.href}
-	                href={link.href}
-	                className={`transition-colors ${
-	                  isScrolled ? "hover:text-navy" : "hover:text-white"
-	                }`}
-	              >
-	                {link.label}
-	              </a>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="flex items-center gap-3">
-            <a
-              href="https://github.com/cashubtc/Numo/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 bg-navy text-white rounded-full text-sm font-medium hover:bg-navy-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-            >
-              Download APK
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
+    </BentoCard>
   );
 }
 
@@ -314,24 +252,27 @@ function Hero() {
 
         {/* App Store Buttons */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
-	          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-navy rounded-full text-white text-base font-medium hover:bg-white hover:text-navy hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
+          <Button
+            href="https://github.com/cashubtc/Numo/releases"
+            variant="dark"
+            external
+          >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
             Download APK
-          </a>
-          <a
+          </Button>
+          <Button
             href="https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Download on Zapstore"
-	            className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-navy text-base font-semibold bg-white/90 hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 w-full sm:w-auto min-w-[200px] sm:min-w-0 shadow-lg"
-	          >
+            variant="light"
+            external
+            ariaLabel="Download on Zapstore"
+          >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z" />
             </svg>
             Download on Zapstore
-          </a>
+          </Button>
         </div>
       </div>
     </section>
@@ -347,11 +288,11 @@ function BentoFeatures() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
           {/* Row 1 - Left: Tap to Pay with Cashu wallet support */}
-          <div className="bg-cream rounded-[2rem] p-8 flex flex-col relative noise-overlay">
+          <BentoCard variant="cream" className="flex flex-col">
             <div className="flex items-start justify-between mb-4 gap-4">
-              <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
+              <SectionHeading as="h3" className="flex-1">
                 TAP TO PAY<br/>
-              </h3>
+              </SectionHeading>
               <div className="flex gap-2 flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center">
                   <svg className="w-5 h-5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -362,7 +303,7 @@ function BentoFeatures() {
                 </div>
               </div>
             </div>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            <p className="text-lg text-navy/75 mb-6 leading-relaxed">
             Apple Pay-like experience for Bitcoin payments.
             </p>
             
@@ -468,20 +409,20 @@ function BentoFeatures() {
                 </div>
               </div>
             </div>
-          </div>
+          </BentoCard>
 
           {/* Row 1 - Right: Zero platform fees */}
-          <div className="bg-mint-soft rounded-[2rem] p-8 flex flex-col relative noise-overlay">
+          <BentoCard variant="mint-soft" className="flex flex-col">
             <div className="flex items-start justify-between mb-4 gap-4">
-              <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold flex-1">
+              <SectionHeading as="h3" className="flex-1">
                 Zero platform{" "}
                 <span className="zero-slice-container">
                   <span className="zero-slice-top">fees</span>
                   <span className="zero-slice-bottom">fees</span>
                 </span>
-              </h3>
+              </SectionHeading>
             </div>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-navy/75 mb-6">
               Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
             </p>
             
@@ -498,7 +439,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-1-slice-top 12s ease-in-out infinite'
@@ -508,7 +449,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-1-slice-bottom 12s ease-in-out infinite'
@@ -535,7 +476,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-2-slice-top 12s ease-in-out infinite'
@@ -545,7 +486,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-7xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-2-slice-bottom 12s ease-in-out infinite'
@@ -555,25 +496,26 @@ function BentoFeatures() {
                   </span>
                 </div>
                 {/* Slice line for second fee */}
-                <div 
+                <div
                   className="absolute left-0 right-0 top-1/2 h-1 bg-[#FF3B30] origin-left"
                   style={{ animation: 'slice-line-2 12s ease-in-out infinite' }}
                 ></div>
               </div>
             </div>
-          </div>
+          </BentoCard>
 
           {/* Row 2 - Left: Works Offline with animation */}
-          <div className="bg-cream-warm rounded-[2rem] p-8 flex flex-col relative noise-overlay">
-            <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-4">
+          <BentoCard variant="cream-warm" className="flex flex-col">
+            <SectionHeading as="h3" className="mb-4">
               Works offline
-            </h3>
-            <p className="text-lg text-gray-600 mb-6">
+            </SectionHeading>
+            <p className="text-lg text-navy/75 mb-6">
               Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
-            <div className="flex-1 flex items-center justify-center gap-6">
+            <div className="flex-1 flex items-center justify-center overflow-hidden">
+              <div className="flex items-center gap-6 origin-center scale-[0.6] sm:scale-[0.8] md:scale-100">
               {/* iPhone with airplane mode - larger */}
               <div className="relative flex-shrink-0 z-10">
                 {/* iPhone frame - significantly bigger */}
@@ -694,8 +636,9 @@ function BentoFeatures() {
                 {/* Terminal base/handle */}
                 <div className="w-16 h-5 bg-gradient-to-b from-[#3d3d3d] to-[#252525] rounded-b-xl mx-auto -mt-0.5 shadow-lg"></div>
               </div>
+              </div>
             </div>
-          </div>
+          </BentoCard>
 
           {/* Row 2 - Right: Two stacked cards */}
           <div className="flex flex-col gap-4">
@@ -703,29 +646,29 @@ function BentoFeatures() {
             <AutoCustodyBento />
 
             {/* Works offline card */}
-            <div className="bg-gray-100 rounded-[2rem] p-8 flex-1 relative noise-overlay">
-              <h3 className="font-display text-4xl md:text-5xl text-navy leading-[0.9] font-bold mb-3">
+            <BentoCard variant="gray" className="flex-1">
+              <SectionHeading as="h3" size="sm" className="mb-3">
                 Fully open-source and free
-              </h3>
-              <p className="text-lg text-gray-600 mb-4">
+              </SectionHeading>
+              <p className="text-lg text-navy/75 mb-4">
                 No vendor lock-in, no hidden fees, no subscriptions. You own your payment infrastructure.
               </p>
-            </div>
+            </BentoCard>
           </div>
 
           {/* Row 3 - Full width CTA */}
-          <div className="bg-cream rounded-[2rem] p-8 md:col-span-2 relative noise-overlay">
+          <BentoCard variant="cream" className="md:col-span-2">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
-                <h3 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] font-bold mb-2">
+                <SectionHeading as="h3" className="mb-2">
                   Instant settlement
-                </h3>
-                <p className="text-lg text-gray-600">
+                </SectionHeading>
+                <p className="text-lg text-navy/75">
                   Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
                 </p>
               </div>
             </div>
-          </div>
+          </BentoCard>
         </div>
       </div>
     </section>
@@ -761,13 +704,13 @@ function SupportedWallets() {
     <section id="wallets" className="section-anchor bg-white py-20 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Bento-style container */}
-        <div className="bg-cream rounded-[2rem] p-8 md:p-12 relative noise-overlay">
+        <BentoCard variant="cream" size="lg">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-4 font-bold">
+            <SectionHeading className="mb-4">
               SUPPORTED WALLETS
-            </h2>
-            <p className="text-lg text-gray-600">
+            </SectionHeading>
+            <p className="text-lg text-navy/75">
               Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
             </p>
           </div>
@@ -820,7 +763,7 @@ function SupportedWallets() {
           {/* Divider */}
           <div className="flex items-center gap-4 mb-8">
             <div className="flex-1 h-px bg-navy/10"></div>
-            <span className="text-sm text-gray-500 font-medium">FULLY COMPATIBLE WITH</span>
+            <span className="text-sm text-navy/55 font-medium">FULLY COMPATIBLE WITH</span>
             <div className="flex-1 h-px bg-navy/10"></div>
           </div>
 
@@ -859,7 +802,7 @@ function SupportedWallets() {
               + all bitcoin lightning wallets!
             </p>
           </div>
-        </div>
+        </BentoCard>
       </div>
     </section>
   );
@@ -891,10 +834,10 @@ function SimpleFeatures() {
           
           {/* Text Content - Column 2 */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
+            <SectionHeading className="mb-6">
               Lightning and ecash, unified
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
+            </SectionHeading>
+            <p className="text-lg text-navy/75 mb-8">
               Numo isn&apos;t just an ecash app—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
               If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
               You get the benefits of both systems in one platform.
@@ -932,10 +875,10 @@ function SimpleFeatures() {
         <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center">
           {/* Text Content - Column 1, aligns with top image column */}
           <div>
-            <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
+            <SectionHeading className="mb-6">
               Easy inventory management
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
+            </SectionHeading>
+            <p className="text-lg text-navy/75 mb-8">
               Built-in inventory management makes selling easy. Create categories for items and sizes, 
               then tap to request a pre-determined payment. Track everything you sell.
             </p>
@@ -1431,10 +1374,10 @@ function BTCPayIntegration() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-display text-5xl md:text-6xl text-navy leading-[0.9] mb-6 font-bold">
+          <SectionHeading className="mb-6">
             BTCPay Server x Numo Integration
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          </SectionHeading>
+          <p className="text-lg text-navy/75 max-w-2xl mx-auto">
             A direct integration between BTCPay Server and Numo is currently under development. Coming soon.
           </p>
         </div>
@@ -1528,10 +1471,10 @@ function FAQ() {
     <section id="faq" className="section-anchor bg-white py-20">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Fully rounded FAQ container */}
-        <div className="bg-cream rounded-[3rem] p-8 md:p-12 relative noise-overlay">
-          <h2 className="font-display text-5xl md:text-6xl text-navy text-center mb-10 leading-[0.9] font-bold">
+        <BentoCard variant="cream" size="lg" radius="lg">
+          <SectionHeading align="center" className="mb-10">
             FREQUENTLY ASKED QUESTIONS
-          </h2>
+          </SectionHeading>
           
           <div className="space-y-0">
             {FAQ_DATA.map((faq, index) => (
@@ -1540,11 +1483,11 @@ function FAQ() {
                   className="w-full py-5 flex items-center justify-between text-left group"
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
-                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/70 transition-colors duration-150">
+                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/75 transition-colors duration-150">
                     {faq.q}
                   </span>
                   <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-all duration-200 active:scale-95">
-                    <span className={`text-navy/50 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
+                    <span className={`text-navy/55 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
                       +
                     </span>
                   </div>
@@ -1555,7 +1498,7 @@ function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
+                    <div className="pb-5 text-lg text-navy/75 leading-relaxed pr-16">
                       {renderAnswer(index, faq.a)}
                     </div>
                   </div>
@@ -1563,7 +1506,7 @@ function FAQ() {
               </div>
             ))}
           </div>
-        </div>
+        </BentoCard>
       </div>
     </section>
   );
@@ -1581,12 +1524,16 @@ function Footer() {
         <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
         
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
-          <a href="https://github.com/cashubtc/Numo/releases" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-mint rounded-full text-navy text-base font-medium hover:bg-white hover:text-navy hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out shadow-lg w-full sm:w-auto min-w-[200px] sm:min-w-0">
+          <Button
+            href="https://github.com/cashubtc/Numo/releases"
+            variant="accent"
+            external
+          >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
             Download APK
-          </a>
+          </Button>
         </div>
         
         {/* Support acknowledgment and links */}
@@ -1604,6 +1551,13 @@ function Footer() {
           </p>
           
           <div className="flex items-center justify-center gap-6 flex-wrap">
+            <a
+              href="/releases"
+              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+            >
+              Releases
+            </a>
+            <span className="text-white/20">·</span>
             <a
               href="/privacy"
               className="text-white/50 hover:text-white text-sm font-medium transition-colors"
