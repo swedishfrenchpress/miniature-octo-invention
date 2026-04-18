@@ -28,7 +28,7 @@ export function ReleaseEntry({ release }: Props) {
         </div>
         <time
           dateTime={release.date}
-          className="mt-2 block text-xs uppercase tracking-[0.18em] font-semibold text-navy/50"
+          className="mt-2 block text-xs uppercase tracking-[0.2em] font-semibold text-navy/55"
         >
           {formatDate(release.date)}
         </time>
@@ -56,7 +56,7 @@ export function ReleaseEntry({ release }: Props) {
                 <dt className="font-display text-xl md:text-2xl text-navy leading-[0.95] mb-2 max-w-[28ch]">
                   {h.title}
                 </dt>
-                <dd className="text-base md:text-lg text-navy/70 leading-relaxed max-w-[60ch]">
+                <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
                   {h.body}
                 </dd>
                 {h.image && (
@@ -73,7 +73,7 @@ export function ReleaseEntry({ release }: Props) {
           href={FULL_RELEASE_NOTES_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 inline-flex items-center gap-1.5 text-sm font-medium text-navy/60 hover:text-navy transition-colors underline underline-offset-4 decoration-navy/20 hover:decoration-navy"
+          className="mt-10 inline-flex items-center gap-1.5 text-sm font-medium text-navy/55 hover:text-navy transition-colors duration-200 underline underline-offset-4 decoration-navy/30 hover:decoration-navy/60"
         >
           Full release notes on GitHub
           <span aria-hidden="true">↗</span>

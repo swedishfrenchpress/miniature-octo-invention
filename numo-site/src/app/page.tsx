@@ -146,7 +146,7 @@ function AutoCustodyBento() {
       <SectionHeading as="h3" size="sm" align="center" className="mb-2">
         Automatic self-custody
       </SectionHeading>
-      <p className="text-lg text-gray-600 mb-2 text-center">
+      <p className="text-lg text-navy/75 mb-2 text-center">
         Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your Lightning address.
       </p>
       
@@ -169,7 +169,7 @@ function AutoCustodyBento() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-lg font-semibold text-navy">{notification.amount} Threshold Reached</p>
-                <p className="text-sm text-gray-500 truncate">Sent to {notification.address}</p>
+                <p className="text-sm text-navy/55 truncate">Sent to {notification.address}</p>
               </div>
             </div>
           ))}
@@ -303,7 +303,7 @@ function BentoFeatures() {
                 </div>
               </div>
             </div>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            <p className="text-lg text-navy/75 mb-6 leading-relaxed">
             Apple Pay-like experience for Bitcoin payments.
             </p>
             
@@ -422,7 +422,7 @@ function BentoFeatures() {
                 </span>
               </SectionHeading>
             </div>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-navy/75 mb-6">
               Keep 100% of what you earn. No 2.9% + 30¢. Just tiny Bitcoin network fees.
             </p>
             
@@ -509,7 +509,7 @@ function BentoFeatures() {
             <SectionHeading as="h3" className="mb-4">
               Works offline
             </SectionHeading>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-navy/75 mb-6">
               Bad signal? No problem. Numo uses Cashu ecash. Payments sync when you&apos;re back online.
             </p>
             
@@ -650,7 +650,7 @@ function BentoFeatures() {
               <SectionHeading as="h3" size="sm" className="mb-3">
                 Fully open-source and free
               </SectionHeading>
-              <p className="text-lg text-gray-600 mb-4">
+              <p className="text-lg text-navy/75 mb-4">
                 No vendor lock-in, no hidden fees, no subscriptions. You own your payment infrastructure.
               </p>
             </BentoCard>
@@ -663,7 +663,7 @@ function BentoFeatures() {
                 <SectionHeading as="h3" className="mb-2">
                   Instant settlement
                 </SectionHeading>
-                <p className="text-lg text-gray-600">
+                <p className="text-lg text-navy/75">
                   Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
                 </p>
               </div>
@@ -710,7 +710,7 @@ function SupportedWallets() {
             <SectionHeading className="mb-4">
               SUPPORTED WALLETS
             </SectionHeading>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-navy/75">
               Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
             </p>
           </div>
@@ -763,7 +763,7 @@ function SupportedWallets() {
           {/* Divider */}
           <div className="flex items-center gap-4 mb-8">
             <div className="flex-1 h-px bg-navy/10"></div>
-            <span className="text-sm text-gray-500 font-medium">FULLY COMPATIBLE WITH</span>
+            <span className="text-sm text-navy/55 font-medium">FULLY COMPATIBLE WITH</span>
             <div className="flex-1 h-px bg-navy/10"></div>
           </div>
 
@@ -837,7 +837,7 @@ function SimpleFeatures() {
             <SectionHeading className="mb-6">
               Lightning and ecash, unified
             </SectionHeading>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-navy/75 mb-8">
               Numo isn&apos;t just an ecash app—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
               If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
               You get the benefits of both systems in one platform.
@@ -878,7 +878,7 @@ function SimpleFeatures() {
             <SectionHeading className="mb-6">
               Easy inventory management
             </SectionHeading>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-navy/75 mb-8">
               Built-in inventory management makes selling easy. Create categories for items and sizes, 
               then tap to request a pre-determined payment. Track everything you sell.
             </p>
@@ -1377,7 +1377,7 @@ function BTCPayIntegration() {
           <SectionHeading className="mb-6">
             BTCPay Server x Numo Integration
           </SectionHeading>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-navy/75 max-w-2xl mx-auto">
             A direct integration between BTCPay Server and Numo is currently under development. Coming soon.
           </p>
         </div>
@@ -1483,11 +1483,11 @@ function FAQ() {
                   className="w-full py-5 flex items-center justify-between text-left group"
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
-                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/70 transition-colors duration-150">
+                  <span className="font-display text-xl md:text-2xl text-navy pr-6 group-hover:text-navy/75 transition-colors duration-150">
                     {faq.q}
                   </span>
                   <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-all duration-200 active:scale-95">
-                    <span className={`text-navy/50 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
+                    <span className={`text-navy/55 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
                       +
                     </span>
                   </div>
@@ -1498,7 +1498,7 @@ function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="pb-5 text-lg text-gray-600 leading-relaxed pr-16">
+                    <div className="pb-5 text-lg text-navy/75 leading-relaxed pr-16">
                       {renderAnswer(index, faq.a)}
                     </div>
                   </div>

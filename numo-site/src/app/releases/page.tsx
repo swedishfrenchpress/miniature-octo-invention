@@ -58,7 +58,7 @@ export default function ReleasesPage() {
             </span>
             <time
               dateTime={latest.date}
-              className="text-xs md:text-sm uppercase tracking-[0.22em] font-semibold text-navy/55"
+              className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-navy/55"
             >
               {formatFullDate(latest.date)}
             </time>
@@ -66,11 +66,11 @@ export default function ReleasesPage() {
 
           <h2
             id="latest-title"
-            className="font-display text-4xl md:text-6xl text-navy leading-[0.9] font-bold mb-6 [text-wrap:balance]"
+            className="font-display text-4xl md:text-6xl text-navy leading-[0.9] font-bold mb-6 max-w-[20ch] [text-wrap:balance]"
           >
             {latest.title}
           </h2>
-          <p className="text-xl md:text-2xl text-navy/80 leading-[1.4] max-w-[58ch] [text-wrap:pretty]">
+          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[58ch] [text-wrap:pretty]">
             {latest.summary}
           </p>
 
@@ -87,7 +87,7 @@ export default function ReleasesPage() {
                   <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch]">
                     {h.title}
                   </dt>
-                  <dd className="text-base md:text-lg text-navy/70 leading-relaxed max-w-[60ch]">
+                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
                     {h.body}
                   </dd>
                   {h.image && (
@@ -100,7 +100,7 @@ export default function ReleasesPage() {
             </dl>
           )}
 
-          <div className="mt-14 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+          <div className="mt-14 w-fit">
             <Button
               href={latest.downloadUrl ?? DEFAULT_DOWNLOAD}
               variant="accent"
@@ -108,15 +108,6 @@ export default function ReleasesPage() {
             >
               Download v{latest.version}
             </Button>
-            <a
-              href={FULL_RELEASE_NOTES_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-navy/60 hover:text-navy transition-colors underline underline-offset-4 decoration-navy/20 hover:decoration-navy"
-            >
-              Full release notes on GitHub
-              <span aria-hidden="true">↗</span>
-            </a>
           </div>
         </section>
 
@@ -128,7 +119,7 @@ export default function ReleasesPage() {
           >
             <h3
               id="earlier-releases"
-              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/50 mb-2"
+              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/55 mb-2"
             >
               Earlier releases
             </h3>
@@ -143,7 +134,7 @@ export default function ReleasesPage() {
         {/* Footer strip */}
         <footer className="border-t border-navy/10 px-6 py-10">
           <div className="max-w-5xl mx-auto">
-            <p className="text-sm text-navy/50">
+            <p className="text-sm text-navy/55">
               Release notes are updated as features ship.
             </p>
           </div>
