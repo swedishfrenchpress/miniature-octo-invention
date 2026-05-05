@@ -53,6 +53,65 @@ export const FULL_RELEASE_NOTES_URL =
 
 export const releases: Release[] = [
   {
+    version: "1.5",
+    date: "2026-05-02",
+    title: "Built from the floor",
+    summary:
+      "Tap2Pay no longer drops on retry or when the app comes back from the background. The transaction history gets a sales dashboard, real filters, and receipts you can read in place. Plus fiat rates that work in Latin America, and Numo in Korean and Japanese.",
+    heroImage: {
+      src: "/releases/v1.5/hero.jpg",
+      alt: "Numo v1.5 release",
+      width: 1200,
+      height: 675,
+    },
+    highlights: [
+      {
+        title: "Taps that don't drop",
+        body: "NFC now survives retries and survives the app coming back from the background. And when you're offline, Numo won't let you generate a payment request your customer can't pay.",
+        image: {
+          src: "/releases/v1.5/nfc.jpg",
+          alt: "Numo v1.5 — NFC and payment reliability",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "A sales dashboard",
+        body: "Open it from your transaction history. See what sold today, this week, or this month, broken out by item.",
+        image: {
+          src: "/releases/v1.5/sales-summary.jpg",
+          alt: "Numo v1.5 — sales summary dashboard",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "Filters in your activity",
+        body: "Filter the history by settled or pending. Narrow to any date range. Tap a payment to read its full receipt without leaving the screen.",
+        image: {
+          src: "/releases/v1.5/activity-filter.jpg",
+          alt: "Numo v1.5 — activity filter with All, Completed, and Pending tabs",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "Fiat rates that work in LATAM",
+        body: "Exchange rates moved from Coinbase to Yadio.io. For Latin American merchants, that means rates that keep working in countries where Coinbase is blocked. Numo also now ships in Korean and Japanese.",
+        image: {
+          src: "/releases/v1.5/fiat-rates.jpg",
+          alt: "Numo v1.5 — better fiat rates",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "Plus",
+        body: "Set ecash or Lightning as your default, and Numo opens straight to it.",
+      },
+    ],
+  },
+  {
     version: "1.4",
     date: "2026-04-17",
     title: "Every currency, a cleaner start",
