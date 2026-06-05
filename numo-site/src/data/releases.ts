@@ -53,6 +53,32 @@ export const FULL_RELEASE_NOTES_URL =
 
 export const releases: Release[] = [
   {
+    version: "1.6",
+    date: "2026-05-22",
+    title: "A new look, top to bottom",
+    summary:
+      "Numo gets an app-wide redesign — a refreshed design system, rebuilt components, and redrawn screens across every flow. Plus a running log of your wallet activity, a nudge to put your shop on the Bitcoin map, and auto-withdrawals that stop failing before they start.",
+    downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.6",
+    highlights: [
+      {
+        title: "Redesigned, end to end",
+        body: "An app-wide refresh — a new design system, refined components, and redrawn screens across the entire app. Everything you already do, cleaner to look at and easier to read.",
+      },
+      {
+        title: "A record of everything your wallet does",
+        body: "Numo now keeps a running log of your wallet activity, so you can trace transactions and wallet events and see exactly what happened, and when.",
+      },
+      {
+        title: "Put your shop on the map",
+        body: "A new onboarding banner invites you to add your location to BTCMap — the open directory of places that take Bitcoin — so nearby customers can find you.",
+      },
+      {
+        title: "Auto-withdrawals that don't bounce",
+        body: "Your auto-withdraw threshold is now checked against your Lightning address's minimum before it runs. Sweeps to your wallet stop failing on amounts that were too small to send.",
+      },
+    ],
+  },
+  {
     version: "1.5",
     date: "2026-05-02",
     title: "Built from the floor",
