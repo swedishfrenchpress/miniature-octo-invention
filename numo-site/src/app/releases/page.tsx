@@ -6,9 +6,9 @@ import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: "Releases — Numo",
+  title: "Releases - Numo",
   description:
-    "Release notes for Numo. What's shipping in the Bitcoin POS app — new features, improvements, and the story behind each version.",
+    "Release notes for Numo: what's shipping in the Bitcoin POS app, new features, improvements, and the story behind each version.",
 };
 
 const DEFAULT_DOWNLOAD = FULL_RELEASE_NOTES_URL;
@@ -39,7 +39,7 @@ export default function ReleasesPage() {
             WHAT&apos;S NEW IN NUMO
           </h1>
           <p className="mt-5 text-base md:text-lg text-white/60 max-w-[52ch]">
-            Every feature, improvement, and fix that ships — written for the
+            Every feature, improvement, and fix that ships, written for the
             people running the terminal, not the people writing the commits.
           </p>
         </div>

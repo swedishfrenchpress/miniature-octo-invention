@@ -53,16 +53,42 @@ export const FULL_RELEASE_NOTES_URL =
 
 export const releases: Release[] = [
   {
+    version: "1.7",
+    date: "2026-06-11",
+    title: "BTCPay Server arrives",
+    summary:
+      "Numo now connects directly to BTCPay Server. It generates invoices, accepts Lightning or Cashu, and syncs your Point-of-Sale inventory automatically. Plus a fix for NFC taps that were triggering Apple Pay on nearby iPhones, and broader support for mints that don't speak Lightning.",
+    downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.7",
+    highlights: [
+      {
+        title: "Your BTCPay store, connected",
+        body: "Link Numo to your BTCPay Server and it takes over invoicing: generating the request, watching for settlement, and accepting payment in Lightning or Cashu. Your Point-of-Sale items, prices, and photos import automatically, and every sale posts back to BTCPay to keep your stock count honest.",
+      },
+      {
+        title: "No more surprise Apple Pay",
+        body: "Numo could accidentally trigger the Apple Pay prompt on a nearby iPhone just by listening for NFC. That's fixed. Numo stays quiet until your customer actually taps to pay.",
+      },
+      {
+        title: "Works with mints that skip Lightning",
+        body: "If your mint doesn't support BOLT11 invoices, Numo now detects that automatically and routes the sale through Cashu instead. No more dead end on the Lightning tab.",
+      },
+      {
+        title: "Plus",
+        body: "Itemized CSV exports that break out every item in the basket, layout fixes for Sunmi V2s terminals, and product photos that no longer rotate sideways.",
+      },
+    ],
+  },
+  {
     version: "1.6",
     date: "2026-05-22",
     title: "A new look, top to bottom",
     summary:
-      "Numo gets an app-wide redesign — a refreshed design system, rebuilt components, and redrawn screens across every flow. Plus a running log of your wallet activity, a nudge to put your shop on the Bitcoin map, and auto-withdrawals that stop failing before they start.",
+      "Numo gets an app-wide redesign: a refreshed design system, rebuilt components, and redrawn screens across every flow. Plus a running log of your wallet activity, a nudge to put your shop on the Bitcoin map, and auto-withdrawals that stop failing before they start.",
     downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.6",
     highlights: [
       {
         title: "Redesigned, end to end",
-        body: "An app-wide refresh — a new design system, refined components, and redrawn screens across the entire app. Everything you already do, cleaner to look at and easier to read.",
+        body: "An app-wide refresh: a new design system, refined components, and redrawn screens across the entire app. Everything you already do, cleaner to look at and easier to read.",
       },
       {
         title: "A record of everything your wallet does",
@@ -70,7 +96,7 @@ export const releases: Release[] = [
       },
       {
         title: "Put your shop on the map",
-        body: "A new onboarding banner invites you to add your location to BTCMap — the open directory of places that take Bitcoin — so nearby customers can find you.",
+        body: "A new onboarding banner invites you to add your location to BTCMap, the open directory of places that take Bitcoin, so nearby customers can find you.",
       },
       {
         title: "Auto-withdrawals that don't bounce",
@@ -162,7 +188,7 @@ export const releases: Release[] = [
       },
       {
         title: "Redesigned onboarding",
-        body: "A short explainer carousel walks new merchants through mint selection — so you know what you're picking before you pick it.",
+        body: "A short explainer carousel walks new merchants through mint selection, so you know what you're picking before you pick it.",
         image: {
           src: "/releases/v1.4/onboarding.jpg",
           alt: "Numo v1.4 — redesigned onboarding flow",
@@ -191,7 +217,7 @@ export const releases: Release[] = [
     date: "2026-03-26",
     title: "Label every payment. Export everything.",
     summary:
-      "Tag each transaction with a label right from the POS. Export your activity as a clean spreadsheet. And a single QR code now pays with ecash or Lightning — your customers stop picking.",
+      "Tag each transaction with a label right from the POS. Export your activity as a clean spreadsheet. And a single QR code now pays with ecash or Lightning. Your customers stop picking.",
     heroImage: {
       src: "/releases/v1.3/hero.jpg",
       alt: "Numo v1.3 release — activity screen showing payments received and a withdrawal",
@@ -211,7 +237,7 @@ export const releases: Release[] = [
       },
       {
         title: "Tag every transaction",
-        body: "Label each payment directly from the POS. Keep track of what every transaction was for — without leaving the app.",
+        body: "Label each payment directly from the POS. Keep track of what every transaction was for. No need to leave the app.",
         image: {
           src: "/releases/v1.3/tags.jpg",
           alt: "Tag every transaction with a label — shop tags for Farmer's Market, Catering Deposit, Patio Tab, Inventory Raw Milk, Food Truck",
@@ -231,7 +257,7 @@ export const releases: Release[] = [
       },
       {
         title: "New transaction details",
-        body: "Tap any payment in your history to see the full context — amount, time, label, and how it settled.",
+        body: "Tap any payment in your history to see the full context: amount, time, label, and how it settled.",
       },
     ],
   },
@@ -273,7 +299,7 @@ export const releases: Release[] = [
       },
       {
         title: "Export your menu",
-        body: "CSV export for the item catalog — back it up, edit in a spreadsheet, or move it to a second device.",
+        body: "CSV export for the item catalog: back it up, edit in a spreadsheet, or move it to a second device.",
       },
       {
         title: "DKK, SEK, NOK",
@@ -290,7 +316,7 @@ export const releases: Release[] = [
     highlights: [
       {
         title: "Tap-to-pay with Cashu ecash",
-        body: "NFC payments via NDEF — customers pay by holding their phone to yours.",
+        body: "NFC payments via NDEF. Customers pay by holding their phone to yours.",
       },
       {
         title: "Lightning fallback",
@@ -302,7 +328,7 @@ export const releases: Release[] = [
       },
       {
         title: "Merchant tools",
-        body: "Item catalogs with pre-selectable items, persistent baskets, and payment history — built in.",
+        body: "Item catalogs with pre-selectable items, persistent baskets, and payment history. Built in.",
       },
     ],
   },
