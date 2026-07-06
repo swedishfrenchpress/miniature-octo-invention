@@ -1378,7 +1378,7 @@ function BTCPayIntegration() {
             BTCPay Server x Numo Integration
           </SectionHeading>
           <p className="text-lg text-navy/75 max-w-2xl mx-auto">
-            A direct integration between BTCPay Server and Numo is currently under development. Coming soon.
+            Numo connects directly to your BTCPay Server store. It generates invoices, accepts Lightning or Cashu, and keeps your Point-of-Sale inventory in sync automatically.
           </p>
         </div>
 
