@@ -683,6 +683,7 @@ const NFC_WALLETS = [
   { name: "Cashu.me", image: "/wallets/cashume.png" },
   { name: "Minibits", image: "/wallets/minibits.jpg" },
   { name: "Phoenix", image: "/wallets/phoenix.jpg" },
+  { name: "Bey", image: "/wallets/bey.png" },
 ];
 
 // Lightning wallets (standard support) - hoisted outside component
