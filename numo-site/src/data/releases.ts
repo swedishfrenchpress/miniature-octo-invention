@@ -53,6 +53,28 @@ export const FULL_RELEASE_NOTES_URL =
 
 export const releases: Release[] = [
   {
+    version: "1.8",
+    date: "2026-07-20",
+    title: "More units. A safer way back.",
+    summary:
+      "Numo now works in any base unit supported by your mint, with that unit carried through every sale, receipt, report, and export. Android wallets can also back up encrypted recovery data to Google, and the fiat currency picker is faster to scan.",
+    downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.8",
+    highlights: [
+      {
+        title: "Price and sell in your mint's unit",
+        body: "Choose a base unit in mint settings, and Numo uses it across payment requests, received payments, tips, catalog pricing, receipts, transaction history, insights, and CSV exports. Custom units turn off fiat conversion; recognized fiat units keep their standard formatting. Numo also skips Lightning mints that don't support the active unit.",
+      },
+      {
+        title: "An encrypted way back on Android",
+        body: "Opt in to back up your encrypted seed phrase and mint list to your Google account, protected by a separate recovery password of at least 12 characters. The backup refreshes whenever your recovery data changes and can restore your wallet on a new device. Android cloud backup and a device screen lock must be enabled, and Numo can't recover a forgotten recovery password.",
+      },
+      {
+        title: "Currencies you can spot faster",
+        body: "Fiat currencies now come with circular flag avatars, plus a code-based fallback where no suitable flag exists. Removing the pinned Preferred Currency header leaves more room for the searchable list.",
+      },
+    ],
+  },
+  {
     version: "1.7",
     date: "2026-06-11",
     title: "BTCPay Server arrives",
