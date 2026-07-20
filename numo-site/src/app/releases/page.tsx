@@ -66,7 +66,7 @@ export default function ReleasesPage() {
 
           <h2
             id="latest-title"
-            className="font-display text-4xl md:text-6xl text-navy leading-[0.9] font-bold mb-6 max-w-[20ch] [text-wrap:balance]"
+            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] font-bold mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
           >
             {latest.title}
           </h2>
@@ -84,7 +84,7 @@ export default function ReleasesPage() {
             <dl className="mt-14 space-y-12">
               {latestHighlights.map((h, i) => (
                 <div key={i}>
-                  <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch]">
+                  <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch] md:max-w-none md:whitespace-nowrap">
                     {h.title}
                   </dt>
                   <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
