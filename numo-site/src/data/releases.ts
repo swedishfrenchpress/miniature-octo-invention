@@ -89,12 +89,6 @@ export const releases: Release[] = [
       {
         title: "Currencies you can spot faster",
         body: "Fiat currencies now come with circular flag avatars, plus a code-based fallback where no suitable flag exists. Removing the pinned Preferred Currency header leaves more room for the searchable list.",
-        image: {
-          src: "/releases/v1.8/fiat-selector.png",
-          alt: "Numo fiat currency selector before and after adding flag avatars",
-          width: 872,
-          height: 302,
-        },
       },
     ],
   },
