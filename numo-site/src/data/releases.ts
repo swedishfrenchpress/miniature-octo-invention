@@ -58,19 +58,43 @@ export const releases: Release[] = [
     title: "More units. A safer way back.",
     summary:
       "Numo now works in any base unit supported by your mint, with that unit carried through every sale, receipt, report, and export. Android wallets can also back up encrypted recovery data to Google, and the fiat currency picker is faster to scan.",
+    heroImage: {
+      src: "/releases/v1.8/hero.png",
+      alt: "Numo v1.8 release artwork showing the point-of-sale keypad",
+      width: 1200,
+      height: 675,
+    },
     downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.8",
     highlights: [
       {
         title: "Price and sell in your mint's unit",
         body: "Choose a base unit in mint settings, and Numo uses it across payment requests, received payments, tips, catalog pricing, receipts, transaction history, insights, and CSV exports. Custom units turn off fiat conversion; recognized fiat units keep their standard formatting. Numo also skips Lightning mints that don't support the active unit.",
+        image: {
+          src: "/releases/v1.8/custom-unit.png",
+          alt: "Numo mint settings with a dialog for selecting sat or usd as the base unit",
+          width: 1200,
+          height: 675,
+        },
       },
       {
         title: "An encrypted way back on Android",
         body: "Opt in to back up your encrypted seed phrase and mint list to your Google account, protected by a separate recovery password of at least 12 characters. The backup refreshes whenever your recovery data changes and can restore your wallet on a new device. Android cloud backup and a device screen lock must be enabled, and Numo can't recover a forgotten recovery password.",
+        image: {
+          src: "/releases/v1.8/android-recovery.png",
+          alt: "Numo Security and Privacy and encrypted device backup screens",
+          width: 1200,
+          height: 675,
+        },
       },
       {
         title: "Currencies you can spot faster",
         body: "Fiat currencies now come with circular flag avatars, plus a code-based fallback where no suitable flag exists. Removing the pinned Preferred Currency header leaves more room for the searchable list.",
+        image: {
+          src: "/releases/v1.8/fiat-selector.png",
+          alt: "Numo fiat currency selector before and after adding flag avatars",
+          width: 872,
+          height: 302,
+        },
       },
     ],
   },
