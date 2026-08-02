@@ -65,7 +65,7 @@ export default function SetupPage() {
             <div className="grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
               <div className="lg:sticky lg:top-32 lg:self-start">
                 <p className="text-sm font-semibold uppercase tracking-[.25em] text-navy/45">Part one</p>
-                <h2 className="mt-4 font-display text-5xl text-navy md:text-7xl">OPEN YOUR TILL.</h2>
+                <h2 className="mt-4 font-display text-5xl text-navy md:text-7xl">SET UP YOUR TERMINAL.</h2>
                 <p className="mt-5 max-w-md text-lg leading-relaxed text-navy/65">Onboarding creates the wallet your terminal uses to receive payments. You do not need to understand Bitcoin infrastructure to get started.</p>
                 <div className="mt-8 rounded-2xl border border-navy/10 bg-white/55 p-5 text-sm leading-relaxed text-navy/65">
                   <strong className="text-navy">What is a mint?</strong><br />It is the service that issues and holds the Cashu balance received by this terminal. It is not your final payout wallet.
