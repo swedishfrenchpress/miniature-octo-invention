@@ -81,8 +81,8 @@ function ScreenshotCarousel({
         </div>
         <span className="absolute left-5 top-5 rounded-full bg-navy/90 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur">Step {stepIndex + 1}</span>
       </div>
-      <div className="mt-4 flex min-h-8 items-center justify-center gap-3 text-center">
-        <figcaption className="text-xs text-white/55">{activeScreen.caption}</figcaption>
+      <div className={`mt-4 flex items-center justify-center text-center ${compact ? "min-h-16 flex-col gap-2 px-3" : "min-h-8 gap-3"}`}>
+        <figcaption className="max-w-full text-xs leading-5 text-white/55">{activeScreen.caption}</figcaption>
         {screens.length > 1 && onSelect && (
           <div className="flex gap-1.5" aria-label={`Image ${carouselIndex + 1} of ${screens.length}`}>
             {screens.map((screen, index) => (
