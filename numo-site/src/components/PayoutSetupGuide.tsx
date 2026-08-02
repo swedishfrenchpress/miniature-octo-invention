@@ -39,10 +39,67 @@ const steps = [
   },
 ];
 
+type Screen = (typeof steps)[number]["screens"][number];
+
+function ScreenshotCarousel({
+  screens,
+  carouselIndex,
+  stepIndex,
+  onSelect,
+  compact = false,
+}: {
+  screens: readonly Screen[];
+  carouselIndex: number;
+  stepIndex: number;
+  onSelect?: (index: number) => void;
+  compact?: boolean;
+}) {
+  const activeScreen = screens[carouselIndex] ?? screens[0];
+
+  return (
+    <figure className={`w-full ${compact ? "max-w-[280px]" : "max-w-[350px]"}`} aria-live="polite">
+      <div className="relative overflow-hidden rounded-[2.25rem] bg-black p-2 shadow-[0_32px_80px_rgba(0,0,0,.35)] ring-1 ring-white/15">
+        <div className="overflow-hidden rounded-[1.75rem]">
+          <div
+            className="flex transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+          >
+            {screens.map((screen) => (
+              <div key={`${stepIndex}-${screen.src}`} className="relative w-full shrink-0">
+                <Image src={screen.src} alt={screen.alt} width={1080} height={2340} priority className="h-auto w-full" />
+                <span
+                  aria-hidden="true"
+                  className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-red-500 bg-red-500/10 shadow-[0_0_0_3px_rgba(255,255,255,.9),0_4px_16px_rgba(0,0,0,.35)]"
+                  style={{ left: `${screen.hotspot.x}%`, top: `${screen.hotspot.y}%` }}
+                >
+                  <span className="absolute inset-0 animate-ping rounded-full border-2 border-red-500 opacity-60" />
+                  <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500" />
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <span className="absolute left-5 top-5 rounded-full bg-navy/90 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur">Step {stepIndex + 1}</span>
+      </div>
+      <div className="mt-4 flex min-h-8 items-center justify-center gap-3 text-center">
+        <figcaption className="text-xs text-white/55">{activeScreen.caption}</figcaption>
+        {screens.length > 1 && onSelect && (
+          <div className="flex gap-1.5" aria-label={`Image ${carouselIndex + 1} of ${screens.length}`}>
+            {screens.map((screen, index) => (
+              <button key={screen.src} type="button" onClick={() => onSelect(index)} aria-label={`Show image ${index + 1}`} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-5 bg-mint" : "w-1.5 bg-white/30"}`} />
+            ))}
+          </div>
+        )}
+      </div>
+    </figure>
+  );
+}
+
 export function PayoutSetupGuide() {
   const [activeStep, setActiveStep] = useState(0);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const stepRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const mobileStepRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const desktopStepRefs = useRef<Array<HTMLLIElement | null>>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,7 +115,7 @@ export function PayoutSetupGuide() {
       { rootMargin: "-30% 0px -45%", threshold: [0, 0.25, 0.5, 0.75] },
     );
 
-    stepRefs.current.forEach((node) => node && observer.observe(node));
+    [...mobileStepRefs.current, ...desktopStepRefs.current].forEach((node) => node && observer.observe(node));
     return () => observer.disconnect();
   }, []);
 
@@ -72,17 +129,35 @@ export function PayoutSetupGuide() {
   }, [activeStep]);
 
   const activeScreens = steps[activeStep].screens;
-  const activeScreen = activeScreens[carouselIndex] ?? activeScreens[0];
-
   return (
-    <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_.8fr] lg:gap-20">
+    <>
+      <ol className="mt-12 space-y-16 lg:hidden">
+        {steps.map((step, index) => (
+          <li
+            key={step.title}
+            ref={(node) => { mobileStepRefs.current[index] = node; }}
+            data-step={index}
+            className="border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
+          >
+            <div className="flex gap-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mint font-display text-xl text-navy">{index + 1}</span>
+              <div><h3 className="font-display text-3xl text-white">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-white/60">{step.body}</p></div>
+            </div>
+            <div className="mt-8 flex justify-center">
+              <ScreenshotCarousel screens={step.screens} carouselIndex={index === 0 ? carouselIndex : 0} stepIndex={index} onSelect={index === 0 ? setCarouselIndex : undefined} compact />
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-12 hidden gap-12 lg:grid lg:grid-cols-[1fr_.8fr] lg:gap-20">
       <ol>
         {steps.map((step, index) => {
           const isActive = index === activeStep;
           return (
             <li
               key={step.title}
-              ref={(node) => { stepRefs.current[index] = node; }}
+              ref={(node) => { desktopStepRefs.current[index] = node; }}
               data-step={index}
               className="flex min-h-[58vh] items-center border-t border-white/10 py-16 first:border-t-0 lg:min-h-[68vh]"
             >
@@ -101,56 +176,10 @@ export function PayoutSetupGuide() {
 
       <div className="order-first lg:order-none">
         <div className="sticky top-24 flex min-h-[62vh] items-center justify-center lg:top-28 lg:min-h-[calc(100vh-8rem)]">
-          <figure className="w-full max-w-[350px]" aria-live="polite">
-            <div className="relative overflow-hidden rounded-[2.25rem] bg-black p-2 shadow-[0_32px_80px_rgba(0,0,0,.35)] ring-1 ring-white/15">
-              <div className="overflow-hidden rounded-[1.75rem]">
-                <div
-                  className="flex transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
-                  style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                >
-                  {activeScreens.map((screen) => (
-                    <div key={`${activeStep}-${screen.src}`} className="relative w-full shrink-0">
-                      <Image
-                        src={screen.src}
-                        alt={screen.alt}
-                        width={1080}
-                        height={2340}
-                        priority
-                        className="h-auto w-full"
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-red-500 bg-red-500/10 shadow-[0_0_0_3px_rgba(255,255,255,.9),0_4px_16px_rgba(0,0,0,.35)]"
-                        style={{ left: `${screen.hotspot.x}%`, top: `${screen.hotspot.y}%` }}
-                      >
-                        <span className="absolute inset-0 animate-ping rounded-full border-2 border-red-500 opacity-60" />
-                        <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500" />
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <span className="absolute left-5 top-5 rounded-full bg-navy/90 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur">Step {activeStep + 1}</span>
-            </div>
-            <div className="mt-4 flex min-h-8 items-center justify-center gap-3 text-center">
-              <figcaption className="text-xs text-white/55">{activeScreen.caption}</figcaption>
-              {activeScreens.length > 1 && (
-                <div className="flex gap-1.5" aria-label={`Image ${carouselIndex + 1} of ${activeScreens.length}`}>
-                  {activeScreens.map((screen, index) => (
-                    <button
-                      key={screen.src}
-                      type="button"
-                      onClick={() => setCarouselIndex(index)}
-                      aria-label={`Show image ${index + 1}`}
-                      className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-5 bg-mint" : "w-1.5 bg-white/30"}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </figure>
+          <ScreenshotCarousel screens={activeScreens} carouselIndex={carouselIndex} stepIndex={activeStep} onSelect={setCarouselIndex} />
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
