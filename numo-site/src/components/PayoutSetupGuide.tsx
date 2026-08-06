@@ -1,184 +1,216 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 
-const steps = [
-  {
-    title: "Open Withdrawals",
-    body: <>From the till, tap the <strong>gear in the top-right corner</strong>. Under Payments, tap <strong>Withdrawals</strong>.</>,
-    screens: [
-      { src: "/setup/05-settings.png", alt: "Numo Settings screen with Withdrawals under Payments", caption: "Tap Withdrawals under Payments", hotspot: { x: 25, y: 73 } },
-      { src: "/setup/06-auto-withdraw.png", alt: "Numo Withdraw screen with Auto-Withdraw switched off", caption: "You land on the Withdraw screen", hotspot: { x: 89, y: 39 } },
-    ],
-  },
-  {
-    title: "Switch on Auto-Withdraw",
-    body: <>Turn on the <strong>Auto-Withdraw</strong> switch. The destination and trigger settings will appear below it.</>,
-    screens: [{ src: "/setup/07-payout-details.png", alt: "Numo Auto-Withdraw screen in its active state", caption: "The green switch means Auto-Withdraw is on", hotspot: { x: 89, y: 39 } }],
-  },
-  {
-    title: "Enter your destination",
-    body: <>Tap the <strong>Lightning Address</strong> field and enter the address supplied by your Lightning wallet. Wait for the green <strong>Valid Lightning address</strong> message.</>,
-    screens: [{ src: "/setup/07-payout-details.png", alt: "Lightning Address field on the Numo Auto-Withdraw screen", caption: "Enter your address in the Destination section", hotspot: { x: 50, y: 60.5 } }],
-  },
-  {
-    title: "Choose a threshold",
-    body: <>Tap the value beside <strong>Balance Threshold</strong> and choose the balance that triggers a payout. Numo checks your address and adjusts the minimum when needed.</>,
-    screens: [{ src: "/setup/07-payout-details.png", alt: "Balance Threshold setting on the Numo Auto-Withdraw screen", caption: "The default trigger is 50,000 sat", hotspot: { x: 77, y: 81 } }],
-  },
-  {
-    title: "Choose how much to send",
-    body: <>Set the <strong>Withdraw Amount</strong> percentage. Leaving a small balance behind gives fees room to move.</>,
-    screens: [{ src: "/setup/07-payout-details.png", alt: "Withdraw Amount percentage on the Numo Auto-Withdraw screen", caption: "The default payout is 95%", hotspot: { x: 81, y: 91 } }],
-  },
-  {
-    title: "Check the green status",
-    body: <>Scroll back to the top and confirm the status says <strong>Active</strong>. There is no Save button—Numo stores these settings as you change them.</>,
-    screens: [{ src: "/setup/07-payout-details.png", alt: "Active status on the Numo Auto-Withdraw screen", caption: "Active confirms automatic payouts are enabled", hotspot: { x: 20, y: 18.5 } }],
-  },
-];
+/**
+ * Regions are expressed as percentages of the screenshot, so an annotation
+ * outlines the control instead of covering it.
+ */
+type Region = { left: number; top: number; width: number; height: number };
 
-type Screen = (typeof steps)[number]["screens"][number];
+const REGION = {
+  withdrawalsRow: { left: 3.5, top: 70.7, width: 36, height: 4.5 },
+  toggle: { left: 84.5, top: 36.7, width: 11, height: 4.1 },
+  address: { left: 8.8, top: 56.6, width: 82.4, height: 7.7 },
+  threshold: { left: 62.9, top: 77.8, width: 28, height: 6.5 },
+  amount: { left: 72.3, top: 87.9, width: 18.7, height: 6.4 },
+} satisfies Record<string, Region>;
 
-function ScreenshotCarousel({
-  screens,
-  carouselIndex,
-  stepIndex,
-  onSelect,
-  compact = false,
+/** `markerAt` picks the corner with empty screen behind it, so a marker never sits on a label. */
+type Annotation = { region: Region; marker?: string; markerAt?: "left" | "right" };
+
+function Screenshot({
+  src,
+  alt,
+  sizes,
+  annotations = [],
 }: {
-  screens: readonly Screen[];
-  carouselIndex: number;
-  stepIndex: number;
-  onSelect?: (index: number) => void;
-  compact?: boolean;
+  src: string;
+  alt: string;
+  sizes: string;
+  annotations?: readonly Annotation[];
 }) {
-  const activeScreen = screens[carouselIndex] ?? screens[0];
-
   return (
-    <figure className={`w-full ${compact ? "max-w-[280px]" : "max-w-[350px]"}`} aria-live="polite">
-      <div className="relative overflow-hidden rounded-[2.25rem] bg-black p-2 shadow-[0_32px_80px_rgba(0,0,0,.35)] ring-1 ring-white/15">
-        <div className="overflow-hidden rounded-[1.75rem]">
-          <div
-            className="flex transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
-            style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+    <div className="overflow-hidden rounded-[1.75rem] bg-black p-1.5 shadow-[0_32px_80px_rgba(0,0,0,.35)] ring-1 ring-white/15">
+      <div className="relative overflow-hidden rounded-[1.4rem]">
+        <Image src={src} alt={alt} width={1080} height={2340} sizes={sizes} className="h-auto w-full" />
+        {annotations.map(({ region, marker, markerAt = "left" }) => (
+          <span
+            key={`${region.left}-${region.top}`}
+            aria-hidden="true"
+            className="pointer-events-none absolute rounded-lg ring-2 ring-navy"
+            style={{
+              left: `${region.left}%`,
+              top: `${region.top}%`,
+              width: `${region.width}%`,
+              height: `${region.height}%`,
+            }}
           >
-            {screens.map((screen) => (
-              <div key={`${stepIndex}-${screen.src}`} className="relative w-full shrink-0">
-                <Image src={screen.src} alt={screen.alt} width={1080} height={2340} priority className="h-auto w-full" />
-                <span
-                  aria-hidden="true"
-                  className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-red-500 bg-red-500/10 shadow-[0_0_0_3px_rgba(255,255,255,.9),0_4px_16px_rgba(0,0,0,.35)]"
-                  style={{ left: `${screen.hotspot.x}%`, top: `${screen.hotspot.y}%` }}
-                >
-                  <span className="absolute inset-0 animate-ping rounded-full border-2 border-red-500 opacity-60" />
-                  <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500" />
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <span className="absolute left-5 top-5 rounded-full bg-navy/90 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur">Step {stepIndex + 1}</span>
+            {marker && (
+              <span
+                className={`absolute -top-3 flex h-6 w-6 items-center justify-center rounded-full bg-navy font-display text-sm text-mint ${
+                  markerAt === "right" ? "-right-2" : "-left-2"
+                }`}
+              >
+                {marker}
+              </span>
+            )}
+          </span>
+        ))}
       </div>
-      <div className={`mt-4 flex items-center justify-center text-center ${compact ? "min-h-16 flex-col gap-2 px-3" : "min-h-8 gap-3"}`}>
-        <figcaption className="max-w-full text-xs leading-5 text-white/55">{activeScreen.caption}</figcaption>
-        {screens.length > 1 && onSelect && (
-          <div className="flex gap-1.5" aria-label={`Image ${carouselIndex + 1} of ${screens.length}`}>
-            {screens.map((screen, index) => (
-              <button key={screen.src} type="button" onClick={() => onSelect(index)} aria-label={`Show image ${index + 1}`} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-5 bg-mint" : "w-1.5 bg-white/30"}`} />
-            ))}
-          </div>
-        )}
-      </div>
-    </figure>
+    </div>
   );
 }
 
+/**
+ * Below `sm` the badge shares the heading row rather than sitting in a gutter —
+ * a 40px badge plus its gap costs 60px of a 342px phone column, which drops the
+ * instruction text to roughly 26 characters a line.
+ */
+function StepHeading({ number, children }: { number: string; children: string }) {
+  return (
+    <div className="flex items-center gap-4">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mint font-display text-xl text-navy">
+        {number}
+      </span>
+      <h3 className="font-display text-3xl [text-wrap:balance] text-white md:text-4xl">{children}</h3>
+    </div>
+  );
+}
+
+const settings = [
+  {
+    marker: "A",
+    name: "Lightning Address",
+    body: (
+      <>
+        Tap the field and enter the address your Lightning wallet gave you. Wait for the green{" "}
+        <strong className="font-semibold text-white">Valid Lightning address</strong> message before moving on.
+      </>
+    ),
+    region: REGION.address,
+    markerAt: "right" as const,
+  },
+  {
+    marker: "B",
+    name: "Balance Threshold",
+    body: (
+      <>
+        The balance that triggers a payout. Numo checks your address and raises this figure if your wallet needs a
+        larger minimum.
+      </>
+    ),
+    region: REGION.threshold,
+  },
+  {
+    marker: "C",
+    name: "Withdraw Amount",
+    body: <>The share of the balance to send. The remainder stays on the terminal to cover network fees.</>,
+    region: REGION.amount,
+  },
+];
+
 export function PayoutSetupGuide() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const mobileStepRefs = useRef<Array<HTMLLIElement | null>>([]);
-  const desktopStepRefs = useRef<Array<HTMLLIElement | null>>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        const index = Number((visible.target as HTMLElement).dataset.step);
-        setActiveStep(index);
-        setCarouselIndex(0);
-      },
-      { rootMargin: "-30% 0px -45%", threshold: [0, 0.25, 0.5, 0.75] },
-    );
-
-    [...mobileStepRefs.current, ...desktopStepRefs.current].forEach((node) => node && observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const screenCount = steps[activeStep].screens.length;
-    if (screenCount < 2) return;
-    const timer = window.setInterval(() => {
-      setCarouselIndex((current) => (current + 1) % screenCount);
-    }, 2400);
-    return () => window.clearInterval(timer);
-  }, [activeStep]);
-
-  const activeScreens = steps[activeStep].screens;
   return (
     <>
-      <ol className="mt-12 space-y-16 lg:hidden">
-        {steps.map((step, index) => (
-          <li
-            key={step.title}
-            ref={(node) => { mobileStepRefs.current[index] = node; }}
-            data-step={index}
-            className="border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
-          >
-            <div className="flex gap-4">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mint font-display text-xl text-navy">{index + 1}</span>
-              <div><h3 className="font-display text-3xl text-white">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-white/60">{step.body}</p></div>
+      <ol className="mt-14 max-w-4xl space-y-20 md:space-y-28">
+        <li className="grid gap-8 lg:grid-cols-[1fr_17rem] lg:items-center lg:gap-14">
+          <div>
+            <StepHeading number="1">Open Withdrawals</StepHeading>
+            <div className="sm:pl-14">
+              <p className="mt-4 max-w-[36rem] text-lg leading-[1.75] tracking-[0.005em] [text-wrap:pretty] text-white/75">
+                From the till, tap the <strong className="font-semibold text-white">gear in the top-right corner</strong>.
+                Under Payments, tap <strong className="font-semibold text-white">Withdrawals</strong>.
+              </p>
             </div>
-            <div className="mt-8 flex justify-center">
-              <ScreenshotCarousel screens={step.screens} carouselIndex={index === 0 ? carouselIndex : 0} stepIndex={index} onSelect={index === 0 ? setCarouselIndex : undefined} compact />
+          </div>
+          <figure className="mx-auto w-full max-w-[22rem] lg:mx-0 lg:max-w-none">
+            <Screenshot
+              src="/setup/05-settings.png"
+              alt="Numo Settings screen. Withdrawals sits under the Payments heading."
+              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              annotations={[{ region: REGION.withdrawalsRow }]}
+            />
+            <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
+              Settings, with Withdrawals outlined.
+            </figcaption>
+          </figure>
+        </li>
+
+        <li className="grid gap-8 lg:grid-cols-[1fr_17rem] lg:items-center lg:gap-14">
+          <div>
+            <StepHeading number="2">Switch on Auto-Withdraw</StepHeading>
+            <div className="sm:pl-14">
+              <p className="mt-4 max-w-[36rem] text-lg leading-[1.75] tracking-[0.005em] [text-wrap:pretty] text-white/75">
+                You land on the Withdraw screen with the status reading{" "}
+                <strong className="font-semibold text-white">Inactive</strong>. Turn on the{" "}
+                <strong className="font-semibold text-white">Auto-Withdraw</strong> switch — the status flips to Active
+                and the destination and trigger settings appear underneath, as in step 3.
+              </p>
             </div>
-          </li>
-        ))}
+          </div>
+          <figure className="mx-auto w-full max-w-[22rem] lg:mx-0 lg:max-w-none">
+            <Screenshot
+              src="/setup/06-auto-withdraw.png"
+              alt="Numo Withdraw screen with the status reading Inactive and the Auto-Withdraw switch turned off."
+              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              annotations={[{ region: REGION.toggle }]}
+            />
+            <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
+              Before the switch: no destination, no trigger settings.
+            </figcaption>
+          </figure>
+        </li>
+
+        <li className="grid gap-10 lg:grid-cols-[1fr_17rem] lg:items-center lg:gap-14">
+          <div>
+            <StepHeading number="3">Fill in the three settings</StepHeading>
+            <div className="sm:pl-14">
+              <p className="mt-4 max-w-[36rem] text-lg leading-[1.75] tracking-[0.005em] [text-wrap:pretty] text-white/75">
+                They all live on this one screen. There is no Save button — Numo stores each value as you change it.
+              </p>
+              <dl className="mt-8 max-w-lg divide-y divide-white/15 border-y border-white/15">
+                {settings.map((setting) => (
+                  <div key={setting.marker} className="flex gap-4 py-5">
+                    <span
+                      aria-hidden="true"
+                      className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white font-display text-sm text-navy"
+                    >
+                      {setting.marker}
+                    </span>
+                    <div>
+                      <dt className="text-base font-bold tracking-[0.01em] text-white">
+                        <span className="sr-only">{setting.marker}. </span>
+                        {setting.name}
+                      </dt>
+                      <dd className="mt-1.5 max-w-[28rem] text-sm leading-[1.7] tracking-[0.005em] [text-wrap:pretty] text-white/75">
+                        {setting.body}
+                      </dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+          <figure className="mx-auto w-full max-w-[22rem] lg:mx-0 lg:max-w-none">
+            <Screenshot
+              src="/setup/07-payout-details.png"
+              alt="Numo Withdraw screen with Auto-Withdraw active, showing the Lightning Address field, a 50,000 sat Balance Threshold and a 95% Withdraw Amount."
+              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              annotations={settings.map(({ region, marker, markerAt }) => ({ region, marker, markerAt }))}
+            />
+            <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
+              After the switch: Destination and Trigger Settings have appeared. A, B and C mark the three values to
+              set.
+            </figcaption>
+          </figure>
+        </li>
       </ol>
 
-      <div className="mt-12 hidden gap-12 lg:grid lg:grid-cols-[1fr_.8fr] lg:gap-20">
-      <ol>
-        {steps.map((step, index) => {
-          const isActive = index === activeStep;
-          return (
-            <li
-              key={step.title}
-              ref={(node) => { desktopStepRefs.current[index] = node; }}
-              data-step={index}
-              className="flex min-h-[58vh] items-center border-t border-white/10 py-16 first:border-t-0 lg:min-h-[68vh]"
-            >
-              <div className={`flex gap-5 transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-35"}`}>
-                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-display text-xl transition-colors duration-300 ${isActive ? "bg-mint text-navy" : "border border-white/25 text-white"}`}>{index + 1}</span>
-                <div>
-                  <h3 className="font-display text-3xl text-white md:text-4xl">{step.title}</h3>
-                  <p className="mt-3 max-w-lg text-base leading-relaxed text-white/60">{step.body}</p>
-                  <p className={`mt-5 text-xs font-semibold uppercase tracking-[.18em] text-mint transition-opacity ${isActive ? "opacity-100" : "opacity-0"}`}>Shown on the right</p>
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-
-      <div className="order-first lg:order-none">
-        <div className="sticky top-24 flex min-h-[62vh] items-center justify-center lg:top-28 lg:min-h-[calc(100vh-8rem)]">
-          <ScreenshotCarousel screens={activeScreens} carouselIndex={carouselIndex} stepIndex={activeStep} onSelect={setCarouselIndex} />
-        </div>
-      </div>
+      <div className="mt-20 max-w-4xl rounded-[2rem] bg-mint p-8 text-navy md:mt-28 md:p-12">
+        <h3 className="font-display text-4xl [text-wrap:balance] md:text-5xl">That&rsquo;s the till open.</h3>
+        <p className="mt-4 max-w-[36rem] text-lg leading-[1.6] [text-wrap:pretty] text-navy/75">
+          When the badge at the top of the Withdraw screen reads Active, sales land on the terminal and leave for your
+          Lightning wallet on their own. Take one small payment to watch a full round trip before you trade.
+        </p>
       </div>
     </>
   );

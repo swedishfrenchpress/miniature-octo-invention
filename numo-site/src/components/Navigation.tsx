@@ -132,7 +132,9 @@ export function Navigation() {
           isMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
-        <div className="overflow-hidden">
+        {/* inert keeps the collapsed links out of the tab order and the a11y tree —
+            grid-rows-[0fr] hides them visually but leaves them focusable on their own. */}
+        <div className="overflow-hidden" inert={!isMenuOpen}>
           <div className="max-w-7xl mx-auto px-6 pb-6 pt-2">
             <ul
               style={{ fontFamily: "var(--font-display)" }}
