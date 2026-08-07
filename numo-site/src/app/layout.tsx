@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, Bebas_Neue, Dancing_Script, Grandstander } from "next/font/google";
+import { Sora, Bebas_Neue, Grandstander } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -8,7 +8,9 @@ import "./globals.css";
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  // 700 is no longer referenced anywhere; each weight is a font file every
+  // visitor downloads.
+  weight: ["400", "500", "600"],
 });
 
 // Bold display font
@@ -18,24 +20,17 @@ const bebas = Bebas_Neue({
   weight: ["400"],
 });
 
-// Cursive font for taglines
-const dancing = Dancing_Script({
-  variable: "--font-cursive",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-// Grandstander font for NUMO footer branding
+// Grandstander font for NUMO footer branding — the single 400-weight wordmark
 const grandstander = Grandstander({
   variable: "--font-grandstander",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
   title: "Numo - Bitcoin Payments Made Simple",
-  description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay, powered entirely by Bitcoin.",
-  keywords: ["bitcoin", "payments", "terminal", "point of sale", "NFC", "tap to pay", "cashu", "lightning"],
+  description: "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay — no extra hardware, no platform fees.",
+  keywords: ["bitcoin", "payments", "point of sale", "android", "NFC", "tap to pay", "cashu", "ecash", "lightning", "merchant"],
   icons: {
     icon: [
       { url: "/favicon/favicon.ico" },
@@ -46,7 +41,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Numo - Bitcoin Payments Made Simple",
-    description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay.",
+    description: "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     type: "website",
     siteName: "Numo",
     images: [
@@ -61,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Numo - Bitcoin Payments Made Simple",
-    description: "Accept Bitcoin payments with a tap. NFC-enabled terminal that feels as natural as Apple Pay.",
+    description: "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     images: ["https://numopay.org/og-image.jpg"],
   },
   other: {
@@ -78,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sora.variable} ${bebas.variable} ${dancing.variable} ${grandstander.variable} antialiased font-sans`}
+        className={`${sora.variable} ${bebas.variable} ${grandstander.variable} antialiased font-sans`}
       >
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

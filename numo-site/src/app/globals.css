@@ -15,21 +15,7 @@
   /* Warm: Cream tones - soft backgrounds */
   --cream: #FAF8F5;
   --cream-warm: #F5F0E8;
-  
-  /* Extended palette for wallet pills */
-  --blue-soft: #E0F2FE;
-  --blue: #7DD3FC;
-  --yellow-soft: #FEF3C7;
-  --yellow: #FCD34D;
-  --red-soft: #FEE2E2;
-  --red: #FCA5A5;
-  --orange-soft: #FFEDD5;
-  --orange: #FDBA74;
-  --purple-soft: #F3E8FF;
-  --purple: #C4B5FD;
-  --teal-soft: #CCFBF1;
-  --teal: #5EEAD4;
-  
+
   /* Neutral: Grays - UI elements */
   --white: #FFFFFF;
   --gray-50: #FAFAFA;
@@ -54,18 +40,6 @@
   --color-mint-pale: var(--mint-pale);
   --color-cream: var(--cream);
   --color-cream-warm: var(--cream-warm);
-  --color-blue-soft: var(--blue-soft);
-  --color-blue: var(--blue);
-  --color-yellow-soft: var(--yellow-soft);
-  --color-yellow: var(--yellow);
-  --color-red-soft: var(--red-soft);
-  --color-red: var(--red);
-  --color-orange-soft: var(--orange-soft);
-  --color-orange: var(--orange);
-  --color-purple-soft: var(--purple-soft);
-  --color-purple: var(--purple);
-  --color-teal-soft: var(--teal-soft);
-  --color-teal: var(--teal);
   --color-white: var(--white);
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
@@ -76,16 +50,16 @@
   --color-gray-600: var(--gray-600);
   --font-sans: var(--font-sora);
   --font-display: var(--font-bebas);
-  --font-cursive: var(--font-cursive);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No `scroll-behavior: smooth` on html. It animated every programmatic scroll —
+   including the 5,000px jumps a nav anchor produces — which stalled the renderer
+   and left the viewport blank mid-flight. In-page anchors now scroll explicitly
+   from Navigation.tsx, which can honour prefers-reduced-motion per call. */
 
 /* Respect user's motion preferences - CRITICAL for accessibility */
 @media (prefers-reduced-motion: reduce) {
@@ -94,7 +68,10 @@ html {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    /* Delays too, or a staggered reveal still waits out its delay before snapping in */
+    animation-delay: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -129,7 +106,7 @@ body {
   z-index: 1000;
   background: var(--navy);
   color: var(--white);
-  padding: 10px 14px;
+  padding: 12px 18px;
   border-radius: 999px;
   font-size: 0.875rem;
   transform: translateY(-200%);
@@ -157,11 +134,6 @@ body {
   letter-spacing: 0.01em;
   text-transform: uppercase;
   line-height: 0.9;
-}
-
-/* Cursive font */
-.font-cursive {
-  font-family: var(--font-cursive);
 }
 
 /* Grandstander font */
@@ -291,222 +263,73 @@ body {
   }
 }
 
-/* Zero slice animation - text cut in half effect */
-@keyframes slice-top {
-  0%, 95% { 
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% { 
-    transform: translateY(-6px);
-    opacity: 1;
-  }
-}
+/* Fee slicing — the one mechanic this card exists to show: a platform fee gets
+   cut in half and falls away. 12s loop, the two numerals cut at different moments.
 
-@keyframes slice-bottom {
-  0%, 95% { 
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% { 
-    transform: translateY(6px);
-    opacity: 1;
-  }
-}
+   Timing is the whole trick. The earlier version left each numeral sitting split
+   and fully opaque for ~5s of every loop, which reads as broken text rather than
+   as a cut. Now each one is intact and legible for most of its time on screen,
+   the red line slashes, and the halves come apart and drop within about a second.
 
-.zero-slice-container {
-  position: relative;
-  display: inline-block;
-}
+   All opacity lives on the container; the halves only ever transform. */
 
-.zero-slice-top,
-.zero-slice-bottom {
-  display: inline-block;
-}
-
-.zero-slice-top {
-  clip-path: inset(0 0 50% 0);
-  animation: slice-top 8.5s ease-out forwards;
-}
-
-.zero-slice-bottom {
-  position: absolute;
-  left: 0;
-  top: 0;
-  clip-path: inset(50% 0 0 0);
-  animation: slice-bottom 8.5s ease-out forwards;
-}
-
-/* Fee slicing animation - 12 second loop with heavily staggered timing */
-
-/* ===== FIRST FEE: 2.9% - appears first, cuts at ~3.5s ===== */
+/* ===== FIRST FEE: 2.9% — cut at 38% (~4.6s) ===== */
 @keyframes fee-1-container {
-  /* Fade in (0-7% = 0-0.84s) */
-  0% {
-    opacity: 0;
-    transform: rotate(-4deg) translateY(10px);
-  }
-  7% {
-    opacity: 1;
-    transform: rotate(-4deg) translateY(0);
-  }
-  
-  /* Float/hover (7-30% = 0.84-3.6s) */
-  12% {
-    transform: rotate(-4deg) translateY(-5px);
-  }
-  20% {
-    transform: rotate(-4deg) translateY(3px);
-  }
-  28% {
-    transform: rotate(-4deg) translateY(0);
-  }
-  
-  /* Hold during slice and after (30-83%) */
-  30%, 83% {
-    opacity: 1;
-    transform: rotate(-4deg) translateY(0);
-  }
-  
-  /* Fade out (83-100% = 10-12s) */
-  83% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: rotate(-4deg) translateY(0);
-  }
+  0%        { opacity: 0; transform: rotate(-4deg) translateY(10px); }
+  5%        { opacity: 1; transform: rotate(-4deg) translateY(0); }
+  14%       { transform: rotate(-4deg) translateY(-5px); }
+  26%       { transform: rotate(-4deg) translateY(3px); }
+  36%       { opacity: 1; transform: rotate(-4deg) translateY(0); }
+  48%, 100% { opacity: 0; transform: rotate(-4deg) translateY(0); }
 }
 
 @keyframes fee-1-slice-top {
-  /* Normal (0-30% = 0-3.6s) */
-  0%, 30% {
-    transform: translateY(0);
-  }
-  /* Slice up (30-35% = 3.6-4.2s) */
-  35%, 100% {
-    transform: translateY(-18px);
-  }
+  0%, 36%   { transform: translateY(0) rotate(0deg); }
+  40%       { transform: translateY(-14px) rotate(-3deg); }
+  48%, 100% { transform: translateY(-46px) rotate(-10deg); }
 }
 
 @keyframes fee-1-slice-bottom {
-  /* Normal (0-30% = 0-3.6s) */
-  0%, 30% {
-    transform: translateY(0);
-  }
-  /* Slice down (30-35% = 3.6-4.2s) */
-  35%, 100% {
-    transform: translateY(18px);
-  }
+  0%, 36%   { transform: translateY(0) rotate(0deg); }
+  40%       { transform: translateY(14px) rotate(3deg); }
+  48%, 100% { transform: translateY(46px) rotate(10deg); }
 }
 
 @keyframes slice-line-1 {
-  /* Hidden (0-30%) */
-  0%, 30% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  /* Slash (30-32%) */
-  31% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  /* Fade (32-40%) */
-  40% {
-    transform: scaleX(1);
-    opacity: 0;
-  }
-  40%, 100% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
+  0%, 35%   { transform: scaleX(0); opacity: 0; }
+  36%       { transform: scaleX(1); opacity: 1; }
+  42%       { transform: scaleX(1); opacity: 0; }
+  43%, 100% { transform: scaleX(0); opacity: 0; }
 }
 
-/* ===== SECOND FEE: 30¢ - appears later, cuts much later (~6s after first) ===== */
+/* ===== SECOND FEE: 30¢ — arrives later, cut at 68% (~8.2s) ===== */
 @keyframes fee-2-container {
-  /* Stay hidden initially (0-10% = 0-1.2s) */
-  0%, 10% {
-    opacity: 0;
-    transform: rotate(3deg) translateY(10px);
-  }
-  /* Fade in (10-18% = 1.2-2.16s) */
-  18% {
-    opacity: 1;
-    transform: rotate(3deg) translateY(0);
-  }
-  
-  /* Float/hover (18-55% = 2.16-6.6s) - longer hover before cut */
-  25% {
-    transform: rotate(3deg) translateY(-5px);
-  }
-  35% {
-    transform: rotate(3deg) translateY(3px);
-  }
-  45% {
-    transform: rotate(3deg) translateY(-3px);
-  }
-  55% {
-    transform: rotate(3deg) translateY(0);
-  }
-  
-  /* Hold during slice and after (55-83%) */
-  55%, 83% {
-    opacity: 1;
-    transform: rotate(3deg) translateY(0);
-  }
-  
-  /* Fade out (83-100% = 10-12s) */
-  83% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: rotate(3deg) translateY(0);
-  }
+  0%, 12%   { opacity: 0; transform: rotate(3deg) translateY(10px); }
+  18%       { opacity: 1; transform: rotate(3deg) translateY(0); }
+  28%       { transform: rotate(3deg) translateY(-5px); }
+  44%       { transform: rotate(3deg) translateY(3px); }
+  56%       { transform: rotate(3deg) translateY(-3px); }
+  78%       { opacity: 1; transform: rotate(3deg) translateY(0); }
+  90%, 100% { opacity: 0; transform: rotate(3deg) translateY(0); }
 }
 
 @keyframes fee-2-slice-top {
-  /* Normal (0-55% = 0-6.6s) - cuts ~3 seconds after first! */
-  0%, 55% {
-    transform: translateY(0);
-  }
-  /* Slice up (55-60% = 6.6-7.2s) */
-  60%, 100% {
-    transform: translateY(-18px);
-  }
+  0%, 78%   { transform: translateY(0) rotate(0deg); }
+  82%       { transform: translateY(-14px) rotate(-3deg); }
+  90%, 100% { transform: translateY(-46px) rotate(-10deg); }
 }
 
 @keyframes fee-2-slice-bottom {
-  /* Normal (0-55% = 0-6.6s) */
-  0%, 55% {
-    transform: translateY(0);
-  }
-  /* Slice down (55-60% = 6.6-7.2s) */
-  60%, 100% {
-    transform: translateY(18px);
-  }
+  0%, 78%   { transform: translateY(0) rotate(0deg); }
+  82%       { transform: translateY(14px) rotate(3deg); }
+  90%, 100% { transform: translateY(46px) rotate(10deg); }
 }
 
 @keyframes slice-line-2 {
-  /* Hidden (0-55%) */
-  0%, 55% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  /* Slash (55-57%) */
-  56% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  /* Fade (57-65%) */
-  65% {
-    transform: scaleX(1);
-    opacity: 0;
-  }
-  65%, 100% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
+  0%, 77%   { transform: scaleX(0); opacity: 0; }
+  78%       { transform: scaleX(1); opacity: 1; }
+  84%       { transform: scaleX(1); opacity: 0; }
+  85%, 100% { transform: scaleX(0); opacity: 0; }
 }
 
 /* Offline payment animation - staggered trail of bills with more space */
@@ -625,14 +448,11 @@ body {
   }
 }
 
-/* POS success - only activates after money arrives */
+/* POS success — transparent until the sale lands, then a mint flash. The screen's
+   resting colour belongs to the device markup, not to the keyframe. */
 @keyframes pos-success {
-  0%, 88% {
-    background-color: #1a1a2e;
-  }
-  92%, 100% {
-    background-color: var(--mint);
-  }
+  0%, 88%   { background-color: transparent; }
+  92%, 100% { background-color: var(--mint); }
 }
 
 /* Checkmark appears only when money arrives */
@@ -653,80 +473,23 @@ body {
 
 /* Tap to Pay Animation Keyframes */
 
-/* Phone fade in and gentle hover - 5 second loop */
+/* Customer phone — a gentle float, and that is all. It used to fade to nothing
+   for the last 15% of every loop, which left the tap illustration showing one
+   phone and no one to tap it. Both devices stay on screen; the waves and the
+   till's success flash are what move. */
 @keyframes phone-hover {
-  /* Fade in (0-10% = 0-0.5s) */
-  0% {
-    opacity: 0;
-    transform: translateY(0) rotate(-2deg);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(0) rotate(-2deg);
-  }
-  
-  /* Gentle hover up (10-30% = 0.5-1.5s) */
-  10%, 30% {
-    opacity: 1;
-  }
-  20% {
-    transform: translateY(-6px) rotate(-2deg);
-  }
-  30% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  
-  /* Gentle hover up (30-50% = 1.5-2.5s) */
-  40% {
-    transform: translateY(-6px) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  
-  /* Gentle hover up (50-70% = 2.5-3.5s) */
-  60% {
-    transform: translateY(-6px) rotate(-2deg);
-  }
-  70% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  
-  /* Hold and fade out (70-100% = 3.5-5s) */
-  70%, 85% {
-    opacity: 1;
-    transform: translateY(0) rotate(-2deg);
-  }
-  95%, 100% {
-    opacity: 0;
-    transform: translateY(0) rotate(-2deg);
-  }
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  20%      { transform: translateY(-6px) rotate(-2deg); }
+  40%      { transform: translateY(0) rotate(-2deg); }
+  60%      { transform: translateY(-6px) rotate(-2deg); }
+  80%      { transform: translateY(0) rotate(-2deg); }
 }
 
-/* POS Screen Success State */
+/* Till screen success flash (5s tap loop) */
 @keyframes pos-screen-success {
-  /* Default dark screen (0-55% = 0-2.75s) */
-  0%, 55% {
-    background-color: #0d0d0d;
-  }
-  /* Success green (55-85% = 2.75-4.25s) */
-  55% {
-    background-color: #0d0d0d;
-  }
-  58% {
-    background-color: var(--mint);
-  }
-  /* Hold green */
-  58%, 82% {
-    background-color: var(--mint);
-  }
-  /* Fade back to dark (82-100%) */
-  82% {
-    background-color: var(--mint);
-  }
-  88%, 100% {
-    background-color: #0d0d0d;
-  }
+  0%, 55%   { background-color: transparent; }
+  58%, 82%  { background-color: var(--mint); }
+  88%, 100% { background-color: transparent; }
 }
 
 /* Checkmark fade in */
@@ -905,5 +668,18 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--navy);
-  border-radius: 4px;
+  border-radius: 9999px;
+}
+
+/* Till amount — visible while the screen is dark, gone while it flashes mint.
+   Paired with pos-screen-success (5s, tap card) and pos-success (3.5s, offline card). */
+@keyframes till-amount {
+  0%, 55%   { opacity: 1; }
+  58%, 82%  { opacity: 0; }
+  88%, 100% { opacity: 1; }
+}
+
+@keyframes till-amount-offline {
+  0%, 88%  { opacity: 1; }
+  92%, 100% { opacity: 0; }
 }

@@ -2,19 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import { PayoutSetupGuide } from "@/components/PayoutSetupGuide";
 
 export const metadata: Metadata = {
-  title: "Set up Numo — Merchant Guide",
+  title: "Set up Numo - Merchant Guide",
   description:
-    "A practical guide to setting up Numo, choosing a mint, and sending sales to your Lightning wallet automatically.",
+    "Install Numo, pick a mint, and switch on auto-withdraw so sales move to your own Lightning wallet.",
 };
-
-const ArrowDown = () => (
-  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0-5-5m5 5 5-5" />
-  </svg>
-);
 
 function AppScreenshot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
   return (
@@ -38,10 +33,30 @@ function AppScreenshot({ src, alt, caption }: { src: string; alt: string; captio
 
 const onboardingSteps = [
   {
-    title: "Open Numo",
+    title: "Install the app",
     body: (
       <>
-        Download the latest APK, install it on an NFC-enabled Android device, then tap the white{" "}
+        Download the latest APK from{" "}
+        <a
+          href="https://github.com/cashubtc/Numo/releases"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-navy underline underline-offset-2 hover:text-navy/70"
+        >
+          GitHub releases
+        </a>{" "}
+        or{" "}
+        <a
+          href="https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-navy underline underline-offset-2 hover:text-navy/70"
+        >
+          Zapstore
+        </a>
+        . When you open the file, Android asks you to allow installs from this source. That
+        prompt is normal for any app from outside the Play Store. Approve it, finish the
+        install, then tap the white{" "}
         <strong className="font-semibold text-navy">Get Started</strong> button.
       </>
     ),
@@ -66,10 +81,10 @@ const onboardingSteps = [
     title: "Keep or change the default mint",
     body: (
       <>
-        Numo selects a default mint for you. For the quickest setup, leave it selected and tap{" "}
-        <strong className="font-semibold text-navy">Continue</strong>. You can tap a popular mint to make it the
-        default, or use <strong className="font-semibold text-navy">Add New Mint</strong> if your business already has
-        one.
+        Numo picks a default mint for you. Leave it and tap{" "}
+        <strong className="font-semibold text-navy">Continue</strong> to start trading soonest. To use a different one,
+        tap any mint in the popular list, or use{" "}
+        <strong className="font-semibold text-navy">Add New Mint</strong> if your business already has one.
       </>
     ),
     image: "/setup/03-select-mint.png",
@@ -96,11 +111,14 @@ const onboardingSteps = [
   },
 ];
 
+// The closing card of Part two already tells the merchant to take a test payment,
+// so this list is what to check once they have. Repeating the instruction here
+// made the page say the same thing twice in consecutive blocks.
 const preflight = [
-  "Take one small test payment",
-  "Confirm the sale appears in Activity",
-  "Check that your Lightning address is valid",
-  "Keep the device charged and connected",
+  "The sale appears in Activity",
+  "The payout badge still reads Active",
+  "Your Lightning address still shows as valid",
+  "The terminal is charged and connected",
 ];
 
 export default function SetupPage() {
@@ -117,18 +135,9 @@ export default function SetupPage() {
               <span className="block">From download</span>
               <span className="block">to first sale.</span>
             </h1>
-            <div className="mt-9 flex max-w-3xl flex-col gap-7 border-l-2 border-mint pl-6 md:flex-row md:items-end md:justify-between">
-              <p className="max-w-xl text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
-                Set up Numo, choose where payments arrive, and automatically move sales to your own Lightning wallet.
-              </p>
-              <a
-                href="#onboarding"
-                className="-my-3 inline-flex min-h-11 shrink-0 items-center gap-2 py-3 text-sm font-semibold text-mint hover:text-white"
-              >
-                Start the guide
-                <ArrowDown />
-              </a>
-            </div>
+            <p className="mt-9 max-w-[38rem] text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
+              Part one opens the till. Part two points it at your own Lightning wallet.
+            </p>
           </div>
           <div
             aria-hidden="true"
@@ -136,16 +145,16 @@ export default function SetupPage() {
           />
         </section>
 
-        <section aria-label="What you need before you start" className="border-b border-navy/10 bg-mint px-6 py-6">
+        <section aria-labelledby="youll-need" className="border-b border-navy/10 bg-mint px-6 py-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:gap-8">
-            <h2 className="shrink-0 font-display text-3xl [text-wrap:balance] text-navy md:text-4xl">You&rsquo;ll need</h2>
+            <h2 id="youll-need" className="shrink-0 font-display text-3xl [text-wrap:balance] text-navy md:text-4xl">You&rsquo;ll need</h2>
             <ul className="flex flex-col gap-2 text-sm font-semibold text-navy md:flex-row md:flex-wrap md:items-center md:gap-x-8">
               <li>About 5 minutes</li>
               <li>An NFC-enabled Android phone</li>
               <li>
-                A Lightning address for payouts —{" "}
+                A Lightning address for payouts, from any{" "}
                 <a href="/#wallets" className="underline decoration-navy/40 underline-offset-4 hover:decoration-navy">
-                  see supported wallets
+                  supported wallet
                 </a>
               </li>
             </ul>
@@ -157,12 +166,12 @@ export default function SetupPage() {
             <p className="text-sm font-semibold uppercase tracking-[.25em] text-navy/70">Part one</p>
             <h2 className="mt-4 max-w-2xl font-display text-[clamp(3rem,5vw,4.5rem)] [text-wrap:balance] text-navy">Set up your terminal.</h2>
             <p className="mt-5 max-w-xl text-lg leading-[1.6] [text-wrap:pretty] text-navy/70">
-              Onboarding creates the wallet your terminal receives payments into. Four screens, then you are trading.
+              These four screens create the wallet your terminal takes payments into. Then you are trading.
             </p>
-            <p className="mt-6 max-w-[30rem] rounded-2xl bg-white/70 p-5 text-sm leading-[1.6] [text-wrap:pretty] text-navy/75">
-              <strong className="font-semibold text-navy">What is a mint?</strong> It is the service that issues and
-              holds the Cashu balance received by this terminal. It is not your final payout wallet — step 3 is where
-              you pick one, and Part two is where you send the money on.
+            <p className="mt-6 max-w-[38rem] rounded-2xl bg-white/70 p-5 text-sm leading-[1.6] [text-wrap:pretty] text-navy/75">
+              <strong className="font-semibold text-navy">What is a mint?</strong> The service that issues and holds
+              the Cashu balance your terminal takes in. It is not your payout wallet. You pick a mint in step 3, and
+              Part two moves the money on to a wallet you own.
             </p>
 
             <ol className="mt-14 max-w-4xl space-y-20 md:space-y-28">
@@ -202,9 +211,9 @@ export default function SetupPage() {
             <p className="text-sm font-semibold uppercase tracking-[.25em] text-mint">Part two</p>
             <h2 className="mt-4 max-w-2xl font-display text-[clamp(3rem,5vw,4.5rem)] [text-wrap:balance]">Send sales to your wallet.</h2>
             <p className="mt-5 max-w-xl text-lg leading-[1.7] tracking-[0.005em] [text-wrap:pretty] text-white/75">
-              A Lightning address looks like an email address — such as{" "}
-              <span className="text-white">shop@wallet.com</span>. Numo can send funds there whenever the terminal
-              balance reaches an amount you choose.
+              A Lightning address looks like an email address, for example{" "}
+              <span className="text-white">shop@wallet.com</span>. Numo sends funds there every time the terminal
+              balance reaches an amount you set.
             </p>
             <PayoutSetupGuide />
           </div>
@@ -218,12 +227,12 @@ export default function SetupPage() {
                 <span className="block">95% out.</span>
               </h2>
               <p className="mt-5 max-w-[36rem] text-lg leading-[1.6] [text-wrap:pretty] text-navy/70">
-                Numo ships with those two values. Adjust either to suit how much you sell in a day — a busy counter can
-                afford a higher threshold, a market stall usually wants a lower one.
+                Numo ships with those two values. Change either to match a day&rsquo;s takings. A busy counter can sit
+                on a higher threshold. A market stall usually wants a lower one.
               </p>
             </div>
             <div className="rounded-[2rem] bg-cream p-8 md:p-12">
-              <h2 className="font-display text-4xl [text-wrap:balance] text-navy">Before the first customer</h2>
+              <h2 className="font-display text-4xl [text-wrap:balance] text-navy">Check after the test sale</h2>
               <ul className="mt-7 space-y-4 text-base leading-[1.5] text-navy/75">
                 {preflight.map((item) => (
                   <li key={item} className="flex gap-3">
@@ -240,19 +249,7 @@ export default function SetupPage() {
         </section>
       </main>
 
-      <footer className="bg-cream-warm px-6 py-16">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <div>
-            <p className="font-display text-4xl [text-wrap:balance] text-navy md:text-5xl">Get the app.</p>
-            <p className="mt-2 max-w-[33rem] leading-[1.6] [text-wrap:pretty] text-navy/70">
-              Numo is free and open source. Step one starts at the GitHub releases page.
-            </p>
-          </div>
-          <Button href="https://github.com/cashubtc/Numo/releases" variant="dark" external>
-            Download the APK
-          </Button>
-        </div>
-      </footer>
+      <SiteFooter note="Numo is free and open source. Step one starts at the GitHub releases page." />
     </>
   );
 }

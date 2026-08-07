@@ -4,6 +4,7 @@ import { ReleaseEntry } from "@/components/ReleaseEntry";
 import { ReleaseImage } from "@/components/ReleaseImage";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Releases - Numo",
@@ -29,20 +30,24 @@ export default function ReleasesPage() {
     <>
       <Navigation />
 
-      {/* Page header */}
-      <header className="bg-navy px-6 pt-32 pb-14 md:pt-40 md:pb-20">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-mint mb-4">
-            Releases
-          </p>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-white leading-[0.9] font-bold">
-            WHAT&apos;S NEW IN NUMO
+      {/* Page header. Same construction as /setup's: identical ink ground, display
+          clamp, padding and intro step, so the two secondary pages open the same
+          way instead of at two different scales. */}
+      <header className="noise-overlay relative overflow-hidden bg-navy px-6 pb-20 pt-36 text-white md:pb-28 md:pt-44">
+        <div className="relative z-10 mx-auto max-w-6xl">
+          <h1 className="max-w-5xl font-display text-[clamp(3rem,8vw,8rem)] [text-wrap:balance]">
+            <span className="block">What&rsquo;s new</span>
+            <span className="block">in Numo.</span>
           </h1>
-          <p className="mt-5 text-base md:text-lg text-white/60 max-w-[52ch]">
+          <p className="mt-9 max-w-[38rem] text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
             Every feature, improvement, and fix that ships, written for the
             people running the terminal, not the people writing the commits.
           </p>
         </div>
+        <div
+          aria-hidden="true"
+          className="absolute -bottom-28 -right-24 h-80 w-80 rounded-full border-[48px] border-mint/10 md:h-[30rem] md:w-[30rem]"
+        />
       </header>
 
       <main className="bg-cream-warm">
@@ -50,7 +55,7 @@ export default function ReleasesPage() {
         <section
           id={`v${latest.version}`}
           aria-labelledby="latest-title"
-          className="scroll-mt-28 max-w-5xl mx-auto px-6 py-16 md:py-24"
+          className="scroll-mt-28 max-w-6xl mx-auto px-6 py-20 md:py-28"
         >
           <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 mb-6">
             <span className="font-display text-6xl md:text-8xl text-navy leading-none">
@@ -58,7 +63,7 @@ export default function ReleasesPage() {
             </span>
             <time
               dateTime={latest.date}
-              className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-navy/55"
+              className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-navy/65"
             >
               {formatFullDate(latest.date)}
             </time>
@@ -66,11 +71,11 @@ export default function ReleasesPage() {
 
           <h2
             id="latest-title"
-            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] font-bold mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
+            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
           >
             {latest.title}
           </h2>
-          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[58ch] [text-wrap:pretty]">
+          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[38rem] [text-wrap:pretty]">
             {latest.summary}
           </p>
 
@@ -87,7 +92,7 @@ export default function ReleasesPage() {
                   <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch] md:max-w-none md:whitespace-nowrap">
                     {h.title}
                   </dt>
-                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
+                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[40rem]">
                     {h.body}
                   </dd>
                   {h.image && (
@@ -115,11 +120,11 @@ export default function ReleasesPage() {
         {older.length > 0 && (
           <section
             aria-labelledby="earlier-releases"
-            className="max-w-5xl mx-auto px-6 pb-20"
+            className="max-w-6xl mx-auto px-6 pb-20"
           >
             <h3
               id="earlier-releases"
-              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/55 mb-2"
+              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/65 mb-2"
             >
               Earlier releases
             </h3>
@@ -131,15 +136,10 @@ export default function ReleasesPage() {
           </section>
         )}
 
-        {/* Footer strip */}
-        <footer className="border-t border-navy/10 px-6 py-10">
-          <div className="max-w-5xl mx-auto">
-            <p className="text-sm text-navy/55">
-              Release notes are updated as features ship.
-            </p>
-          </div>
-        </footer>
+
       </main>
+
+      <SiteFooter note="Release notes are updated as features ship. Numo is free and open source." />
     </>
   );
 }

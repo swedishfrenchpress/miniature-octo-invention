@@ -184,7 +184,7 @@ Depth is deliberately withheld. Page architecture is dead flat — cream on whit
 A four-color system — ink, mint, and two creams — deliberately narrow so the accent stays loud. Everything else is a neutral gray doing utility work.
 
 ### Primary
-- **Signwriter's Ink** (`#0A2540`): The voice of the system. Every headline, every body paragraph, every icon glyph, and the dark inverse sections (site footer, setup hero, Part Two of the setup guide). Body copy runs at 75% opacity, secondary copy at 65%, and captions at 50–55% — the ink is tinted by transparency, never swapped for a gray. **Ink Light** (`#1a3a5c`) exists solely as the hover state of a compact dark button.
+- **Signwriter's Ink** (`#0A2540`): The voice of the system. Every headline, every body paragraph, every icon glyph, and the dark inverse sections (site footer, setup hero, Part Two of the setup guide). Body copy runs at 75% opacity, secondary copy at 70%, and captions at 65% — the ink is tinted by transparency, never swapped for a gray. 65% is the floor: `/55` measures 3.68:1 on white and `/50` measures 3.17:1, both under the 4.5:1 AA body minimum, while `/65` clears it at 5.02:1 on white, 4.88:1 on cream and 4.76:1 on butcher paper. **Ink Light** (`#1a3a5c`) exists solely as the hover state of a compact dark button.
 
 ### Secondary
 - **Fresh Paint Mint** (`#5EFFC2`): The single accent, and the only color in the system that gets to be bright. It appears on the logo tile, on accent CTAs, on the eyebrow labels of dark sections, on active step markers, on the focus ring, and — critically — as the success state that a POS screen flashes to when a payment lands. **Mint Soft** (`#E8FFF5`) and **Mint Pale** (`#F0FFF8`) are card fills for the rare block that should read as adjacent to success without shouting.
@@ -199,7 +199,7 @@ A four-color system — ink, mint, and two creams — deliberately narrow so the
 
 **The One Coat Rule.** Mint is a coat of paint, not a palette. It appears where the merchant acts (CTA), where the system confirms (success flash, active step, valid state), and nowhere else. If a screen has more than a few mint elements, one of them is decoration and should be removed.
 
-**The Tinted Ink Rule.** Secondary and tertiary text is `Signwriter's Ink` at reduced opacity — `/75` for body, `/65` for supporting copy, `/55` and `/50` for captions and timestamps. Never reach for a gray to make text quieter. Gray is for structure; ink is for language.
+**The Tinted Ink Rule.** Secondary and tertiary text is `Signwriter's Ink` at reduced opacity — `/75` for body, `/70` for supporting copy, `/65` for captions and timestamps. **`/65` is the floor**; anything lighter fails WCAG AA for body text on every ground this system uses. Never reach for a gray to make text quieter. Gray is for structure; ink is for language.
 
 **The Cream Floor Rule.** Content sits on cream or on ink. Long stretches of pure white are a gap in the composition, not a style — white's job is to separate cream slabs, not to host content on its own.
 
@@ -218,7 +218,7 @@ A four-color system — ink, mint, and two creams — deliberately narrow so the
 - **Title** (400, `clamp(1.25rem, 3vw, 2.25rem)`, 0.95): Card headings, FAQ questions, release-note highlight terms, numbered step titles. Still Bebas, still uppercase in most contexts.
 - **Masthead** (400, 2.5rem, 1.0): The navigation lockup only — the "N" inside the mint tile and the "Numo" wordmark beside it. Both halves carry a `0.05em` downward nudge, because Bebas sets its caps high in the line box and centering the box alone leaves the glyph above the tile's true middle.
 - **Nav** (400, 1.2rem → 1.5rem at `lg` → 1.7rem at `xl`, 1.0): The desktop navigation rail. Tracking loosens as the type grows (`0.06em` → `0.09em` → `0.11em`) — larger Bebas caps need less letter-spacing to stay legible, and the tighter settings at the small end buy back the horizontal room the rail needs to clear the CTA. The mobile disclosure panel sets the same links at a flat 1.6rem / `0.1em`.
-- **Body** (400, 1.125rem, 1.625): Sora at `text-lg`, tinted ink at 65–75%. Measure is capped explicitly on editorial surfaces — `65ch` for release summaries, `60ch` for highlight bodies, `52–58ch` for page intros.
+- **Body** (400, 1.125rem, 1.625): Sora at `text-lg`, tinted ink at 65–75%. Measure is capped in `rem`, not `ch` — `43rem` for release summaries, `40rem` for highlight bodies, `31–38rem` for page intros. The `ch` unit is the advance of `0`, and Sora's zero is wide: a `65ch` cap measured out at **89 real characters**, well past the 65–75 the cap was meant to enforce. Sora's average lowercase advance is `0.564em`, so the honest conversion is `characters × 0.564 × font-size`; at the 1.125rem body that is **`43rem` ≈ 68 characters**.
 - **Label** (600, 0.875rem, `0.22–0.3em` tracking, uppercase): Eyebrows, dates, and status chips. The widest tracking in the system (`0.3em`) belongs to the hero tagline and the releases eyebrow.
 - **Wordmark** (Grandstander, `clamp(6rem, 20vw, 20rem)`, white at 10%): One instance only — "NUMO" resting on the footer baseline as architectural texture.
 - **Annotation** (Solitreo, `clamp(1.5rem, 3vw, 1.875rem)`, rotated -2°): One instance only — the handwritten "+ all bitcoin lightning wallets!" beneath the wallet grid.
@@ -232,6 +232,8 @@ A four-color system — ink, mint, and two creams — deliberately narrow so the
 **The Nothing In Between Rule.** The gap between 1.125rem body and 3rem+ display is intentional. Do not introduce mid-scale headings (1.5–2.5rem Sora) to soften the jump — the steepness is what makes the display type read as signage rather than as a large paragraph. The Title, Nav, and Masthead steps sit inside that band without breaking the rule, because all three are Bebas: they read as small signage, not as large body copy. The rule bars mid-scale *Sora*, and it bars it in the reading column — chrome is not the reading column.
 
 **The Single Weight Rule.** Bebas Neue ships one weight (400). Applying `font-bold` to it produces synthetic bold, which thickens the strokes unevenly and dulls the condensed silhouette. Prefer size and case for emphasis; treat any existing `font-display font-bold` pairing as legacy to be corrected, not as a pattern to copy.
+
+**The Depicted Object Rule.** Type *inside* a drawn device or a mockup of another product's interface is not on this ramp, because it is not this site speaking — it is a picture of something else, drawn at the scale that thing would actually have. A phone rendered 96px wide carries 8px labels; the BTCPay Server dashboard in the integration section carries its own 10–13px chrome. Both are correct. The colour side of this is already stated above — *Grays 50–600 … the interior of device mockups. Never used for prose* — and the same boundary governs type. Two conditions keep it honest: the depicted element must be inert and out of the accessibility tree, so no one is asked to read or operate it, and nothing outside the drawing may borrow those sizes. In the reading column the ramp is absolute.
 
 ## Layout
 
@@ -325,7 +327,7 @@ The system's defining asset class: pure CSS/SVG scenes that loop to demonstrate 
 
 ### Do:
 - **Do** give every section its own ground — white, Awning Cream, Butcher Paper, or Signwriter's Ink. Alternation is the page's structure.
-- **Do** tint text with ink opacity (`/75`, `/65`, `/55`, `/50`) rather than reaching for a gray.
+- **Do** tint text with ink opacity (`/75`, `/70`, `/65`) rather than reaching for a gray — and stop at `/65`, which is the AA contrast floor.
 - **Do** spend the mint on action and confirmation only, per **The One Coat Rule**.
 - **Do** invert large buttons to a white fill on hover; it is the system's signature interaction.
 - **Do** cap editorial measure in `ch` (52–65ch) and use `[text-wrap:balance]` on headlines, `[text-wrap:pretty]` on body.

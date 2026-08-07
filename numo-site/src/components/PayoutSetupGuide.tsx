@@ -140,9 +140,9 @@ export function PayoutSetupGuide() {
             <StepHeading number="2">Switch on Auto-Withdraw</StepHeading>
             <div className="sm:pl-14">
               <p className="mt-4 max-w-[36rem] text-lg leading-[1.75] tracking-[0.005em] [text-wrap:pretty] text-white/75">
-                You land on the Withdraw screen with the status reading{" "}
+                The Withdraw screen opens with the status reading{" "}
                 <strong className="font-semibold text-white">Inactive</strong>. Turn on the{" "}
-                <strong className="font-semibold text-white">Auto-Withdraw</strong> switch — the status flips to Active
+                <strong className="font-semibold text-white">Auto-Withdraw</strong> switch. The status flips to Active,
                 and the destination and trigger settings appear underneath, as in step 3.
               </p>
             </div>
@@ -165,7 +165,8 @@ export function PayoutSetupGuide() {
             <StepHeading number="3">Fill in the three settings</StepHeading>
             <div className="sm:pl-14">
               <p className="mt-4 max-w-[36rem] text-lg leading-[1.75] tracking-[0.005em] [text-wrap:pretty] text-white/75">
-                They all live on this one screen. There is no Save button — Numo stores each value as you change it.
+                They all live on this one screen. There is no Save button, because Numo stores each value as you
+                change it.
               </p>
               <dl className="mt-8 max-w-lg divide-y divide-white/15 border-y border-white/15">
                 {settings.map((setting) => (
@@ -177,7 +178,7 @@ export function PayoutSetupGuide() {
                       {setting.marker}
                     </span>
                     <div>
-                      <dt className="text-base font-bold tracking-[0.01em] text-white">
+                      <dt className="text-base font-semibold tracking-[0.01em] text-white">
                         <span className="sr-only">{setting.marker}. </span>
                         {setting.name}
                       </dt>
@@ -208,8 +209,9 @@ export function PayoutSetupGuide() {
       <div className="mt-20 max-w-4xl rounded-[2rem] bg-mint p-8 text-navy md:mt-28 md:p-12">
         <h3 className="font-display text-4xl [text-wrap:balance] md:text-5xl">That&rsquo;s the till open.</h3>
         <p className="mt-4 max-w-[36rem] text-lg leading-[1.6] [text-wrap:pretty] text-navy/75">
-          When the badge at the top of the Withdraw screen reads Active, sales land on the terminal and leave for your
-          Lightning wallet on their own. Take one small payment to watch a full round trip before you trade.
+          When the badge at the top of the Withdraw screen reads Active, sales land on the terminal and move to your
+          Lightning wallet without you touching anything. Take one small payment and watch a full round trip before
+          you trade.
         </p>
       </div>
     </>

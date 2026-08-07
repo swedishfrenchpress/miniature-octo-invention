@@ -2,19 +2,38 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { BentoCard } from "@/components/BentoCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import WorksOfflineAnimation from "@/components/WorksOfflineAnimation";
+
+/** The NFC mark. Used at three scales: the tap card, the wallets heading, and the
+ *  badge that marks a wallet as tap-capable. */
+function NfcGlyph({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="currentColor" fillOpacity="0.85"/>
+      <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="currentColor" fillOpacity="0.85"/>
+      <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="currentColor" fillOpacity="0.85"/>
+    </svg>
+  );
+}
 
 // Notification data pool - cycles through these
+// Auto-withdraw sends to the merchant's own Lightning address, so the address is
+// constant across notifications and only the amount moves — the earlier pool
+// showed six different people's handles at real providers, which was both
+// inaccurate to the feature and invented data on companies' real domains.
+const PAYOUT_ADDRESS = "shop@wallet.com";
 const notificationPool = [
-  { amount: "$20.00", address: "satoshi@primal.net" },
-  { amount: "$35.00", address: "alice@wallet.com" },
-  { amount: "$50.00", address: "bob@strike.me" },
-  { amount: "$100.00", address: "carol@coinos.io" },
-  { amount: "$75.00", address: "dave@getalby.com" },
-  { amount: "$45.00", address: "eve@phoenix.io" },
+  { amount: "$20.00", address: PAYOUT_ADDRESS },
+  { amount: "$35.00", address: PAYOUT_ADDRESS },
+  { amount: "$50.00", address: PAYOUT_ADDRESS },
+  { amount: "$100.00", address: PAYOUT_ADDRESS },
+  { amount: "$75.00", address: PAYOUT_ADDRESS },
+  { amount: "$45.00", address: PAYOUT_ADDRESS },
 ];
 
 interface StackNotification {
@@ -143,15 +162,15 @@ function AutoCustodyBento() {
       size="sm"
       className="flex-1 min-h-[320px] flex flex-col overflow-hidden"
     >
-      <SectionHeading as="h3" size="sm" align="center" className="mb-2">
-        Automatic self-custody
+      <SectionHeading as="h2" size="sm" className="mb-3">
+        Automatic payouts
       </SectionHeading>
-      <p className="text-lg text-navy/75 mb-2 text-center">
-        Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your Lightning address.
+      <p className="text-lg text-navy/75 mb-2">
+        Set a threshold amount. Once your ecash balance reaches it, funds automatically transfer to your own Lightning address.
       </p>
       
       {/* iOS-style stacked notifications container */}
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center" aria-hidden="true">
         <div className="relative w-full max-w-[380px] h-[140px]">
           {notifications.map((notification) => (
             <div
@@ -169,7 +188,7 @@ function AutoCustodyBento() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-lg font-semibold text-navy">{notification.amount} Threshold Reached</p>
-                <p className="text-sm text-navy/55 truncate">Sent to {notification.address}</p>
+                <p className="text-sm text-navy/65 truncate">Sent to {notification.address}</p>
               </div>
             </div>
           ))}
@@ -207,8 +226,10 @@ function Hero() {
 
   return (
     <section id="hero" className="section-anchor bg-white pt-36 md:pt-40 pb-24 relative overflow-hidden">
-      {/* Video Background - Full Width */}
-      <div className="absolute inset-0 top-0 bottom-0 overflow-hidden z-0">
+      {/* Video Background - Full Width. The ink ground under it is what a viewer
+          sees if even the poster is still in flight, so the white hero type never
+          lands on white. */}
+      <div className="absolute inset-0 top-0 bottom-0 overflow-hidden z-0 bg-navy">
         {/* Video container - Full width */}
         <div className="relative w-full h-full">
           {HERO_VIDEOS.map((video, index) => (
@@ -216,12 +237,15 @@ function Hero() {
               key={video}
               ref={videoRefs[index]}
               src={video}
+              // The poster is frame 0 of the video itself, so a slow or blocked
+              // connection shows the opening shot rather than an empty box.
+              poster="/hero-poster.jpg"
               autoPlay
               muted
               loop={false}
               playsInline
               onEnded={handleVideoEnd}
-              preload="auto"
+              preload={index === 0 ? "auto" : "metadata"}
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
                 index === currentVideo ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
@@ -238,11 +262,8 @@ function Hero() {
 
       {/* Content - above everything */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
-        {/* Tagline */}
-        <p className="text-white/70 text-sm md:text-base font-semibold tracking-[0.3em] mb-4">MEET NUMO</p>
-
         {/* Main Headline */}
-        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 max-w-5xl mx-auto font-bold drop-shadow-lg">
+        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 max-w-5xl mx-auto drop-shadow-lg [text-wrap:balance]">
           BITCOIN PAYMENTS AS EASY AS APPLE PAY. <br />TAP. DONE.
         </h1>
 
@@ -250,28 +271,22 @@ function Hero() {
           Accept Bitcoin with a tap on any NFC-enabled Android.
         </p>
 
-        {/* App Store Buttons */}
+        {/* The guide leads, not the raw APK link — a merchant meeting this product
+            for the first time needs the five-minute path before the download. The
+            nav bar keeps the direct download one click away throughout. */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
+          <Button href="/setup" variant="dark">
+            Setup in minutes
+          </Button>
           <Button
             href="https://github.com/cashubtc/Numo/releases"
-            variant="dark"
+            variant="light"
             external
           >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
             Download APK
-          </Button>
-          <Button
-            href="https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc"
-            variant="light"
-            external
-            ariaLabel="Download on Zapstore"
-          >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z" />
-            </svg>
-            Download on Zapstore
           </Button>
         </div>
       </div>
@@ -287,139 +302,109 @@ function BentoFeatures() {
         {/* Bento Grid - Abode style */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
-          {/* Row 1 - Left: Tap to Pay with Cashu wallet support */}
-          <BentoCard variant="cream" className="flex flex-col">
-            <div className="flex items-start justify-between mb-4 gap-4">
-              <SectionHeading as="h3" className="flex-1">
-                TAP TO PAY<br/>
+          {/* Row 1 - The claim no Lightning-only product can copy, at double width
+              and the only lg heading on the page. Everything below it is support. */}
+          <BentoCard variant="cream" className="md:col-span-2 flex flex-col gap-8 md:flex-row md:items-center md:gap-12">
+            <div className="md:w-[38%] md:shrink-0">
+              <SectionHeading as="h2" size="lg" className="mb-4">
+                Tap to pay
               </SectionHeading>
-              <div className="flex gap-2 flex-shrink-0">
-                <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center">
-                  <svg className="w-5 h-5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
-                    <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
-                    <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
-                  </svg>
-                </div>
-              </div>
+              <p className="text-lg text-navy/75 leading-relaxed">
+                Your customer holds their phone to yours and the sale is done. Numo pays in
+                Cashu ecash — bearer tokens that move device to device — which is why this is
+                a real tap and not a QR code to scan.
+              </p>
             </div>
-            <p className="text-lg text-navy/75 mb-6 leading-relaxed">
-            Apple Pay-like experience for Bitcoin payments.
-            </p>
-            
-            {/* Tap to Pay Animation */}
-            <div className="flex-1 flex items-center justify-center min-h-[280px] relative">
-              {/* Centered animation container */}
-              <div className="relative flex flex-col items-center">
-                {/* Phone (horizontal/landscape) - fades in and hovers gently */}
-                <div 
-                  className="relative z-10 mb-3"
-                  style={{
-                    animation: 'phone-hover 5s ease-in-out infinite'
-                  }}
+
+            {/* Customer's phone held over the terminal, waves in the gap, the sale
+                confirming. Terminal proportions — squat body, screen up top, physical
+                keypad below, reader slot on the edge — which is what makes it read as
+                a POS device rather than a handset. */}
+            <div className="relative flex min-h-[480px] flex-1 items-center justify-center overflow-hidden py-6" aria-hidden="true">
+              <div className="relative flex scale-[0.82] flex-col items-center sm:scale-90 lg:scale-100">
+                {/* Customer phone, landscape, held up to the terminal */}
+                <div
+                  className="relative z-20 mb-8"
+                  style={{ animation: "phone-hover 5s ease-in-out infinite" }}
                 >
-                  {/* Phone in landscape orientation */}
-                  <div className="w-36 h-[72px] bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-2xl shadow-2xl border-2 border-[#3a3a3a] relative overflow-hidden">
-                    {/* Phone screen bezel */}
-                    <div className="absolute inset-1.5 bg-gradient-to-br from-[#1a1a2a] to-[#0d0d15] rounded-xl flex items-center justify-center">
-                      {/* Bitcoin symbol on screen */}
-                      <span className="text-[#F7931A] font-bold text-4xl drop-shadow-[0_0_12px_rgba(247,147,26,0.6)]">₿</span>
+                  <div className="relative h-[86px] w-40 rounded-[1.15rem] bg-navy p-[5px] shadow-[0_25px_50px_-12px_rgb(0_0_0/0.25)]">
+                    <div className="flex h-full w-full items-center justify-center rounded-[0.85rem] bg-navy-light">
+                      <span className="font-display text-3xl leading-none text-mint">₿</span>
                     </div>
-                    {/* Dynamic Island / Notch area */}
-                    <div className="absolute top-1/2 -translate-y-1/2 left-2 w-1 h-3 bg-[#1a1a1a] rounded-full"></div>
-                    {/* Side button (power) */}
-                    <div className="absolute -right-0.5 top-4 w-1 h-5 bg-[#4a4a4a] rounded-l"></div>
-                    {/* Volume buttons */}
-                    <div className="absolute -left-0.5 top-3 w-1 h-3 bg-[#4a4a4a] rounded-r"></div>
-                    <div className="absolute -left-0.5 top-7 w-1 h-3 bg-[#4a4a4a] rounded-r"></div>
+                    <div className="absolute left-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-white/25" />
+                    <div className="absolute -top-[3px] right-8 h-[3px] w-9 rounded-t-sm bg-navy/70" />
                   </div>
                 </div>
-                
-                {/* NFC Signal Waves - pulse from between phone and Terminal */}
-                <div 
-                  className="absolute top-[72px] left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none z-20"
-                  style={{
-                    animation: 'nfc-waves-visibility 5s ease-in-out infinite'
-                  }}
+
+                {/* NFC waves, behind both devices so they read as coming from the gap */}
+                <div
+                  className="pointer-events-none absolute left-1/2 top-[62px] z-0 h-28 w-28 -translate-x-1/2"
+                  style={{ animation: "nfc-waves-visibility 5s ease-in-out infinite" }}
                 >
-                  {/* Wave 1 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/60"
-                    style={{
-                      animation: 'nfc-pulse-1 5s ease-in-out infinite'
-                    }}
-                  ></div>
-                  {/* Wave 2 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/45"
-                    style={{
-                      animation: 'nfc-pulse-2 5s ease-in-out infinite'
-                    }}
-                  ></div>
-                  {/* Wave 3 */}
-                  <div 
-                    className="absolute inset-0 rounded-full border-2 border-[#F7931A]/30"
-                    style={{
-                      animation: 'nfc-pulse-3 5s ease-in-out infinite'
-                    }}
-                  ></div>
+                  <div className="absolute inset-0 rounded-full border-2 border-mint" style={{ animation: "nfc-pulse-1 5s ease-in-out infinite" }} />
+                  <div className="absolute inset-0 rounded-full border-2 border-mint/70" style={{ animation: "nfc-pulse-2 5s ease-in-out infinite" }} />
+                  <div className="absolute inset-0 rounded-full border-2 border-mint/45" style={{ animation: "nfc-pulse-3 5s ease-in-out infinite" }} />
                 </div>
 
-                {/* Terminal - Black and Orange */}
-                <div className="relative w-44 h-56 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-3xl shadow-2xl border-2 border-[#F7931A]/40">
-                  {/* Orange accent strip at top */}
-                  <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded-t-3xl"></div>
-                  
-                  {/* Terminal Screen - Large display */}
-                  <div className="absolute top-5 left-4 right-4 h-28 bg-[#0a0a0a] rounded-2xl overflow-hidden border-2 border-[#333]">
-                    {/* Screen content - shows checkmark on success */}
-                    <div 
-                      className="absolute inset-2 rounded-xl flex items-center justify-center transition-colors duration-300"
-                      style={{ 
-                        animation: 'pos-screen-success 5s ease-in-out infinite'
-                      }}
+                {/* The terminal */}
+                <div className="relative z-10 h-[330px] w-52 rounded-[1.75rem] bg-gradient-to-b from-navy-light to-navy shadow-[0_25px_50px_-12px_rgb(0_0_0/0.25)]">
+                  {/* Contactless target strip across the top — where a card or phone taps */}
+                  <div className="absolute inset-x-0 top-0 flex h-7 items-center justify-center gap-2 rounded-t-[1.75rem] bg-mint">
+                    <NfcGlyph className="h-3.5 w-3.5 text-navy" />
+                    <span className="text-[0.5rem] font-semibold uppercase tracking-[0.2em] text-navy">Tap here</span>
+                  </div>
+
+                  {/* Screen */}
+                  <div className="absolute inset-x-4 top-11 h-[124px] overflow-hidden rounded-xl bg-navy ring-1 ring-white/10">
+                    <div
+                      className="absolute inset-0 flex flex-col items-center justify-center"
+                      style={{ animation: "till-amount 5s ease-in-out infinite" }}
                     >
-                      {/* Checkmark appears on success */}
-                      <svg 
-                        className="w-16 h-16 text-navy"
-                        fill="none" 
-                        stroke="currentColor" 
+                      <span className="text-[0.5rem] font-medium uppercase tracking-[0.2em] text-white/45">
+                        Total to pay
+                      </span>
+                      <span className="mt-1.5 font-display text-4xl leading-none text-white">$21.00</span>
+                    </div>
+                    <div
+                      className="absolute inset-0 z-10 flex items-center justify-center"
+                      style={{ animation: "pos-screen-success 5s ease-in-out infinite" }}
+                    >
+                      <svg
+                        className="h-14 w-14 text-navy"
+                        fill="none"
+                        stroke="currentColor"
                         viewBox="0 0 24 24"
-                        style={{ 
-                          animation: 'checkmark-fade-in 5s ease-in-out infinite'
-                        }}
+                        style={{ animation: "checkmark-fade-in 5s ease-in-out infinite" }}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
                   </div>
-                  
-                  {/* Keypad area - 3x4 grid like real Terminal */}
-                  <div className="absolute bottom-4 left-4 right-4 h-16 grid grid-cols-3 grid-rows-4 gap-1.5">
-                    {[...Array(12)].map((_, i) => (
-                      <div key={i} className="bg-[#2a2a2a] rounded-lg border border-[#F7931A]/15 shadow-inner"></div>
+
+                  {/* Physical keypad — moulded keys, which is the tell of a terminal */}
+                  <div className="absolute inset-x-4 bottom-5 grid grid-cols-3 gap-1.5">
+                    {["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"].map((k) => (
+                      <span
+                        key={k}
+                        className="flex h-7 items-center justify-center rounded-md bg-white/10 font-sans text-[0.625rem] text-white/70 shadow-[inset_0_-1px_0_rgb(0_0_0/0.25)]"
+                      >
+                        {k}
+                      </span>
                     ))}
                   </div>
-                  
-                  {/* Orange LED indicator */}
-                  <div className="absolute top-6 right-5 w-2.5 h-2.5 rounded-full bg-[#F7931A] shadow-[0_0_8px_#F7931A]"></div>
-                  
-                  {/* Card reader slot on right side */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-[#222] rounded-l-sm"></div>
+
+                  {/* Card reader slot on the right edge */}
+                  <div className="absolute -right-[3px] top-[150px] h-14 w-[3px] rounded-r-sm bg-navy/80" />
                 </div>
               </div>
             </div>
           </BentoCard>
 
-          {/* Row 1 - Right: Zero platform fees */}
+          {/* Row 2 - Left: Zero platform fees */}
           <BentoCard variant="mint-soft" className="flex flex-col">
             <div className="flex items-start justify-between mb-4 gap-4">
-              <SectionHeading as="h3" className="flex-1">
-                Zero platform{" "}
-                <span className="zero-slice-container">
-                  <span className="zero-slice-top">fees</span>
-                  <span className="zero-slice-bottom">fees</span>
-                </span>
+              <SectionHeading as="h2" size="sm" className="flex-1">
+                Zero platform fees
               </SectionHeading>
             </div>
             <p className="text-lg text-navy/75 mb-6">
@@ -439,7 +424,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-1-slice-top 12s ease-in-out infinite'
@@ -449,7 +434,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-1-slice-bottom 12s ease-in-out infinite'
@@ -476,7 +461,7 @@ function BentoFeatures() {
                 <div className="relative inline-block">
                   {/* Top half */}
                   <span 
-                    className="font-display text-6xl md:text-8xl text-navy font-bold inline-block"
+                    className="font-display text-6xl md:text-8xl text-navy inline-block"
                     style={{ 
                       clipPath: 'inset(0 0 50% 0)',
                       animation: 'fee-2-slice-top 12s ease-in-out infinite'
@@ -486,7 +471,7 @@ function BentoFeatures() {
                   </span>
                   {/* Bottom half */}
                   <span 
-                    className="font-display text-6xl md:text-8xl text-navy font-bold absolute left-0 top-0"
+                    className="font-display text-6xl md:text-8xl text-navy absolute left-0 top-0"
                     style={{ 
                       clipPath: 'inset(50% 0 0 0)',
                       animation: 'fee-2-slice-bottom 12s ease-in-out infinite'
@@ -504,9 +489,9 @@ function BentoFeatures() {
             </div>
           </BentoCard>
 
-          {/* Row 2 - Left: Works Offline with animation */}
+          {/* Row 2 - Right: Works Offline with animation */}
           <BentoCard variant="cream-warm" className="flex flex-col">
-            <SectionHeading as="h3" className="mb-4">
+            <SectionHeading as="h2" size="sm" className="mb-4">
               Works offline
             </SectionHeading>
             <p className="text-lg text-navy/75 mb-6">
@@ -514,161 +499,35 @@ function BentoFeatures() {
             </p>
             
             {/* Offline payment animation - centered vertically and horizontally */}
-            <div className="flex-1 flex items-center justify-center overflow-hidden">
-              <div className="flex items-center gap-6 origin-center scale-[0.6] sm:scale-[0.8] md:scale-100">
-              {/* iPhone with airplane mode - larger */}
-              <div className="relative flex-shrink-0 z-10">
-                {/* iPhone frame - significantly bigger */}
-                <div className="w-28 h-56 bg-[#1a1a2e] rounded-[1.5rem] relative overflow-hidden shadow-2xl border-[4px] border-[#2a2a3e]">
-                  {/* Dynamic Island */}
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-black rounded-full z-10"></div>
-                  
-                  {/* iPhone screen */}
-                  <div className="absolute inset-[4px] bg-gradient-to-b from-[#1e1e3f] to-[#12122a] rounded-[1.2rem] flex items-center justify-center">
-                     {/* Airplane mode icon - just the icon, no text */}
-                     <div className="w-20 h-20 rounded-full bg-[#FF9500] flex items-center justify-center shadow-lg">
-                       <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                         <path d="M22 16v-2l-8.5-5V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V9L2 14v2l8.5-2.5V19L8 20.5V22l4-1 4 1v-1.5L13.5 19v-5.5L22 16z"/>
-                       </svg>
-                     </div>
-                   </div>
-                   
-                   {/* Home indicator - Removed Thunderbolt */}
-                   <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-14 h-1.5 bg-white/30 rounded-full"></div>
-                 </div>
-                 
-                 {/* No WiFi badge */}
-                <div className="absolute -top-2 -right-2 w-9 h-9 bg-[#FF3B30] rounded-full flex items-center justify-center shadow-lg border-[3px] border-white z-20">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Money flying animation - staggered trail with more space */}
-              <div className="relative h-32 w-[180px] overflow-visible">
-                {/* Bill 1 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-1 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-16 h-9 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded shadow-lg flex items-center justify-center border border-[#FFB84D]/30">
-                    <span className="text-white font-bold text-lg drop-shadow-md">₿</span>
-                  </div>
-                </div>
-                
-                {/* Bill 2 - Green $ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-2 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-14 h-8 bg-gradient-to-r from-[#34C759] to-[#5DD97C] rounded shadow-lg flex items-center justify-center border border-[#5DD97C]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">$</span>
-                  </div>
-                </div>
-                
-                {/* Bill 3 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-3 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-15 h-8 bg-gradient-to-r from-[#F7931A] to-[#FFCC66] rounded shadow-lg flex items-center justify-center border border-[#FFCC66]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">₿</span>
-                  </div>
-                </div>
-                
-                {/* Bill 4 - Green $ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-4 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-14 h-8 bg-gradient-to-r from-[#2DB84C] to-[#4ADE80] rounded shadow-lg flex items-center justify-center border border-[#4ADE80]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">$</span>
-                  </div>
-                </div>
-                
-                {/* Bill 5 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-5 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-15 h-8 bg-gradient-to-r from-[#E8850F] to-[#F7931A] rounded shadow-lg flex items-center justify-center border border-[#F7931A]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">₿</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Android Terminal - larger, handheld style */}
-              <div className="relative flex-shrink-0 z-10">
-                {/* Terminal body - significantly bigger handheld terminal */}
-                <div className="w-28 h-48 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-2xl relative shadow-2xl">
-                  {/* Screen bezel */}
-                  <div className="absolute top-4 left-3 right-3 bg-[#0d0d0d] rounded-xl overflow-hidden" style={{ height: '100px' }}>
-                    {/* Terminal screen - animates to green on success */}
-                    <div 
-                      className="absolute inset-2 rounded-lg flex items-center justify-center"
-                      style={{ animation: 'pos-success 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                    >
-                      {/* Checkmark - appears when money arrives */}
-                      <svg 
-                        className="w-14 h-14 text-navy" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                        style={{ animation: 'checkmark-appear 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  {/* Keypad area */}
-                  <div className="absolute bottom-5 left-3 right-3 h-14 grid grid-cols-3 gap-1.5">
-                    {[...Array(9)].map((_, i) => (
-                      <div key={i} className="bg-[#3a3a3a] rounded-sm"></div>
-                    ))}
-                  </div>
-                  
-                  {/* Card reader slot on side */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-10 bg-[#4a4a4a] rounded-l"></div>
-                </div>
-                
-                {/* Terminal base/handle */}
-                <div className="w-16 h-5 bg-gradient-to-b from-[#3d3d3d] to-[#252525] rounded-b-xl mx-auto -mt-0.5 shadow-lg"></div>
-              </div>
-              </div>
+            <div className="flex-1 flex items-center justify-center overflow-hidden" aria-hidden="true">
+              <WorksOfflineAnimation className="scale-[0.62] sm:scale-[0.8] md:scale-[0.82] lg:scale-90" />
             </div>
           </BentoCard>
 
-          {/* Row 2 - Right: Two stacked cards */}
-          <div className="flex flex-col gap-4">
-            {/* Self custody card with animated toasts */}
-            <AutoCustodyBento />
+          {/* Row 3 - Left: payouts, with the notification stack */}
+          <AutoCustodyBento />
 
-            {/* Works offline card */}
+          {/* Row 3 - Right: the two short claims, stacked so neither is left in a
+              half-empty slab of its own */}
+          <div className="flex flex-col gap-4">
+            <BentoCard variant="cream" className="flex-1">
+              <SectionHeading as="h2" size="sm" className="mb-3">
+                Instant settlement
+              </SectionHeading>
+              <p className="text-lg text-navy/75">
+                Seconds, not days. No chargebacks, no holds, no waiting for funds to clear.
+              </p>
+            </BentoCard>
+
             <BentoCard variant="gray" className="flex-1">
-              <SectionHeading as="h3" size="sm" className="mb-3">
+              <SectionHeading as="h2" size="sm" className="mb-3">
                 Fully open-source and free
               </SectionHeading>
-              <p className="text-lg text-navy/75 mb-4">
+              <p className="text-lg text-navy/75">
                 No vendor lock-in, no hidden fees, no subscriptions. You own your payment infrastructure.
               </p>
             </BentoCard>
           </div>
-
-          {/* Row 3 - Full width CTA */}
-          <BentoCard variant="cream" className="md:col-span-2">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <SectionHeading as="h3" className="mb-2">
-                  Instant settlement
-                </SectionHeading>
-                <p className="text-lg text-navy/75">
-                  Settlement in seconds, not days. No chargebacks, no holds or waiting for funds to clear.
-                </p>
-              </div>
-            </div>
-          </BentoCard>
         </div>
       </div>
     </section>
@@ -699,19 +558,21 @@ const LIGHTNING_WALLETS = [
   { name: "Zeus", image: "/wallets/zeus.jpg" },
 ];
 
-// Supported Wallets Section
+// Supported Wallets Section.
+// Runs on butcher paper with the white pills sitting straight on the ground. The
+// cream panel that used to hold them made a card inside a card and cost the pills
+// their contrast — the ground does that job better.
 function SupportedWallets() {
   return (
-    <section id="wallets" className="section-anchor bg-white py-20 px-4">
+    <section id="wallets" className="section-anchor bg-cream-warm py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Bento-style container */}
-        <BentoCard variant="cream" size="lg">
+        <div>
           {/* Header */}
           <div className="text-center mb-12">
             <SectionHeading className="mb-4">
               SUPPORTED WALLETS
             </SectionHeading>
-            <p className="text-lg text-navy/75">
+            <p className="text-lg text-navy/75 mx-auto max-w-[35rem] [text-wrap:pretty]">
               Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
             </p>
           </div>
@@ -719,16 +580,12 @@ function SupportedWallets() {
           {/* NFC Wallets - Featured Section */}
           <div className="mb-10">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
-                <svg className="w-4 h-4" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
-                  <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
-                  <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
-                </svg>
+              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-white">
+                <NfcGlyph className="w-4 h-4" />
               </div>
-              <h3 className="font-display text-2xl md:text-3xl text-navy font-bold">TAP-TO-PAY</h3>
+              <h3 className="font-display text-2xl md:text-3xl text-navy">TAP-TO-PAY</h3>
             </div>
-            
+
             {/* NFC Wallet Cards */}
             <div className="flex flex-wrap justify-center gap-3">
               {NFC_WALLETS.map((wallet, index) => (
@@ -736,13 +593,9 @@ function SupportedWallets() {
                   key={index} 
                   className="relative flex items-center gap-3 bg-white rounded-full px-4 py-2.5"
                 >
-                  {/* NFC Badge */}
-                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-navy flex items-center justify-center shadow-md z-10">
-                    <svg className="w-2.5 h-2.5" viewBox="0 0 14.4636 23.222" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14.1019 11.6159C14.1019 7.48502 12.8129 3.63737 10.5179 0.453773C9.81482-0.532555 8.37928 0.32682 9.141 1.35221C11.2797 4.29166 12.4222 7.83659 12.4222 11.6159C12.4222 15.3952 11.2699 18.9303 9.141 21.8698C8.39881 22.8854 9.78553 23.7936 10.5179 22.778C12.8129 19.5846 14.1019 15.737 14.1019 11.6159Z" fill="white" fillOpacity="0.85"/>
-                      <path d="M8.77967 11.6159C8.77967 8.54948 7.81287 5.66862 6.07459 3.33463C5.29334 2.28971 3.93592 3.29557 4.66834 4.2526C6.26014 6.34245 7.10975 8.89127 7.10975 11.6159C7.10975 14.3405 6.26014 16.8893 4.66834 18.9792C3.93592 19.9362 5.29334 20.9421 6.07459 19.8874C7.81287 17.5534 8.77967 14.6823 8.77967 11.6159Z" fill="white" fillOpacity="0.85"/>
-                      <path d="M3.47693 11.6159C3.47693 9.60416 2.78357 7.72916 1.55311 6.26432C0.742558 5.30729-0.439082 6.39127 0.166386 7.17252C1.34803 8.6569 1.79725 9.89713 1.79725 11.6159C1.79725 13.3346 1.34803 14.5749 0.166386 16.0592C-0.429317 16.8307 0.752324 17.9049 1.55311 16.9577C2.78357 15.5026 3.47693 13.6276 3.47693 11.6159Z" fill="white" fillOpacity="0.85"/>
-                    </svg>
+                  {/* NFC badge — the only thing telling the two wallet tiers apart */}
+                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-navy flex items-center justify-center shadow-md z-10 text-white">
+                    <NfcGlyph className="w-2.5 h-2.5" />
                   </div>
                   
                   {/* Wallet icon */}
@@ -764,7 +617,7 @@ function SupportedWallets() {
           {/* Divider */}
           <div className="flex items-center gap-4 mb-8">
             <div className="flex-1 h-px bg-navy/10"></div>
-            <span className="text-sm text-navy/55 font-medium">FULLY COMPATIBLE WITH</span>
+            <span className="text-sm text-navy/65 font-medium">FULLY COMPATIBLE WITH</span>
             <div className="flex-1 h-px bg-navy/10"></div>
           </div>
 
@@ -803,130 +656,122 @@ function SupportedWallets() {
               + all bitcoin lightning wallets!
             </p>
           </div>
-        </BentoCard>
+        </div>
       </div>
     </section>
   );
 }
 
-// Simple Two-Column Feature Layout
+/** Below-the-fold demo footage. Holds its poster frame until the block is near the
+ *  viewport, then loads and plays — the hero should own the first megabyte. The
+ *  poster is painted onto the frame itself, so footage that never arrives reads as
+ *  a still screenshot rather than a hole. */
+function DemoVideo({
+  src,
+  poster,
+  className = "",
+}: {
+  src: string;
+  poster: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldLoad(true);
+        observer.disconnect();
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // No bezel. The footage carries its own light ground, which is enough to read
+  // as a frame on a cream section — a black border around it only added weight.
+  return (
+    <div ref={ref} className={className}>
+      <div
+        className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-cream-warm bg-cover bg-center"
+        style={{ backgroundImage: `url(${poster})` }}
+      >
+        {shouldLoad && (
+          <video
+            src={src}
+            poster={poster}
+            autoPlay
+            loop
+            muted
+            playsInline
+            disablePictureInPicture
+            controlsList="nodownload"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Two capability blocks. They used to be one template mirrored — same grid ratio,
+ *  same three checkmark-in-a-circle bullets, same heading size — which is the
+ *  stock B2B feature block run twice. Now the first carries an editorial spec list
+ *  and the second carries none, at a different column ratio. */
 function SimpleFeatures() {
   return (
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* First Row - Phone left, Text right */}
-        <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center mb-24">
-          {/* Video - Column 1 */}
-          <div className="flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/3]">
-              <video
-                src="/ln-checkout.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                disablePictureInPicture
-                controlsList="nodownload"
-                className="w-full h-full object-cover rounded-lg"
-                style={{ pointerEvents: 'none' }}
-              />
-            </div>
-          </div>
-          
-          {/* Text Content - Column 2 */}
+    <section className="bg-cream py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Block one — media leads, copy explains */}
+        <div className="grid items-center gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
+          <DemoVideo src="/ln-checkout.mp4" poster="/ln-checkout-poster.jpg" />
+
           <div>
             <SectionHeading className="mb-6">
               Lightning and ecash, unified
             </SectionHeading>
-            <p className="text-lg text-navy/75 mb-8">
-              Numo isn&apos;t just an ecash app—it&apos;s both. Ecash unlocks the optimal tap-to-pay experience. 
-              If your customers don&apos;t have an ecash wallet, Lightning payments work seamlessly. 
-              You get the benefits of both systems in one platform.
+            <p className="mb-8 max-w-[38rem] text-lg text-navy/75 [text-wrap:pretty]">
+              Ecash is what makes the tap work. When a customer doesn&apos;t carry an ecash
+              wallet, Numo falls back to a Lightning invoice and the sale still closes. One
+              till, both rails.
             </p>
-            <ul className="space-y-5">
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+            <dl className="border-t border-navy/10">
+              {[
+                ["Tap to pay", "Any compatible Cashu ecash wallet"],
+                ["Scan to pay", "Any Bitcoin Lightning wallet"],
+                ["Either way", "Lands in the same balance"],
+              ].map(([term, detail]) => (
+                <div
+                  key={term}
+                  className="flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-navy/10 py-4"
+                >
+                  <dt className="font-display text-2xl leading-none text-navy">{term}</dt>
+                  <dd className="text-lg text-navy/65">{detail}</dd>
                 </div>
-                <span className="text-lg text-navy">Tap-to-pay with ecash wallets</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <span className="text-lg text-navy">Full Lightning Network support</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-cream-warm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="text-lg text-navy">Best of both payment systems</span>
-              </li>
-            </ul>
+              ))}
+            </dl>
           </div>
         </div>
 
-        {/* Second Row - Text left, Phone right */}
-        <div className="grid md:grid-cols-[1fr_1fr] gap-8 items-center">
-          {/* Text Content - Column 1, aligns with top image column */}
+        {/* Block two — narrow copy rail, footage running wider */}
+        <div className="mt-24 grid items-center gap-10 md:mt-32 md:grid-cols-[1fr_1.35fr] md:gap-14">
           <div>
             <SectionHeading className="mb-6">
               Easy inventory management
             </SectionHeading>
-            <p className="text-lg text-navy/75 mb-8">
-              Built-in inventory management makes selling easy. Create categories for items and sizes, 
-              then tap to request a pre-determined payment. Track everything you sell.
+            <p className="max-w-[31rem] text-lg text-navy/75 [text-wrap:pretty]">
+              Build categories for items and sizes, then tap once to charge a preset price.
+              Every sale is tracked, and the whole ledger exports per item when you need it.
             </p>
-            <ul className="space-y-5">
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 13a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z" />
-                  </svg>
-                </div>
-                <span className="text-lg text-navy">Organize items by category and size</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                </div>
-                <span className="text-lg text-navy">Tap to request pre-determined payments</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-mint-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <span className="text-lg text-navy">Export sales reports by item.</span>
-              </li>
-            </ul>
           </div>
-          
-          {/* Video - Column 2, aligns with top text column */}
-          <div className="flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/3]">
-              <video
-                src="/cart.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                disablePictureInPicture
-                controlsList="nodownload"
-                className="w-full h-full object-cover rounded-lg"
-                style={{ pointerEvents: 'none' }}
-              />
-            </div>
-          </div>
+
+          <DemoVideo src="/cart.mp4" poster="/cart-poster.jpg" />
         </div>
       </div>
     </section>
@@ -1000,18 +845,19 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
   }, [animationKey]);
 
   return (
-    <div className="relative w-[300px] h-[600px] bg-[#1a1a1a] rounded-[3rem] shadow-2xl border-[8px] border-[#333] mx-auto transform hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
-      {/* Dynamic Island / Speaker */}
-      <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-30"></div>
+    <div className="relative w-[300px] h-[600px] bg-navy rounded-[3rem] shadow-[0_25px_50px_-12px_rgb(0_0_0/0.25)] border-[8px] border-navy mx-auto transform hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+      {/* Punch-hole camera. Numo is Android-only, so this device is not an iPhone
+          and must not be drawn as one — no Dynamic Island, no 9:41. */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-3 bg-navy rounded-full z-30"></div>
 
       {/* Screen Area - Explicit white background and full coverage */}
       <div className="absolute inset-0 bg-white rounded-[2.5rem] overflow-hidden flex flex-col z-10">
         {/* Status Bar */}
         <div className="h-14 w-full flex justify-between items-center px-6 pt-3 bg-white z-20">
-           <span className="text-sm font-bold text-gray-800">9:41</span>
-           <div className="flex gap-1.5">
-             <div className="w-5 h-3 bg-gray-800 rounded-[1px]"></div>
-             <div className="w-0.5 h-3 bg-gray-800 rounded-[1px]"></div>
+           <span className="text-sm font-semibold text-gray-600">Numo</span>
+           <div className="flex items-center gap-1.5">
+             <div className="w-5 h-3 bg-gray-600 rounded-[1px]"></div>
+             <div className="w-0.5 h-3 bg-gray-600 rounded-[1px]"></div>
            </div>
         </div>
 
@@ -1065,7 +911,7 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
           <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white transition-all duration-700 ease-out ${showQR && step !== 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
              <div className="text-center mb-6">
                <div className="text-gray-400 text-sm font-medium mb-1 uppercase tracking-wide">Total to pay</div>
-               <div className="text-5xl font-bold text-[#0A2540]">$21.00</div>
+               <div className="text-5xl font-semibold text-[#0A2540]">$21.00</div>
              </div>
              
              {/* QR Code Container */}
@@ -1078,7 +924,7 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
                </svg>
                {/* Center N Logo overlay */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-mint rounded-lg flex items-center justify-center shadow-sm">
-                 <span className="font-display font-bold text-navy text-xl">N</span>
+                 <span className="font-display text-navy text-xl">N</span>
                </div>
              </div>
 
@@ -1091,7 +937,7 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
           {/* Success View - Full Green Screen with elegant entrance */}
           <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-mint transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${step === 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
              <div className={`flex flex-col items-center justify-center transition-all duration-400 delay-100 ease-out ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-               <div className={`w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-5 transition-transform duration-400 delay-150 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${step === 'success' ? 'scale-100' : 'scale-[0.9]'}`}>
+               <div className={`w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-5 transition-transform duration-400 delay-150 ease-(--ease-spring) ${step === 'success' ? 'scale-100' : 'scale-[0.9]'}`}>
                  <svg className={`w-10 h-10 text-navy transition-all duration-200 delay-300 ${step === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.9]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                </div>
                 <div className={`text-navy text-xl font-medium tracking-tight transition-all duration-200 delay-200 ${step === 'success' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'}`}>Payment Received</div>
@@ -1120,7 +966,9 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
   const isPaid = paymentStatus === 'paid';
 
   return (
-    <div className="bg-[#f8f9fa] rounded-lg overflow-hidden font-sans border border-gray-200 border-b-0 flex text-xs md:text-sm select-none h-[640px]">
+    // A depicted object on the ink ground, so it earns a real shadow and a defined
+    // edge. rounded-[2rem] matches the screenshot frame used elsewhere.
+    <div className="bg-[#f8f9fa] rounded-t-[2rem] overflow-hidden font-sans ring-1 ring-navy/10 shadow-[0_28px_60px_rgba(10,37,64,.2)] flex text-xs md:text-sm select-none h-[640px]">
       {/* Sidebar */}
       <div className="w-[220px] bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0">
         <div className="p-4 flex items-center justify-between mb-2">
@@ -1129,7 +977,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
            </div>
            <div className="relative cursor-pointer">
               <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-              <span className="absolute -top-1.5 -right-1.5 bg-[#dc3545] text-white text-[10px] min-w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold px-1 border-2 border-[#f8f9fa]">15</span>
+              <span className="absolute -top-1.5 -right-1.5 bg-[#dc3545] text-white text-[10px] min-w-[16px] h-[16px] flex items-center justify-center rounded-full font-semibold px-1 border-2 border-[#f8f9fa]">15</span>
            </div>
         </div>
         
@@ -1154,7 +1002,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             </div>
 
             <div className="mb-6">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Wallets</p>
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Wallets</p>
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                     <div className="w-5 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-[#51b13e]"></div></div>
@@ -1170,7 +1018,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             </div>
 
             <div className="mb-6">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Payments</p>
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Payments</p>
                 <div className="space-y-1">
                     <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
@@ -1213,7 +1061,8 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
          <div className="p-4 md:p-8 h-full overflow-y-auto [&::-webkit-scrollbar]:hidden">
             <div className="flex items-center justify-between gap-4 mb-6">
                <div className="flex items-center gap-2">
-                 <h2 className="text-xl md:text-2xl font-bold text-gray-800">Invoices</h2>
+                 {/* Not a real heading — depicted chrome, kept out of the outline */}
+                 <div className="text-xl md:text-2xl font-semibold text-gray-800">Invoices</div>
                  <span className="text-gray-400 cursor-help bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center text-[10px]">?</span>
                </div>
                <button className="bg-[#51b13e] hover:bg-[#469d34] active:scale-[0.98] text-white px-4 py-2 rounded shadow-sm font-medium text-sm transition-all duration-150 flex items-center gap-2">
@@ -1280,9 +1129,9 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                           </td>
                           <td className="py-3 px-4 whitespace-nowrap align-middle">
                                  {isPaid ? (
-                                    <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-bold">Paid</span>
+                                    <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-semibold">Paid</span>
                                  ) : (
-                                    <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-bold">Processing</span>
+                                    <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-semibold">Processing</span>
                                  )}
                            </td>
                           <td className="py-3 px-4 text-right text-gray-700 align-middle whitespace-nowrap font-mono text-[11px]">
@@ -1311,9 +1160,9 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                              </td>
                              <td className="py-3 px-4 whitespace-nowrap align-middle">
                                 {inv.status === 'Processing' ? (
-                                   <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-bold">Processing</span>
+                                   <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-semibold">Processing</span>
                                 ) : (
-                                   <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-bold">Paid</span>
+                                   <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-semibold">Paid</span>
                                 )}
                              </td>
                              <td className="py-3 px-4 text-right text-gray-700 whitespace-nowrap font-mono text-[11px] align-middle">{inv.amount}</td>
@@ -1371,25 +1220,38 @@ function BTCPayIntegration() {
   }, []);
 
   return (
-    <section id="integration" ref={sectionRef} className="section-anchor bg-white py-20 px-4">
+    <section id="integration" ref={sectionRef} className="section-anchor bg-cream-warm py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <SectionHeading className="mb-6">
             BTCPay Server x Numo Integration
           </SectionHeading>
-          <p className="text-lg text-navy/75 max-w-2xl mx-auto">
+          <p className="text-lg text-navy/75 max-w-[38rem] mx-auto [text-wrap:pretty]">
             Numo connects directly to your BTCPay Server store. It generates invoices, accepts Lightning or Cashu, and keeps your Point-of-Sale inventory in sync automatically.
           </p>
         </div>
 
         {/* Integration Demo Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-center">
-           {/* Left: BTCPay UI */}
-           <div className="w-full relative">
+           {/* Left: BTCPay UI. Depicted third-party software — a picture of a
+               dashboard, not a dashboard. It carries no information a screen
+               reader needs and its controls are inert, so it leaves the a11y tree
+               and the tab order entirely. `inert` rather than `aria-hidden`,
+               because the mockup contains a search field and six checkboxes that
+               would stay focusable inside an aria-hidden subtree. */}
+           {/* Masked rather than overlaid. A navy scrim laid over the white
+               dashboard turned it grey and still ended on a hard edge; masking
+               dissolves the artwork itself into the ink ground with nothing on top. */}
+           <div
+              className="w-full relative"
+              inert
+              style={{
+                maskImage: "linear-gradient(to bottom, #000 0%, #000 68%, transparent 99%)",
+                WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 68%, transparent 99%)",
+              }}
+           >
               <BTCPayInterface paymentStatus={paymentStatus} />
-              {/* White gradient fade overlay - sits on top of entire BTCPay illustration */}
-              <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none z-[9999]"></div>
            </div>
 
            {/* Right: POS Animation */}
@@ -1403,42 +1265,58 @@ function BTCPayIntegration() {
               )}
            </div>
         </div>
+
+        {/* The invoice rows are sample content, not a customer's books. PRODUCT.md
+            bans fabricated proof; saying so plainly keeps this an illustration
+            rather than an implied claim about volume. */}
+        <p className="mt-10 text-center text-sm text-navy/65">
+          Illustration. Invoice amounts and store name are sample data.
+        </p>
       </div>
     </section>
   );
 }
 
-// FAQ data - hoisted outside component (JSX items rendered inline)
+// FAQ data - hoisted outside component. `a: null` means the answer carries links
+// and is rendered as JSX in renderAnswer, keyed on `id` rather than on position.
 const FAQ_DATA = [
   {
+    id: "what",
     q: "What is Numo?",
-    a: "Numo is a Bitcoin (point of sale) app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
+    a: "Numo is a Bitcoin point-of-sale app that lets you accept Bitcoin payments with a simple tap. Your customers use NFC to pay, just like Apple Pay or Google Pay, but it's all Bitcoin.",
   },
   {
+    id: "customer-app",
     q: "Do my customers need a special app?",
     a: "They just need a Bitcoin Lightning wallet and Numo will work. If they want to take advantage of the tap-to-pay UX, they'll need a compatible Cashu wallet.",
   },
   {
+    id: "hardware",
     q: "Do I need any extra hardware?",
     a: "No. All you need is an Android phone that supports NFC.",
   },
   {
+    id: "price",
     q: "Is it really free?",
     a: "Yes. Numo is free to download and free to use. The Bitcoin network has minimal fees (usually less than a cent), but we don't charge anything.",
   },
   {
+    id: "custody",
     q: "Is Numo custodial?",
-    a: "Yes. Your bitcoin stays in Numo until you're ready to move it. Withdraw to your Lightning wallet at any time, or set a payout threshold to do it automatically.",
+    a: null, // Rendered with JSX inline
   },
   {
+    id: "offline",
     q: "What if I have bad internet?",
     a: "Numo works offline too with Cashu wallets when paying cashu requests. Payments sync when you're back online. No lost sales.",
   },
   {
+    id: "get-started",
     q: "How do I get started?",
     a: null, // Rendered with JSX inline
   },
   {
+    id: "play-store",
     q: "Can I download Numo on the Google Play Store?",
     a: "Numo will be available on the Google Play Store soon. We will update this website once it's available on the Google Play Store.",
   },
@@ -1447,21 +1325,45 @@ const FAQ_DATA = [
 function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  // Render FAQ answer - handles the special case with JSX
-  const renderAnswer = (index: number, answer: string | null) => {
-    if (index === 6) {
+  // Render FAQ answer - handles the cases that carry links
+  const renderAnswer = (id: string, answer: string | null) => {
+    if (id === "custody") {
       return (
         <>
-          You can download the official{" "}
-          <a 
-            href="https://github.com/cashubtc/Numo/releases" 
-            target="_blank" 
+          Yes. Your sales are Cashu ecash — bearer tokens held on your phone, and the bitcoin
+          behind them sits with the mint you pick during{" "}
+          <Link
+            href="/setup"
+            className="text-navy underline hover:text-navy/70 transition-colors"
+          >
+            setup
+          </Link>
+          . That mint is the custodian, so choose one you trust; Numo itself holds nothing and
+          cannot move your funds. Withdraw to your own Lightning address any time, or set a
+          balance threshold and let auto-withdraw send sales out for you.
+        </>
+      );
+    }
+    if (id === "get-started") {
+      return (
+        <>
+          Install the app on an NFC Android phone from{" "}
+          <a
+            href="https://github.com/cashubtc/Numo/releases"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-navy underline hover:text-navy/70 transition-colors"
           >
-            APK release
+            GitHub releases
           </a>{" "}
-          from the Numo GitHub repository. Once downloaded, set up your wallet and you&apos;re ready to accept Bitcoin payments.
+          or Zapstore, then follow the{" "}
+          <Link
+            href="/setup"
+            className="text-navy underline hover:text-navy/70 transition-colors"
+          >
+            setup guide
+          </Link>
+          . Four screens and you&apos;re taking payments.
         </>
       );
     }
@@ -1488,7 +1390,7 @@ function FAQ() {
                     {faq.q}
                   </span>
                   <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-navy/30 flex items-center justify-center group-hover:border-navy group-hover:bg-navy transition-all duration-200 active:scale-95">
-                    <span className={`text-navy/55 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
+                    <span className={`text-navy/65 group-hover:text-white text-xl leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${openIndex === index ? "rotate-45" : ""}`}>
                       +
                     </span>
                   </div>
@@ -1499,8 +1401,8 @@ function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="pb-5 text-lg text-navy/75 leading-relaxed pr-16">
-                      {renderAnswer(index, faq.a)}
+                    <div className="pb-5 pr-4 text-lg leading-relaxed text-navy/75 sm:pr-16">
+                      {renderAnswer(faq.id, faq.a)}
                     </div>
                   </div>
                 </div>
@@ -1518,25 +1420,37 @@ function Footer() {
   return (
     <footer id="get-started" className="section-anchor bg-navy pt-20 pb-0 relative">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6 font-bold">
+        <h2 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] mb-6">
           START ACCEPTING<br/>
           BITCOIN TODAY.
         </h2>
         <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
-        
+
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
           <Button
             href="https://github.com/cashubtc/Numo/releases"
             variant="accent"
             external
           >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
             Download APK
           </Button>
+          <Button
+            href="https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc"
+            variant="light"
+            external
+            ariaLabel="Download on Zapstore"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z" />
+            </svg>
+            Download on Zapstore
+          </Button>
         </div>
-        
+
+
         {/* Support acknowledgment and links */}
         <div className="border-t border-white/10 pt-8 mb-8">
           <p className="text-base text-white/50 mb-6 max-w-2xl mx-auto">
@@ -1554,14 +1468,14 @@ function Footer() {
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <a
               href="/releases"
-              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+              className="-my-3 inline-flex min-h-11 items-center py-3 text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               Releases
             </a>
             <span className="text-white/20">·</span>
             <a
               href="/privacy"
-              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+              className="-my-3 inline-flex min-h-11 items-center py-3 text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               Privacy &amp; Terms
             </a>
@@ -1570,7 +1484,7 @@ function Footer() {
               href="https://cashu.space/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/50 hover:text-white text-sm font-medium transition-colors"
+              className="-my-3 inline-flex min-h-11 items-center py-3 text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               Visit Cashu.space
             </a>
@@ -1579,7 +1493,7 @@ function Footer() {
               href="https://x.com/numopayapp" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-white/50 hover:text-white text-sm font-medium transition-colors flex items-center gap-1.5"
+              className="-my-3 inline-flex min-h-11 items-center gap-1.5 py-3 text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -1591,7 +1505,7 @@ function Footer() {
               href="https://primal.net/p/nprofile1qqs0y3tvskgs9gpgxxu5ahgz3fmms3rzmxt504qceqtz4a6pdgfwlkghwl6j8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-white/50 hover:text-white text-sm font-medium transition-colors flex items-center gap-1.5"
+              className="-my-3 inline-flex min-h-11 items-center gap-1.5 py-3 text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               <svg className="w-5 h-5" viewBox="0 0 256 256" fill="currentColor">
                 <path d="M210.8 199.4c0 3.1-2.5 5.7-5.7 5.7h-68c-3.1 0-5.7-2.5-5.7-5.7v-15.5c.3-19 2.3-37.2 6.5-45.5 2.5-5 6.7-7.7 11.5-9.1 9.1-2.7 24.9-.9 31.7-1.2 0 0 20.4.8 20.4-10.7s-9.1-8.6-9.1-8.6c-10 .3-17.7-.4-22.6-2.4-8.3-3.3-8.6-9.2-8.6-11.2-.4-23.1-34.5-25.9-64.5-20.1-32.8 6.2.4 53.3.4 116.1v8.4c0 3.1-2.6 5.6-5.7 5.6H57.7c-3.1 0-5.7-2.5-5.7-5.7v-144c0-3.1 2.5-5.7 5.7-5.7h31.7c3.1 0 5.7 2.5 5.7 5.7 0 4.7 5.2 7.2 9 4.5 11.4-8.2 26-12.5 42.4-12.5 36.6 0 64.4 21.4 64.4 68.7v83.2ZM150 99.3c0-6.7-5.4-12.1-12.1-12.1s-12.1 5.4-12.1 12.1 5.4 12.1 12.1 12.1S150 106 150 99.3Z"/>
@@ -1605,7 +1519,7 @@ function Footer() {
       {/* Large NUMO text - full width, resting at bottom baseline */}
       <div className="w-full mt-4 relative overflow-hidden">
         <p 
-          className="font-grandstander text-[6rem] sm:text-[6rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] text-white/10 leading-none w-full text-center break-words"
+          className="font-grandstander text-[clamp(6rem,20vw,20rem)] text-white/10 leading-none w-full text-center break-words"
           style={{ letterSpacing: '-0.02em', marginBottom: '-0.25em', paddingBottom: '0' }}
         >
           <span className="block sm:inline">NUMO</span>
@@ -1620,7 +1534,8 @@ export default function Home() {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to content</a>
-      <main id="main-content">
+      {/* tabIndex -1 so the skip link moves focus into main, not just the scroll position */}
+      <main id="main-content" tabIndex={-1}>
       <Navigation />
       <Hero />
       <BentoFeatures />

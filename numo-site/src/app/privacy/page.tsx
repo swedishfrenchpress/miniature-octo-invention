@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Privacy & Terms - Numo",
   description:
-    "Numo Wallet privacy policy. Self-custodial Bitcoin wallet using Cashu ecash technology.",
+    "Privacy policy and terms for the Numo Android app — a Bitcoin point-of-sale app built on Cashu ecash.",
 };
 
 const sections = [
@@ -40,14 +43,20 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <>
+      <Navigation />
+
       {/* Header */}
-      <header className="bg-navy pt-16 pb-12 px-6">
+      <header className="bg-navy pt-36 pb-12 px-6 md:pt-40">
         <div className="max-w-3xl mx-auto">
           <h1 className="font-display text-5xl md:text-6xl text-white leading-[0.9]">
             NUMO PAY
           </h1>
           <p className="font-display text-3xl md:text-4xl text-mint mt-2">
             PRIVACY POLICY
+          </p>
+          <p className="mt-4 max-w-[35rem] leading-relaxed text-white/70 [text-wrap:pretty]">
+            This policy covers the Numo Android app. It does not describe numopay.org, which
+            uses privacy-friendly page analytics.
           </p>
         </div>
       </header>
@@ -69,10 +78,12 @@ export default function PrivacyPage() {
           </div>
 
           <div className="mt-16 pt-8 border-t border-navy/10">
-            <p className="text-navy/40 text-sm">Last updated: April 2026</p>
+            <p className="text-navy/65 text-sm">Last updated: April 2026</p>
           </div>
         </div>
       </main>
+
+      <SiteFooter note="Numo is free and open source. The five-minute setup guide is the fastest way in." />
     </>
   );
 }

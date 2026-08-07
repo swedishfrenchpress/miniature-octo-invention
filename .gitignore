@@ -1,0 +1,60 @@
+# Repository-level ignores.
+#
+# Commit 3901728 deleted the agent skill libraries from numo-site/ but added no
+# ignore rule and there was no root .gitignore at all, so the next agent run put
+# them straight back — this time inside two stale worktrees under .claude/, where
+# they were less visible. That was 495 files and 31MB of another machine's tooling
+# tracked as if it were this project's source. These rules are the part that was
+# missing, so it does not happen a third time.
+
+# Agent worktrees. Scratch checkouts an agent creates while working; each holds a
+# full copy of the repo. Never this project's source.
+.claude/worktrees/
+
+# Agent skill libraries, for whichever tool a contributor happens to use. These
+# are installed per machine, not shared through the repo.
+**/.agent/skills/
+**/.agents/skills/
+**/.claude/skills/
+**/.cline/skills/
+**/.codebuddy/skills/
+**/.codex/skills/
+**/.commandcode/skills/
+**/.continue/skills/
+**/.crush/skills/
+**/.cursor/skills/
+**/.factory/skills/
+**/.gemini/skills/
+**/.github/skills/
+**/.goose/skills/
+**/.junie/skills/
+**/.kilocode/skills/
+**/.kiro/skills/
+**/.kode/skills/
+**/.mcpjam/skills/
+**/.mux/skills/
+**/.neovate/skills/
+**/.opencode/skills/
+**/.openhands/skills/
+**/.pi/skills/
+**/.pochi/skills/
+**/.qoder/skills/
+**/.qwen/skills/
+**/.roo/skills/
+**/.trae/skills/
+**/.windsurf/skills/
+**/.zencoder/skills/
+
+# Symlink shims that pointed into .agents/skills. 3901728 deleted the target and
+# left these dangling; they are tracked as symlinks so they survive a normal clean.
+numo-site/skills/
+
+# Local agent session state
+**/.impeccable/hook.cache.json
+**/.impeccable/hook.pending.json
+**/.impeccable/config.local.json
+**/.impeccable/live/
+
+# OS cruft
+.DS_Store
+**/.DS_Store
