@@ -132,17 +132,9 @@ export default function SetupPage() {
               <span className="block">From download</span>
               <span className="block">to first sale.</span>
             </h1>
-            <div className="mt-9 flex max-w-3xl flex-col gap-7 md:flex-row md:items-end md:justify-between">
-              <p className="max-w-xl text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
-                Set up Numo, choose where payments arrive, and automatically move sales to your own Lightning wallet.
-              </p>
-              <a
-                href="#onboarding"
-                className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-mint px-6 py-3 font-medium text-navy transition-all duration-200 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
-              >
-                Start the guide
-              </a>
-            </div>
+            <p className="mt-9 max-w-[38rem] text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
+              Set up Numo, choose where payments arrive, and automatically move sales to your own Lightning wallet.
+            </p>
           </div>
           <div
             aria-hidden="true"

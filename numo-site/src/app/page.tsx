@@ -1426,7 +1426,7 @@ function Footer() {
         </h2>
         <p className="text-lg text-white/60 mb-8">Free to download. Free to use. No fees, ever.</p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-6 px-4 sm:px-0">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0">
           <Button
             href="https://github.com/cashubtc/Numo/releases"
             variant="accent"
@@ -1450,20 +1450,6 @@ function Footer() {
           </Button>
         </div>
 
-        {/* The two facts worth stating at the download: what it runs on, and that
-            it is verifiable. */}
-        <p className="mx-auto mb-12 text-sm text-white/60">
-          Android 8+ with NFC. Open source at{" "}
-          <a
-            href="https://github.com/cashubtc/Numo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white underline underline-offset-2 hover:text-mint"
-          >
-            cashubtc/Numo
-          </a>
-          .
-        </p>
 
         {/* Support acknowledgment and links */}
         <div className="border-t border-white/10 pt-8 mb-8">
