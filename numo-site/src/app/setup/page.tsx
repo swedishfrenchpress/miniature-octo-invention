@@ -6,9 +6,9 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { PayoutSetupGuide } from "@/components/PayoutSetupGuide";
 
 export const metadata: Metadata = {
-  title: "Set up Numo — Merchant Guide",
+  title: "Set up Numo - Merchant Guide",
   description:
-    "A practical guide to setting up Numo, choosing a mint, and sending sales to your Lightning wallet automatically.",
+    "Install Numo, pick a mint, and switch on auto-withdraw so sales move to your own Lightning wallet.",
 };
 
 function AppScreenshot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
@@ -54,9 +54,9 @@ const onboardingSteps = [
         >
           Zapstore
         </a>
-        . Open the file and Android will ask you to allow installs from this source — that
-        prompt is normal for anything outside the Play Store. Approve it, finish the install,
-        then tap the white{" "}
+        . When you open the file, Android asks you to allow installs from this source. That
+        prompt is normal for any app from outside the Play Store. Approve it, finish the
+        install, then tap the white{" "}
         <strong className="font-semibold text-navy">Get Started</strong> button.
       </>
     ),
@@ -81,10 +81,10 @@ const onboardingSteps = [
     title: "Keep or change the default mint",
     body: (
       <>
-        Numo selects a default mint for you. For the quickest setup, leave it selected and tap{" "}
-        <strong className="font-semibold text-navy">Continue</strong>. You can tap a popular mint to make it the
-        default, or use <strong className="font-semibold text-navy">Add New Mint</strong> if your business already has
-        one.
+        Numo picks a default mint for you. Leave it and tap{" "}
+        <strong className="font-semibold text-navy">Continue</strong> to start trading soonest. To use a different one,
+        tap any mint in the popular list, or use{" "}
+        <strong className="font-semibold text-navy">Add New Mint</strong> if your business already has one.
       </>
     ),
     image: "/setup/03-select-mint.png",
@@ -111,11 +111,14 @@ const onboardingSteps = [
   },
 ];
 
+// The closing card of Part two already tells the merchant to take a test payment,
+// so this list is what to check once they have. Repeating the instruction here
+// made the page say the same thing twice in consecutive blocks.
 const preflight = [
-  "Take one small test payment",
-  "Confirm the sale appears in Activity",
-  "Check that your Lightning address is valid",
-  "Keep the device charged and connected",
+  "The sale appears in Activity",
+  "The payout badge still reads Active",
+  "Your Lightning address still shows as valid",
+  "The terminal is charged and connected",
 ];
 
 export default function SetupPage() {
@@ -133,7 +136,7 @@ export default function SetupPage() {
               <span className="block">to first sale.</span>
             </h1>
             <p className="mt-9 max-w-[38rem] text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
-              Set up Numo, choose where payments arrive, and automatically move sales to your own Lightning wallet.
+              Part one opens the till. Part two points it at your own Lightning wallet.
             </p>
           </div>
           <div
@@ -142,16 +145,16 @@ export default function SetupPage() {
           />
         </section>
 
-        <section aria-label="What you need before you start" className="border-b border-navy/10 bg-mint px-6 py-6">
+        <section aria-labelledby="youll-need" className="border-b border-navy/10 bg-mint px-6 py-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:gap-8">
-            <h2 className="shrink-0 font-display text-3xl [text-wrap:balance] text-navy md:text-4xl">You&rsquo;ll need</h2>
+            <h2 id="youll-need" className="shrink-0 font-display text-3xl [text-wrap:balance] text-navy md:text-4xl">You&rsquo;ll need</h2>
             <ul className="flex flex-col gap-2 text-sm font-semibold text-navy md:flex-row md:flex-wrap md:items-center md:gap-x-8">
               <li>About 5 minutes</li>
               <li>An NFC-enabled Android phone</li>
               <li>
-                A Lightning address for payouts —{" "}
+                A Lightning address for payouts, from any{" "}
                 <a href="/#wallets" className="underline decoration-navy/40 underline-offset-4 hover:decoration-navy">
-                  see supported wallets
+                  supported wallet
                 </a>
               </li>
             </ul>
@@ -163,12 +166,12 @@ export default function SetupPage() {
             <p className="text-sm font-semibold uppercase tracking-[.25em] text-navy/70">Part one</p>
             <h2 className="mt-4 max-w-2xl font-display text-[clamp(3rem,5vw,4.5rem)] [text-wrap:balance] text-navy">Set up your terminal.</h2>
             <p className="mt-5 max-w-xl text-lg leading-[1.6] [text-wrap:pretty] text-navy/70">
-              Onboarding creates the wallet your terminal receives payments into. Four screens, then you are trading.
+              These four screens create the wallet your terminal takes payments into. Then you are trading.
             </p>
             <p className="mt-6 max-w-[38rem] rounded-2xl bg-white/70 p-5 text-sm leading-[1.6] [text-wrap:pretty] text-navy/75">
-              <strong className="font-semibold text-navy">What is a mint?</strong> It is the service that issues and
-              holds the Cashu balance received by this terminal. It is not your final payout wallet — step 3 is where
-              you pick one, and Part two is where you send the money on.
+              <strong className="font-semibold text-navy">What is a mint?</strong> The service that issues and holds
+              the Cashu balance your terminal takes in. It is not your payout wallet. You pick a mint in step 3, and
+              Part two moves the money on to a wallet you own.
             </p>
 
             <ol className="mt-14 max-w-4xl space-y-20 md:space-y-28">
@@ -208,9 +211,9 @@ export default function SetupPage() {
             <p className="text-sm font-semibold uppercase tracking-[.25em] text-mint">Part two</p>
             <h2 className="mt-4 max-w-2xl font-display text-[clamp(3rem,5vw,4.5rem)] [text-wrap:balance]">Send sales to your wallet.</h2>
             <p className="mt-5 max-w-xl text-lg leading-[1.7] tracking-[0.005em] [text-wrap:pretty] text-white/75">
-              A Lightning address looks like an email address — such as{" "}
-              <span className="text-white">shop@wallet.com</span>. Numo can send funds there whenever the terminal
-              balance reaches an amount you choose.
+              A Lightning address looks like an email address, for example{" "}
+              <span className="text-white">shop@wallet.com</span>. Numo sends funds there every time the terminal
+              balance reaches an amount you set.
             </p>
             <PayoutSetupGuide />
           </div>
@@ -224,12 +227,12 @@ export default function SetupPage() {
                 <span className="block">95% out.</span>
               </h2>
               <p className="mt-5 max-w-[36rem] text-lg leading-[1.6] [text-wrap:pretty] text-navy/70">
-                Numo ships with those two values. Adjust either to suit how much you sell in a day — a busy counter can
-                afford a higher threshold, a market stall usually wants a lower one.
+                Numo ships with those two values. Change either to match a day&rsquo;s takings. A busy counter can sit
+                on a higher threshold. A market stall usually wants a lower one.
               </p>
             </div>
             <div className="rounded-[2rem] bg-cream p-8 md:p-12">
-              <h2 className="font-display text-4xl [text-wrap:balance] text-navy">Before the first customer</h2>
+              <h2 className="font-display text-4xl [text-wrap:balance] text-navy">Check after the test sale</h2>
               <ul className="mt-7 space-y-4 text-base leading-[1.5] text-navy/75">
                 {preflight.map((item) => (
                   <li key={item} className="flex gap-3">
