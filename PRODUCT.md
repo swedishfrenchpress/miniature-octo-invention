@@ -71,7 +71,7 @@ Nearest reference: Square / Block — merchant-first, editorial, confident, prod
 
 ## Evidence on Hand
 
-**Designated proof — the release log.** Dated, versioned changelog entries v1.3 → v1.8 (`numo-site/src/data/releases.ts`) with real product screenshots in `numo-site/public/releases/`. This is the one body of evidence future work is cleared to build on: it shows a product that ships on a cadence.
+**Designated proof — the release log.** Dated, versioned changelog entries running v1.0 (2026-02-23) → v1.8 (`numo-site/src/data/releases.ts`), of which v1.3, v1.4, v1.5, and v1.8 carry real product screenshots in `numo-site/public/releases/`. This is the one body of evidence future work is cleared to build on: it shows a product that ships on a cadence. Cite the cadence and the dated entries themselves; do not convert them into a metric ("shipping every N weeks") without checking the dates.
 
 Other real assets available:
 

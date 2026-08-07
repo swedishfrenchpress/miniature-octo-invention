@@ -10,12 +10,6 @@ export const metadata: Metadata = {
     "A practical guide to setting up Numo, choosing a mint, and sending sales to your Lightning wallet automatically.",
 };
 
-const ArrowDown = () => (
-  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0-5-5m5 5 5-5" />
-  </svg>
-);
-
 function AppScreenshot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
   return (
     <figure className="w-full">
@@ -38,10 +32,30 @@ function AppScreenshot({ src, alt, caption }: { src: string; alt: string; captio
 
 const onboardingSteps = [
   {
-    title: "Open Numo",
+    title: "Install the app",
     body: (
       <>
-        Download the latest APK, install it on an NFC-enabled Android device, then tap the white{" "}
+        Download the latest APK from{" "}
+        <a
+          href="https://github.com/cashubtc/Numo/releases"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-navy underline underline-offset-2 hover:text-navy/70"
+        >
+          GitHub releases
+        </a>{" "}
+        or{" "}
+        <a
+          href="https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-navy underline underline-offset-2 hover:text-navy/70"
+        >
+          Zapstore
+        </a>
+        . Open the file and Android will ask you to allow installs from this source — that
+        prompt is normal for anything outside the Play Store. Approve it, finish the install,
+        then tap the white{" "}
         <strong className="font-semibold text-navy">Get Started</strong> button.
       </>
     ),
@@ -117,16 +131,15 @@ export default function SetupPage() {
               <span className="block">From download</span>
               <span className="block">to first sale.</span>
             </h1>
-            <div className="mt-9 flex max-w-3xl flex-col gap-7 border-l-2 border-mint pl-6 md:flex-row md:items-end md:justify-between">
+            <div className="mt-9 flex max-w-3xl flex-col gap-7 md:flex-row md:items-end md:justify-between">
               <p className="max-w-xl text-lg leading-[1.6] tracking-[0.005em] [text-wrap:pretty] text-white/75 md:text-xl">
                 Set up Numo, choose where payments arrive, and automatically move sales to your own Lightning wallet.
               </p>
               <a
                 href="#onboarding"
-                className="-my-3 inline-flex min-h-11 shrink-0 items-center gap-2 py-3 text-sm font-semibold text-mint hover:text-white"
+                className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-mint px-6 py-3 font-medium text-navy transition-all duration-200 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
               >
                 Start the guide
-                <ArrowDown />
               </a>
             </div>
           </div>

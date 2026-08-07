@@ -21,6 +21,19 @@ const PAGE_LINKS = [
 
 const SMOOTH = "ease-[cubic-bezier(0.32,0.72,0,1)]";
 
+/** Scroll an on-page section into view. `.section-anchor`'s scroll-margin-top
+ *  keeps it clear of the bar. Returns false when the section isn't in the DOM yet. */
+function scrollToSection(id: string, behavior: ScrollBehavior) {
+  const el = document.getElementById(id);
+  if (!el) return false;
+  el.scrollIntoView({ behavior, block: "start" });
+  return true;
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 /** The scrim under the transparent bar. One long fade, so no band edge is visible over the hero video. */
 const SCRIM =
   "bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.34)_40%,rgba(0,0,0,0.13)_72%,rgba(0,0,0,0)_100%)]";
@@ -43,11 +56,14 @@ function NavLink({
   label: string;
   active: boolean;
   current: "page" | "location";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
 }) {
+  // The label and its paint stroke live in an inner box, so the anchor itself can
+  // carry the padding that makes a 23px line of Bebas into a 44px tap target
+  // without dragging the underline away from the text.
   const body = (
-    <>
+    <span className="relative inline-block pb-1.5">
       {label}
       {/* The coat of paint: wipes in from the left on hover, stays put on the current section.
           Mint carries over the video; on the cream board mint reads at ~1.2:1, so it paints in ink. */}
@@ -61,10 +77,10 @@ function NavLink({
             : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
         }`}
       />
-    </>
+    </span>
   );
 
-  const classes = `group relative inline-block whitespace-nowrap pb-1.5 transition-colors duration-200 ${
+  const classes = `group inline-flex min-h-11 items-center whitespace-nowrap transition-colors duration-200 ${
     onDark
       ? active
         ? "text-white"
@@ -157,6 +173,24 @@ export function Navigation() {
     };
   }, [isMenuOpen]);
 
+  // Arriving at /#faq from /setup or /releases, the browser resolves the fragment
+  // before this client tree has rendered the section, so it lands at scrollY 0 with
+  // the target 5,000px below. Re-resolve it once the section actually exists.
+  useEffect(() => {
+    if (!isHome) return;
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
+    let frame = 0;
+    let attempts = 0;
+    const resolve = () => {
+      if (scrollToSection(id, "auto") || (attempts += 1) > 30) return;
+      frame = requestAnimationFrame(resolve);
+    };
+    frame = requestAnimationFrame(resolve);
+    return () => cancelAnimationFrame(frame);
+  }, [isHome]);
+
   /** The bar is a painted cream board once it leaves the hero, and while the menu is open. */
   const isBoard = isScrolled || isMenuOpen;
   const onDark = !isBoard;
@@ -165,6 +199,19 @@ export function Navigation() {
     id ? isHome && activeSection === id : pathname === href;
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  /** On the home page, drive the scroll ourselves so it can be smooth for people
+   *  who want motion and instant for people who don't. Off the home page, let the
+   *  browser navigate — the effect above finishes the job on arrival. */
+  const onAnchorClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    closeMenu();
+    if (!isHome || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    const id = href.slice(2);
+    e.preventDefault();
+    if (scrollToSection(id, prefersReducedMotion() ? "auto" : "smooth")) {
+      window.history.pushState(null, "", href);
+    }
+  };
 
   return (
     <nav
@@ -226,6 +273,7 @@ export function Navigation() {
               active={isActive(link.href, link.id)}
               current="location"
               onDark={onDark}
+              onClick={onAnchorClick(link.href)}
             />
           ))}
 
@@ -313,8 +361,8 @@ export function Navigation() {
                     active={isActive(link.href, link.id)}
                     current="location"
                     onDark={false}
-                    onClick={closeMenu}
-                    className="!pb-0 my-3.5"
+                    onClick={onAnchorClick(link.href)}
+                    className="w-full min-h-14"
                   />
                 </li>
               ))}
@@ -330,7 +378,7 @@ export function Navigation() {
                     current="page"
                     onDark={false}
                     onClick={closeMenu}
-                    className="!pb-0 my-3.5"
+                    className="w-full min-h-14"
                   />
                 </li>
               ))}

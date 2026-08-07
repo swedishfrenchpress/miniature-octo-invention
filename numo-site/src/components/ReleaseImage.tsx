@@ -26,7 +26,7 @@ export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) 
         />
       </div>
       {image.caption && (
-        <figcaption className="mt-3 text-sm italic text-navy/55 leading-relaxed max-w-[60ch]">
+        <figcaption className="mt-3 text-sm italic text-navy/65 leading-relaxed max-w-[60ch]">
           {image.caption}
         </figcaption>
       )}

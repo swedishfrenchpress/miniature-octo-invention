@@ -35,7 +35,7 @@ export default function ReleasesPage() {
           <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-mint mb-4">
             Releases
           </p>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-white leading-[0.9] font-bold">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-white leading-[0.9]">
             WHAT&apos;S NEW IN NUMO
           </h1>
           <p className="mt-5 text-base md:text-lg text-white/60 max-w-[52ch]">
@@ -58,7 +58,7 @@ export default function ReleasesPage() {
             </span>
             <time
               dateTime={latest.date}
-              className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-navy/55"
+              className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-navy/65"
             >
               {formatFullDate(latest.date)}
             </time>
@@ -66,7 +66,7 @@ export default function ReleasesPage() {
 
           <h2
             id="latest-title"
-            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] font-bold mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
+            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
           >
             {latest.title}
           </h2>
@@ -119,7 +119,7 @@ export default function ReleasesPage() {
           >
             <h3
               id="earlier-releases"
-              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/55 mb-2"
+              className="text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-navy/65 mb-2"
             >
               Earlier releases
             </h3>
@@ -134,7 +134,7 @@ export default function ReleasesPage() {
         {/* Footer strip */}
         <footer className="border-t border-navy/10 px-6 py-10">
           <div className="max-w-5xl mx-auto">
-            <p className="text-sm text-navy/55">
+            <p className="text-sm text-navy/65">
               Release notes are updated as features ship.
             </p>
           </div>
