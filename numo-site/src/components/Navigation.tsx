@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Button } from "./Button";
 
 const NAV_LINKS = [
@@ -8,6 +9,7 @@ const NAV_LINKS = [
   { label: "Wallets", href: "/#wallets" },
   { label: "Integration", href: "/#integration" },
   { label: "FAQ", href: "/#faq" },
+  { label: "Setup", href: "/setup" },
   { label: "Releases", href: "/releases" },
 ];
 
@@ -51,13 +53,13 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="relative flex items-center justify-between gap-6">
           {/* Logo */}
-          <a
+          <Link
             href="/"
             className="w-12 h-12 rounded-lg flex items-center justify-center bg-mint hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150 cursor-pointer shadow-sm"
             aria-label="Numo home"
           >
             <span className="text-2xl font-display font-bold text-navy">N</span>
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <div
@@ -130,7 +132,9 @@ export function Navigation() {
           isMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
-        <div className="overflow-hidden">
+        {/* inert keeps the collapsed links out of the tab order and the a11y tree —
+            grid-rows-[0fr] hides them visually but leaves them focusable on their own. */}
+        <div className="overflow-hidden" inert={!isMenuOpen}>
           <div className="max-w-7xl mx-auto px-6 pb-6 pt-2">
             <ul
               style={{ fontFamily: "var(--font-display)" }}

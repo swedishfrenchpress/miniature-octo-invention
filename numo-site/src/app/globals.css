@@ -111,10 +111,14 @@ body {
   scroll-margin-top: 96px;
 }
 
-/* Accessible focus styles */
+/* Accessible focus styles.
+   Two-tone: mint alone is ~1.1:1 on cream and navy alone is invisible on the
+   dark sections, so the ring pairs a mint line with a navy backing and stays
+   visible on every ground the site uses. */
 :where(a, button, input, select, textarea, [role="button"]):focus-visible {
   outline: 2px solid var(--mint);
-  outline-offset: 3px;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--navy);
 }
 
 /* Skip link for keyboard users */
