@@ -11,6 +11,14 @@ type Props = {
 
 const DEFAULT_SIZES = "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px";
 
+/* Release screenshots are plain paths, so next/image has no build-time blur to
+   derive. Without a placeholder the reserved box paints nothing and /releases
+   arrives as a column of holes — sixteen of them, of which three had loaded a
+   full four seconds in. A single butcher-paper tone is enough: these are app
+   screenshots on light grounds, so the page reads as paper settling rather than
+   as gaps waiting to fill. */
+const BLUR = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjExLjEwMAD/2wBDAAgYGBwYHCEhISEhISckJygoKCcnJycoKCgrKyszMzMrKysoKCsrMDAzMzc5NzQ0MzQ5OTw8PEhIRUVUVFdnZ3z/xABMAAEBAAAAAAAAAAAAAAAAAAAABwEBAQAAAAAAAAAAAAAAAAAAAgMQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/wAARCAAGAAgDASIAAhEAAxEA/9oADAMBAAIRAxEAPwC4gJG//9k=";
+
 export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) {
   return (
     <figure>
@@ -22,11 +30,13 @@ export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) 
           height={image.height}
           priority={priority}
           sizes={sizes}
+          placeholder="blur"
+          blurDataURL={BLUR}
           className="block w-full h-auto"
         />
       </div>
       {image.caption && (
-        <figcaption className="mt-3 text-sm italic text-navy/65 leading-relaxed max-w-[60ch]">
+        <figcaption className="mt-3 max-w-[43rem] text-sm italic leading-relaxed text-navy/65">
           {image.caption}
         </figcaption>
       )}

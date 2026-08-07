@@ -7,6 +7,7 @@ import { BentoCard } from "@/components/BentoCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import WorksOfflineAnimation from "@/components/WorksOfflineAnimation";
 
 /** The NFC mark. Used at three scales: the tap card, the wallets heading, and the
  *  badge that marks a wallet as tap-capable. */
@@ -21,13 +22,18 @@ function NfcGlyph({ className }: { className?: string }) {
 }
 
 // Notification data pool - cycles through these
+// Auto-withdraw sends to the merchant's own Lightning address, so the address is
+// constant across notifications and only the amount moves — the earlier pool
+// showed six different people's handles at real providers, which was both
+// inaccurate to the feature and invented data on companies' real domains.
+const PAYOUT_ADDRESS = "shop@wallet.com";
 const notificationPool = [
-  { amount: "$20.00", address: "satoshi@primal.net" },
-  { amount: "$35.00", address: "alice@wallet.com" },
-  { amount: "$50.00", address: "bob@strike.me" },
-  { amount: "$100.00", address: "carol@coinos.io" },
-  { amount: "$75.00", address: "dave@getalby.com" },
-  { amount: "$45.00", address: "eve@phoenix.io" },
+  { amount: "$20.00", address: PAYOUT_ADDRESS },
+  { amount: "$35.00", address: PAYOUT_ADDRESS },
+  { amount: "$50.00", address: PAYOUT_ADDRESS },
+  { amount: "$100.00", address: PAYOUT_ADDRESS },
+  { amount: "$75.00", address: PAYOUT_ADDRESS },
+  { amount: "$45.00", address: PAYOUT_ADDRESS },
 ];
 
 interface StackNotification {
@@ -494,126 +500,7 @@ function BentoFeatures() {
             
             {/* Offline payment animation - centered vertically and horizontally */}
             <div className="flex-1 flex items-center justify-center overflow-hidden" aria-hidden="true">
-              <div className="flex items-center gap-4 origin-center scale-[0.62] sm:scale-[0.8] md:scale-[0.82] lg:scale-90">
-              {/* Customer's phone, offline. The original device treatment — deep
-                  bezel, recessed screen, big amber airplane badge — on an Android
-                  body: punch-hole rather than a notch, since Numo is Android-only. */}
-              <div className="relative flex-shrink-0 z-10">
-                <div className="w-28 h-56 bg-[#1a1a2e] rounded-[1.5rem] relative overflow-hidden shadow-2xl border-[4px] border-[#2a2a3e]">
-                  {/* Punch-hole camera */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#3a3a4e] rounded-full z-10"></div>
-
-                  <div className="absolute inset-[4px] bg-gradient-to-b from-[#1e1e3f] to-[#12122a] rounded-[1.2rem] flex items-center justify-center">
-                     {/* Airplane mode */}
-                     <div className="w-20 h-20 rounded-full bg-[#FF9500] flex items-center justify-center shadow-lg">
-                       <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                         <path d="M22 16v-2l-8.5-5V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V9L2 14v2l8.5-2.5V19L8 20.5V22l4-1 4 1v-1.5L13.5 19v-5.5L22 16z"/>
-                       </svg>
-                     </div>
-                   </div>
-
-                   {/* Android gesture bar */}
-                   <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-14 h-1.5 bg-white/30 rounded-full"></div>
-                 </div>
-
-                 {/* No signal badge — the one red mark in the system, and it means "cut off" */}
-                <div className="absolute -top-2 -right-2 w-9 h-9 bg-[#FF3B30] rounded-full flex items-center justify-center shadow-lg border-[3px] border-white z-20">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Money flying animation - staggered trail with more space */}
-              <div className="relative h-32 w-[180px] overflow-visible">
-                {/* Bill 1 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-1 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-16 h-9 bg-gradient-to-r from-[#F7931A] to-[#FFB84D] rounded shadow-lg flex items-center justify-center border border-[#FFB84D]/30">
-                    <span className="text-white font-bold text-lg drop-shadow-md">₿</span>
-                  </div>
-                </div>
-                
-                {/* Bill 2 - Green $ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-2 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-14 h-8 bg-gradient-to-r from-[#34C759] to-[#5DD97C] rounded shadow-lg flex items-center justify-center border border-[#5DD97C]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">$</span>
-                  </div>
-                </div>
-                
-                {/* Bill 3 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-3 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-16 h-8 bg-gradient-to-r from-[#F7931A] to-[#FFCC66] rounded shadow-lg flex items-center justify-center border border-[#FFCC66]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">₿</span>
-                  </div>
-                </div>
-                
-                {/* Bill 4 - Green $ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-4 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-14 h-8 bg-gradient-to-r from-[#2DB84C] to-[#4ADE80] rounded shadow-lg flex items-center justify-center border border-[#4ADE80]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">$</span>
-                  </div>
-                </div>
-                
-                {/* Bill 5 - Orange Bitcoin ₿ */}
-                <div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{ animation: 'money-fly-5 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                >
-                  <div className="w-16 h-8 bg-gradient-to-r from-[#E8850F] to-[#F7931A] rounded shadow-lg flex items-center justify-center border border-[#F7931A]/30">
-                    <span className="text-white font-bold text-base drop-shadow-md">₿</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* The receiving device. The original's heavy dark body and recessed
-                  screen, but a phone — no card-reader slot and no terminal base,
-                  because Numo runs on the merchant's own handset. */}
-              <div className="relative flex-shrink-0 z-10">
-                <div className="w-32 h-60 bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] rounded-[1.75rem] relative shadow-2xl border-[4px] border-[#3a3a3a] overflow-hidden">
-                  {/* Punch-hole camera */}
-                  <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#4a4a4a] rounded-full z-10"></div>
-
-                  {/* Till screen — flashes mint the moment the ecash lands */}
-                  <div className="absolute inset-[5px] rounded-[1.4rem] overflow-hidden bg-[#0d0d0d]">
-                    <div
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ animation: 'pos-success 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                    >
-                      <span
-                        className="font-display text-3xl leading-none text-white"
-                        style={{ animation: 'till-amount-offline 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                      >
-                        $12.00
-                      </span>
-                      <svg
-                        className="absolute w-14 h-14 text-navy"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        style={{ animation: 'checkmark-appear 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite' }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Android gesture bar */}
-                  <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-white/30 rounded-full z-20"></div>
-                </div>
-              </div>
-              </div>
+              <WorksOfflineAnimation className="scale-[0.62] sm:scale-[0.8] md:scale-[0.82] lg:scale-90" />
             </div>
           </BentoCard>
 
@@ -685,7 +572,7 @@ function SupportedWallets() {
             <SectionHeading className="mb-4">
               SUPPORTED WALLETS
             </SectionHeading>
-            <p className="text-lg text-navy/75 mx-auto max-w-[52ch] [text-wrap:pretty]">
+            <p className="text-lg text-navy/75 mx-auto max-w-[35rem] [text-wrap:pretty]">
               Works with any Bitcoin Lightning wallet. Tap-to-pay available for ecash wallets.
             </p>
           </div>
@@ -839,8 +726,8 @@ function DemoVideo({
  *  and the second carries none, at a different column ratio. */
 function SimpleFeatures() {
   return (
-    <section className="bg-cream py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="bg-cream py-20">
+      <div className="mx-auto max-w-6xl px-6">
         {/* Block one — media leads, copy explains */}
         <div className="grid items-center gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
           <DemoVideo src="/ln-checkout.mp4" poster="/ln-checkout-poster.jpg" />
@@ -849,7 +736,7 @@ function SimpleFeatures() {
             <SectionHeading className="mb-6">
               Lightning and ecash, unified
             </SectionHeading>
-            <p className="mb-8 max-w-[58ch] text-lg text-navy/75 [text-wrap:pretty]">
+            <p className="mb-8 max-w-[38rem] text-lg text-navy/75 [text-wrap:pretty]">
               Ecash is what makes the tap work. When a customer doesn&apos;t carry an ecash
               wallet, Numo falls back to a Lightning invoice and the sale still closes. One
               till, both rails.
@@ -878,7 +765,7 @@ function SimpleFeatures() {
             <SectionHeading className="mb-6">
               Easy inventory management
             </SectionHeading>
-            <p className="max-w-[46ch] text-lg text-navy/75 [text-wrap:pretty]">
+            <p className="max-w-[31rem] text-lg text-navy/75 [text-wrap:pretty]">
               Build categories for items and sizes, then tap once to charge a preset price.
               Every sale is tracked, and the whole ledger exports per item when you need it.
             </p>
@@ -1024,7 +911,7 @@ function POSSystem({ onPaymentComplete, onQRShown, onReset }: { onPaymentComplet
           <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white transition-all duration-700 ease-out ${showQR && step !== 'success' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
              <div className="text-center mb-6">
                <div className="text-gray-400 text-sm font-medium mb-1 uppercase tracking-wide">Total to pay</div>
-               <div className="text-5xl font-bold text-[#0A2540]">$21.00</div>
+               <div className="text-5xl font-semibold text-[#0A2540]">$21.00</div>
              </div>
              
              {/* QR Code Container */}
@@ -1090,7 +977,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
            </div>
            <div className="relative cursor-pointer">
               <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-              <span className="absolute -top-1.5 -right-1.5 bg-[#dc3545] text-white text-[10px] min-w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold px-1 border-2 border-[#f8f9fa]">15</span>
+              <span className="absolute -top-1.5 -right-1.5 bg-[#dc3545] text-white text-[10px] min-w-[16px] h-[16px] flex items-center justify-center rounded-full font-semibold px-1 border-2 border-[#f8f9fa]">15</span>
            </div>
         </div>
         
@@ -1115,7 +1002,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             </div>
 
             <div className="mb-6">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Wallets</p>
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Wallets</p>
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                     <div className="w-5 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-[#51b13e]"></div></div>
@@ -1131,7 +1018,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             </div>
 
             <div className="mb-6">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-3">Payments</p>
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Payments</p>
                 <div className="space-y-1">
                     <div className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded cursor-pointer hover:bg-gray-200/50 transition-colors duration-150">
                        <div className="w-5 flex justify-center"><svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
@@ -1175,7 +1062,7 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
             <div className="flex items-center justify-between gap-4 mb-6">
                <div className="flex items-center gap-2">
                  {/* Not a real heading — depicted chrome, kept out of the outline */}
-                 <div className="text-xl md:text-2xl font-bold text-gray-800">Invoices</div>
+                 <div className="text-xl md:text-2xl font-semibold text-gray-800">Invoices</div>
                  <span className="text-gray-400 cursor-help bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center text-[10px]">?</span>
                </div>
                <button className="bg-[#51b13e] hover:bg-[#469d34] active:scale-[0.98] text-white px-4 py-2 rounded shadow-sm font-medium text-sm transition-all duration-150 flex items-center gap-2">
@@ -1242,9 +1129,9 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                           </td>
                           <td className="py-3 px-4 whitespace-nowrap align-middle">
                                  {isPaid ? (
-                                    <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-bold">Paid</span>
+                                    <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-semibold">Paid</span>
                                  ) : (
-                                    <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-bold">Processing</span>
+                                    <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-semibold">Processing</span>
                                  )}
                            </td>
                           <td className="py-3 px-4 text-right text-gray-700 align-middle whitespace-nowrap font-mono text-[11px]">
@@ -1273,9 +1160,9 @@ function BTCPayInterface({ paymentStatus }: { paymentStatus: 'pending' | 'paid' 
                              </td>
                              <td className="py-3 px-4 whitespace-nowrap align-middle">
                                 {inv.status === 'Processing' ? (
-                                   <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-bold">Processing</span>
+                                   <span className="bg-[#fff3cd] text-[#856404] px-2 py-1 rounded text-[11px] font-semibold">Processing</span>
                                 ) : (
-                                   <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-bold">Paid</span>
+                                   <span className="bg-[#d4edda] text-[#155724] px-2 py-1 rounded text-[11px] font-semibold">Paid</span>
                                 )}
                              </td>
                              <td className="py-3 px-4 text-right text-gray-700 whitespace-nowrap font-mono text-[11px] align-middle">{inv.amount}</td>
@@ -1340,7 +1227,7 @@ function BTCPayIntegration() {
           <SectionHeading className="mb-6">
             BTCPay Server x Numo Integration
           </SectionHeading>
-          <p className="text-lg text-navy/75 max-w-[58ch] mx-auto [text-wrap:pretty]">
+          <p className="text-lg text-navy/75 max-w-[38rem] mx-auto [text-wrap:pretty]">
             Numo connects directly to your BTCPay Server store. It generates invoices, accepts Lightning or Cashu, and keeps your Point-of-Sale inventory in sync automatically.
           </p>
         </div>
@@ -1378,6 +1265,13 @@ function BTCPayIntegration() {
               )}
            </div>
         </div>
+
+        {/* The invoice rows are sample content, not a customer's books. PRODUCT.md
+            bans fabricated proof; saying so plainly keeps this an illustration
+            rather than an implied claim about volume. */}
+        <p className="mt-10 text-center text-sm text-navy/65">
+          Illustration. Invoice amounts and store name are sample data.
+        </p>
       </div>
     </section>
   );

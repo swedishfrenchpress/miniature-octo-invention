@@ -4,6 +4,7 @@ import { ReleaseEntry } from "@/components/ReleaseEntry";
 import { ReleaseImage } from "@/components/ReleaseImage";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Releases - Numo",
@@ -38,7 +39,7 @@ export default function ReleasesPage() {
           <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-white leading-[0.9]">
             WHAT&apos;S NEW IN NUMO
           </h1>
-          <p className="mt-5 text-base md:text-lg text-white/60 max-w-[52ch]">
+          <p className="mt-5 text-base md:text-lg text-white/60 max-w-[35rem]">
             Every feature, improvement, and fix that ships, written for the
             people running the terminal, not the people writing the commits.
           </p>
@@ -70,7 +71,7 @@ export default function ReleasesPage() {
           >
             {latest.title}
           </h2>
-          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[58ch] [text-wrap:pretty]">
+          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[38rem] [text-wrap:pretty]">
             {latest.summary}
           </p>
 
@@ -87,7 +88,7 @@ export default function ReleasesPage() {
                   <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch] md:max-w-none md:whitespace-nowrap">
                     {h.title}
                   </dt>
-                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
+                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[40rem]">
                     {h.body}
                   </dd>
                   {h.image && (
@@ -131,15 +132,10 @@ export default function ReleasesPage() {
           </section>
         )}
 
-        {/* Footer strip */}
-        <footer className="border-t border-navy/10 px-6 py-10">
-          <div className="max-w-5xl mx-auto">
-            <p className="text-sm text-navy/65">
-              Release notes are updated as features ship.
-            </p>
-          </div>
-        </footer>
+
       </main>
+
+      <SiteFooter note="Release notes are updated as features ship. Numo is free and open source." />
     </>
   );
 }

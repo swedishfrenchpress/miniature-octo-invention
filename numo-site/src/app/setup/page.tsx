@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/Button";
 import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import { PayoutSetupGuide } from "@/components/PayoutSetupGuide";
 
 export const metadata: Metadata = {
@@ -172,7 +173,7 @@ export default function SetupPage() {
             <p className="mt-5 max-w-xl text-lg leading-[1.6] [text-wrap:pretty] text-navy/70">
               Onboarding creates the wallet your terminal receives payments into. Four screens, then you are trading.
             </p>
-            <p className="mt-6 max-w-[30rem] rounded-2xl bg-white/70 p-5 text-sm leading-[1.6] [text-wrap:pretty] text-navy/75">
+            <p className="mt-6 max-w-[38rem] rounded-2xl bg-white/70 p-5 text-sm leading-[1.6] [text-wrap:pretty] text-navy/75">
               <strong className="font-semibold text-navy">What is a mint?</strong> It is the service that issues and
               holds the Cashu balance received by this terminal. It is not your final payout wallet — step 3 is where
               you pick one, and Part two is where you send the money on.
@@ -253,19 +254,7 @@ export default function SetupPage() {
         </section>
       </main>
 
-      <footer className="bg-cream-warm px-6 py-16">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <div>
-            <p className="font-display text-4xl [text-wrap:balance] text-navy md:text-5xl">Get the app.</p>
-            <p className="mt-2 max-w-[33rem] leading-[1.6] [text-wrap:pretty] text-navy/70">
-              Numo is free and open source. Step one starts at the GitHub releases page.
-            </p>
-          </div>
-          <Button href="https://github.com/cashubtc/Numo/releases" variant="dark" external>
-            Download the APK
-          </Button>
-        </div>
-      </footer>
+      <SiteFooter note="Numo is free and open source. Step one starts at the GitHub releases page." />
     </>
   );
 }

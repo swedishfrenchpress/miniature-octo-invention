@@ -177,7 +177,7 @@ export function PayoutSetupGuide() {
                       {setting.marker}
                     </span>
                     <div>
-                      <dt className="text-base font-bold tracking-[0.01em] text-white">
+                      <dt className="text-base font-semibold tracking-[0.01em] text-white">
                         <span className="sr-only">{setting.marker}. </span>
                         {setting.name}
                       </dt>

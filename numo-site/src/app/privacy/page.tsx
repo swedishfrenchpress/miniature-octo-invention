@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Navigation } from "@/components/Navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Privacy & Terms - Numo",
@@ -53,7 +54,7 @@ export default function PrivacyPage() {
           <p className="font-display text-3xl md:text-4xl text-mint mt-2">
             PRIVACY POLICY
           </p>
-          <p className="mt-4 max-w-[52ch] leading-relaxed text-white/70 [text-wrap:pretty]">
+          <p className="mt-4 max-w-[35rem] leading-relaxed text-white/70 [text-wrap:pretty]">
             This policy covers the Numo Android app. It does not describe numopay.org, which
             uses privacy-friendly page analytics.
           </p>
@@ -82,24 +83,7 @@ export default function PrivacyPage() {
         </div>
       </main>
 
-      {/* This page used to end here, with no nav and no footer — the only way back
-          was the browser's back button. */}
-      <footer className="bg-cream-warm px-6 py-16">
-        <div className="mx-auto flex max-w-3xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <div>
-            <p className="font-display text-4xl [text-wrap:balance] text-navy md:text-5xl">Get the app.</p>
-            <p className="mt-2 max-w-[33rem] leading-[1.6] [text-wrap:pretty] text-navy/70">
-              Numo is free and open source. The five-minute setup guide is the fastest way in.
-            </p>
-          </div>
-          <Link
-            href="/setup"
-            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-navy px-6 py-3.5 font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-white hover:text-navy active:scale-[0.98]"
-          >
-            Read the setup guide
-          </Link>
-        </div>
-      </footer>
+      <SiteFooter note="Numo is free and open source. The five-minute setup guide is the fastest way in." />
     </>
   );
 }

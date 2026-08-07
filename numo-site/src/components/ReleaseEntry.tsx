@@ -39,7 +39,7 @@ export function ReleaseEntry({ release }: Props) {
         <h2 className="font-display text-3xl md:text-4xl text-navy leading-[0.95] mb-4 max-w-[22ch] [text-wrap:balance]">
           {release.title}
         </h2>
-        <p className="text-lg text-navy/75 leading-relaxed max-w-[65ch] [text-wrap:pretty]">
+        <p className="text-lg text-navy/75 leading-relaxed max-w-[43rem] [text-wrap:pretty]">
           {release.summary}
         </p>
 
@@ -56,7 +56,7 @@ export function ReleaseEntry({ release }: Props) {
                 <dt className="font-display text-xl md:text-2xl text-navy leading-[0.95] mb-2 max-w-[28ch]">
                   {h.title}
                 </dt>
-                <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[60ch]">
+                <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[40rem]">
                   {h.body}
                 </dd>
                 {h.image && (

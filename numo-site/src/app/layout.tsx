@@ -8,7 +8,9 @@ import "./globals.css";
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  // 700 is no longer referenced anywhere; each weight is a font file every
+  // visitor downloads.
+  weight: ["400", "500", "600"],
 });
 
 // Bold display font
