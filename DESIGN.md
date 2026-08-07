@@ -18,6 +18,12 @@ colors:
   gray-500: "#71717A"
   gray-600: "#52525B"
 typography:
+  scale:
+    nav: "1.2rem"
+    nav-lg: "1.5rem"
+    nav-xl: "1.7rem"
+    nav-panel: "1.6rem"
+    masthead: "2.5rem"
   display:
     fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
     fontSize: "clamp(3rem, 8vw, 8rem)"
@@ -36,6 +42,24 @@ typography:
     fontWeight: 400
     lineHeight: 0.95
     letterSpacing: "0.01em"
+  masthead:
+    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
+    fontSize: "2.5rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "0.01em"
+  nav:
+    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
+    fontSize: "1.2rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "0.06em"
+  nav-panel:
+    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
+    fontSize: "1.6rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "0.1em"
   body:
     fontFamily: "Sora, system-ui, sans-serif"
     fontSize: "1.125rem"
@@ -119,7 +143,20 @@ components:
     size: "2.5rem"
   nav-link:
     textColor: "{colors.signwriters-ink}"
-    typography: "{typography.label}"
+    typography: "{typography.nav}"
+    textOpacity: 0.7
+    textOpacityActive: 1
+    textColorOnScrim: "{colors.white}"
+    textOpacityOnScrim: 0.75
+    indicatorHeight: "2px"
+    indicatorColor: "{colors.signwriters-ink}"
+    indicatorColorOnScrim: "{colors.fresh-paint-mint}"
+  nav-logo:
+    backgroundColor: "{colors.fresh-paint-mint}"
+    textColor: "{colors.signwriters-ink}"
+    typography: "{typography.masthead}"
+    rounded: "{rounded.sm}"
+    size: "2.75rem"
 ---
 
 # Design System: Numo
@@ -179,8 +216,10 @@ A four-color system — ink, mint, and two creams — deliberately narrow so the
 - **Display** (400, `clamp(3rem, 8vw, 8rem)`, 0.9): Page-level h1 only. Hero headlines and the footer CTA. Always uppercase, always allowed to break across lines at a chosen point rather than wrapping arbitrarily.
 - **Headline** (400, `clamp(3rem, 5vw, 4.5rem)`, 0.9): Section h2. Shipped via `SectionHeading`, which offers a smaller `sm` step (2.25rem → 3rem) for headings inside cards.
 - **Title** (400, `clamp(1.25rem, 3vw, 2.25rem)`, 0.95): Card headings, FAQ questions, release-note highlight terms, numbered step titles. Still Bebas, still uppercase in most contexts.
+- **Masthead** (400, 2.5rem, 1.0): The navigation lockup only — the "N" inside the mint tile and the "Numo" wordmark beside it. Both halves carry a `0.05em` downward nudge, because Bebas sets its caps high in the line box and centering the box alone leaves the glyph above the tile's true middle.
+- **Nav** (400, 1.2rem → 1.5rem at `lg` → 1.7rem at `xl`, 1.0): The desktop navigation rail. Tracking loosens as the type grows (`0.06em` → `0.09em` → `0.11em`) — larger Bebas caps need less letter-spacing to stay legible, and the tighter settings at the small end buy back the horizontal room the rail needs to clear the CTA. The mobile disclosure panel sets the same links at a flat 1.6rem / `0.1em`.
 - **Body** (400, 1.125rem, 1.625): Sora at `text-lg`, tinted ink at 65–75%. Measure is capped explicitly on editorial surfaces — `65ch` for release summaries, `60ch` for highlight bodies, `52–58ch` for page intros.
-- **Label** (600, 0.875rem, `0.22–0.3em` tracking, uppercase): Eyebrows, dates, nav links, and status chips. The widest tracking in the system (`0.3em`) belongs to the hero tagline and the releases eyebrow.
+- **Label** (600, 0.875rem, `0.22–0.3em` tracking, uppercase): Eyebrows, dates, and status chips. The widest tracking in the system (`0.3em`) belongs to the hero tagline and the releases eyebrow.
 - **Wordmark** (Grandstander, `clamp(6rem, 20vw, 20rem)`, white at 10%): One instance only — "NUMO" resting on the footer baseline as architectural texture.
 - **Annotation** (Solitreo, `clamp(1.5rem, 3vw, 1.875rem)`, rotated -2°): One instance only — the handwritten "+ all bitcoin lightning wallets!" beneath the wallet grid.
 
@@ -190,7 +229,7 @@ A four-color system — ink, mint, and two creams — deliberately narrow so the
 
 **The Once Per Page Rule.** Grandstander and Solitreo each appear exactly once in the entire site, and that scarcity is the reason they land. The Grandstander wordmark belongs to the site footer; the Solitreo aside belongs to the wallets card. A second use of either on the same page destroys both. Adding a third decorative face is out of bounds.
 
-**The Nothing In Between Rule.** The gap between 1.125rem body and 3rem+ display is intentional. Do not introduce mid-scale headings (1.5–2.5rem Sora) to soften the jump — the steepness is what makes the display type read as signage rather than as a large paragraph.
+**The Nothing In Between Rule.** The gap between 1.125rem body and 3rem+ display is intentional. Do not introduce mid-scale headings (1.5–2.5rem Sora) to soften the jump — the steepness is what makes the display type read as signage rather than as a large paragraph. The Title, Nav, and Masthead steps sit inside that band without breaking the rule, because all three are Bebas: they read as small signage, not as large body copy. The rule bars mid-scale *Sora*, and it bars it in the reading column — chrome is not the reading column.
 
 **The Single Weight Rule.** Bebas Neue ships one weight (400). Applying `font-bold` to it produces synthetic bold, which thickens the strokes unevenly and dulls the condensed silhouette. Prefer size and case for emphasis; treat any existing `font-display font-bold` pairing as legacy to be corrected, not as a pattern to copy.
 
@@ -200,7 +239,7 @@ The system is a stack of full-bleed sections, each choosing its own ground (whit
 
 Vertical rhythm is `5rem` (`py-20`) per section, opening to `7rem` (`py-28`) at `md` on the editorial pages. The bento feature grid is a two-column layout at `md` with a tight `1rem` gap, letting cards touch closely enough to read as one composed slab rather than as separate tiles; some cards span both columns to break the rhythm.
 
-Two responsive hinges matter. At **768px (`md`)** the navigation collapses to a hamburger with a grid-rows disclosure panel, the bento grid goes single-column, and display sizes step down. At **1024px (`lg`)** the setup guide switches from a stacked mobile list — where each step carries its own screenshot — to a two-column layout with a sticky screenshot rail on the right and scroll-driven step activation on the left. That is the system's most distinctive layout behavior and its mobile fallback is a genuine alternate composition, not a squeezed version of the desktop one.
+Two responsive hinges matter. At **768px (`md`)** the navigation collapses to a hamburger with a grid-rows disclosure panel, the bento grid goes single-column, and display sizes step down. At **1024px (`lg`)** the setup guide switches from a stacked mobile list — where each step carries its own screenshot — to a two-column layout with a sticky screenshot rail on the right and scroll-driven step activation on the left. That is the system's most distinctive layout behavior and its mobile fallback is a genuine alternate composition, not a squeezed version of the desktop one. The navigation hinges on the same two widths for a different reason: the wordmark appears at `lg` and the rail steps up a type size again at `xl`, both governed by how much room is left between the masthead and the CTA.
 
 Editorial pages use an asymmetric rail: the releases index sets a `160px` version column beside a fluid content column, separated by hairline `ink/10` rules with `3.5rem` of vertical padding per entry.
 
@@ -213,7 +252,7 @@ Editorial pages use an asymmetric rail: the releases index sets a `160px` versio
 Shadow is reserved for two things: elements that depict a **physical object**, and controls that can be **pressed**. A phone mockup, a payment-received notification, a screenshot frame — these cast real, generous shadows because they are pretending to exist in space. A large CTA button carries `shadow-lg` because it invites a finger. Everything else stays on the page.
 
 ### Shadow Vocabulary
-- **Surface hairline** (`box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)`): The scrolled navigation bar and the logo tile. The lightest possible acknowledgement that a bar is floating over content.
+- **Surface hairline** (`box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)`): The navigation logo tile. The lightest possible acknowledgement that an object is sitting on the bar. The scrolled bar itself carries no shadow — it separates from the page with an `ink/10` bottom hairline instead.
 - **Pressable** (`box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)`): Large CTA buttons and the payment-received toast.
 - **Object** (`box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25)`): Device mockups inside illustrations.
 - **Ink-tinted object** (`box-shadow: 0 28px 60px rgba(10, 37, 64, .2)`): Screenshot frames on light grounds. The shadow is tinted with Signwriter's Ink rather than black, which keeps it warm against cream.
@@ -240,7 +279,7 @@ Borders are used sparingly and are almost always hairline `ink/10` or `ink/15` d
 - **Primary (dark):** Signwriter's Ink fill, white text, medium weight, `1rem 2rem` padding at the large size, with `shadow-lg`. Large buttons go full-width below `sm` and auto-width above, with a `200px` minimum.
 - **Accent:** Fresh Paint Mint fill with ink text. Used in inverse contexts — the site footer's download CTA — where mint is the only thing that will carry.
 - **Light:** White at 90% with ink text; the secondary of a pair over imagery, as in the hero's Zapstore button.
-- **Compact:** `0.625rem 1.25rem` padding, `0.875rem` text, no shadow. The navigation's persistent download button.
+- **Compact:** `0.625rem 1.25rem` padding, `0.875rem` text, no shadow. The navigation's persistent download button. It is the one button in the system that swaps variant with its surroundings — mint `accent` while the bar is transparent over the hero, ink `dark` once the bar becomes a cream board — so the CTA stays the loudest thing on the bar in both states.
 - **Hover / Active:** Both large variants invert to a **white fill with ink text** — this system's signature button hover, in which the button appears to lift off the ground rather than darken. Scale `1.02` on hover, `0.98` on active, `200ms`. The compact dark button is the exception: it deepens to Ink Light instead of inverting.
 
 ### Cards / Containers
@@ -256,7 +295,19 @@ Borders are used sparingly and are almost always hairline `ink/10` or `ink/15` d
 - **Status chip:** Ink at 90% with backdrop blur, white `0.75rem` semibold text, full pill. Used as the "Step N" marker floating over screenshots.
 
 ### Navigation
-Fixed, full-width, and **transparent at the top of the page** — sitting over hero video behind a black gradient scrim, with white links. Past 20px of scroll it transitions over `300ms` to white at 90% with `backdrop-blur-xl`, a hairline bottom border, and ink links at 80%. Links are Bebas uppercase at `0.22em` tracking. The logo is a `48px` mint tile with an ink "N". Below `md`, links collapse into a panel that opens by animating `grid-template-rows` from `0fr` to `1fr` — no max-height guessing — over `300ms` on the smooth curve, while the hamburger's three bars rotate into an X.
+Fixed, full-width, and built as **two states of one bar**, crossfading over `300ms` on the smooth curve.
+
+**Over the hero** the bar is transparent, sitting on hero video behind a four-stop black scrim that fades `0.5 → 0` across `190%` of the bar's own height. The long fade is the point: a shorter gradient leaves a visible band edge over moving video. Lettering is white, and the CTA is mint.
+
+**Past 20px of scroll** the bar becomes an opaque Awning Cream board with the 3% noise overlay and an `ink/10` bottom hairline — a painted board, not frosted glass. There is no backdrop blur and no shadow. Lettering turns ink, and the CTA turns dark. Vertical padding tightens from `1.25rem` to `0.75rem`, so the bar physically settles as it lands.
+
+**The masthead** is a `2.75rem` mint tile at `rounded.sm` holding an ink "N", followed by the "Numo" wordmark — both at the Masthead step. The wordmark is held in a box matching the tile's so the two sit on a shared optical centre, and it drops below `lg` where the rail needs the room.
+
+**The rail** is split into two groups by a hairline divider: on-page anchors (Features, Wallets, Integration, FAQ) first, then real routes (Setup, Releases). Anchors stay plain `<a>` so they scroll in place; routes get client-side navigation. The split is doing real work — it tells a merchant which items move the page and which leave it.
+
+**The active indicator** is a `2px` coat of paint that wipes in from the left on hover and stays put on the current item, mint over the scrim and ink on the board. Mint is deliberately *not* used on the cream board, where it reads at about 1.2:1. A scroll spy drives the anchor state from a line `120px` down the viewport, taking the last section whose top has crossed it — so the untitled stretches between sections hold the previous item rather than blanking the indicator out.
+
+**Below `md`** the rail collapses into a panel that opens by animating `grid-template-rows` from `0fr` to `1fr` — no max-height guessing — while the hamburger's three bars rotate into an X. Panel links step up to the Nav Panel size, divided by `ink/10` hairlines with a heavier `ink/25` rule marking the anchors/routes seam. The collapsed panel carries `inert`, because `grid-rows-[0fr]` hides links visually but leaves them focusable.
 
 ### FAQ Accordion
 Rows divided by `gray-200` hairlines inside a `3rem` cream panel. The question is Bebas title-scale; the control is a `40px` circle outlined in `ink/30` containing a `+` glyph, which on hover fills solid ink with a white glyph, and on open rotates `45°` into an X. The answer discloses via the same `grid-template-rows` technique, `300ms` smooth, with opacity following.
