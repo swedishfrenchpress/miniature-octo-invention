@@ -20,7 +20,7 @@ function AppScreenshot({ src, alt, caption }: { src: string; alt: string; captio
           alt={alt}
           width={1080}
           height={2340}
-          sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+          sizes="(min-width: 1024px) 272px, (min-width: 400px) 352px, calc(100vw - 3rem)"
           className="h-auto w-full rounded-[1.55rem]"
         />
       </div>

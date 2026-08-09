@@ -126,7 +126,7 @@ export function PayoutSetupGuide() {
             <Screenshot
               src="/setup/05-settings.png"
               alt="Numo Settings screen. Withdrawals sits under the Payments heading."
-              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              sizes="(min-width: 1024px) 272px, (min-width: 400px) 352px, calc(100vw - 3rem)"
               annotations={[{ region: REGION.withdrawalsRow }]}
             />
             <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
@@ -151,7 +151,7 @@ export function PayoutSetupGuide() {
             <Screenshot
               src="/setup/06-auto-withdraw.png"
               alt="Numo Withdraw screen with the status reading Inactive and the Auto-Withdraw switch turned off."
-              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              sizes="(min-width: 1024px) 272px, (min-width: 400px) 352px, calc(100vw - 3rem)"
               annotations={[{ region: REGION.toggle }]}
             />
             <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
@@ -195,7 +195,7 @@ export function PayoutSetupGuide() {
             <Screenshot
               src="/setup/07-payout-details.png"
               alt="Numo Withdraw screen with Auto-Withdraw active, showing the Lightning Address field, a 50,000 sat Balance Threshold and a 95% Withdraw Amount."
-              sizes="(min-width: 1024px) 272px, min(22rem, 100vw - 3rem)"
+              sizes="(min-width: 1024px) 272px, (min-width: 400px) 352px, calc(100vw - 3rem)"
               annotations={settings.map(({ region, marker, markerAt }) => ({ region, marker, markerAt }))}
             />
             <figcaption className="mt-4 text-center text-xs leading-[1.45] tracking-[0.01em] [text-wrap:pretty] text-white/70 lg:text-left">
