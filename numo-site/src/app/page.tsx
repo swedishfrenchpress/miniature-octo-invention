@@ -538,7 +538,7 @@ function BentoFeatures() {
 const NFC_WALLETS = [
   { name: "eNuts", image: "/wallets/enuts.png" },
   { name: "Sovran", image: "/wallets/sovran.jpg" },
-  { name: "Macadamia", image: "/wallets/macadamia.jpg" },
+  { name: "Macadamia", image: "/wallets/macadamia.png" },
   { name: "Cashu.me", image: "/wallets/cashume.png" },
   { name: "Minibits", image: "/wallets/minibits.jpg" },
   { name: "Phoenix", image: "/wallets/phoenix.jpg" },
