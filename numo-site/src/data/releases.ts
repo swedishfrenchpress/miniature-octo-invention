@@ -53,6 +53,56 @@ export const FULL_RELEASE_NOTES_URL =
 
 export const releases: Release[] = [
   {
+    version: "1.9",
+    date: "2026-09-21",
+    title: "A clearer Numo, from first tap to final token.",
+    summary:
+      "Numo gets a refreshed interface, easier mint discovery, animated QR exports for large Cashu tokens, and a new welcome experience that shows merchants what they can do before setup begins.",
+    heroImage: {
+      src: "/releases/v1.9/hero.png",
+      alt: "Numo v1.9 release artwork showing the sales dashboard on a phone",
+      width: 1200,
+      height: 675,
+    },
+    downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.9",
+    highlights: [
+      {
+        title: "A fresh look throughout Numo",
+        body: "Material 3 styling and consistent icons bring a more unified experience in light and dark mode. Settings now has search, clearer groups, and current-value summaries, while redesigned detail screens better accommodate large text and tablets.",
+        image: {
+          src: "/releases/v1.9/catalog-and-theme.png",
+          alt: "Numo v1.9 showing the faster catalog flow and new theme picker",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "Find the right mint in the app",
+        body: "Search Nostr for Cashu mints, review their profiles, and see community recommendations and ratings before adding one to Numo.",
+      },
+      {
+        title: "Large tokens, one scannable flow",
+        body: "Withdrawal tokens that exceed a single QR code's capacity now play as animated QR codes. Choose slow, normal, or fast, or tap the code to expand it full screen for easier scanning.",
+        image: {
+          src: "/releases/v1.9/animated-qr.png",
+          alt: "Numo v1.9 animated QR export with slow, normal, and fast speed controls",
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        title: "A better welcome for merchants",
+        body: "A new animated introduction shows product checkout, tap-to-pay, automatic withdrawals, and sales insights before guiding new users into wallet setup. Numo also now speaks German.",
+        image: {
+          src: "/releases/v1.9/onboarding.png",
+          alt: "Numo v1.9 animated onboarding experience for merchants",
+          width: 1200,
+          height: 675,
+        },
+      },
+    ],
+  },
+  {
     version: "1.8",
     date: "2026-07-20",
     title: "More units. A safer way back.",

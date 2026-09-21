@@ -71,11 +71,11 @@ export default function ReleasesPage() {
 
           <h2
             id="latest-title"
-            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] mb-6 max-w-[20ch] md:max-w-none md:whitespace-nowrap [text-wrap:balance]"
+            className="font-display text-4xl md:text-[3.5rem] lg:text-6xl text-navy leading-[0.9] mb-6 max-w-none [text-wrap:balance]"
           >
             {latest.title}
           </h2>
-          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-[38rem] [text-wrap:pretty]">
+          <p className="text-xl md:text-2xl text-navy/75 leading-[1.4] max-w-none [text-wrap:pretty]">
             {latest.summary}
           </p>
 
@@ -89,10 +89,10 @@ export default function ReleasesPage() {
             <dl className="mt-14 space-y-12">
               {latestHighlights.map((h, i) => (
                 <div key={i}>
-                  <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[28ch] md:max-w-none md:whitespace-nowrap">
+                  <dt className="font-display text-2xl md:text-3xl text-navy leading-[0.95] mb-2 max-w-[720px]">
                     {h.title}
                   </dt>
-                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[40rem]">
+                  <dd className="text-base md:text-lg text-navy/75 leading-relaxed max-w-[720px]">
                     {h.body}
                   </dd>
                   {h.image && (
@@ -110,8 +110,9 @@ export default function ReleasesPage() {
               href={latest.downloadUrl ?? DEFAULT_DOWNLOAD}
               variant="accent"
               external
+              className="shadow-none hover:shadow-none"
             >
-              Download v{latest.version}
+              Download Numo v{latest.version}
             </Button>
           </div>
         </section>

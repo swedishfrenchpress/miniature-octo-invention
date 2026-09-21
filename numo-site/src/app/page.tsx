@@ -549,7 +549,6 @@ const NFC_WALLETS = [
 const LIGHTNING_WALLETS = [
   { name: "Alby Go", image: "/wallets/albygo.webp" },
   { name: "Blink Wallet", image: "/wallets/blinkwallet.jpg" },
-  { name: "Agicash", image: "/wallets/agicash.png" },
   { name: "Cash App", image: "/wallets/cashapp.svg" },
   { name: "Fedi", image: "/wallets/fedi.jpg" },
   { name: "Muun", image: "/wallets/muun.png" },
