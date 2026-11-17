@@ -28,6 +28,8 @@ export type ReleaseHighlight = {
   body: string;
   /** Optional image shown beneath this highlight's body. */
   image?: ReleaseImage;
+  /** Optional second image, stacked beneath the first. */
+  secondImage?: ReleaseImage;
 };
 
 export type Release = {
@@ -52,6 +54,72 @@ export const FULL_RELEASE_NOTES_URL =
   "https://github.com/cashubtc/Numo/releases";
 
 export const releases: Release[] = [
+  {
+    version: "1.10",
+    date: "2026-11-13",
+    title: "Arkoor arrives",
+    summary:
+      "Take Arkoor and Lightning from one QR code, and update Numo without leaving the app. Plus a clear view of what works offline, and Activity and Sales that finally match.",
+    heroImage: {
+      src: "/releases/v1.10/hero.png",
+      alt: "Numo v1.10 release artwork showing the unified QR, app updates, offline banner, and Activity filters",
+      width: 1920,
+      height: 1080,
+    },
+    downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.10",
+    highlights: [
+      {
+        title: "Arkoor and Lightning, one QR code",
+        body: "If your mint supports Arkoor, one QR code now offers both. Activity and CSV exports show which one the customer used.",
+        image: {
+          src: "/releases/v1.10/arkoor.png",
+          alt: "Numo v1.10 payment screen with one QR code for Cashu, Lightning, and Arkoor",
+          width: 1920,
+          height: 1080,
+        },
+      },
+      {
+        title: "Update without leaving Numo",
+        body: "Check for a new release from the home screen or Settings → About. Downloads resume if they drop, and nothing installs mid-payment.",
+        image: {
+          src: "/releases/v1.10/updates.png",
+          alt: "Numo v1.10 App updates screen showing version 1.10 available",
+          width: 1920,
+          height: 1080,
+        },
+      },
+      {
+        title: "Offline, spelled out",
+        body: "A connection indicator shows what still works. A pending Lightning payment can be confirmed once you're back online. New charges still need internet.",
+        image: {
+          src: "/releases/v1.10/offline-1.png",
+          alt: "Numo v1.10 keypad with an Offline banner reading New charges need internet",
+          width: 1920,
+          height: 1080,
+        },
+        secondImage: {
+          src: "/releases/v1.10/offline-2.png",
+          alt: "Numo v1.10 offline explainer listing what needs internet and what works offline",
+          width: 1920,
+          height: 1080,
+        },
+      },
+      {
+        title: "Activity and Sales agree",
+        body: "Totals match across both, with tips shown separately. Filter Activity by status or date, and tap any sale for its details.",
+        image: {
+          src: "/releases/v1.10/filters.png",
+          alt: "Numo v1.10 Activity screen filtered by Paid and Last 7 days",
+          width: 1920,
+          height: 1080,
+        },
+      },
+      {
+        title: "Plus",
+        body: "Security fixes for PIN entry and wallet restore, and Lightning payments that wait out a slow mint.",
+      },
+    ],
+  },
   {
     version: "1.9",
     date: "2026-09-21",

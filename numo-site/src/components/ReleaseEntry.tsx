@@ -64,6 +64,11 @@ export function ReleaseEntry({ release }: Props) {
                     <ReleaseImage image={h.image} />
                   </div>
                 )}
+                {h.secondImage && (
+                  <div className="mt-4 max-w-[640px]">
+                    <ReleaseImage image={h.secondImage} />
+                  </div>
+                )}
               </div>
             ))}
           </dl>

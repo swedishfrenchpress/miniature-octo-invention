@@ -100,6 +100,11 @@ export default function ReleasesPage() {
                       <ReleaseImage image={h.image} />
                     </div>
                   )}
+                  {h.secondImage && (
+                    <div className="mt-4 max-w-[720px]">
+                      <ReleaseImage image={h.secondImage} />
+                    </div>
+                  )}
                 </div>
               ))}
             </dl>
