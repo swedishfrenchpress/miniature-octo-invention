@@ -1,23 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./Button";
+import { Logo } from "./Logo";
+import { prefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
-/** On-page anchors. Order matters — the scroll spy takes the last one whose top has passed the bar. */
-const SECTION_LINKS = [
+type NavItem = { label: string; href: string; id?: string };
+
+/** The bar itself: two on-page anchors, then the pages. */
+const BAR_LINKS: NavItem[] = [
   { label: "Features", href: "/#features", id: "features" },
   { label: "Wallets", href: "/#wallets", id: "wallets" },
-  { label: "Integration", href: "/#integration", id: "integration" },
-  { label: "FAQ", href: "/#faq", id: "faq" },
-];
-
-/** Real routes. Kept visually separate from the anchors — they go somewhere else. */
-const PAGE_LINKS = [
+  { label: "BTCPay", href: "/btcpay" },
   { label: "Setup", href: "/setup" },
   { label: "Releases", href: "/releases" },
 ];
+
+/** The mobile panel has room for every destination, in page order. */
+const PANEL_LINKS: NavItem[] = [
+  { label: "Features", href: "/#features", id: "features" },
+  { label: "Wallets", href: "/#wallets", id: "wallets" },
+  { label: "FAQ", href: "/#faq", id: "faq" },
+  { label: "BTCPay", href: "/btcpay" },
+  { label: "Setup", href: "/setup" },
+  { label: "Releases", href: "/releases" },
+];
+
+/** Sections the scroll spy tracks. Order matters: the last one whose top has
+ *  passed the bar wins, so the FAQ releases the Wallets highlight. */
+const SPY_IDS = ["features", "wallets", "faq"];
+
+const GITHUB_URL = "https://github.com/cashubtc/Numo";
+const DOWNLOAD_URL = "https://github.com/cashubtc/Numo/releases";
 
 const SMOOTH = "ease-[cubic-bezier(0.32,0.72,0,1)]";
 
@@ -30,86 +46,33 @@ function scrollToSection(id: string, behavior: ScrollBehavior) {
   return true;
 }
 
-function prefersReducedMotion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function GitHubIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+    </svg>
+  );
 }
 
-/** The scrim under the transparent bar. One long fade, so no band edge is visible over the hero video. */
-const SCRIM =
-  "bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.34)_40%,rgba(0,0,0,0.13)_72%,rgba(0,0,0,0)_100%)]";
-
-type LinkTone = {
-  /** True while the bar is transparent over the hero — lettering is white, the paint stroke is mint. */
-  onDark: boolean;
-};
-
 function NavLink({
-  href,
-  label,
+  item,
   active,
-  onDark,
-  current,
   onClick,
-  className = "",
-}: LinkTone & {
-  href: string;
-  label: string;
+  className,
+}: {
+  item: NavItem;
   active: boolean;
-  current: "page" | "location";
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-  className?: string;
+  className: string;
 }) {
-  // The label and its paint stroke live in an inner box, so the anchor itself can
-  // carry the padding that makes a 23px line of Bebas into a 44px tap target
-  // without dragging the underline away from the text.
-  const body = (
-    <span className="relative inline-block pb-1.5">
-      {label}
-      {/* The coat of paint: wipes in from the left on hover, stays put on the current section.
-          Mint carries over the video; on the cream board mint reads at ~1.2:1, so it paints in ink. */}
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] origin-left rounded-full transition-transform duration-200 ${SMOOTH} ${
-          onDark ? "bg-mint" : "bg-navy"
-        } ${
-          active
-            ? "scale-x-100"
-            : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
-        }`}
-      />
-    </span>
-  );
-
-  const classes = `group inline-flex min-h-11 items-center whitespace-nowrap transition-colors duration-200 ${
-    onDark
-      ? active
-        ? "text-white"
-        : "text-white/75 hover:text-white"
-      : active
-        ? "text-navy"
-        : "text-navy/70 hover:text-navy"
-  } ${className}`;
-
+  const props = {
+    href: item.href,
+    onClick,
+    "aria-current": active ? ((item.id ? "location" : "page") as "location" | "page") : undefined,
+    className,
+  };
   // Anchors stay plain <a> so they scroll in place; routes get client-side navigation.
-  return href.startsWith("/#") ? (
-    <a
-      href={href}
-      onClick={onClick}
-      aria-current={active ? current : undefined}
-      className={classes}
-    >
-      {body}
-    </a>
-  ) : (
-    <Link
-      href={href}
-      onClick={onClick}
-      aria-current={active ? current : undefined}
-      className={classes}
-    >
-      {body}
-    </Link>
-  );
+  return item.id ? <a {...props}>{item.label}</a> : <Link {...props}>{item.label}</Link>;
 }
 
 export function Navigation() {
@@ -117,25 +80,27 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const wasOpen = useRef(false);
 
   const isHome = pathname === "/";
 
-  // One rAF-batched listener drives both the board state and the scroll spy.
+  // One rAF-batched listener drives both the hairline and the scroll spy.
   useEffect(() => {
     let frame = 0;
 
     const measure = () => {
       frame = 0;
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 24);
 
       if (!isHome) return;
       // The line just below the bar. A section owns the nav from the moment its
-      // top crosses that line until the next one does — so the untitled sections
-      // in between don't blank the indicator out. Sits clear of the 96px
-      // scroll-margin so a clicked anchor registers on landing.
-      const line = 120;
+      // top crosses that line until the next tracked one does. Sits clear of the
+      // 76px scroll-margin so a clicked anchor registers on landing.
+      const line = 100;
       let current: string | null = null;
-      for (const { id } of SECTION_LINKS) {
+      for (const id of SPY_IDS) {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= line) current = id;
       }
@@ -173,9 +138,23 @@ export function Navigation() {
     };
   }, [isMenuOpen]);
 
-  // Arriving at /#faq from /setup or /releases, the browser resolves the fragment
-  // before this client tree has rendered the section, so it lands at scrollY 0 with
-  // the target 5,000px below. Re-resolve it once the section actually exists.
+  // Focus follows the menu: into the first link when it opens, back to the button
+  // when it closes — but only if focus was inside the panel, so choosing a link
+  // doesn't yank focus away from where the page is about to take it.
+  useEffect(() => {
+    if (isMenuOpen) {
+      panelRef.current?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
+    } else if (wasOpen.current) {
+      const active = document.activeElement;
+      if (!active || active === document.body || panelRef.current?.contains(active)) {
+        menuButtonRef.current?.focus({ preventScroll: true });
+      }
+    }
+    wasOpen.current = isMenuOpen;
+  }, [isMenuOpen]);
+
+  // Arriving at /#faq from /setup or /releases, the browser can resolve the
+  // fragment before the section has rendered. Re-resolve it once it exists.
   useEffect(() => {
     if (!isHome) return;
     const id = window.location.hash.slice(1);
@@ -191,148 +170,100 @@ export function Navigation() {
     return () => cancelAnimationFrame(frame);
   }, [isHome]);
 
-  /** The bar is a painted cream board once it leaves the hero, and while the menu is open. */
-  const isBoard = isScrolled || isMenuOpen;
-  const onDark = !isBoard;
-
-  const isActive = (href: string, id?: string) =>
-    id ? isHome && activeSection === id : pathname === href;
+  const isActive = (item: NavItem) =>
+    item.id ? isHome && activeSection === item.id : pathname === item.href;
 
   const closeMenu = () => setIsMenuOpen(false);
 
   /** On the home page, drive the scroll ourselves so it can be smooth for people
    *  who want motion and instant for people who don't. Off the home page, let the
    *  browser navigate — the effect above finishes the job on arrival. */
-  const onAnchorClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onLinkClick = (item: NavItem) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     closeMenu();
+    if (!item.id) return;
     if (!isHome || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    const id = href.slice(2);
     e.preventDefault();
-    if (scrollToSection(id, prefersReducedMotion() ? "auto" : "smooth")) {
-      window.history.pushState(null, "", href);
+    if (scrollToSection(item.id, prefersReducedMotion() ? "auto" : "smooth")) {
+      window.history.pushState(null, "", item.href);
     }
   };
+
+  const showLine = isScrolled || isMenuOpen;
+  /** Over the home page's video hero the bar is clear glass with white lettering.
+   *  Everywhere else, and as soon as the page moves, it is the paper bar. */
+  const onDark = isHome && !isScrolled && !isMenuOpen;
+  const linkTone = (active: boolean) =>
+    onDark
+      ? `hover:bg-white/10 hover:text-white ${active ? "text-white" : "text-white/80"}`
+      : `hover:bg-navy/[0.05] hover:text-navy ${active ? "text-navy" : "text-navy/70"}`;
 
   return (
     <nav
       aria-label="Main"
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 ${SMOOTH} ${
-        isBoard
-          ? "noise-overlay border-navy/10 bg-cream"
-          : "border-transparent bg-transparent"
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-200 ${
+        onDark
+          ? "bg-transparent"
+          : `backdrop-blur-md backdrop-saturate-150 ${isMenuOpen ? "bg-paper" : "bg-paper/80"}`
+      } ${showLine ? "border-line" : "border-transparent"}`}
     >
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 top-0 h-[190%] transition-opacity duration-300 ${SCRIM} ${
-          isBoard ? "opacity-0" : "opacity-100"
-        }`}
-      />
-
-      <div
-        className={`relative z-[2] mx-auto flex max-w-7xl items-center px-6 transition-[padding] duration-300 ${SMOOTH} ${
-          isBoard ? "py-3" : "py-5"
-        }`}
-      >
-        {/* Masthead — the mark, then the name. The mark stands on its own below lg. */}
+      <div className="mx-auto flex h-[60px] max-w-[1200px] items-center px-6">
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-2.5"
           aria-label="Numo home"
+          className="-ml-1 flex h-11 shrink-0 items-center rounded-control px-1"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-mint shadow-sm transition-transform duration-200 group-hover:scale-[1.04] group-active:scale-[0.97]">
-            {/* Bebas sits its caps high in the line box, so centring the box leaves the
-                glyph 0.05em above the square's true middle. Both halves of the lockup
-                carry the same correction, which keeps them on one line. */}
-            <span className="translate-y-[0.05em] font-display text-[2.5rem] leading-none text-navy">
-              N
-            </span>
-          </span>
-          {/* Same box as the chip — h-11 centring an identical inline glyph — so the
-              wordmark lands on the mark's optical centre instead of its line box. */}
-          <span className="hidden h-11 items-center lg:flex">
-            <span
-              className={`translate-y-[0.05em] font-display text-[2.5rem] leading-none tracking-[0.01em] transition-colors duration-300 ${
-                onDark ? "text-white" : "text-navy"
-              }`}
-            >
-              Numo
-            </span>
-          </span>
+          <Logo tone={onDark ? "inverse" : "ink"} />
         </Link>
 
-        {/* The rail. Anchors first, then a hairline, then the pages that actually go somewhere. */}
-        <div
-          className="ml-5 hidden items-center gap-3 font-display text-[1.2rem] tracking-[0.06em] md:flex lg:ml-8 lg:gap-5 lg:text-[1.5rem] lg:tracking-[0.09em] xl:ml-10 xl:gap-7 xl:text-[1.7rem] xl:tracking-[0.11em]"
-        >
-          {SECTION_LINKS.map((link) => (
-            <NavLink
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              active={isActive(link.href, link.id)}
-              current="location"
-              onDark={onDark}
-              onClick={onAnchorClick(link.href)}
-            />
-          ))}
-
-          <span
-            aria-hidden="true"
-            className={`mx-1 h-4 w-px shrink-0 transition-colors duration-300 lg:mx-2 ${
-              onDark ? "bg-white/30" : "bg-navy/20"
-            }`}
-          />
-
-          {PAGE_LINKS.map((link) => (
-            <NavLink
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              active={isActive(link.href)}
-              current="page"
-              onDark={onDark}
-            />
-          ))}
+        <div className="ml-6 hidden items-center md:flex">
+          {BAR_LINKS.map((item) => {
+            const active = isActive(item);
+            return (
+              <NavLink
+                key={item.href}
+                item={item}
+                active={active}
+                onClick={onLinkClick(item)}
+                className={`inline-flex h-9 items-center rounded-chip px-3 text-sm font-medium transition-colors duration-150 ${linkTone(active)}`}
+              />
+            );
+          })}
         </div>
 
-        <div className="ml-auto flex shrink-0 items-center gap-3 pl-4">
-          {/* Wrapper, not a `hidden` class on the Button — the Button's own
-              `inline-flex` wins the cascade and the header CTA leaks onto mobile. */}
-          <div className="hidden sm:block">
-            <Button
-              href="https://github.com/cashubtc/Numo/releases"
-              variant={isBoard ? "dark" : "accent"}
-              size="sm"
-              external
-            >
-              Download APK
-            </Button>
-          </div>
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`mr-1.5 hidden h-9 items-center gap-2 rounded-chip px-3 text-sm font-medium transition-colors duration-150 md:inline-flex ${linkTone(false)}`}
+          >
+            <GitHubIcon className="h-4 w-4" />
+            GitHub
+          </a>
+
+          <Button href={DOWNLOAD_URL} variant={onDark ? "inverse" : "primary"} size="sm" external>
+            Download
+          </Button>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setIsMenuOpen((v) => !v)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className={`relative flex h-11 w-11 items-center justify-center rounded-lg transition-colors duration-200 md:hidden ${
-              isBoard ? "text-navy hover:bg-navy/10" : "text-white hover:bg-white/15"
+            className={`-mr-2.5 flex h-11 w-11 items-center justify-center rounded-control transition-colors duration-150 md:hidden ${
+              onDark ? "text-white hover:bg-white/10" : "text-navy hover:bg-navy/[0.05]"
             }`}
           >
-            <span className="relative block h-4 w-5" aria-hidden="true">
+            <span className="relative block h-3 w-[18px]" aria-hidden="true">
               <span
-                className={`absolute left-0 right-0 h-0.5 rounded-full bg-current transition-all duration-300 ${SMOOTH} ${
+                className={`absolute inset-x-0 h-[1.5px] rounded-full bg-current transition-all duration-300 ${SMOOTH} ${
                   isMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
                 }`}
               />
               <span
-                className={`absolute left-0 right-0 top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-current transition-opacity duration-200 ${
-                  isMenuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 right-0 h-0.5 rounded-full bg-current transition-all duration-300 ${SMOOTH} ${
+                className={`absolute inset-x-0 h-[1.5px] rounded-full bg-current transition-all duration-300 ${SMOOTH} ${
                   isMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
                 }`}
               />
@@ -341,57 +272,49 @@ export function Navigation() {
         </div>
       </div>
 
-      {/* Mobile panel — same board, links stepped up to signage scale. */}
+      {/* Mobile panel */}
       <div
         id="mobile-menu"
-        className={`relative z-[2] grid transition-[grid-template-rows] duration-300 md:hidden ${SMOOTH} ${
+        className={`grid transition-[grid-template-rows] duration-300 md:hidden ${SMOOTH} ${
           isMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
         {/* inert keeps the collapsed links out of the tab order and the a11y tree —
             grid-rows-[0fr] hides them visually but leaves them focusable on their own. */}
-        <div className="overflow-hidden" inert={!isMenuOpen}>
-          <div className="mx-auto max-w-7xl px-6 pb-6">
-            <ul className="font-display text-[1.6rem] tracking-[0.1em]">
-              {SECTION_LINKS.map((link) => (
-                <li key={link.href} className="border-t border-navy/10 first:border-t-0">
-                  <NavLink
-                    href={link.href}
-                    label={link.label}
-                    active={isActive(link.href, link.id)}
-                    current="location"
-                    onDark={false}
-                    onClick={onAnchorClick(link.href)}
-                    className="w-full min-h-14"
-                  />
-                </li>
-              ))}
-              {PAGE_LINKS.map((link, i) => (
-                <li
-                  key={link.href}
-                  className={`border-t ${i === 0 ? "border-navy/25" : "border-navy/10"}`}
+        <div ref={panelRef} className="overflow-hidden" inert={!isMenuOpen}>
+          <div className="mx-auto max-w-[1200px] px-6 pb-6">
+            <ul className="border-t border-line">
+              {PANEL_LINKS.map((item) => {
+                const active = isActive(item);
+                return (
+                  <li key={item.href} className="border-b border-line">
+                    <NavLink
+                      item={item}
+                      active={active}
+                      onClick={onLinkClick(item)}
+                      className={`flex min-h-[52px] w-full items-center text-base font-medium transition-colors duration-150 ${
+                        active ? "text-navy" : "text-navy/75"
+                      }`}
+                    />
+                  </li>
+                );
+              })}
+              <li className="border-b border-line">
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMenu}
+                  className="flex min-h-[52px] w-full items-center gap-2.5 text-base font-medium text-navy/75"
                 >
-                  <NavLink
-                    href={link.href}
-                    label={link.label}
-                    active={isActive(link.href)}
-                    current="page"
-                    onDark={false}
-                    onClick={closeMenu}
-                    className="w-full min-h-14"
-                  />
-                </li>
-              ))}
+                  <GitHubIcon className="h-[18px] w-[18px]" />
+                  GitHub
+                </a>
+              </li>
             </ul>
 
-            <Button
-              href="https://github.com/cashubtc/Numo/releases"
-              variant="dark"
-              size="sm"
-              external
-              className="mt-5 w-full"
-            >
-              Download APK
+            <Button href={DOWNLOAD_URL} variant="primary" external className="mt-5 w-full">
+              Download
             </Button>
           </div>
         </div>

@@ -1,30 +1,14 @@
 import type { Metadata } from "next";
-import { Sora, Bebas_Neue, Grandstander } from "next/font/google";
-import Script from "next/script";
+import { Sora } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-// Clean body font
+// The one typeface. Each weight is a font file every visitor downloads, so only
+// the three the type scale uses are declared.
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
-  // 700 is no longer referenced anywhere; each weight is a font file every
-  // visitor downloads.
   weight: ["400", "500", "600"],
-});
-
-// Bold display font
-const bebas = Bebas_Neue({
-  variable: "--font-bebas",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-// Grandstander font for NUMO footer branding — the single 400-weight wordmark
-const grandstander = Grandstander({
-  variable: "--font-grandstander",
-  subsets: ["latin"],
-  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -59,10 +43,6 @@ export const metadata: Metadata = {
     description: "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     images: ["https://numopay.org/og-image.jpg"],
   },
-  other: {
-    "font-preconnect-1": "https://fonts.googleapis.com",
-    "font-preconnect-2": "https://fonts.gstatic.com",
-  },
 };
 
 export default function RootLayout({
@@ -73,11 +53,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sora.variable} ${bebas.variable} ${grandstander.variable} antialiased font-sans`}
+        className={`${sora.variable} antialiased font-sans`}
       >
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         {children}
         <Analytics />
