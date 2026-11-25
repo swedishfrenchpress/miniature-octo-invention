@@ -52,7 +52,7 @@ function AcceptsMarquee() {
   return (
     <div className="relative border-t border-white/15">
       <div
-        className="marquee-mask mx-auto max-w-[1200px] overflow-hidden px-6"
+        className="marquee-mask shell overflow-hidden"
         aria-label="Numo accepts"
         role="group"
       >
@@ -116,14 +116,14 @@ export function Hero() {
         <div className={`absolute inset-0 ${SCRIM}`} />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-10 pt-16 md:pb-14">
+      <div className="shell relative z-10 pb-12 pt-16 md:pb-20">
         <h1 className="text-display max-w-[48rem] text-white">
           Bitcoin payments as easy as Apple Pay.
         </h1>
-        <p className="text-lead mt-5 max-w-[30rem] text-white/85">
+        <p className="text-lead mt-5 md:mt-6 max-w-[30rem] text-white/85">
           Tap to take Bitcoin on any Android with NFC. Zero platform fees.
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+        <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
           <DownloadMenu variant="mint" size="lg" align="left" direction="up" />
           <Button href="/setup" variant="ghost-inverse" size="lg">
             Setup guide

@@ -90,8 +90,8 @@ export function Faq() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section id="faq" className="section-anchor bg-paper py-20 md:py-28">
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:grid-cols-[1fr_1.5fr] md:gap-16">
+    <section id="faq" className="section-anchor section-y bg-paper">
+      <div className="shell grid gap-10 md:grid-cols-[1fr_1.5fr] md:gap-16">
         <h2 className="text-h2 text-navy">Frequently asked questions</h2>
 
         <div className="border-t border-line">
@@ -105,7 +105,7 @@ export function Faq() {
                     aria-expanded={open}
                     aria-controls={`faq-${faq.id}`}
                     onClick={() => setOpenId(open ? null : faq.id)}
-                    className="group flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left"
+                    className="group flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left"
                   >
                     <span className="text-lead font-medium text-navy">{faq.q}</span>
                     <span

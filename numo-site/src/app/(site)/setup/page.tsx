@@ -23,10 +23,11 @@ export const metadata: Metadata = {
 };
 
 /* The whole page is set in five type styles (display, lead, h2, h3, body) and
-   three gaps (mt-2 inside a unit, mt-6 around it, mt-12 between blocks). Body
-   copy has exactly one emphasis: the label the reader has to find on screen. */
-const section = "section-anchor border-t border-line py-20 md:py-28";
-const container = "mx-auto max-w-[1200px] px-6";
+   three gaps (mt-2 inside a unit, mt-6 around it, mt-12 between blocks, which
+   opens to mt-16 from md up). Body copy has exactly one emphasis: the label
+   the reader has to find on screen. */
+const section = "section-anchor section-y border-t border-line";
+const container = "shell";
 const prose = "text-navy/70 [text-wrap:pretty]";
 
 function Label({ children }: { children: ReactNode }) {
@@ -139,9 +140,9 @@ export default function SetupPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className={`${container} pb-12 pt-16 md:pb-16 md:pt-24`}>
+        <div className={`${container} header-y`}>
           <h1 className="text-display max-w-[8em] text-navy">From download to first sale.</h1>
-          <p className="text-lead mt-5 max-w-[38rem] text-navy/70">
+          <p className="text-lead mt-5 md:mt-6 max-w-[38rem] text-navy/70">
             Five minutes on an Android phone with NFC and internet. For payouts, bring a Lightning
             address from Strike, Alby Go, Blink, Wallet of Satoshi, or any wallet that provides
             one.
@@ -159,7 +160,7 @@ export default function SetupPage() {
             Open your till.
           </h2>
           <SetupSteps steps={tillSteps} />
-          <div className="mt-12 max-w-[35rem]">
+          <div className="mt-12 max-w-[35rem] md:mt-16">
             <h3 className="text-h3 text-navy">Back up your recovery phrase</h3>
             <p className={`mt-2 ${prose}`}>
               From the till, tap the gear icon, open <Label>Security &amp; Privacy</Label>, and
@@ -185,7 +186,7 @@ export default function SetupPage() {
 
       {/* `#btcpay` is linked from /btcpay; `#cards` is kept as a stable anchor. */}
       <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-sunken`}>
-        <div className={`${container} grid gap-12 lg:grid-cols-2 lg:gap-6`}>
+        <div className={`${container} grid gap-12 md:gap-16 lg:grid-cols-2 lg:gap-6`}>
           <h2 id="extras-heading" className="text-h2 text-navy">
             Optional extras.
           </h2>

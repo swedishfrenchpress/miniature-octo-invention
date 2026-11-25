@@ -57,14 +57,14 @@ export function SiteFooter() {
 
   return (
     <footer id="get-started" className="section-anchor overflow-hidden bg-navy text-white">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="shell">
         {/* The ask */}
-        <div className="flex flex-col gap-8 py-20 md:flex-row md:items-end md:justify-between md:py-28">
+        <div className="section-y flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           {isSetup ? (
             <>
               <div>
                 <h2 className="text-h2 max-w-[18ch]">Next at the counter.</h2>
-                <p className="text-lead mt-4 max-w-[30rem] text-white/70">
+                <p className="text-lead mt-4 max-w-[30rem] text-white/70 md:mt-5">
                   See how Numo syncs with BTCPay Server, browse what&rsquo;s shipping, or check the
                   FAQ if anything gets stuck.
                 </p>
@@ -82,7 +82,7 @@ export function SiteFooter() {
             <>
               <div>
                 <h2 className="text-h2 max-w-[18ch]">Start accepting Bitcoin today.</h2>
-                <p className="text-lead mt-4 max-w-[30rem] text-white/70">
+                <p className="text-lead mt-4 max-w-[30rem] text-white/70 md:mt-5">
                   Free to use, zero platform fees on Bitcoin. Any Android with NFC works.
                 </p>
               </div>
@@ -99,7 +99,7 @@ export function SiteFooter() {
         </div>
 
         {/* Every destination */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 py-14 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 py-16 md:py-20 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" aria-label="Numo home" className="inline-flex min-h-11 items-center">
               <Logo tone="inverse" />

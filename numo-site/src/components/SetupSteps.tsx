@@ -22,7 +22,7 @@ export type SetupStep = {
  *  and both step sections share this grid so the phones line up down the page. */
 export function SetupSteps({ steps }: { steps: readonly SetupStep[] }) {
   return (
-    <ol className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 xl:grid-cols-4">
+    <ol className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 md:mt-16 md:gap-y-16 xl:grid-cols-4">
       {steps.map((step, index) => (
         <li key={step.title} className="flex flex-col">
           <h3 className="text-h3 text-navy">

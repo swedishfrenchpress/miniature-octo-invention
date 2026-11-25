@@ -53,7 +53,7 @@ function WalletGroup({
   nfc?: boolean;
 }) {
   return (
-    <div className="grid gap-8 border-t border-line py-10 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-12">
+    <div className="grid gap-8 border-t border-line py-12 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-16">
       <div>
         <div className="flex items-center gap-2">
           <h3 className="text-title text-navy">{title}</h3>
@@ -88,17 +88,17 @@ export function Wallets() {
   return (
     <section
       id="wallets"
-      className="section-anchor border-y border-line bg-sunken py-20 md:py-28"
+      className="section-anchor section-y border-y border-line bg-sunken"
     >
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="shell">
         <h2 className="text-display max-w-[16ch] text-navy">
           Your customers already have the wallet.
         </h2>
-        <p className="text-lead mt-4 max-w-[34rem] text-navy/70">
+        <p className="text-lead mt-5 max-w-[34rem] text-navy/70 md:mt-6">
           Works with any Lightning wallet. Tap to pay works with Cashu wallets.
         </p>
 
-        <div className="mt-12 md:mt-16">
+        <div className="mt-block">
           <WalletGroup
             title="Tap to pay"
             detail="Cashu ecash wallets."

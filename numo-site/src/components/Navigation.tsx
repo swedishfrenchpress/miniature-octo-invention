@@ -206,7 +206,7 @@ export function Navigation() {
           : `bg-paper ${showLine ? "border-line" : "border-transparent"}`
       }`}
     >
-      <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between gap-4 px-6 md:h-[84px]">
+      <div className="shell flex h-[72px] items-center justify-between gap-4 md:h-[84px]">
         <Link
           href="/"
           aria-label="Numo home"
@@ -307,7 +307,7 @@ export function Navigation() {
         }`}
       >
         <div ref={panelRef} className="overflow-hidden" aria-hidden={!isMenuOpen} inert={!isMenuOpen}>
-          <div className="mx-auto max-w-[1200px] px-6 pb-6">
+          <div className="shell pb-6">
             <ul className="border-t border-line">
               {ANCHOR_LINKS.map((item) => (
                 <li key={item.href} className="border-b border-line">

@@ -33,6 +33,16 @@
   --gray-500: #71717A;
   --gray-600: #52525B;
 
+  /* Spacing roles. The site breathes between groups, never inside them: these
+     four intervals are generous, and the gaps within a group (a headline and
+     its lead, a step title and its text) stay tight so each group still reads
+     as one thing. Each steps up with the viewport below. */
+  --gutter: 1.5rem; /* page side margin */
+  --section-space: 6rem; /* top and bottom of a full-width section */
+  --block-space: 3.5rem; /* a section's heading block to the content it introduces */
+  --header-top: 4.5rem; /* page header, under the fixed nav */
+  --header-bottom: 4rem;
+
   /* Motion curves: confident exponential deceleration, no elastic bounce. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
@@ -67,6 +77,55 @@
   --shadow-popover: 0 20px 44px -16px rgb(10 37 64 / 0.24), 0 4px 12px -4px rgb(10 37 64 / 0.1);
   --font-sans: var(--font-sora);
   --font-display: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2.5rem;
+    --section-space: 8rem;
+    --block-space: 4.5rem;
+    --header-top: 7rem;
+    --header-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 3rem;
+    --section-space: 9rem;
+    --block-space: 5.5rem;
+    --header-top: 8rem;
+    --header-bottom: 7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --section-space: 10rem;
+    --block-space: 6rem;
+  }
+}
+
+/* The page column: 1152px of content, centered, with the gutter either side.
+   The gutter widens on mid-width windows so content never hugs the edge. */
+@utility shell {
+  width: 100%;
+  max-width: calc(72rem + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section-y {
+  padding-block: var(--section-space);
+}
+
+@utility header-y {
+  padding-top: var(--header-top);
+  padding-bottom: var(--header-bottom);
+}
+
+@utility mt-block {
+  margin-top: var(--block-space);
 }
 
 * {

@@ -27,9 +27,9 @@ export default function ReleasesPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className="mx-auto max-w-[1200px] px-6 pb-12 pt-16 md:pb-16 md:pt-24">
+        <div className="shell header-y">
           <h1 className="text-display max-w-[14ch] text-navy">What&rsquo;s new in Numo.</h1>
-          <p className="text-lead mt-5 max-w-[32rem] text-navy/70">
+          <p className="text-lead mt-5 md:mt-6 max-w-[32rem] text-navy/70">
             What&rsquo;s shipping in Numo, written for shop owners.
           </p>
         </div>
@@ -39,9 +39,9 @@ export default function ReleasesPage() {
       <section
         id={`v${latest.version}`}
         aria-labelledby="latest-title"
-        className="scroll-mt-28 border-t border-line bg-sunken py-16 md:py-24"
+        className="section-y scroll-mt-28 border-t border-line bg-sunken"
       >
-        <div className="mx-auto max-w-[1200px] px-6">
+        <div className="shell">
           <p className="flex flex-wrap items-center gap-x-3 text-sm text-navy/70">
             <span className="tabular inline-flex items-center rounded-full bg-mint-soft px-2.5 py-0.5 font-semibold text-navy ring-1 ring-inset ring-navy/10">
               Latest
@@ -53,7 +53,7 @@ export default function ReleasesPage() {
           <h2 id="latest-title" className="text-h2 mt-4 max-w-[14em] text-navy">
             {unbrokenHyphens(latest.title)}
           </h2>
-          <p className="text-lead mt-4 max-w-[38rem] text-navy/70">{latest.summary}</p>
+          <p className="text-lead mt-4 max-w-[38rem] text-navy/70 md:mt-5">{latest.summary}</p>
 
           {latest.heroImage && (
             <div className="mt-10">
@@ -94,10 +94,10 @@ export default function ReleasesPage() {
       {older.length > 0 && (
         <section
           aria-labelledby="earlier-releases"
-          className="border-t border-line bg-paper pb-20 md:pb-28"
+          className="border-t border-line bg-paper pb-(--section-space)"
         >
-          <div className="mx-auto max-w-[1200px] px-6">
-            <h2 id="earlier-releases" className="text-title pb-2 pt-14 text-navy">
+          <div className="shell">
+            <h2 id="earlier-releases" className="text-title pb-2 pt-16 text-navy md:pt-20">
               Earlier releases
             </h2>
             <div>

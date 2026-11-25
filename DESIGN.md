@@ -70,10 +70,12 @@ rounded:
   frame: "24px"
   pill: "9999px"
 spacing:
-  gutter: "1.5rem"
-  container: "1200px"
-  section: "5rem"
-  section-md: "7rem"
+  content: "72rem"
+  gutter: "1.5rem / 2.5rem md / 3rem lg"
+  section: "6rem / 8rem md / 9rem lg / 10rem xl"
+  block: "3.5rem / 4.5rem md / 5.5rem lg / 6rem xl"
+  header-top: "4.5rem / 7rem md / 8rem lg"
+  header-bottom: "4rem / 6rem md / 7rem lg"
 components:
   button-mint:
     backgroundColor: "{colors.fresh-paint-mint}"
@@ -166,8 +168,12 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because pages alter
 
 ## Layout & Navigation
 
-- **Container:** `max-w-[1200px]` centered with `1.5rem` (`px-6`) horizontal gutters across all routes.
-- **Vertical rhythm:** `py-20 md:py-28` (`5rem` → `7rem`) per section, avoiding double-stacked `320px` blank voids.
+- **Spacing roles (`globals.css`):** four named intervals carry the page's air, each a CSS variable that steps up with the viewport and each applied through one utility. Change the variable, never a one-off class.
+  - **`shell`** (`--gutter`): the page column. `72rem` (`1152px`) of content, centered, with a gutter of `1.5rem`, `2.5rem` from `md`, `3rem` from `lg`. The wider gutter is what keeps content off the edge of a mid-width window.
+  - **`section-y`** (`--section-space`): top and bottom of every full-width section, `6rem` → `8rem` → `9rem` → `10rem`.
+  - **`mt-block`** (`--block-space`): from a section's heading block to the content it introduces, `3.5rem` → `4.5rem` → `5.5rem` → `6rem`.
+  - **`header-y`** (`--header-top`, `--header-bottom`): a page header under the fixed nav, roomier above than below.
+- **The Breathing Rule.** The site breathes between groups, never inside them. Section padding, block space, and the gap between feature rows are generous; the gaps inside a group (a headline and its lead at `mt-5 md:mt-6`, a step title and its text at `mt-2`) stay tight, so each group still reads as one thing. Adding air everywhere equally removes the grouping and reads as loose, not calm.
 - **Navigation (`Navigation.tsx`):** Fixed `72px` (`md: 84px`) masthead bar with the larger `GC Protage` brand lockup (`36px` mint tile + `Numo` display wordmark) and `md` (`44px`) `DownloadMenu`. Transparent over the dark Hero scrim with a subtle `border-white/15` bottom hairline; snaps cleanly to **opaque `bg-paper`** with a `1px` `border-line` once scrolled or off-home (zero translucent blur smudging). Centered desktop rail splits on-page anchors (`Features`, `Wallets`, `FAQ`) from routes (`BTCPay`, `Setup`, `Releases`) with a `1px` vertical divider and marks the active destination with a clean tonal pill (`bg-sunken` with `ring-navy/10` on paper; `bg-white/15` on dark) — no underlines. Over the Hero, the top-right `DownloadMenu` stays `ghost-inverse` (hidden on mobile fold) so the Hero's Mint CTA owns first focus.
 - **Touch targets:** Every interactive control — including short footer links (`X`, `FAQ`, `Nostr`) and desktop nav links — maintains a minimum **`44×44px`** hit area (`min-h-11 min-w-11` or `::after` hit extension).
 
@@ -177,7 +183,7 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because pages alter
 - **Download Chooser (`DownloadMenu.tsx`):** Lightweight non-blocking disclosure popover (standard link traversal + Escape/blur dismiss) revealing **Direct Android APK (GitHub Releases)** and **Zapstore (Auto-updates)** alongside *"Android with NFC"* and a `44px` link to `/setup` (hidden while already on `/setup`).
 - **Showcase Stages (`Showcase.tsx`):** Every feature visual sits in a unified `aspect-[5/4] rounded-[24px] bg-sunken` stage — equalizing visual weight across studio hardware renders, the slashed `2.9% + 30¢ → 0%` `FeeStage`, and Android-styled payout notifications.
 - **BTCPay Demo (`btcpay/BTCPayDemo.tsx`, `BTCPayInvoices.tsx`, `NumoApp.tsx`):** Two real screens set side by side, straight on the section ground: **no device frame, no backing plate, no overlap, nothing cropped**. The Numo screen stands on the left where the sale starts and the BTCPay page on the right where it lands, sharing top and bottom edges and one edge treatment (a `7%` ink hairline plus `--shadow-device`). `NumoApp` is the Android app's keypad, Pay, and received screens transcribed from its layout XML (Roboto, `#00C244`, the app's own drawables), shown as a bare rounded screen. `BTCPayInvoices` is BTCPay Server's Invoices page transcribed from its own stylesheets, markup, and icon sprite (Open Sans, `#51B13E`, `New` → `Settled` badges, amounts in `SATS` because that is how Numo creates its invoices). It is the page alone, without BTCPay's sidebar and top bar, so it can be drawn at `1:1` instead of shrunk, and it shows a fixed number of whole rows (eight wide, four compact): a new invoice opens at the top and the oldest slides out under a soft lower edge. Both are authored at native size on a fixed canvas that scales to its slot; below an `800px` slot they stack, the till on top. The story is one sale per loop: keys, Charge, the invoice arrives as `New`, the customer pays, it turns `Settled`, the till shows received, Close. Sales accumulate rather than rewind, and the till's clock moves on between customers. Open Sans and Roboto load on this route only. `Pause` and `Replay` are real controls; reduced motion holds the settled frame.
-- **Setup Guide (`setup/page.tsx`, `SetupSteps.tsx`):** Deliberately the quietest page on the site. The whole guide is set in **five type styles** (`text-display`, `text-lead` under the `h1` only, `text-h2`, `text-h3`, body) and **three gaps** (`mt-2` inside a unit, `mt-6` around it, `mt-12` between blocks); do not add a sixth style or a fourth gap. Body copy carries exactly one emphasis, `font-medium text-navy`, reserved for the on-screen label the reader has to find, and underlines appear only on the two download links. Grounds alternate `Paper` header → `Sunken` Open your till → `Paper` Automatic payouts → `Sunken` Optional extras → `/setup`-aware closing footer. Two layouts only: step sections share one `xl:grid-cols-4` grid of identical units (numbered `text-h3` title, one paragraph, one bottom-aligned `PhoneFrame` screenshot sitting directly on the section ground, no stage box and no caption, with an optional single `ring-navy` outline on the control to tap), and the closing split section puts the `h2` in the left half with a hairline-ruled list of the BTCPay Server and Stripe extras in the right half. No cards, badges, callout boxes, checklists, or lettered markers.
+- **Setup Guide (`setup/page.tsx`, `SetupSteps.tsx`):** Deliberately the quietest page on the site. The whole guide is set in **five type styles** (`text-display`, `text-lead` under the `h1` only, `text-h2`, `text-h3`, body) and **three gaps** (`mt-2` inside a unit, `mt-6` around it, `mt-12` between blocks, opening to `mt-16` from `md`); do not add a sixth style or a fourth gap. Body copy carries exactly one emphasis, `font-medium text-navy`, reserved for the on-screen label the reader has to find, and underlines appear only on the two download links. Grounds alternate `Paper` header → `Sunken` Open your till → `Paper` Automatic payouts → `Sunken` Optional extras → `/setup`-aware closing footer. Two layouts only: step sections share one `xl:grid-cols-4` grid of identical units (numbered `text-h3` title, one paragraph, one bottom-aligned `PhoneFrame` screenshot sitting directly on the section ground, no stage box and no caption, with an optional single `ring-navy` outline on the control to tap), and the closing split section puts the `h2` in the left half with a hairline-ruled list of the BTCPay Server and Stripe extras in the right half. No cards, badges, callout boxes, checklists, or lettered markers.
 
 ## Motion & Accessibility
 

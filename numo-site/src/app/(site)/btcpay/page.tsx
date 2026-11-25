@@ -30,7 +30,7 @@ export default function BTCPayPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className="mx-auto max-w-[1200px] px-6 pb-14 pt-16 md:pb-20 md:pt-24">
+        <div className="shell header-y">
           <div className="flex items-center gap-3">
             <LogoMark className="h-8 w-8" />
             <span aria-hidden="true" className="text-sm font-medium text-navy/60">
@@ -47,10 +47,10 @@ export default function BTCPayPage() {
           <h1 className="text-display mt-8 max-w-[16ch] text-navy">
             The till for your BTCPay Server store.
           </h1>
-          <p className="text-lead mt-5 max-w-[32rem] text-navy/70">
+          <p className="text-lead mt-5 md:mt-6 max-w-[32rem] text-navy/70">
             Connect Numo to ring up in-person sales directly into BTCPay.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
             <DownloadMenu variant="primary" size="md" align="left" />
             <Button href="/setup#btcpay" variant="secondary" size="md">
               Setup guide
@@ -59,15 +59,15 @@ export default function BTCPayPage() {
         </div>
       </header>
 
-      <section className="border-t border-line bg-sunken py-16 md:py-24">
-        <div className="mx-auto max-w-[1200px] px-6">
+      <section className="section-y border-t border-line bg-sunken">
+        <div className="shell">
           <BTCPayDemo />
 
-          <div className="mt-14 grid overflow-hidden rounded-card border border-line bg-surface md:mt-16 md:grid-cols-3">
+          <div className="mt-block grid overflow-hidden rounded-card border border-line bg-surface md:grid-cols-3">
             {POINTS.map((point, i) => (
               <div
                 key={point.title}
-                className={`p-7 md:p-9 ${
+                className={`p-8 md:p-10 ${
                   i < POINTS.length - 1 ? "border-b border-line md:border-b-0 md:border-r" : ""
                 }`}
               >

@@ -178,7 +178,7 @@ function Row({
 }) {
   return (
     <div
-      className={`grid items-center gap-8 md:gap-12 lg:gap-16 ${
+      className={`grid items-center gap-8 md:gap-12 lg:gap-20 ${
         flip ? "md:grid-cols-[1fr_1.15fr]" : "md:grid-cols-[1.15fr_1fr]"
       }`}
     >
@@ -191,20 +191,20 @@ function Row({
   );
 }
 
-const body = "text-lead mt-4 text-navy/70";
+const body = "text-lead mt-4 text-navy/70 md:mt-5";
 
 export function Showcase() {
   return (
-    <section id="features" className="section-anchor bg-paper py-20 md:py-28">
-      <div className="mx-auto max-w-[1200px] px-6">
+    <section id="features" className="section-anchor section-y bg-paper">
+      <div className="shell">
         <h2 className="text-display max-w-[9.25em] text-navy">
           A full point of sale on any Android.
         </h2>
-        <p className="text-lead mt-4 max-w-[34rem] text-navy/70">
+        <p className="text-lead mt-5 max-w-[34rem] text-navy/70 md:mt-6">
           Use your own phone or a handheld Android terminal.
         </p>
 
-        <div className="mt-14 space-y-16 md:mt-20 md:space-y-24">
+        <div className="mt-block space-y-20 md:space-y-28 lg:space-y-36">
           <Row
             title="Tap to pay"
             visual={

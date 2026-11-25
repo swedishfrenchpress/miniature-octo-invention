@@ -34,7 +34,7 @@ export function ReleaseEntry({ release }: Props) {
   return (
     <article
       id={`v${release.version}`}
-      className="grid scroll-mt-28 grid-cols-1 gap-3 border-b border-line py-12 last:border-b-0 md:grid-cols-[160px_1fr] md:gap-12"
+      className="grid scroll-mt-28 grid-cols-1 gap-3 border-b border-line py-14 last:border-b-0 md:py-16 md:grid-cols-[160px_1fr] md:gap-12"
     >
       <header className="text-sm text-navy/70 md:pt-1.5">
         <div className="tabular font-semibold text-navy">v{release.version}</div>

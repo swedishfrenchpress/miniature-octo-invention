@@ -21,17 +21,17 @@ export default function PrivacyPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className="mx-auto max-w-[1200px] px-6 pb-12 pt-16 md:pb-16 md:pt-24">
+        <div className="shell header-y">
           <h1 className="text-display text-navy">Privacy policy</h1>
-          <p className="text-lead mt-5 max-w-[34rem] text-navy/70">
+          <p className="text-lead mt-5 md:mt-6 max-w-[34rem] text-navy/70">
             Covers the Numo Android app. This website uses privacy-friendly Vercel Analytics.
           </p>
         </div>
       </header>
 
-      <div className="border-t border-line bg-sunken pb-24 pt-14 md:pb-28 md:pt-20">
-        <div className="mx-auto max-w-[1200px] px-6">
-          <div className="max-w-[36rem] space-y-10">
+      <div className="section-y border-t border-line bg-sunken">
+        <div className="shell">
+          <div className="max-w-[36rem] space-y-12 md:space-y-14">
             <section>
               <h2 className="text-h3 text-navy">Data collection</h2>
               <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
