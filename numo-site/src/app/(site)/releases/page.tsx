@@ -26,24 +26,26 @@ export default function ReleasesPage() {
 
   return (
     <>
-      <header className="pt-[60px]">
-        <div className="mx-auto max-w-[1200px] px-6 pb-14 pt-16 md:pb-20 md:pt-24">
+      <header className="bg-paper pt-[72px] md:pt-[84px]">
+        <div className="mx-auto max-w-[1200px] px-6 pb-12 pt-16 md:pb-16 md:pt-24">
           <h1 className="text-display max-w-[14ch] text-navy">What&rsquo;s new in Numo.</h1>
-          <p className="text-lead mt-6 max-w-[36rem] text-navy/70">
-            Every feature, improvement, and fix that ships, written for the people running
-            the terminal, not the people writing the commits.
+          <p className="text-lead mt-5 max-w-[32rem] text-navy/70">
+            What&rsquo;s shipping in Numo, written for shop owners.
           </p>
         </div>
       </header>
 
-      {/* Featured latest release */}
+      {/* Featured latest release on warm sunken ground */}
       <section
         id={`v${latest.version}`}
         aria-labelledby="latest-title"
-        className="scroll-mt-24 border-t border-line py-20 md:py-28"
+        className="scroll-mt-28 border-t border-line bg-sunken py-16 md:py-24"
       >
         <div className="mx-auto max-w-[1200px] px-6">
-          <p className="flex flex-wrap items-baseline gap-x-3 text-sm text-navy/70">
+          <p className="flex flex-wrap items-center gap-x-3 text-sm text-navy/70">
+            <span className="tabular inline-flex items-center rounded-full bg-mint-soft px-2.5 py-0.5 font-semibold text-navy ring-1 ring-inset ring-navy/10">
+              Latest
+            </span>
             <span className="tabular font-semibold text-navy">v{latest.version}</span>
             <time dateTime={latest.date}>{formatFullDate(latest.date)}</time>
           </p>
@@ -51,20 +53,20 @@ export default function ReleasesPage() {
           <h2 id="latest-title" className="text-h2 mt-4 max-w-[24ch] text-navy">
             {latest.title}
           </h2>
-          <p className="text-lead mt-5 max-w-[44rem] text-navy/70">{latest.summary}</p>
+          <p className="text-lead mt-4 max-w-[38rem] text-navy/70">{latest.summary}</p>
 
           {latest.heroImage && (
-            <div className="mt-12">
+            <div className="mt-10">
               <ReleaseImage image={latest.heroImage} priority />
             </div>
           )}
 
           {latestHighlights.length > 0 && (
-            <dl className="mt-14 space-y-12">
+            <dl className="mt-12 space-y-12">
               {latestHighlights.map((h, i) => (
                 <div key={i}>
-                  <dt className="text-h3 max-w-[720px] text-navy">{h.title}</dt>
-                  <dd className="mt-2 max-w-[720px] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
+                  <dt className="text-h3 max-w-[35rem] text-navy">{h.title}</dt>
+                  <dd className="mt-2 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
                   {h.image && (
                     <div className="mt-6 max-w-[720px]">
                       <ReleaseImage image={h.image} />
@@ -80,8 +82,8 @@ export default function ReleasesPage() {
             </dl>
           )}
 
-          <div className="mt-14">
-            <Button href={latest.downloadUrl ?? DEFAULT_DOWNLOAD} variant="primary" external>
+          <div className="mt-12">
+            <Button href={latest.downloadUrl ?? DEFAULT_DOWNLOAD} variant="primary" size="md" external>
               Download v{latest.version}
             </Button>
           </div>
@@ -90,9 +92,12 @@ export default function ReleasesPage() {
 
       {/* Earlier releases timeline */}
       {older.length > 0 && (
-        <section aria-labelledby="earlier-releases" className="pb-24 md:pb-32">
+        <section
+          aria-labelledby="earlier-releases"
+          className="border-t border-line bg-paper pb-20 md:pb-28"
+        >
           <div className="mx-auto max-w-[1200px] px-6">
-            <h2 id="earlier-releases" className="text-title border-t border-line pb-2 pt-14 text-navy">
+            <h2 id="earlier-releases" className="text-title pb-2 pt-14 text-navy">
               Earlier releases
             </h2>
             <div>

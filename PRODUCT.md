@@ -20,37 +20,37 @@ Numo is a Bitcoin point-of-sale app that makes accepting Bitcoin feel as native 
 
 ## Positioning
 
-**Ecash is what makes the tap real.** Numo's payments are Cashu ecash — bearer tokens that transfer directly between devices — which is why a customer can tap their phone to a merchant's phone and be done. A Lightning-only point-of-sale app can present a QR code to scan; it cannot deliver a genuine Apple Pay-style tap. Everything else Numo offers (Lightning fallback, offline sales, BTCPay integration, zero platform fees) is real and worth saying, but the tap is the claim a neighboring product cannot truthfully copy.
+**Ecash is what makes the tap real.** Numo's payments are Cashu ecash — bearer tokens that transfer directly between devices — which is why a customer can tap their phone to a merchant's phone and be done. A Lightning-only point-of-sale app can present a QR code to scan; it cannot deliver a genuine Apple Pay-style tap. Everything else Numo offers (Lightning fallback, optional Stripe card tap-to-pay, BTCPay integration, zero platform fees on Bitcoin) is real and worth saying, but the tap is the claim a neighboring product cannot truthfully copy.
 
 ## Operating Context
 
-- **The merchant's setup**: an NFC-capable Android phone, on a counter, a market stall, or a food truck. No extra hardware, no dedicated terminal.
-- **The sale**: the customer taps an ecash wallet phone-to-phone, or scans a Lightning invoice QR when they don't have one. Settlement is seconds, no chargebacks or holds.
+- **The merchant's setup**: an NFC-capable Android phone — or a dedicated handheld Android terminal (such as a SUNMI V3) — on a counter, market stall, or food truck. No extra hardware is required.
+- **The sale**: the customer taps an ecash wallet phone-to-phone, scans a Lightning invoice QR when they don't have one, or taps a contactless card/phone/watch when the merchant has optionally connected their Stripe account. Bitcoin settlement is seconds, with no chargebacks or holds.
 - **Onboarding**: download the APK from GitHub releases or Zapstore → create a wallet (or restore from backup) → accept the pre-selected default mint → start selling. The merchant is not required to understand Bitcoin infrastructure to finish.
-- **Payouts**: optional auto-withdraw sends sales to the merchant's own Lightning address (which reads like an email address) once a balance threshold is reached.
-- **Inventory**: categories and item sizes, tap-to-request pre-set payments, exportable per-item sales reports.
-- **BTCPay Server**: Numo connects directly to an existing BTCPay store, generating invoices and keeping point-of-sale inventory in sync.
+- **Payouts**: optional auto-withdraw sends Bitcoin sales to the merchant's own Lightning address (which reads like an email address) once a balance threshold is reached. Optional Stripe card payments settle directly to the merchant's Stripe account and stay separate from Bitcoin in Numo.
+- **Inventory**: categories, sizes, stock counts, item-level taxes, tap-to-request preset prices, and exportable CSV sales reports.
+- **BTCPay Server**: Numo connects directly to an existing BTCPay store (`Settings → Payments → BTCPay Server`), generating invoices and keeping point-of-sale inventory in sync.
 - **How the site is read**: on a phone in a kitchen or a laptop in a back office — daylight, interrupted attention — not a dark trading terminal.
-- **Site surfaces today**: `/` (home), `/setup` (merchant setup guide), `/releases` (versioned changelog), `/privacy`, `/export/offline`.
+- **Site surfaces today**: `/` (home), `/btcpay` (BTCPay Server integration), `/setup` (merchant setup guide), `/releases` (versioned changelog), `/privacy`.
 
 ## Capabilities and Constraints
 
-**Custody — the single most load-bearing fact.** Ecash tokens are bearer instruments held on the merchant's device; the Cashu **mint** is the party backing them. Numo the project custodies nothing. Future copy must not flatly claim "non-custodial," and must not say "your bitcoin stays in Numo." Name the mint and describe the actual arrangement. *The FAQ answer currently shipped on the homepage ("Is Numo custodial? Yes. Your bitcoin stays in Numo…") contradicts this and is a known copy defect awaiting a fix.*
+**Custody — the single most load-bearing fact.** Ecash tokens are bearer instruments held on the merchant's device; the Cashu **mint** is the party backing them. Numo the project custodies nothing. Copy must not flatly claim "non-custodial" or "no custodian," and must not say "your bitcoin stays in Numo." Name the mint and describe the actual arrangement.
 
 - **Platform**: Android only, NFC required. iOS availability is not established — do not imply it.
-- **Distribution**: GitHub releases (APK) at `github.com/cashubtc/Numo/releases`, and Zapstore. The site states a Google Play listing is coming; no date is confirmed and none may be invented.
-- **Price**: free to download, free to use. Numo takes no percentage and no subscription. Bitcoin network fees only, typically under a cent. No "2.9% + 30¢."
+- **Distribution**: GitHub releases (APK) at `github.com/cashubtc/Numo/releases`, and Zapstore (signed releases & auto-updates). The site states a Google Play listing is coming; no date is confirmed and none may be invented.
+- **Price & Fees**: free to download, free to use. Numo takes 0% platform fee and no subscription on Bitcoin sales — only tiny Bitcoin network fees (typically under a cent, no 2.9% + 30¢). If a merchant optionally connects their own Stripe account for contactless cards, Stripe's standard card processing fees apply to card sales.
 - **Open source**: the app repo is `cashubtc/Numo`; this site repo is MIT.
-- **Customer-side requirement**: tap-to-pay needs a compatible Cashu ecash wallet. Any Lightning wallet works via invoice/QR. Both are true and the distinction must not be blurred.
-- **Offline**: ecash payments complete without connectivity and sync on reconnect.
-- **Compatible wallets named on the site** (factual list; never padded with unverified names) — *ecash*: eNuts, Sovran, Macadamia, Cashu.me, Minibits, Phoenix, Bey. *Lightning*: Alby Go, Blink, Agicash, Cash App, Fedi, Muun, Strike, Wallet of Satoshi, Zeus.
-- **Terminology**: mint, ecash, Cashu, Lightning address, sats, auto-withdraw, balance threshold, BTCPay Server, NFC tap-to-pay. The app calls its payment screen the *till*.
+- **Customer-side requirement**: Bitcoin tap-to-pay needs a compatible Cashu ecash wallet; any Lightning wallet works via invoice/QR; optional contactless cards / Apple Pay / Google Pay work through the merchant's connected Stripe account. Keep these distinctions crisp.
+- **Connectivity / Offline**: Numo requires an internet connection to take a new payment because the mint must verify and redeem the ecash. When offline, the app displays an offline status banner explaining what still works, holds pending Lightning confirmations until reconnect, and waits to ring up new charges.
+- **Compatible wallets named on the site** (factual list; never padded with unverified names) — *ecash (NFC tap)*: eNuts, Sovran, Macadamia, Cashu.me, Minibits, Phoenix, Bey. *Lightning (QR scan)*: Alby Go, Blink Wallet, Cash App, Fedi, Muun, Strike, Wallet of Satoshi, Zeus. Note: when advising on *merchant payout Lightning addresses*, recommend wallets that actually provide a Lightning address (e.g., Strike, Alby Go, Blink, Wallet of Satoshi) — not Muun.
+- **Terminology**: mint, ecash, Cashu, Lightning address, sats, auto-withdraw, balance threshold, BTCPay Server, NFC tap-to-pay, Stripe. The app calls its payment screen the *till*.
 - **Site stack (fixed)**: Next.js 16 App Router, React 19, Tailwind v4, TypeScript. Deployed on Vercel with `@vercel/analytics`. The application lives in `numo-site/`, not at the repository root.
 - **Domain**: numopay.org.
 
 ## Brand Commitments
 
-**Name**: Numo. **Voice**: confident · punchy · merchant-first.
+**Name**: Numo. **Voice**: confident, punchy, merchant-first.
 
 - *Confident*: We don't hedge. Numo is a product for people who sell things. Copy is declarative, not aspirational. No "imagine a world where…" No "we're on a mission to…"
 - *Punchy*: Short lines, real numbers (fees, speeds, wallet names). Ideas land fast. If a sentence can be cut in half, cut it.
@@ -71,33 +71,26 @@ Nearest reference: Square / Block — merchant-first, editorial, confident, prod
 
 ## Evidence on Hand
 
-**Designated proof — the release log.** Dated, versioned changelog entries running v1.0 (2026-02-23) → v1.8 (`numo-site/src/data/releases.ts`), of which v1.3, v1.4, v1.5, and v1.8 carry real product screenshots in `numo-site/public/releases/`. This is the one body of evidence future work is cleared to build on: it shows a product that ships on a cadence. Cite the cadence and the dated entries themselves; do not convert them into a metric ("shipping every N weeks") without checking the dates.
+**Designated proof — the release log.** Dated, versioned changelog entries running v1.0 (2026-02-23) → v1.10 (`numo-site/src/data/releases.ts`), with authentic product screenshots in `numo-site/public/releases/`. This is the one body of evidence future work is cleared to build on: it shows a product that ships on a cadence. Cite the cadence and the dated entries themselves; do not convert them into a metric ("shipping every N weeks") without checking the dates.
 
 Other real assets available:
 
 - Setup guide screenshots of actual app UI — `numo-site/public/setup/01-welcome.png` through `07-payout-details.png`.
 - Wallet logos — `numo-site/public/wallets/`.
-- BTCPay Server logo and interface still — `numo-site/public/btcpay-logo.svg`, `btcpay-ui.png`.
-- Product video and imagery — `1.mp4`, `2.mp4`, `cart.mp4`, `ln-checkout.mp4`, `hero.png`, `grass.png`, `og-image.jpg`.
+- Studio hardware renders — `numo-site/public/ui/numo-tap.png`, `numo-card-tap-2.png`, `numo-sales.png`.
+- BTCPay Server logo — `numo-site/public/btcpay-logo.svg`.
+- Product video and imagery — `1.mp4`, `2.mp4`, `hero-poster.jpg`, `og-image.jpg`.
 
 **Absences that must never be fabricated.** There are no testimonials, no named or pictured merchants, no case studies, no install or download counts, no transaction or volume figures, no press quotes, no uptime or benchmark numbers, and no "trusted by N merchants." The OpenCash support credit in the footer is factual shipped copy, but was not designated as a proof point to build marketing claims on. If a future section needs social proof, it must be sourced first — not written.
 
 ## Product Principles
 
 1. **Merchant first, Bitcoin second.** Every section answers a question a merchant would actually ask. Technical honesty serves the Bitcoin-native audience; technical jargon never leads.
-2. **Technical honesty is the trust mechanism.** Especially on custody, fees, and platform support. A precise, slightly less flattering sentence beats a clean claim that a Bitcoin native can catch out.
-3. **Demonstrate, don't describe.** Default to "can we show this mechanic?" — fees getting cut, payments streaming in, NFC tapping — before reaching for a headline and a paragraph.
+2. **Technical honesty is the trust mechanism.** Especially on custody, fees (Bitcoin vs optional Stripe cards), connectivity, and platform support. A precise, slightly less flattering sentence beats a clean claim that a Bitcoin native can catch out.
+3. **Demonstrate, don't describe.** Default to "can we show this mechanic?" — fees getting cut, BTCPay invoices settling, NFC tapping — before reaching for a headline and a paragraph.
 4. **Claim only what ships.** Android and NFC today. No implied iOS, no invented Play Store date, no borrowed metrics.
 5. **Two audiences, one voice.** Never code-switch into merchant-speak in one section and cypherpunk-speak in the next. The same declarative sentences serve both.
 
 ## Accessibility & Inclusion
 
-No formal WCAG level or special accommodations documented by stakeholders. Default to WCAG AA: verify body text contrast (≥4.5:1) and respect `prefers-reduced-motion` for the site's illustrative animations.
-
----
-
-## Register
-
-<!-- Retired field: v4 replaced the register axis with per-surface visitor modes. Retained pending deletion; treated as absent for all decisions. -->
-
-brand
+Target WCAG AA throughout: verify body text contrast (≥4.5:1), large text (≥3:1), minimum `44×44px` touch targets, `inert` on depicted third-party/simulated mockups, and honor `prefers-reduced-motion` across both CSS animations and JS timer loops.

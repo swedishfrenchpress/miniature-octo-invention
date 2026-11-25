@@ -23,34 +23,60 @@ const LIGHTNING_WALLETS = [
 
 type Wallet = { name: string; image: string };
 
-/** One tier of wallets: what the tier means on the left, who is in it on the right.
- *  No frame — a single hairline separates the two tiers. */
+function NfcIcon() {
+  return (
+    <svg
+      className="h-5 w-5 shrink-0 text-navy"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M5.5 5.5a3.6 3.6 0 0 1 0 5" />
+      <path d="M8.3 3.8a6.2 6.2 0 0 1 0 8.4" />
+      <path d="M11 2.2a8.8 8.8 0 0 1 0 11.6" />
+    </svg>
+  );
+}
+
 function WalletGroup({
   title,
   detail,
   wallets,
+  nfc,
 }: {
   title: string;
   detail: string;
   wallets: Wallet[];
+  nfc?: boolean;
 }) {
   return (
-    <div className="grid gap-8 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-16 md:py-14">
+    <div className="grid gap-8 border-t border-line py-10 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-12">
       <div>
-        <h3 className="text-title text-navy">{title}</h3>
-        <p className="mt-2 max-w-[18rem] text-navy/70 [text-wrap:pretty]">{detail}</p>
+        <div className="flex items-center gap-2">
+          <h3 className="text-title text-navy">{title}</h3>
+          {nfc && <NfcIcon />}
+        </div>
+        <p className="mt-2.5 max-w-[19rem] text-navy/70 [text-wrap:pretty]">{detail}</p>
       </div>
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {wallets.map((wallet) => (
-          <li key={wallet.name} className="flex items-center gap-3.5">
-            <Image
-              src={wallet.image}
-              alt=""
-              width={44}
-              height={44}
-              className="h-11 w-11 shrink-0 rounded-[11px] object-cover"
-            />
-            <span className="font-medium text-navy">{wallet.name}</span>
+          <li
+            key={wallet.name}
+            className="flex items-center gap-3 rounded-[14px] border border-line bg-surface px-3.5 py-2.5"
+          >
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-inset ring-navy/10">
+              <Image
+                src={wallet.image}
+                alt=""
+                width={40}
+                height={40}
+                className="h-full w-full object-cover"
+              />
+            </span>
+            <span className="text-sm font-medium leading-tight text-navy">{wallet.name}</span>
           </li>
         ))}
       </ul>
@@ -60,23 +86,28 @@ function WalletGroup({
 
 export function Wallets() {
   return (
-    <section id="wallets" className="section-anchor py-24 md:py-40">
+    <section
+      id="wallets"
+      className="section-anchor border-y border-line bg-sunken py-20 md:py-28"
+    >
       <div className="mx-auto max-w-[1200px] px-6">
-        <h2 className="text-display max-w-[15ch] text-navy">Your customers already have the wallet.</h2>
-        <p className="text-lead mt-6 max-w-[34rem] text-navy/70">
-          Works with any Bitcoin Lightning wallet. Tap to pay is available for ecash
-          wallets.
+        <h2 className="text-display max-w-[16ch] text-navy">
+          Your customers already have the wallet.
+        </h2>
+        <p className="text-lead mt-4 max-w-[34rem] text-navy/70">
+          Works with any Lightning wallet. Tap to pay works with Cashu wallets.
         </p>
 
-        <div className="mt-16 md:mt-24">
+        <div className="mt-12 md:mt-16">
           <WalletGroup
             title="Tap to pay"
-            detail="Cashu ecash wallets that pay with an NFC tap."
+            detail="Cashu ecash wallets."
             wallets={NFC_WALLETS}
+            nfc
           />
           <WalletGroup
             title="Scan to pay"
-            detail="These, and every other Bitcoin Lightning wallet."
+            detail="Any Bitcoin Lightning wallet."
             wallets={LIGHTNING_WALLETS}
           />
         </div>

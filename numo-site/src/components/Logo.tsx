@@ -1,6 +1,6 @@
 /** The Numo mark: a mint tile carrying a condensed N. Drawn as a path so the mark
  *  never depends on a display font being loaded. */
-export function LogoMark({ className = "h-[26px] w-[26px]" }: { className?: string }) {
+export function LogoMark({ className = "h-7 w-7" }: { className?: string }) {
   return (
     <svg viewBox="0 0 26 26" className={className} aria-hidden="true">
       <rect width="26" height="26" rx="7" fill="var(--mint)" />
@@ -12,14 +12,23 @@ export function LogoMark({ className = "h-[26px] w-[26px]" }: { className?: stri
   );
 }
 
-export function Logo({ tone = "ink" }: { tone?: "ink" | "inverse" }) {
+export function Logo({
+  tone = "ink",
+  size = "md",
+}: {
+  tone?: "ink" | "inverse";
+  size?: "md" | "lg";
+}) {
+  const isLarge = size === "lg";
   return (
-    <span className="flex items-center gap-2">
-      <LogoMark />
+    <span className={`flex items-center ${isLarge ? "gap-2 lg:gap-2.5" : "gap-2"}`}>
+      <LogoMark
+        className={isLarge ? "h-8 w-8 lg:h-9 lg:w-9" : "h-[26px] w-[26px]"}
+      />
       <span
-        className={`text-[1.0625rem] font-semibold tracking-[-0.02em] transition-colors duration-200 ${
-          tone === "ink" ? "text-navy" : "text-white"
-        }`}
+        className={`font-display font-semibold leading-none tracking-[-0.025em] transition-colors duration-200 ${
+          isLarge ? "text-[1.3125rem] lg:text-[1.5625rem]" : "text-[1.125rem]"
+        } ${tone === "ink" ? "text-navy" : "text-white"}`}
       >
         Numo
       </span>

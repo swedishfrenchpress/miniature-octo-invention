@@ -57,7 +57,7 @@ export const releases: Release[] = [
   {
     version: "1.10",
     date: "2026-11-13",
-    title: "Arkoor arrives",
+    title: "Arkoor and in-app updates",
     summary:
       "Take Arkoor and Lightning from one QR code, and update Numo without leaving the app. Plus a clear view of what works offline, and Activity and Sales that finally match.",
     heroImage: {
@@ -80,7 +80,7 @@ export const releases: Release[] = [
       },
       {
         title: "Update without leaving Numo",
-        body: "Check for a new release from the home screen or Settings → About. Downloads resume if they drop, and nothing installs mid-payment.",
+        body: "Check for a new release from the home screen or in Settings under About. Downloads resume if they drop, and nothing installs mid-payment.",
         image: {
           src: "/releases/v1.10/updates.png",
           alt: "Numo v1.10 App updates screen showing version 1.10 available",
@@ -470,7 +470,7 @@ export const releases: Release[] = [
     date: "2026-02-23",
     title: "Numo launches",
     summary:
-      "The first public build of Numo is live. Accept Bitcoin payments with a tap on any NFC-enabled Android. No custodian. No subscription.",
+      "The first public build of Numo is live. Accept Bitcoin payments with a tap on any NFC-enabled Android. No platform custody. No subscription.",
     highlights: [
       {
         title: "Tap-to-pay with Cashu ecash",
@@ -481,8 +481,8 @@ export const releases: Release[] = [
         body: "Switch to the Lightning tab for a BOLT11 QR code, so customers without an ecash wallet still pay.",
       },
       {
-        title: "Self-custody from day one",
-        body: "Withdraw manually to your own wallet, or set an automatic threshold to sweep to your Lightning address.",
+        title: "Automatic payouts from day one",
+        body: "Withdraw manually to your own wallet, or set an automatic threshold to sweep sales out of your mint to your Lightning address.",
       },
       {
         title: "Merchant tools",

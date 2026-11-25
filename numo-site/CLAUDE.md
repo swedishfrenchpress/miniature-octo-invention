@@ -20,13 +20,13 @@ Check `PRODUCT.md` → *Capabilities and Constraints* first. Several claims are 
 The app lives in `numo-site/`, **not** at the repository root.
 
 ```
-src/app/          routes: / · /setup · /releases · /privacy · /export/offline
-src/app/globals.css   design tokens (@theme), font classes, reduced-motion block
-src/components/   BentoCard · Button · Navigation · SectionHeading ·
-                  PayoutSetupGuide · ReleaseEntry · ReleaseImage ·
-                  WorksOfflineAnimation
+src/app/(site)/   routes: / · /btcpay · /setup · /releases · /privacy
+src/app/globals.css   design tokens (@theme), type scale, reduced-motion block
+src/components/   Button · DownloadMenu · Logo · Navigation · SiteFooter ·
+                  PhoneFrame · PayoutSetupGuide · PreflightChecklist ·
+                  ReleaseEntry · ReleaseImage · home/* · btcpay/BTCPayDemo
 src/data/         releases.ts — the versioned changelog rendered by /releases
-public/           setup/ · releases/ · wallets/ screenshots and logos
+public/           setup/ · releases/ · ui/ · wallets/ · logos/ assets
 ```
 
 ## Commands

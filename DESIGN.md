@@ -1,15 +1,18 @@
 ---
 name: Numo
-description: A Bitcoin point-of-sale site built like painted shop signage — ink on cream, one coat of fresh mint.
+description: A Bitcoin point-of-sale site built like a warm merchant counter — GC Protage display headers paired with Sora body, ink on warm paper and sunken cream, one fresh coat of mint.
 colors:
   signwriters-ink: "#0A2540"
   ink-light: "#1a3a5c"
+  ink-deep: "#06182B"
   fresh-paint-mint: "#5EFFC2"
-  mint-soft: "#E8FFF5"
-  mint-pale: "#F0FFF8"
-  awning-cream: "#FAF8F5"
-  butcher-paper: "#F5F0E8"
-  white: "#FFFFFF"
+  mint-soft: "#E6FFF4"
+  vermilion-slash: "#D93829"
+  paper: "#FBFAF7"
+  sunken-cream: "#F2EEE6"
+  surface-white: "#FFFFFF"
+  line: "rgb(10 37 64 / 0.11)"
+  line-strong: "rgb(10 37 64 / 0.2)"
   gray-50: "#FAFAFA"
   gray-100: "#F4F4F5"
   gray-200: "#E4E4E7"
@@ -18,330 +21,159 @@ colors:
   gray-500: "#71717A"
   gray-600: "#52525B"
 typography:
-  scale:
-    nav: "1.2rem"
-    nav-lg: "1.5rem"
-    nav-xl: "1.7rem"
-    nav-panel: "1.6rem"
-    masthead: "2.5rem"
   display:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "clamp(3rem, 8vw, 8rem)"
-    fontWeight: 400
-    lineHeight: 0.9
-    letterSpacing: "0.01em"
-  headline:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "clamp(3rem, 5vw, 4.5rem)"
-    fontWeight: 400
-    lineHeight: 0.9
-    letterSpacing: "0.01em"
+    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontSize: "clamp(2.625rem, 6.2vw, 5.25rem)"
+    fontWeight: 500
+    lineHeight: 1.04
+    letterSpacing: "-0.025em"
+  h2:
+    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontSize: "clamp(1.875rem, 4vw, 3.25rem)"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
   title:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "clamp(1.25rem, 3vw, 2.25rem)"
+    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 500
+    lineHeight: 1.24
+    letterSpacing: "-0.015em"
+  h3:
+    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontSize: "1.25rem"
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: "-0.01em"
+  lead:
+    fontFamily: "Sora, system-ui, sans-serif"
+    fontSize: "1.0625rem / 1.1875rem md"
     fontWeight: 400
-    lineHeight: 0.95
-    letterSpacing: "0.01em"
-  masthead:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "2.5rem"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "0.01em"
-  nav:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "1.2rem"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "0.06em"
-  nav-panel:
-    fontFamily: "Bebas Neue, Haettenschweiler, Impact, sans-serif"
-    fontSize: "1.6rem"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "0.1em"
+    lineHeight: 1.55
+    letterSpacing: "normal"
   body:
     fontFamily: "Sora, system-ui, sans-serif"
-    fontSize: "1.125rem"
+    fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.625
+    lineHeight: 1.6
     letterSpacing: "normal"
-  label:
+  caption:
     fontFamily: "Sora, system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "0.25em"
-  wordmark:
-    fontFamily: "Grandstander, cursive"
-    fontSize: "clamp(6rem, 20vw, 20rem)"
+    fontSize: "0.8125rem"
     fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "-0.02em"
-  annotation:
-    fontFamily: "Solitreo, cursive"
-    fontSize: "clamp(1.5rem, 3vw, 1.875rem)"
-    fontWeight: 400
-    lineHeight: 1.4
+    lineHeight: 1.45
     letterSpacing: "normal"
 rounded:
-  sm: "0.5rem"
-  md: "1rem"
-  card: "2rem"
-  card-lg: "3rem"
+  chip: "6px"
+  control: "10px"
+  card: "16px"
+  frame: "24px"
   pill: "9999px"
 spacing:
   gutter: "1.5rem"
-  card-gap: "1rem"
-  card-sm: "1.5rem"
-  card-md: "2rem"
-  card-lg: "3rem"
+  container: "1200px"
   section: "5rem"
-  section-lg: "7rem"
+  section-md: "7rem"
 components:
+  button-mint:
+    backgroundColor: "{colors.fresh-paint-mint}"
+    textColor: "{colors.signwriters-ink}"
+    rounded: "{rounded.control}"
+    height: "3rem (lg) / 2.75rem (md)"
   button-primary:
     backgroundColor: "{colors.signwriters-ink}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.pill}"
-    padding: "1rem 2rem"
-  button-primary-hover:
-    backgroundColor: "{colors.white}"
+    textColor: "{colors.surface-white}"
+    rounded: "{rounded.control}"
+    height: "2.75rem (md) / 2.25rem (sm + 44px hit extension)"
+  button-secondary:
+    backgroundColor: "{colors.surface-white}"
     textColor: "{colors.signwriters-ink}"
-  button-accent:
-    backgroundColor: "{colors.fresh-paint-mint}"
-    textColor: "{colors.signwriters-ink}"
-    rounded: "{rounded.pill}"
-    padding: "1rem 2rem"
-  button-accent-hover:
-    backgroundColor: "{colors.white}"
-    textColor: "{colors.signwriters-ink}"
-  button-compact:
-    backgroundColor: "{colors.signwriters-ink}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.pill}"
-    padding: "0.625rem 1.25rem"
-  card-bento:
-    backgroundColor: "{colors.awning-cream}"
-    textColor: "{colors.signwriters-ink}"
-    rounded: "{rounded.card}"
-    padding: "{spacing.card-md}"
-  card-bento-warm:
-    backgroundColor: "{colors.butcher-paper}"
-    textColor: "{colors.signwriters-ink}"
-    rounded: "{rounded.card}"
-    padding: "{spacing.card-md}"
-  wallet-pill:
-    backgroundColor: "{colors.white}"
-    textColor: "{colors.signwriters-ink}"
-    rounded: "{rounded.pill}"
-    padding: "0.625rem 1rem"
-  step-marker:
-    backgroundColor: "{colors.fresh-paint-mint}"
-    textColor: "{colors.signwriters-ink}"
-    typography: "{typography.title}"
-    rounded: "{rounded.pill}"
-    size: "2.5rem"
-  nav-link:
-    textColor: "{colors.signwriters-ink}"
-    typography: "{typography.nav}"
-    textOpacity: 0.7
-    textOpacityActive: 1
-    textColorOnScrim: "{colors.white}"
-    textOpacityOnScrim: 0.75
-    indicatorHeight: "2px"
-    indicatorColor: "{colors.signwriters-ink}"
-    indicatorColorOnScrim: "{colors.fresh-paint-mint}"
-  nav-logo:
-    backgroundColor: "{colors.fresh-paint-mint}"
-    textColor: "{colors.signwriters-ink}"
-    typography: "{typography.masthead}"
-    rounded: "{rounded.sm}"
-    size: "2.75rem"
+    rounded: "{rounded.control}"
+    height: "2.75rem (md)"
+  stage-frame:
+    backgroundColor: "{colors.sunken-cream}"
+    rounded: "{rounded.frame}"
+    shadow: "none"
+  wallet-tile:
+    backgroundColor: "{colors.surface-white}"
+    border: "1px solid {colors.line}"
+    rounded: "14px"
 ---
 
 # Design System: Numo
 
 ## Overview
 
-**Creative North Star: "The Signwriter's Counter"**
+**Creative North Star: "Warm Counter Editorial"**
 
-Numo's surface is a shop sign, not a dashboard. Bebas Neue set in tight condensed capitals is the painted lettering a signwriter brushes across a storefront window; the cream fields behind it are awning canvas and butcher paper; navy is the ink; and mint is the single wet coat of accent paint applied where the merchant is meant to act. This is why the system looks warm without looking soft, and confident without looking corporate — every headline is a piece of hand-set signage, and everything else is the counter it hangs above.
+Numo's website is built for daylight on a real shop counter, not a dark crypto trading terminal or an anonymous B2B SaaS template. It pairs expressive, sentence-case **GC Protage** display headings with calm **Sora** body typography, warm physical surfaces (**Paper** `#FBFAF7` alternating with **Sunken Cream** `#F2EEE6`), deep **Signwriter's Ink** (`#0A2540`) for language and bookends, and a disciplined coat of **Fresh Paint Mint** (`#5EFFC2`) reserved strictly for brand authorship, primary dark-ground CTAs, and active/success confirmations.
 
-The atmosphere is **warm, declarative, and demonstrative**. Warm, because no page in this system sits on plain white for long — cream slabs at 2rem and 3rem radii, dusted with a 3% noise texture, carry almost every block of content. Declarative, because the type never hedges: display sizes leap from 1.125rem body straight to 3–8rem headlines with nothing in between competing, and the copy is written in short flat statements. Demonstrative, because this system's most distinctive asset is not a component but an *illustration that runs* — fees getting sliced in half, bills flying across a gap into a terminal that flashes mint, NFC waves pulsing out of a phone. Those animations are load-bearing content. They explain the product where a paragraph would only claim it.
-
-Depth is deliberately withheld. Page architecture is dead flat — cream on white, never a shadow — so that when a shadow does appear, it means something physical is present: a phone, a payment notification, a button you can press. The result reads as daylight rather than glass. A merchant looking at this on a phone in a kitchen should recognise a product built by people who sell things, and a Bitcoin native scrolling the same page should find nothing that smells like a crypto launch.
+The atmosphere is **calm, declarative, and concrete**. Calm, because pages alternate softly between warm paper and richer cream grounds rather than stacking heavy boxes or glossy gradients. Declarative, because headlines sit in medium-weight sentence case with generous breathing room and short, verifiable statements. Concrete, because every claim is backed by real hardware renders, live payment illustrations (`FeeStage`, `BTCPayDemo`), authentic app screenshots, and a dated changelog.
 
 **Key Characteristics:**
-- Condensed uppercase display type as the primary voice, at signage scale
-- Cream slabs with deep radii (2rem / 3rem) on white, dusted with 3% noise
-- One accent — mint — used only where action or success happens
-- Flat page architecture; shadow reserved for depicted physical objects
-- Running illustrations that demonstrate a mechanic instead of describing it
-- Steep hierarchy: display type and body text, almost nothing between
+- **GC Protage** self-hosted display headers paired with **Sora** (`400 / 500 / 600`) body and UI copy
+- Deliberate ground alternation: Dark Ink Hero → Paper Showcase (with Sunken Stages) → Sunken Wallets (with White Tiles) → Paper FAQ → Dark Ink Footer
+- **One Coat Mint (`#5EFFC2`)**: logo tile, Hero & Footer dark-surface primary CTAs, active indicators, success confirmation, focus ring, and text selection
+- Flat page architecture; shadows reserved strictly for physical hardware frames and floating popovers (`DownloadMenu`)
+- Opaque scrolled navigation bar (never frosted blur over scrolling imagery) with explicit anchor/route separation and an underline-free tonal pill active state
+- Non-blocking transparent download flow (`DownloadMenu`) surfacing Direct Android APK and Zapstore up front
 
 ## Colors
 
-A four-color system — ink, mint, and two creams — deliberately narrow so the accent stays loud. Everything else is a neutral gray doing utility work.
+### Primary & Accent
+- **Signwriter's Ink (`#0A2540`)**: Primary voice for headings, body copy, light-ground primary buttons, and the closing footer ground. Supporting body copy runs at `/70` opacity (`5.57–5.89:1` AA pass across all light grounds); captions stop at `/65` (`≥4.8:1` floor). **Ink Light (`#1a3a5c`)** is the primary button hover state. **Ink Deep (`#06182B`)** backs the hero video scrim and Android hardware bezels.
+- **Fresh Paint Mint (`#5EFFC2`)**: The single bright accent (`12.8:1` AAA contrast paired with `#0A2540` text). Used on the logo tile, Hero and Footer primary CTAs, FAQ open control, interactive checklist ticks, Signwriter's Ink security-note status dot, `:focus-visible` ring core, `::selection`, and payment-received confirmations.
+- **Mint Soft (`#E6FFF4`)**: Quiet confirmation tint for small badges (`NFC tap`, `Auto-updates`, completed checklist state, `Latest` release chip), always paired with `#0A2540` text.
+- **Vermilion Slash (`#D93829`)**: Reserved strictly for the diagonal strike crossing out `2.9% + 30¢` in `FeeStage`.
 
-### Primary
-- **Signwriter's Ink** (`#0A2540`): The voice of the system. Every headline, every body paragraph, every icon glyph, and the dark inverse sections (site footer, setup hero, Part Two of the setup guide). Body copy runs at 75% opacity, secondary copy at 70%, and captions at 65% — the ink is tinted by transparency, never swapped for a gray. 65% is the floor: `/55` measures 3.68:1 on white and `/50` measures 3.17:1, both under the 4.5:1 AA body minimum, while `/65` clears it at 5.02:1 on white, 4.88:1 on cream and 4.76:1 on butcher paper. **Ink Light** (`#1a3a5c`) exists solely as the hover state of a compact dark button.
-
-### Secondary
-- **Fresh Paint Mint** (`#5EFFC2`): The single accent, and the only color in the system that gets to be bright. It appears on the logo tile, on accent CTAs, on the eyebrow labels of dark sections, on active step markers, on the focus ring, and — critically — as the success state that a POS screen flashes to when a payment lands. **Mint Soft** (`#E8FFF5`) and **Mint Pale** (`#F0FFF8`) are card fills for the rare block that should read as adjacent to success without shouting.
-
-### Neutral
-- **Awning Cream** (`#FAF8F5`): The default card fill. The warm, barely-there surface that keeps the site from being white-on-white fintech.
-- **Butcher Paper** (`#F5F0E8`): The heavier cream. Used for whole-page backgrounds where a section needs to sit *behind* white cards rather than on them — the releases index and the setup guide's Part One both run on it.
-- **White** (`#FFFFFF`): Page ground, wallet pills, and the hover state of dark and accent buttons. White is what a button turns into, not what it starts as.
-- **Grays 50–600** (`#FAFAFA` → `#52525B`): Borders, dividers, scrollbar track, and the interior of device mockups. Never used for prose — prose is always tinted ink.
+### Grounds & Structure
+- **Paper (`#FBFAF7`)**: Default page ground, scrolled navigation board, Showcase, FAQ, and editorial headers.
+- **Sunken Cream (`#F2EEE6`)**: Alternating warm ground for full-bleed sections (`Wallets`, `/setup` Part one & Ready/Preflight, `/releases` featured release, `/btcpay` showcase, `/privacy` body) and Showcase/Setup visual stages. Clearly separates from Paper even in bright counter daylight.
+- **Surface White (`#FFFFFF`)**: Crisp cards, wallet tiles, notification cards, and callout boxes sitting on Sunken Cream or bounded by `line-strong`.
+- **Lines (`--line` 11% ink / `--line-strong` 20% ink)**: Editorial rules, structural dividers, and crisp borders.
+- **Grays 50–600**: Used strictly inside depicted third-party software mockups (`BTCPayInterface`), never for site prose.
 
 ### Named Rules
 
-**The One Coat Rule.** Mint is a coat of paint, not a palette. It appears where the merchant acts (CTA), where the system confirms (success flash, active step, valid state), and nowhere else. If a screen has more than a few mint elements, one of them is decoration and should be removed.
-
-**The Tinted Ink Rule.** Secondary and tertiary text is `Signwriter's Ink` at reduced opacity — `/75` for body, `/70` for supporting copy, `/65` for captions and timestamps. **`/65` is the floor**; anything lighter fails WCAG AA for body text on every ground this system uses. Never reach for a gray to make text quieter. Gray is for structure; ink is for language.
-
-**The Cream Floor Rule.** Content sits on cream or on ink. Long stretches of pure white are a gap in the composition, not a style — white's job is to separate cream slabs, not to host content on its own.
+1. **The One Coat Rule.** Mint marks action on dark grounds, brand authorship, and confirmed states — never decorative walls of mint and never mint text on light backgrounds.
+2. **The Own Ground Rule.** Adjacent sections alternate grounds (`Paper` ↔ `Sunken Cream` ↔ `Ink`) separated by hairline `line` dividers so no page ever degrades into an endless monochrome stretch.
+3. **The Tinted Ink Rule.** Secondary prose uses `navy/70` and captions `navy/65` (`4.5:1` AA floor). Never reach for cool grays on warm grounds.
+4. **The Earned Shadow Rule.** Cards and section stages stay dead flat (`border` OR tonal contrast, never border + soft shadow). Shadows belong strictly to depicted physical devices (`--shadow-device`) and floating popovers (`--shadow-popover`).
+5. **The Depicted Object Rule.** Third-party UIs (`BTCPayInterface`, simulated `POSSystem`) carry their native scale/colors and MUST be wrapped in `inert` so simulated buttons and inputs never enter keyboard focus or assistive technology trees.
+6. **The No Middot Rule.** Never use `·` (interpunct/middot) separators anywhere in copy, labels, captions, or UI chrome. Use plain sentences, spacing, or real layout structure instead.
+7. **The No Arrow Rule.** Never use text arrows (`→` or `->`) in links, buttons, UI labels, or copy. Write plain English (e.g. `Setup guide`, `Withdrawals under Payments`) instead.
 
 ## Typography
 
-**Display Font:** Bebas Neue (with Haettenschweiler, Impact fallback)
-**Body Font:** Sora (with system-ui fallback)
-**Wordmark Font:** Grandstander — footer only
-**Annotation Font:** Solitreo — handwritten asides only
+**Display Font:** GC Protage (`400`, `500`, `600`, `700`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Sora)
+**Body & UI Font:** Sora (`400`, `500`, `600`, self-hosted via `next/font/google`)
 
-**Character:** A signwriter's brush paired with a clean engineering hand. Bebas is condensed, uppercase, and set at 0.9 line-height so headlines stack like painted lettering with the courses almost touching. Sora underneath is neutral, geometric, and unhurried at 1.6 line-height. The pairing is the whole brand thesis in two faces: the sign shouts, the counter explains.
+- **`.text-display`**: `clamp(2.625rem, 6.2vw, 5.25rem)`, weight `500`, tracking `-0.025em`, line-height `1.04` — Page `h1` and major section anchors (`text-wrap: balance`).
+- **`.text-h2`**: `clamp(1.875rem, 4vw, 3.25rem)`, weight `500`, tracking `-0.02em`, line-height `1.1` — Section and Showcase headings.
+- **`.text-title`**: `1.5rem`, weight `500`, tracking `-0.015em`, line-height `1.24` — Step headings, release titles, wallet groups.
+- **`.text-h3`**: `1.25rem`, weight `600`, tracking `-0.01em`, line-height `1.3` — Card headings, highlight titles, privacy headings.
+- **`.text-lead`**: `1.0625rem` → `1.1875rem` (`md`), weight `400`, line-height `1.55` — Section intros (Sora).
+- **Body (`text-base`)**: `1rem`, weight `400`, line-height `1.6` — Editorial prose capped at **`max-w-[35rem]`–`36rem`** (`64–70` characters per line in 16px Sora).
+- **`.text-caption`**: `0.8125rem`, weight `400`, line-height `1.45` — Captions, timestamps, and metadata.
+- **`.tabular`**: `font-variant-numeric: tabular-nums` on every price, satoshi amount, date, version tag, and step numeral.
 
-### Hierarchy
-- **Display** (400, `clamp(3rem, 8vw, 8rem)`, 0.9): Page-level h1 only. Hero headlines and the footer CTA. Always uppercase, always allowed to break across lines at a chosen point rather than wrapping arbitrarily.
-- **Headline** (400, `clamp(3rem, 5vw, 4.5rem)`, 0.9): Section h2. Shipped via `SectionHeading`, which offers a smaller `sm` step (2.25rem → 3rem) for headings inside cards.
-- **Title** (400, `clamp(1.25rem, 3vw, 2.25rem)`, 0.95): Card headings, FAQ questions, release-note highlight terms, numbered step titles. Still Bebas, still uppercase in most contexts.
-- **Masthead** (400, 2.5rem, 1.0): The navigation lockup only — the "N" inside the mint tile and the "Numo" wordmark beside it. Both halves carry a `0.05em` downward nudge, because Bebas sets its caps high in the line box and centering the box alone leaves the glyph above the tile's true middle.
-- **Nav** (400, 1.2rem → 1.5rem at `lg` → 1.7rem at `xl`, 1.0): The desktop navigation rail. Tracking loosens as the type grows (`0.06em` → `0.09em` → `0.11em`) — larger Bebas caps need less letter-spacing to stay legible, and the tighter settings at the small end buy back the horizontal room the rail needs to clear the CTA. The mobile disclosure panel sets the same links at a flat 1.6rem / `0.1em`.
-- **Body** (400, 1.125rem, 1.625): Sora at `text-lg`, tinted ink at 65–75%. Measure is capped in `rem`, not `ch` — `43rem` for release summaries, `40rem` for highlight bodies, `31–38rem` for page intros. The `ch` unit is the advance of `0`, and Sora's zero is wide: a `65ch` cap measured out at **89 real characters**, well past the 65–75 the cap was meant to enforce. Sora's average lowercase advance is `0.564em`, so the honest conversion is `characters × 0.564 × font-size`; at the 1.125rem body that is **`43rem` ≈ 68 characters**.
-- **Label** (600, 0.875rem, `0.22–0.3em` tracking, uppercase): Eyebrows, dates, and status chips. The widest tracking in the system (`0.3em`) belongs to the hero tagline and the releases eyebrow.
-- **Wordmark** (Grandstander, `clamp(6rem, 20vw, 20rem)`, white at 10%): One instance only — "NUMO" resting on the footer baseline as architectural texture.
-- **Annotation** (Solitreo, `clamp(1.5rem, 3vw, 1.875rem)`, rotated -2°): One instance only — the handwritten "+ all bitcoin lightning wallets!" beneath the wallet grid.
+## Layout & Navigation
 
-### Named Rules
+- **Container:** `max-w-[1200px]` centered with `1.5rem` (`px-6`) horizontal gutters across all routes.
+- **Vertical rhythm:** `py-20 md:py-28` (`5rem` → `7rem`) per section, avoiding double-stacked `320px` blank voids.
+- **Navigation (`Navigation.tsx`):** Fixed `72px` (`md: 84px`) masthead bar with the larger `GC Protage` brand lockup (`36px` mint tile + `Numo` display wordmark) and `md` (`44px`) `DownloadMenu`. Transparent over the dark Hero scrim with a subtle `border-white/15` bottom hairline; snaps cleanly to **opaque `bg-paper`** with a `1px` `border-line` once scrolled or off-home (zero translucent blur smudging). Centered desktop rail splits on-page anchors (`Features`, `Wallets`, `FAQ`) from routes (`BTCPay`, `Setup`, `Releases`) with a `1px` vertical divider and marks the active destination with a clean tonal pill (`bg-sunken` with `ring-navy/10` on paper; `bg-white/15` on dark) — no underlines. Over the Hero, the top-right `DownloadMenu` stays `ghost-inverse` (hidden on mobile fold) so the Hero's Mint CTA owns first focus.
+- **Touch targets:** Every interactive control — including short footer links (`X`, `FAQ`, `Nostr`) and desktop nav links — maintains a minimum **`44×44px`** hit area (`min-h-11 min-w-11` or `::after` hit extension).
 
-**The Two Faces Rule.** Bebas carries every heading; Sora carries every sentence. There is no third face for headings, no serif for editorial contrast, and no monospace anywhere. Grandstander and Solitreo are not exceptions to this rule — they are ornaments governed by the rule below.
+## Key Components
 
-**The Once Per Page Rule.** Grandstander and Solitreo each appear exactly once in the entire site, and that scarcity is the reason they land. The Grandstander wordmark belongs to the site footer; the Solitreo aside belongs to the wallets card. A second use of either on the same page destroys both. Adding a third decorative face is out of bounds.
+- **Buttons (`Button.tsx`):** `10px` radius (`rounded-control`), three clear sizes (`sm` `36px + 44px ::after`, `md` `44px`, `lg` `48px`), five semantic variants (`mint`, `primary`, `secondary`, `inverse`, `ghost-inverse`).
+- **Download Chooser (`DownloadMenu.tsx`):** Lightweight non-blocking disclosure popover (standard link traversal + Escape/blur dismiss) revealing **Direct Android APK (GitHub Releases)** and **Zapstore (Auto-updates)** alongside *"Android with NFC"* and a `44px` link to `/setup` (hidden while already on `/setup`).
+- **Showcase Stages (`Showcase.tsx`):** Every feature visual sits in a unified `aspect-[5/4] rounded-[24px] bg-sunken` stage — equalizing visual weight across studio hardware renders, the slashed `2.9% + 30¢ → 0%` `FeeStage`, and Android-styled payout notifications.
+- **BTCPay Live Sync (`BTCPayDemo.tsx`):** Responsive fluid table keeping `Date`, `Order ID`, `Status` (`Processing`→`Paid`), and `Amount` permanently visible at desktop and mobile without horizontal clipping; both mockups marked `inert`; full `prefers-reduced-motion` static fallback plus Pause/Replay controls.
+- **Setup Guide (`setup/page.tsx`, `PayoutSetupGuide.tsx`, `PreflightChecklist.tsx`):** Full `1200px` alternating-ground editorial guide (`Paper` header with 4-section jump links & hairline requirements strip → `Sunken` 4-screen Part one onboarding frieze + paired Signwriter's Ink recovery-phrase and mint custody band → `Paper` stacked 2-up Part two Steps 1–2 + Step 3 A/B/C workbench → `Sunken` Ready/test-sale walkthrough & `localStorage`-persisted preflight checklist → `Paper` optional BTCPay Server & Stripe contactless cards section → `/setup`-aware closing footer). Uses inline tabular numerals paired directly with consistent `text-h3` headings, baseline-locked tonal `PhoneFrame` stages matching `Showcase`, blur placeholders, and full-width screenshot callout outlines.
 
-**The Nothing In Between Rule.** The gap between 1.125rem body and 3rem+ display is intentional. Do not introduce mid-scale headings (1.5–2.5rem Sora) to soften the jump — the steepness is what makes the display type read as signage rather than as a large paragraph. The Title, Nav, and Masthead steps sit inside that band without breaking the rule, because all three are Bebas: they read as small signage, not as large body copy. The rule bars mid-scale *Sora*, and it bars it in the reading column — chrome is not the reading column.
+## Motion & Accessibility
 
-**The Single Weight Rule.** Bebas Neue ships one weight (400). Applying `font-bold` to it produces synthetic bold, which thickens the strokes unevenly and dulls the condensed silhouette. Prefer size and case for emphasis; treat any existing `font-display font-bold` pairing as legacy to be corrected, not as a pattern to copy.
-
-**The Depicted Object Rule.** Type *inside* a drawn device or a mockup of another product's interface is not on this ramp, because it is not this site speaking — it is a picture of something else, drawn at the scale that thing would actually have. A phone rendered 96px wide carries 8px labels; the BTCPay Server dashboard in the integration section carries its own 10–13px chrome. Both are correct. The colour side of this is already stated above — *Grays 50–600 … the interior of device mockups. Never used for prose* — and the same boundary governs type. Two conditions keep it honest: the depicted element must be inert and out of the accessibility tree, so no one is asked to read or operate it, and nothing outside the drawing may borrow those sizes. In the reading column the ramp is absolute.
-
-## Layout
-
-The system is a stack of full-bleed sections, each choosing its own ground (white, cream, butcher paper, or ink) and centering a fixed-width column inside a `1.5rem` gutter. Container widths are chosen by content type rather than by habit: `max-w-7xl` (80rem) for the navigation and the widest demo sections, `max-w-6xl` (72rem) for feature grids and the setup guide, `max-w-5xl` (64rem) for the hero and the releases index, `max-w-4xl` (56rem) for the FAQ. Narrower content — intros, summaries — is capped in `ch` rather than `rem` so the measure stays honest across sizes.
-
-Vertical rhythm is `5rem` (`py-20`) per section, opening to `7rem` (`py-28`) at `md` on the editorial pages. The bento feature grid is a two-column layout at `md` with a tight `1rem` gap, letting cards touch closely enough to read as one composed slab rather than as separate tiles; some cards span both columns to break the rhythm.
-
-Two responsive hinges matter. At **768px (`md`)** the navigation collapses to a hamburger with a grid-rows disclosure panel, the bento grid goes single-column, and display sizes step down. At **1024px (`lg`)** the setup guide switches from a stacked mobile list — where each step carries its own screenshot — to a two-column layout with a sticky screenshot rail on the right and scroll-driven step activation on the left. That is the system's most distinctive layout behavior and its mobile fallback is a genuine alternate composition, not a squeezed version of the desktop one. The navigation hinges on the same two widths for a different reason: the wordmark appears at `lg` and the rail steps up a type size again at `xl`, both governed by how much room is left between the masthead and the CTA.
-
-Editorial pages use an asymmetric rail: the releases index sets a `160px` version column beside a fluid content column, separated by hairline `ink/10` rules with `3.5rem` of vertical padding per entry.
-
-**The Own Ground Rule.** Every section declares its own background. A section that inherits the previous section's ground has not been designed yet — the alternation between white, cream, butcher paper, and ink is the page's primary structural signal, and it does more work here than dividers or spacing do.
-
-## Elevation & Depth
-
-**Flat page, lifted objects.** The page architecture uses no shadows at all. Cards are separated from their ground by tonal contrast (cream on white, white on cream) and by radius, never by elevation. A `BentoCard` has no border and no shadow — just a fill, a deep corner, and a 3% noise texture that gives the surface a faint tooth.
-
-Shadow is reserved for two things: elements that depict a **physical object**, and controls that can be **pressed**. A phone mockup, a payment-received notification, a screenshot frame — these cast real, generous shadows because they are pretending to exist in space. A large CTA button carries `shadow-lg` because it invites a finger. Everything else stays on the page.
-
-### Shadow Vocabulary
-- **Surface hairline** (`box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)`): The navigation logo tile. The lightest possible acknowledgement that an object is sitting on the bar. The scrolled bar itself carries no shadow — it separates from the page with an `ink/10` bottom hairline instead.
-- **Pressable** (`box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)`): Large CTA buttons and the payment-received toast.
-- **Object** (`box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25)`): Device mockups inside illustrations.
-- **Ink-tinted object** (`box-shadow: 0 28px 60px rgba(10, 37, 64, .2)`): Screenshot frames on light grounds. The shadow is tinted with Signwriter's Ink rather than black, which keeps it warm against cream.
-- **Deep object** (`box-shadow: 0 32px 80px rgba(0, 0, 0, .35)`): The setup guide's screenshot carousel, which sits on ink and needs a heavier drop to separate.
-
-**The Earned Shadow Rule.** If an element is not depicting a physical object and cannot be pressed, it does not get a shadow. Adding elevation to a card, a section, or a text block is the fastest way to break this system's daylight character.
-
-**The Noise Floor Rule.** Depth on flat surfaces comes from texture, not lift. The `noise-overlay` treatment — an SVG fractal-noise field at 3% opacity — is the sanctioned way to keep a large cream or ink field from reading as dead flat.
-
-## Shapes
-
-Corners are generous and the scale is unusually wide, which is what keeps a system built on hard condensed capitals from feeling severe. Five steps: `0.5rem` for small utility tiles (the logo, the menu button), `1rem` for nested containers inside illustrations, **`2rem` for the default card**, **`3rem` for feature containers** that should read as a soft-cornered slab (the FAQ, the wallets panel), and full pill for anything interactive or label-like.
-
-Pills dominate — every button, every wallet chip, every step marker, every status badge, and the skip link are fully rounded. Rectangles with small radii appear almost exclusively inside device illustrations, where they are imitating hardware rather than expressing the brand.
-
-Borders are used sparingly and are almost always hairline `ink/10` or `ink/15` dividers doing editorial work — separating release entries, setup steps, FAQ rows, and mobile nav items. Cards carry no border. The one structural use of a heavy border is decorative: a `48px` mint ring at 10% opacity, bleeding off the corner of the setup hero.
-
-**The Pill Or Slab Rule.** Interactive things are pills; content containers are slabs at 2rem or 3rem. There is no middle radius for these two categories — a `0.75rem` button or a `0.5rem` card is out of system.
-
-## Components
-
-### Buttons
-- **Shape:** Full pill (`9999px`), no border, in two sizes.
-- **Primary (dark):** Signwriter's Ink fill, white text, medium weight, `1rem 2rem` padding at the large size, with `shadow-lg`. Large buttons go full-width below `sm` and auto-width above, with a `200px` minimum.
-- **Accent:** Fresh Paint Mint fill with ink text. Used in inverse contexts — the site footer's download CTA — where mint is the only thing that will carry.
-- **Light:** White at 90% with ink text; the secondary of a pair over imagery, as in the hero's Zapstore button.
-- **Compact:** `0.625rem 1.25rem` padding, `0.875rem` text, no shadow. The navigation's persistent download button. It is the one button in the system that swaps variant with its surroundings — mint `accent` while the bar is transparent over the hero, ink `dark` once the bar becomes a cream board — so the CTA stays the loudest thing on the bar in both states.
-- **Hover / Active:** Both large variants invert to a **white fill with ink text** — this system's signature button hover, in which the button appears to lift off the ground rather than darken. Scale `1.02` on hover, `0.98` on active, `200ms`. The compact dark button is the exception: it deepens to Ink Light instead of inverting.
-
-### Cards / Containers
-- **Corner Style:** `2rem` default (`BentoCard` radius `md`), `3rem` for feature panels (`radius="lg"`).
-- **Background:** Awning Cream by default; Butcher Paper, Mint Pale, Mint Soft, and `gray-100` are the alternate fills.
-- **Shadow Strategy:** None, ever. See Elevation.
-- **Border:** None.
-- **Internal Padding:** `1.5rem` / `2rem` / `2rem→3rem` at `md` for the small, medium, and large sizes.
-- **Texture:** Every card carries the `noise-overlay` pseudo-element at 3% opacity.
-
-### Chips
-- **Wallet pill:** White fill on cream, full pill, `0.625rem 1rem` padding, a 40px circular logo, and the wallet name in medium-weight ink. Tap-to-pay wallets carry a small ink-filled NFC badge pinned to the top-right corner, overlapping the pill edge — the badge is how the two wallet tiers are told apart at a glance.
-- **Status chip:** Ink at 90% with backdrop blur, white `0.75rem` semibold text, full pill. Used as the "Step N" marker floating over screenshots.
-
-### Navigation
-Fixed, full-width, and built as **two states of one bar**, crossfading over `300ms` on the smooth curve.
-
-**Over the hero** the bar is transparent, sitting on hero video behind a four-stop black scrim that fades `0.5 → 0` across `190%` of the bar's own height. The long fade is the point: a shorter gradient leaves a visible band edge over moving video. Lettering is white, and the CTA is mint.
-
-**Past 20px of scroll** the bar becomes an opaque Awning Cream board with the 3% noise overlay and an `ink/10` bottom hairline — a painted board, not frosted glass. There is no backdrop blur and no shadow. Lettering turns ink, and the CTA turns dark. Vertical padding tightens from `1.25rem` to `0.75rem`, so the bar physically settles as it lands.
-
-**The masthead** is a `2.75rem` mint tile at `rounded.sm` holding an ink "N", followed by the "Numo" wordmark — both at the Masthead step. The wordmark is held in a box matching the tile's so the two sit on a shared optical centre, and it drops below `lg` where the rail needs the room.
-
-**The rail** is split into two groups by a hairline divider: on-page anchors (Features, Wallets, Integration, FAQ) first, then real routes (Setup, Releases). Anchors stay plain `<a>` so they scroll in place; routes get client-side navigation. The split is doing real work — it tells a merchant which items move the page and which leave it.
-
-**The active indicator** is a `2px` coat of paint that wipes in from the left on hover and stays put on the current item, mint over the scrim and ink on the board. Mint is deliberately *not* used on the cream board, where it reads at about 1.2:1. A scroll spy drives the anchor state from a line `120px` down the viewport, taking the last section whose top has crossed it — so the untitled stretches between sections hold the previous item rather than blanking the indicator out.
-
-**Below `md`** the rail collapses into a panel that opens by animating `grid-template-rows` from `0fr` to `1fr` — no max-height guessing — while the hamburger's three bars rotate into an X. Panel links step up to the Nav Panel size, divided by `ink/10` hairlines with a heavier `ink/25` rule marking the anchors/routes seam. The collapsed panel carries `inert`, because `grid-rows-[0fr]` hides links visually but leaves them focusable.
-
-### FAQ Accordion
-Rows divided by `gray-200` hairlines inside a `3rem` cream panel. The question is Bebas title-scale; the control is a `40px` circle outlined in `ink/30` containing a `+` glyph, which on hover fills solid ink with a white glyph, and on open rotates `45°` into an X. The answer discloses via the same `grid-template-rows` technique, `300ms` smooth, with opacity following.
-
-### Numbered Steps
-The setup guide's spine. A `2.5rem` mint circle holding a Bebas numeral marks the active step; inactive steps show a hollow white-outlined circle at 35% opacity. On desktop the list scrolls past a sticky screenshot rail, with an IntersectionObserver promoting whichever step is centered; each active step is confirmed by a mint "Shown on the right" label. On the overview page the same idea is set differently — large `01`–`04` numerals in ink at 25% opacity, each step carrying its own screenshot.
-
-### Screenshot Frame (signature)
-App screenshots are presented in a black bezel: `0.5rem` of black padding, a `2rem`–`2.25rem` outer radius with the image clipped to a matching inner radius, and a `1px` ring. Instructional screenshots carry an animated hotspot — a `48px` red ring with a white halo and a pinging outer ring — positioned by percentage coordinates over the exact control being described. A caption in tinted ink or white sits beneath at `0.75rem`.
-
-### Running Illustrations (signature)
-The system's defining asset class: pure CSS/SVG scenes that loop to demonstrate a product mechanic — a `2.9%` and a `30¢` sliced in half by a red line, banknotes flying across a gap into a terminal that flashes mint and stamps a checkmark, NFC waves pulsing in three staggered rings, payment notifications stacking into a list. They are built from long multi-keyframe sequences (8.5s–12s), are gated on viewport entry, and are content rather than decoration.
-
-## Do's and Don'ts
-
-### Do:
-- **Do** give every section its own ground — white, Awning Cream, Butcher Paper, or Signwriter's Ink. Alternation is the page's structure.
-- **Do** tint text with ink opacity (`/75`, `/70`, `/65`) rather than reaching for a gray — and stop at `/65`, which is the AA contrast floor.
-- **Do** spend the mint on action and confirmation only, per **The One Coat Rule**.
-- **Do** invert large buttons to a white fill on hover; it is the system's signature interaction.
-- **Do** cap editorial measure in `ch` (52–65ch) and use `[text-wrap:balance]` on headlines, `[text-wrap:pretty]` on body.
-- **Do** use `cubic-bezier(0.32, 0.72, 0, 1)` as the default easing for disclosure and state change, at `200ms` for micro-transitions and `300ms` for panels.
-- **Do** disclose panels by animating `grid-template-rows` between `0fr` and `1fr`, as the nav and FAQ both do.
-- **Do** build a mechanic as a running illustration before writing a paragraph that asserts it.
-- **Do** keep `prefers-reduced-motion` honored — the global reduce block in `globals.css` is load-bearing given how much of this system moves.
-
-### Don't:
-- **Don't** put a shadow on a card, section, or text block. Shadow means "physical object" or "pressable" — nothing else.
-- **Don't** introduce a third typeface, or use Grandstander or Solitreo more than once per page.
-- **Don't** apply `font-bold` to Bebas Neue; it ships a single weight and synthesizes an uneven bold.
-- **Don't** fill the gap between 1.125rem body and 3rem display with mid-scale headings.
-- **Don't** use radii between `1rem` and `2rem` on cards, or anything but a full pill on buttons and chips.
-- **Don't** revive the twelve unused pastel tokens (`--blue`, `--yellow`, `--red`, `--orange`, `--purple`, `--teal` and their `-soft` pairs) in `globals.css`. They were scoped to wallet pills that shipped white instead; treat them as dead and delete them rather than finding a use.
-- **Don't** use the overshoot easing `cubic-bezier(0.34, 1.56, 0.64, 1)` outside a payment-success confirmation. Bounce is the sound of a sale landing, and it means nothing if it is everywhere.
-- **Don't** use gray for prose or mint for large fills. Gray is structure; mint is a coat of paint.
+- **Curves:** Confident exponential deceleration (`--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1)`) and smooth panel disclosure (`--ease-smooth: cubic-bezier(0.32, 0.72, 0, 1)`). No elastic bounce anywhere.
+- **Reduced motion:** Global `@media (prefers-reduced-motion: reduce)` CSS block PLUS `usePrefersReducedMotion()` in JS-driven components (`Hero.tsx`, `BTCPayDemo.tsx`). `FeeStage` freezes on its clearly slashed `2.9% + 30¢` → `0%` final state; `BTCPayDemo` freezes on the settled `Payment Received / Paid` state.
+- **Focus & Browser Surfaces:** Two-tone `:focus-visible` ring (`2px` mint + `4px` navy shadow), themed `::selection` (mint on navy), `caret-color: var(--navy)`, and skip-to-content link targeting `<main id="main-content" tabIndex={-1}>`.

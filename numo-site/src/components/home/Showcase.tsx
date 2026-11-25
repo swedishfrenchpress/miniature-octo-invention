@@ -1,14 +1,25 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 
-/** The product, told as five large rows: one claim, one big picture, alternating
- *  sides. No frames, grids or colour panels — the pictures sit straight on the
- *  page and are the structure.
- *
- *  Three of the pictures are studio renders of the real hardware (a SUNMI V3 till,
- *  an iPhone) whose screens are captures of the real apps. They are clean
- *  cut-outs — transparent ground, no cast shadow — so they take the page colour.
- *  Sources: the numo-promo Blender kit; see DESIGN.md. */
+/** Consistent warm sunken stage so hardware renders, the slashed fee graphic,
+ *  and payout notifications share the same architectural frame and visual gravity. */
+function Stage({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden rounded-[24px] bg-sunken p-6 sm:p-8 lg:p-10 ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** Clean cut-out studio renders hosted inside the shared sunken stage. */
 function Render({
   src,
   alt,
@@ -16,31 +27,28 @@ function Render({
 }: {
   src: string;
   alt: string;
-  /** Per-image framing, e.g. "scale-[1.4]". The renders are shot wide. */
   scale?: string;
 }) {
   return (
-    <div className="relative aspect-[5/4]">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(min-width: 768px) 640px, 100vw"
-        className={`object-contain ${scale}`}
-      />
-    </div>
+    <Stage className="p-4 sm:p-6">
+      <div className="relative h-full w-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 1024px) 680px, (min-width: 768px) 52vw, 100vw"
+          className={`object-contain ${scale}`}
+        />
+      </div>
+    </Stage>
   );
 }
 
-/** Where the money goes: the merchant's own accounts saying it arrived. Two
- *  notifications in the iOS style — bitcoin landing in a Lightning wallet, a
- *  card payment landing in Stripe. An illustration with sample amounts: the
- *  Stripe line follows the wording of Stripe's own payment notification, the
- *  wallet line stands in for the wallet's. 47,500 sats is the app's default
- *  payout, 95% of a 50,000 sat threshold. */
 function AppIcon({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <span className={`flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[12px] ${className}`}>
+    <span
+      className={`flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[12px] ${className}`}
+    >
       {children}
     </span>
   );
@@ -48,13 +56,29 @@ function AppIcon({ children, className = "" }: { children: ReactNode; className?
 
 const NOTIFICATIONS = [
   {
+    app: "Strike",
+    when: "Just now",
+    text: "You received 47,500 sats",
+    icon: (
+      <AppIcon className="bg-black">
+        <Image
+          src="/wallets/strike.png"
+          alt=""
+          width={44}
+          height={44}
+          className="h-full w-full object-cover"
+        />
+      </AppIcon>
+    ),
+  },
+  {
     app: "Stripe",
-    when: "now",
+    when: "2m ago",
     text: "Payment of US$38.00 from Numo",
     icon: (
       <AppIcon className="bg-[#635BFF]">
         <span
-          className="block h-6 w-6 bg-white"
+          className="block h-5 w-5 bg-white"
           style={{
             mask: "url(/logos/stripe-mark.svg) center / contain no-repeat",
             WebkitMask: "url(/logos/stripe-mark.svg) center / contain no-repeat",
@@ -63,95 +87,76 @@ const NOTIFICATIONS = [
       </AppIcon>
     ),
   },
-  {
-    app: "Strike",
-    when: "2m ago",
-    text: "You received 47,500 sats",
-    icon: (
-      <AppIcon>
-        <Image src="/wallets/strike.png" alt="" width={48} height={48} className="h-full w-full object-cover" />
-      </AppIcon>
-    ),
-  },
 ];
 
+/** Android/neutral settlement notifications showing funds arriving directly in
+ *  the merchant's own Lightning wallet and Stripe account. */
 function PayoutNotifications() {
   return (
-    <div className="mx-auto w-full max-w-[460px]">
-      <ul
-        aria-label="Example notifications as payments arrive in Stripe and in a Lightning wallet"
-        className="flex flex-col gap-3"
-        // Depicted iOS UI, so it is set in the system face rather than Sora.
-        style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif" }}
-      >
-        {NOTIFICATIONS.map((n) => (
-          <li
-            key={n.app}
-            className="flex items-center gap-4 rounded-[26px] border border-line bg-white px-[1.125rem] py-4"
-          >
-            {n.icon}
-            <div className="min-w-0 flex-1">
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-[1.0625rem] font-semibold leading-tight text-black">{n.app}</span>
-                <span className="text-[0.875rem] leading-tight text-black/45">{n.when}</span>
-              </div>
-              <p className="mt-0.5 text-[1.0625rem] leading-snug text-black/80">{n.text}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <p className="text-caption mt-4 text-navy/70">Illustration. Sample amounts.</p>
-    </div>
-  );
-}
-
-/** A platform fee, cut in half, at poster scale. Timing lives in globals.css
- *  (`fee-*`, 12s loop). The one picture that is type rather than hardware. */
-function FeeStage() {
-  const figure =
-    "tabular text-[clamp(4.5rem,11vw,9rem)] font-medium leading-none tracking-[-0.05em] text-navy";
-  const fees = [
-    { text: "2.9%", n: 1, place: "left-[6%] top-[14%]", tilt: "rotate(-4deg)" },
-    { text: "30¢", n: 2, place: "bottom-[14%] right-[6%]", tilt: "rotate(3deg)" },
-  ];
-  return (
-    <div className="relative aspect-[5/4] overflow-hidden" aria-hidden="true">
-      {fees.map((fee) => (
-        <div
-          key={fee.text}
-          className={`absolute ${fee.place}`}
-          style={{ animation: `fee-${fee.n}-container 12s ease-in-out infinite`, transform: fee.tilt }}
+    <Stage>
+      <div className="w-full max-w-[420px]">
+        <ul
+          aria-label="Example notifications as payments land in a Lightning wallet and in Stripe"
+          className="flex flex-col gap-3.5"
         >
-          <div className="relative inline-block">
-            <span
-              className={`${figure} inline-block`}
-              style={{ clipPath: "inset(0 0 50% 0)", animation: `fee-${fee.n}-slice-top 12s ease-in-out infinite` }}
+          {NOTIFICATIONS.map((n) => (
+            <li
+              key={n.app}
+              className="flex items-center gap-4 rounded-[18px] bg-surface px-4 py-4 shadow-[0_12px_28px_-14px_rgb(10_37_64/0.16)]"
             >
-              {fee.text}
-            </span>
-            <span
-              className={`${figure} absolute left-0 top-0`}
-              style={{ clipPath: "inset(50% 0 0 0)", animation: `fee-${fee.n}-slice-bottom 12s ease-in-out infinite` }}
-            >
-              {fee.text}
-            </span>
-          </div>
-          <div
-            className="absolute -inset-x-3 top-1/2 h-[3px] origin-left bg-navy"
-            style={{ animation: `slice-line-${fee.n} 12s ease-in-out infinite` }}
-          />
-        </div>
-      ))}
-    </div>
+              {n.icon}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[0.9375rem] font-semibold leading-tight text-navy">
+                    {n.app}
+                  </span>
+                  <span className="text-caption leading-tight text-navy/65">{n.when}</span>
+                </div>
+                <p className="mt-1 text-[0.9375rem] leading-snug text-navy/80">{n.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Stage>
   );
 }
 
-/** What, then how. Plain rows under the copy, divided by hairlines. */
+/** Slashed card-processor fee resolving into Numo's 0% Bitcoin platform fee.
+ *  Even in a single still frame or under reduced motion, 2.9% + 30¢ is visibly
+ *  cut through so it never reads as an active fee. */
+function FeeStage() {
+  return (
+    <Stage>
+      <div className="flex w-full max-w-[420px] flex-col items-center gap-6 text-center" aria-hidden="true">
+        {/* Slashed legacy card fee */}
+        <div className="relative inline-flex items-baseline gap-2.5 px-3 py-1">
+          <span className="fee-old-value tabular text-[clamp(2.25rem,4.6vw,3.75rem)] font-medium leading-none tracking-[-0.03em] text-navy">
+            2.9% + 30¢
+          </span>
+          <span className="fee-strike-line pointer-events-none absolute inset-x-0 top-1/2 h-[4px] -translate-y-1/2 -rotate-[3deg] rounded-full bg-slash" />
+        </div>
+
+        {/* Fresh Paint Mint payoff on Signwriter's Ink */}
+        <div className="fee-zero-badge flex w-full items-center justify-between gap-4 rounded-[18px] bg-navy px-6 py-5 text-left text-white shadow-[var(--shadow-device)]">
+          <div className="text-base font-medium text-white/90">Numo fee</div>
+          <div className="tabular text-[clamp(2.5rem,4.2vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] text-mint">
+            0%
+          </div>
+        </div>
+      </div>
+    </Stage>
+  );
+}
+
 function SpecList({ items }: { items: [string, string][] }) {
   return (
-    <dl className="mt-8 border-t border-line">
+    <dl className="mt-7 border-t border-line">
       {items.map(([term, detail]) => (
-        <div key={term} className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 sm:grid-cols-[11rem_1fr]">
+        <div
+          key={term}
+          className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 sm:grid-cols-[11rem_1fr]"
+        >
           <dt className="font-semibold text-navy">{term}</dt>
           <dd className="text-navy/70">{detail}</dd>
         </div>
@@ -169,11 +174,14 @@ function Row({
   title: string;
   children: ReactNode;
   visual: ReactNode;
-  /** Put the picture on the right. */
   flip?: boolean;
 }) {
   return (
-    <div className={`grid items-center gap-8 md:gap-12 lg:gap-16 ${flip ? "md:grid-cols-[1fr_1.2fr]" : "md:grid-cols-[1.2fr_1fr]"}`}>
+    <div
+      className={`grid items-center gap-8 md:gap-12 lg:gap-16 ${
+        flip ? "md:grid-cols-[1fr_1.15fr]" : "md:grid-cols-[1.15fr_1fr]"
+      }`}
+    >
       <div className={flip ? "md:order-2" : ""}>{visual}</div>
       <div className="max-w-[32rem]">
         <h3 className="text-h2 text-navy">{title}</h3>
@@ -183,31 +191,33 @@ function Row({
   );
 }
 
-const body = "text-lead mt-5 text-navy/70";
+const body = "text-lead mt-4 text-navy/70";
 
 export function Showcase() {
   return (
-    <section id="features" className="section-anchor overflow-hidden py-24 md:py-40">
+    <section id="features" className="section-anchor bg-paper py-20 md:py-28">
       <div className="mx-auto max-w-[1200px] px-6">
         <h2 className="text-display max-w-[17ch] text-navy">
-          A full point of sale on the phone you already have.
+          A full point of sale on any Android.
         </h2>
+        <p className="text-lead mt-4 max-w-[34rem] text-navy/70">
+          Use your own phone or a handheld Android terminal.
+        </p>
 
-        <div className="mt-16 space-y-20 md:mt-24 md:space-y-32">
+        <div className="mt-14 space-y-16 md:mt-20 md:space-y-24">
           <Row
             title="Tap to pay"
             visual={
               <Render
                 src="/ui/numo-tap.png"
-                alt="An iPhone showing Cashu.me's Ready to Scan sheet, held over the head of a handheld till running Numo, whose screen shows an amount in sats, a QR code and the words Scan or Tap to Pay"
-                scale="scale-[1.25]"
+                alt="A customer phone showing Cashu.me's Ready to Scan sheet held over a handheld till running Numo, whose screen displays an amount in sats, a QR code, and Scan or Tap to Pay"
+                scale="scale-[1.12]"
               />
             }
           >
             <p className={body}>
-              Your customer holds their phone to yours and the sale is done. Numo takes
-              Cashu ecash, bearer tokens that move device to device, which is what makes it
-              a real tap. Anyone else scans the same screen with a Lightning wallet.
+              Customers tap their phone to yours with Cashu ecash. No ecash wallet? They
+              scan the same screen with any Lightning wallet.
             </p>
           </Row>
 
@@ -217,44 +227,36 @@ export function Showcase() {
             visual={
               <Render
                 src="/ui/numo-card-tap-2.png"
-                alt="A Chase Sapphire Reserve card held over the reader on a handheld till, whose screen shows Stripe's tap to pay prompt and a total of $38.00"
-                scale="scale-[1.12]"
+                alt="A contactless credit card held over the reader on a handheld till running Numo, showing Stripe's tap-to-pay prompt for $38.00"
+                scale="scale-[1.06]"
               />
             }
           >
             <p className={body}>
-              Have a Stripe account? Connect it and customers tap a card, phone or watch on
-              the same device. No card reader needed. Card payments go to your Stripe
-              account and stay separate from your bitcoin in Numo.
+              Connect your Stripe account to take contactless cards, Apple Pay, and Google
+              Pay on the same device. Card sales settle to Stripe at Stripe&rsquo;s
+              standard rates.
             </p>
             <SpecList
               items={[
-                ["Ecash", "Tap to pay from any compatible Cashu wallet"],
-                ["Lightning", "Scan to pay from any Bitcoin Lightning wallet"],
-                ["Cards and Apple Pay", "Tap to pay, through your own Stripe account"],
+                ["Ecash", "Tap with a Cashu wallet"],
+                ["Lightning", "Scan with any Lightning wallet"],
+                ["Cards", "Tap via your Stripe account"],
               ]}
             />
           </Row>
 
           <Row title="Zero platform fees" visual={<FeeStage />}>
             <p className={body}>
-              Numo takes no cut of your Bitcoin sales. No 2.9% + 30¢. Just tiny Bitcoin
-              network fees, and the money is yours in seconds, not days. No chargebacks,
-              no holds, no waiting for funds to clear.
+              Numo takes 0% on Bitcoin sales. Pay only tiny network fees, usually under a
+              cent. Instant settlement, no chargebacks.
             </p>
           </Row>
 
-          <Row
-            flip
-            title="Automatic payouts"
-            visual={
-              <PayoutNotifications />
-            }
-          >
+          <Row flip title="Automatic payouts" visual={<PayoutNotifications />}>
             <p className={body}>
-              Set a threshold amount. Once your ecash balance reaches it, funds
-automatically transfer to your own Lightning address, in a wallet like
-              Strike or River. Card payments land in your Stripe account.
+              Set a threshold. Once reached, Bitcoin sweeps automatically to your Lightning
+              address, like Strike or Blink. Card sales land in Stripe.
             </p>
           </Row>
 
@@ -263,21 +265,20 @@ automatically transfer to your own Lightning address, in a wallet like
             visual={
               <Render
                 src="/ui/numo-sales.png"
-                alt="A handheld till running Numo's Sales screen: $1,470.00 over the last 7 days, a bar chart by day, and a list of itemised sales"
-                scale="scale-[1.1]"
+                alt="A handheld till running Numo's Sales screen: $1,470.00 over the last 7 days, a daily bar chart, and a list of itemised sales"
+                scale="scale-[1.04]"
               />
             }
           >
             <p className={body}>
-              Build a catalog with categories and sizes, then tap once to charge a preset
-              price. Numo keeps track of what you sold and what you have left.
+              Set up your catalog once, then tap to ring up items in seconds.
             </p>
             <SpecList
               items={[
-                ["Inventory", "Items, sizes and stock in one catalog"],
-                ["Taxes", "Applied at the till, item by item"],
-                ["Sales reports", "What sold, and when"],
-                ["CSV exports", "Ready for your accounting"],
+                ["Inventory", "Categories, sizes, and stock counts"],
+                ["Taxes", "Applied per item at checkout"],
+                ["Sales reports", "Daily totals and tips"],
+                ["CSV exports", "Ready for accounting"],
               ]}
             />
           </Row>
