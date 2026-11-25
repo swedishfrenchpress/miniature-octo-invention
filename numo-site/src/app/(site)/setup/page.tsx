@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import type { ReactNode } from "react";
-import { SetupSteps, type SetupStep } from "@/components/SetupSteps";
+import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 
 export const metadata: Metadata = {
@@ -22,26 +23,16 @@ export const metadata: Metadata = {
   },
 };
 
-/* The whole page is set in five type styles (display, lead, h2, h3, body) and
-   three gaps (mt-2 inside a unit, mt-6 around it, mt-12 between blocks, which
-   opens to mt-16 from md up). Body copy has exactly one emphasis: the label
-   the reader has to find on screen. */
+/* The guide is set in four type styles (display, h2, title, lead) and shows one
+   screen at a time. Step copy carries no bold or emphasis: on-screen labels are
+   written as the app capitalizes them, and that is enough to pick them out. */
 const section = "section-anchor section-y border-t border-line";
-const container = "shell";
-const prose = "text-navy/70 [text-wrap:pretty]";
-
-function Label({ children }: { children: ReactNode }) {
-  return <strong className="font-medium text-navy">{children}</strong>;
-}
+const linkClass =
+  "underline decoration-navy/40 underline-offset-[3px] transition-colors duration-150 hover:text-navy hover:decoration-navy";
 
 function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy"
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
       {children}
       <span className="sr-only"> (opens in a new tab)</span>
     </a>
@@ -53,10 +44,10 @@ const tillSteps: SetupStep[] = [
     title: "Install the app",
     body: (
       <>
-        Install from <ExternalLink href={ZAPSTORE_URL}>Zapstore</ExternalLink> for automatic
-        updates, or download the APK from the latest{" "}
-        <ExternalLink href={DOWNLOAD_APK_URL}>GitHub release</ExternalLink>. Approve Android&rsquo;s
-        install prompt, then tap <Label>Get Started</Label>.
+        Get it from <ExternalLink href={ZAPSTORE_URL}>Zapstore</ExternalLink>, which keeps it
+        updated, or download the APK from{" "}
+        <ExternalLink href={DOWNLOAD_APK_URL}>GitHub</ExternalLink>. Approve Android&rsquo;s install
+        prompt, then tap Get Started.
       </>
     ),
     image: "/setup/01-welcome.png",
@@ -64,12 +55,7 @@ const tillSteps: SetupStep[] = [
   },
   {
     title: "Create your wallet",
-    body: (
-      <>
-        Tap <Label>Create New Wallet</Label>. Choose <Label>Restore From Backup</Label> only if you
-        already have a 12-word phrase.
-      </>
-    ),
+    body: <>Tap Create New Wallet. Already have a 12-word phrase? Choose Restore From Backup.</>,
     image: "/setup/02-wallet-choice.png",
     alt: "Numo Set Up Your Wallet screen",
   },
@@ -77,8 +63,8 @@ const tillSteps: SetupStep[] = [
     title: "Pick a mint",
     body: (
       <>
-        Keep the default or choose another, then tap <Label>Continue</Label>. Your mint, not Numo,
-        holds the bitcoin backing incoming ecash. Switch anytime in Settings under Mints.
+        Keep the default or choose another, then tap Continue. Your mint, not Numo, holds the
+        bitcoin backing incoming ecash. You can switch anytime in Settings.
       </>
     ),
     image: "/setup/03-select-mint.png",
@@ -86,25 +72,28 @@ const tillSteps: SetupStep[] = [
   },
   {
     title: "Enter the till",
-    body: (
-      <>
-        Wait for <Label>Wallet Created</Label>, then tap <Label>Continue</Label>. The green keypad
-        is your till.
-      </>
-    ),
+    body: <>Wait for Wallet Created, then tap Continue. The green keypad is your till.</>,
     image: "/setup/04-ready.png",
     alt: "Numo Wallet Created confirmation screen",
+  },
+  {
+    title: "Back up your recovery phrase",
+    body: (
+      <>
+        Tap the gear icon, open Security &amp; Privacy, and write your 12 words down offline. It is
+        the only way to restore ecash from your mints if you lose this phone.
+      </>
+    ),
+    image: "/setup/05-settings.png",
+    alt: "Numo Settings screen with the Security & Privacy row outlined.",
+    outline: { left: 4, top: 90, width: 92, height: 5.2 },
   },
 ];
 
 const payoutSteps: SetupStep[] = [
   {
     title: "Open Withdrawals",
-    body: (
-      <>
-        From the till, tap the gear icon, then <Label>Withdrawals</Label> under Payments.
-      </>
-    ),
+    body: <>From the till, tap the gear icon, then Withdrawals under Payments.</>,
     image: "/setup/05-settings.png",
     alt: "Numo Settings screen with the Withdrawals row outlined under the Payments heading.",
     outline: { left: 4, top: 70.4, width: 92, height: 5.2 },
@@ -113,8 +102,8 @@ const payoutSteps: SetupStep[] = [
     title: "Turn on Auto-Withdraw",
     body: (
       <>
-        Switch <Label>Auto-Withdraw</Label> on. Status flips from Inactive to Active and the payout
-        fields appear below.
+        Switch Auto-Withdraw on. Status flips from Inactive to Active and the payout fields appear
+        below.
       </>
     ),
     image: "/setup/06-auto-withdraw.png",
@@ -125,9 +114,8 @@ const payoutSteps: SetupStep[] = [
     title: "Set your payout details",
     body: (
       <>
-        Enter your Lightning address and wait for <Label>Valid Lightning address</Label>. The
-        defaults send 95% once your balance passes 50,000 sats, and the remainder covers network
-        fees. Changes save as you type.
+        Enter your Lightning address and wait for Valid Lightning address. By default Numo sends 95%
+        once your balance passes 50,000 sats, and the remainder covers network fees.
       </>
     ),
     image: "/setup/07-payout-details.png",
@@ -140,12 +128,11 @@ export default function SetupPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className={`${container} header-y`}>
+        <div className="shell header-y">
           <h1 className="text-display max-w-[8em] text-navy">From download to first sale.</h1>
-          <p className="text-lead mt-5 md:mt-6 max-w-[38rem] text-navy/70">
+          <p className="text-lead mt-5 max-w-[38rem] text-navy/70 md:mt-6">
             Five minutes on an Android phone with NFC and internet. For payouts, bring a Lightning
-            address from Strike, Alby Go, Blink, Wallet of Satoshi, or any wallet that provides
-            one.
+            address from Strike, Alby Go, Blink, Wallet of Satoshi, or any wallet that provides one.
           </p>
         </div>
       </header>
@@ -155,57 +142,44 @@ export default function SetupPage() {
         aria-labelledby="onboarding-heading"
         className={`${section} bg-sunken`}
       >
-        <div className={container}>
-          <h2 id="onboarding-heading" className="text-h2 text-navy">
-            Open your till.
-          </h2>
-          <SetupSteps steps={tillSteps} />
-          <div className="mt-12 max-w-[35rem] md:mt-16">
-            <h3 className="text-h3 text-navy">Back up your recovery phrase</h3>
-            <p className={`mt-2 ${prose}`}>
-              From the till, tap the gear icon, open <Label>Security &amp; Privacy</Label>, and
-              write your 12 words down offline. It is the only way to restore ecash from your mints
-              if you lose this phone.
-            </p>
-          </div>
-        </div>
+        <SetupSequence heading="Open your till." headingId="onboarding-heading" steps={tillSteps} />
       </section>
 
       <section id="lightning" aria-labelledby="lightning-heading" className={`${section} bg-paper`}>
-        <div className={container}>
-          <h2 id="lightning-heading" className="text-h2 text-navy">
-            Automatic payouts.
-          </h2>
-          <p className={`mt-6 max-w-[35rem] ${prose}`}>
-            Enter your Lightning address, which reads like you@wallet.com, and sales sweep to your
-            own wallet automatically.
-          </p>
-          <SetupSteps steps={payoutSteps} />
-        </div>
+        <SetupSequence
+          heading="Automatic payouts."
+          headingId="lightning-heading"
+          intro="Enter your Lightning address, which reads like you@wallet.com, and sales sweep to your own wallet automatically."
+          steps={payoutSteps}
+        />
       </section>
 
       {/* `#btcpay` is linked from /btcpay; `#cards` is kept as a stable anchor. */}
       <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-sunken`}>
-        <div className={`${container} grid gap-12 md:gap-16 lg:grid-cols-2 lg:gap-6`}>
+        <div className="shell">
           <h2 id="extras-heading" className="text-h2 text-navy">
             Optional extras.
           </h2>
-          <div className="border-t border-line">
-            <div className="border-b border-line py-6">
-              <h3 className="text-h3 text-navy">Connect BTCPay Server</h3>
-              <p className={`mt-2 ${prose}`}>
-                Open <Label>Settings</Label> and tap <Label>BTCPay Server</Label> under Payments to
-                link your store. Numo generates store invoices at the till and syncs your catalog
-                and your Lightning and Cashu sales.
+          <div className="mt-block grid gap-14 md:grid-cols-2 md:gap-16">
+            <div>
+              <h3 className="text-title text-navy">Connect BTCPay Server</h3>
+              <p className="text-lead mt-3 max-w-[30rem] text-navy/70">
+                Open Settings and tap BTCPay Server under Payments to link your store. Numo
+                generates store invoices at the till and syncs your catalog and your Lightning and
+                Cashu sales.
               </p>
             </div>
-            <div id="cards" className="section-anchor border-b border-line py-6">
-              <h3 className="text-h3 text-navy">Take contactless cards with Stripe</h3>
-              <p className={`mt-2 ${prose}`}>
-                Connect your own Stripe account in <Label>Settings</Label> to accept contactless
-                cards, Apple Pay, and Google Pay on the same device. Card sales settle directly to
-                Stripe at Stripe&rsquo;s standard card processing fees and stay separate from
-                Bitcoin in Numo.
+            <div id="cards" className="section-anchor">
+              <h3 className="text-title text-navy">Take contactless cards with Stripe</h3>
+              <p className="text-lead mt-3 max-w-[30rem] text-navy/70">
+                Connect your own Stripe account in Settings to accept contactless cards, Apple Pay,
+                and Google Pay on the same device. Card sales settle directly to Stripe at
+                Stripe&rsquo;s standard card processing fees and stay separate from Bitcoin in Numo.
+                The{" "}
+                <Link href="/setup/stripe" className={linkClass}>
+                  Stripe guide
+                </Link>{" "}
+                walks through it.
               </p>
             </div>
           </div>

@@ -50,7 +50,7 @@ function AcceptsRow({ hidden }: { hidden?: boolean }) {
  *  wide viewports full and loop seamlessly; static under reduced motion. */
 function AcceptsMarquee() {
   return (
-    <div className="relative border-t border-white/15">
+    <div className="relative">
       <div
         className="marquee-mask shell overflow-hidden"
         aria-label="Numo accepts"
@@ -121,7 +121,8 @@ export function Hero() {
           Bitcoin payments as easy as Apple Pay.
         </h1>
         <p className="text-lead mt-5 md:mt-6 max-w-[30rem] text-white/85">
-          Tap to take Bitcoin on any Android with NFC. Zero platform fees.
+          Tap to take Bitcoin on any Android with&nbsp;NFC.{" "}
+          <span className="whitespace-nowrap">Zero platform fees.</span>
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
           <DownloadMenu variant="mint" size="lg" align="left" direction="up" />

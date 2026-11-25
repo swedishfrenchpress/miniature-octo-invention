@@ -53,7 +53,7 @@ const linkClass =
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const isSetup = pathname === "/setup";
+  const isSetup = pathname === "/setup" || pathname.startsWith("/setup/");
 
   return (
     <footer id="get-started" className="section-anchor overflow-hidden bg-navy text-white">

@@ -102,7 +102,7 @@ function PayoutNotifications() {
           {NOTIFICATIONS.map((n) => (
             <li
               key={n.app}
-              className="flex items-center gap-4 rounded-[18px] bg-surface px-4 py-4 shadow-[0_12px_28px_-14px_rgb(10_37_64/0.16)]"
+              className="flex items-center gap-4 rounded-[18px] bg-surface px-4 py-4"
             >
               {n.icon}
               <div className="min-w-0 flex-1">
@@ -138,7 +138,7 @@ function FeeStage() {
         </div>
 
         {/* Fresh Paint Mint payoff on Signwriter's Ink */}
-        <div className="fee-zero-badge flex w-full items-center justify-between gap-4 rounded-[18px] bg-navy px-6 py-5 text-left text-white shadow-[var(--shadow-device)]">
+        <div className="fee-zero-badge flex w-full items-center justify-between gap-4 rounded-[18px] bg-navy px-6 py-5 text-left text-white">
           <div className="text-base font-medium text-white/90">Numo fee</div>
           <div className="tabular text-[clamp(2.5rem,4.2vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] text-mint">
             0%

@@ -16,9 +16,8 @@
 .stage {
   --dw: 1152;
   --dh: 621;
-  /* One edge for both panels: a hairline for definition, then the site's
-     device shadow for lift. */
-  --panel-shadow: 0 0 0 1px rgb(10 37 64 / 0.07), var(--shadow-device);
+  /* One edge for both panels: a single hairline, and no drop shadow. */
+  --panel-edge: 0 0 0 1px rgb(10 37 64 / 0.1);
 
   position: relative;
   aspect-ratio: var(--dw) / var(--dh);
@@ -48,7 +47,7 @@
   height: calc(var(--w) * 832 / 384);
   overflow: hidden;
   border-radius: 30px;
-  box-shadow: var(--panel-shadow);
+  box-shadow: var(--panel-edge);
 }
 
 .appContent {
@@ -70,7 +69,7 @@
   height: calc(var(--native-h) * var(--zoom));
   overflow: hidden;
   border-radius: 16px;
-  box-shadow: var(--panel-shadow);
+  box-shadow: var(--panel-edge);
 }
 
 .storeContent {

@@ -41,7 +41,7 @@ export function DownloadMenu({
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popoverId = useId();
-  const isSetup = pathname === "/setup";
+  const isSetup = pathname === "/setup" || pathname.startsWith("/setup/");
 
   useEffect(() => {
     if (!open) return;
@@ -102,7 +102,7 @@ export function DownloadMenu({
         <div
           id={popoverId}
           aria-label="Download options for Android"
-          className={`absolute z-50 w-[296px] max-w-[calc(100vw-2rem)] rounded-card bg-surface p-2 text-left text-navy shadow-[var(--shadow-popover)] ring-1 ring-navy/10 ${
+          className={`absolute z-50 w-[296px] max-w-[calc(100vw-2rem)] rounded-card bg-surface p-2 text-left text-navy ring-1 ring-navy/15 ${
             direction === "up" ? "bottom-full mb-2.5" : "top-full mt-2.5"
           } ${align === "right" ? "right-0" : "left-0"}`}
         >

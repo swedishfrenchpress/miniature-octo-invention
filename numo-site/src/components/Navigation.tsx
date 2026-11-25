@@ -73,7 +73,9 @@ function NavLink({
   const content = mobile ? (
     <>
       <span>{item.label}</span>
-      {active && <span aria-hidden="true" className="h-2 w-2 rounded-full bg-mint ring-1 ring-navy/25" />}
+      {active && (
+        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-mint ring-1 ring-navy/25" />
+      )}
     </>
   ) : (
     item.label
@@ -178,7 +180,9 @@ export function Navigation() {
   }, [isHome]);
 
   const isActive = (item: NavItem) =>
-    item.id ? isHome && activeSection === item.id : pathname === item.href;
+    item.id
+      ? isHome && activeSection === item.id
+      : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -195,14 +199,16 @@ export function Navigation() {
   /** Transparent editorial masthead over the home video hero; solid opaque paper
    *  board everywhere else (never translucent frosted blur). */
   const onDark = isHome && !isScrolled && !isMenuOpen;
-  const showLine = !onDark && (isScrolled || isMenuOpen || !isHome);
+  // No rule under the bar at rest, on any page. One appears only once content is
+  // sliding beneath it, where it marks the edge of the bar.
+  const showLine = !onDark && (isScrolled || isMenuOpen);
 
   return (
     <nav
       aria-label="Main"
       className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-200 ${
         onDark
-          ? "border-white/15 bg-transparent"
+          ? "border-transparent bg-transparent"
           : `bg-paper ${showLine ? "border-line" : "border-transparent"}`
       }`}
     >
@@ -265,11 +271,7 @@ export function Navigation() {
           {/* Over the hero, keep nav Download quiet so the hero's Fresh Paint Mint
               primary button owns the viewport; once scrolled, flip to solid navy. */}
           <div className={onDark ? "hidden md:block" : "block"}>
-            <DownloadMenu
-              variant={onDark ? "ghost-inverse" : "primary"}
-              size="md"
-              align="right"
-            />
+            <DownloadMenu variant={onDark ? "ghost-inverse" : "primary"} size="md" align="right" />
           </div>
 
           <button
@@ -306,17 +308,17 @@ export function Navigation() {
           isMenuOpen ? "visible grid-rows-[1fr]" : "invisible grid-rows-[0fr]"
         }`}
       >
-        <div ref={panelRef} className="overflow-hidden" aria-hidden={!isMenuOpen} inert={!isMenuOpen}>
+        <div
+          ref={panelRef}
+          className="overflow-hidden"
+          aria-hidden={!isMenuOpen}
+          inert={!isMenuOpen}
+        >
           <div className="shell pb-6">
             <ul className="border-t border-line">
               {ANCHOR_LINKS.map((item) => (
                 <li key={item.href} className="border-b border-line">
-                  <NavLink
-                    item={item}
-                    active={isActive(item)}
-                    onClick={onLinkClick(item)}
-                    mobile
-                  />
+                  <NavLink item={item} active={isActive(item)} onClick={onLinkClick(item)} mobile />
                 </li>
               ))}
               {ROUTE_LINKS.map((item, i) => (
@@ -324,12 +326,7 @@ export function Navigation() {
                   key={item.href}
                   className={`border-b border-line ${i === 0 ? "border-t border-t-line-strong" : ""}`}
                 >
-                  <NavLink
-                    item={item}
-                    active={isActive(item)}
-                    onClick={onLinkClick(item)}
-                    mobile
-                  />
+                  <NavLink item={item} active={isActive(item)} onClick={onLinkClick(item)} mobile />
                 </li>
               ))}
               <li className="border-b border-line">

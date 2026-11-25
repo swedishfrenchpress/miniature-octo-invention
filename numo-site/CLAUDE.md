@@ -20,10 +20,10 @@ Check `PRODUCT.md` → *Capabilities and Constraints* first. Several claims are 
 The app lives in `numo-site/`, **not** at the repository root.
 
 ```
-src/app/(site)/   routes: / · /btcpay · /setup · /releases · /privacy
+src/app/(site)/   routes: / · /btcpay · /setup · /setup/stripe · /releases · /privacy
 src/app/globals.css   design tokens (@theme), type scale, reduced-motion block
 src/components/   Button · DownloadMenu · Logo · Navigation · SiteFooter ·
-                  PhoneFrame · SetupSteps ·
+                  SetupSequence ·
                   ReleaseEntry · ReleaseImage · home/* ·
                   btcpay/* (BTCPayDemo · BTCPayInvoices · NumoApp)
 src/data/         releases.ts — the versioned changelog rendered by /releases
