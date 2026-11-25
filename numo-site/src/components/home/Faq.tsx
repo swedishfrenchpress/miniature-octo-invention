@@ -91,7 +91,7 @@ export function Faq() {
 
   return (
     <section id="faq" className="section-anchor bg-paper py-20 md:py-28">
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:grid-cols-[1fr_1.7fr] md:gap-16">
+      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:grid-cols-[1fr_1.5fr] md:gap-16">
         <h2 className="text-h2 text-navy">Frequently asked questions</h2>
 
         <div className="border-t border-line">

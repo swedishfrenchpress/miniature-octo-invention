@@ -23,7 +23,7 @@ The app lives in `numo-site/`, **not** at the repository root.
 src/app/(site)/   routes: / · /btcpay · /setup · /releases · /privacy
 src/app/globals.css   design tokens (@theme), type scale, reduced-motion block
 src/components/   Button · DownloadMenu · Logo · Navigation · SiteFooter ·
-                  PhoneFrame · PayoutSetupGuide · PreflightChecklist ·
+                  PhoneFrame · SetupSteps ·
                   ReleaseEntry · ReleaseImage · home/* · btcpay/BTCPayDemo
 src/data/         releases.ts — the versioned changelog rendered by /releases
 public/           setup/ · releases/ · ui/ · wallets/ · logos/ assets

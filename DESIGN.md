@@ -23,28 +23,28 @@ colors:
 typography:
   display:
     fontFamily: "GC Protage, Sora, system-ui, sans-serif"
-    fontSize: "clamp(2.625rem, 6.2vw, 5.25rem)"
+    fontSize: "clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)"
     fontWeight: 500
-    lineHeight: 1.04
-    letterSpacing: "-0.025em"
+    lineHeight: 1.1
+    letterSpacing: "0.01em"
   h2:
     fontFamily: "GC Protage, Sora, system-ui, sans-serif"
     fontSize: "clamp(1.875rem, 4vw, 3.25rem)"
     fontWeight: 500
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
+    lineHeight: 1.14
+    letterSpacing: "0.015em"
   title:
     fontFamily: "GC Protage, Sora, system-ui, sans-serif"
     fontSize: "1.5rem"
     fontWeight: 500
-    lineHeight: 1.24
-    letterSpacing: "-0.015em"
+    lineHeight: 1.28
+    letterSpacing: "0.02em"
   h3:
     fontFamily: "GC Protage, Sora, system-ui, sans-serif"
     fontSize: "1.25rem"
     fontWeight: 600
-    lineHeight: 1.3
-    letterSpacing: "-0.01em"
+    lineHeight: 1.35
+    letterSpacing: "0.02em"
   lead:
     fontFamily: "Sora, system-ui, sans-serif"
     fontSize: "1.0625rem / 1.1875rem md"
@@ -122,13 +122,13 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because pages alter
 
 ### Primary & Accent
 - **Signwriter's Ink (`#0A2540`)**: Primary voice for headings, body copy, light-ground primary buttons, and the closing footer ground. Supporting body copy runs at `/70` opacity (`5.57–5.89:1` AA pass across all light grounds); captions stop at `/65` (`≥4.8:1` floor). **Ink Light (`#1a3a5c`)** is the primary button hover state. **Ink Deep (`#06182B`)** backs the hero video scrim and Android hardware bezels.
-- **Fresh Paint Mint (`#5EFFC2`)**: The single bright accent (`12.8:1` AAA contrast paired with `#0A2540` text). Used on the logo tile, Hero and Footer primary CTAs, FAQ open control, interactive checklist ticks, Signwriter's Ink security-note status dot, `:focus-visible` ring core, `::selection`, and payment-received confirmations.
-- **Mint Soft (`#E6FFF4`)**: Quiet confirmation tint for small badges (`NFC tap`, `Auto-updates`, completed checklist state, `Latest` release chip), always paired with `#0A2540` text.
+- **Fresh Paint Mint (`#5EFFC2`)**: The single bright accent (`12.8:1` AAA contrast paired with `#0A2540` text). Used on the logo tile, Hero and Footer primary CTAs, FAQ open control, Signwriter's Ink security-note status dot, `:focus-visible` ring core, `::selection`, and payment-received confirmations.
+- **Mint Soft (`#E6FFF4`)**: Quiet confirmation tint for small badges (`NFC tap`, `Auto-updates`, `Latest` release chip), always paired with `#0A2540` text.
 - **Vermilion Slash (`#D93829`)**: Reserved strictly for the diagonal strike crossing out `2.9% + 30¢` in `FeeStage`.
 
 ### Grounds & Structure
 - **Paper (`#FBFAF7`)**: Default page ground, scrolled navigation board, Showcase, FAQ, and editorial headers.
-- **Sunken Cream (`#F2EEE6`)**: Alternating warm ground for full-bleed sections (`Wallets`, `/setup` Part one & Ready/Preflight, `/releases` featured release, `/btcpay` showcase, `/privacy` body) and Showcase/Setup visual stages. Clearly separates from Paper even in bright counter daylight.
+- **Sunken Cream (`#F2EEE6`)**: Alternating warm ground for full-bleed sections (`Wallets`, `/setup` Open your till & Optional extras, `/releases` featured release, `/btcpay` showcase, `/privacy` body) and Showcase visual stages. Clearly separates from Paper even in bright counter daylight.
 - **Surface White (`#FFFFFF`)**: Crisp cards, wallet tiles, notification cards, and callout boxes sitting on Sunken Cream or bounded by `line-strong`.
 - **Lines (`--line` 11% ink / `--line-strong` 20% ink)**: Editorial rules, structural dividers, and crisp borders.
 - **Grays 50–600**: Used strictly inside depicted third-party software mockups (`BTCPayInterface`), never for site prose.
@@ -145,17 +145,24 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because pages alter
 
 ## Typography
 
-**Display Font:** GC Protage (`400`, `500`, `600`, `700`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Sora)
+**Display Font:** GC Protage (`500`, `600`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Sora)
 **Body & UI Font:** Sora (`400`, `500`, `600`, self-hosted via `next/font/google`)
 
-- **`.text-display`**: `clamp(2.625rem, 6.2vw, 5.25rem)`, weight `500`, tracking `-0.025em`, line-height `1.04` — Page `h1` and major section anchors (`text-wrap: balance`).
-- **`.text-h2`**: `clamp(1.875rem, 4vw, 3.25rem)`, weight `500`, tracking `-0.02em`, line-height `1.1` — Section and Showcase headings.
-- **`.text-title`**: `1.5rem`, weight `500`, tracking `-0.015em`, line-height `1.24` — Step headings, release titles, wallet groups.
-- **`.text-h3`**: `1.25rem`, weight `600`, tracking `-0.01em`, line-height `1.3` — Card headings, highlight titles, privacy headings.
+- **`.text-display`**: `clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)`, weight `500`, tracking `0.01em`, line-height `1.1` — Page `h1` and major section anchors (`text-wrap: balance`). Scales with the viewport below `428px` so the longest headline line still fits a `360px` phone.
+- **`.text-h2`**: `clamp(1.875rem, 4vw, 3.25rem)`, weight `500`, tracking `0.015em`, line-height `1.14` — Section and Showcase headings.
+- **`.text-title`**: `1.5rem`, weight `500`, tracking `0.02em`, line-height `1.28` — Release titles, wallet groups.
+- **`.text-h3`**: `1.25rem`, weight `600`, tracking `0.02em`, line-height `1.35` — Step headings, card headings, highlight titles, privacy headings.
 - **`.text-lead`**: `1.0625rem` → `1.1875rem` (`md`), weight `400`, line-height `1.55` — Section intros (Sora).
 - **Body (`text-base`)**: `1rem`, weight `400`, line-height `1.6` — Editorial prose capped at **`max-w-[35rem]`–`36rem`** (`64–70` characters per line in 16px Sora).
 - **`.text-caption`**: `0.8125rem`, weight `400`, line-height `1.45` — Captions, timestamps, and metadata.
 - **`.tabular`**: `font-variant-numeric: tabular-nums` on every price, satoshi amount, date, version tag, and step numeral.
+
+### Named Rules
+
+1. **The Open Tracking Rule.** GC Protage is drawn with very tight sidebearings (about `0.04em` beside a stem), so the heading scale is never tracked negative. Tracking stays slightly positive and opens as the size drops (`0.01em` display → `0.02em` title and `h3`), and line height never goes below `1.1`. Negative tracking makes pairs like `al`, `ll`, and `rw` collide and the headline reads crushed. The two logo wordmarks are the only exceptions: `tracking-normal` in the lockup, and `-0.03em` on the giant `6%`-opacity footer wordmark.
+2. **The Em Measure Rule.** Cap headline widths in `em`, not `ch`. The shipped GC Protage files have no `0` glyph, so `1ch` silently resolves to a `0.5em` guess. Measure the longest line that must stay whole and leave about `0.4em` of slack.
+3. **The Whole Word Rule.** Headings break between phrases only: never at a hyphen (`unbrokenHyphens` in `ReleaseEntry.tsx`) and never after a one-letter word (bind it to its noun with a non-breaking space in the data).
+4. **The Demo Glyph Rule.** The font files in `src/fonts/` are the GC Protage demo cut: `A–Z`, `a–z`, space, comma, and period only. Digits, apostrophes, hyphens, question marks, and every other mark in a heading render in Sora. Keep numerals and symbol-heavy strings out of display headings where copy allows, until the full family is licensed.
 
 ## Layout & Navigation
 
@@ -170,7 +177,7 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because pages alter
 - **Download Chooser (`DownloadMenu.tsx`):** Lightweight non-blocking disclosure popover (standard link traversal + Escape/blur dismiss) revealing **Direct Android APK (GitHub Releases)** and **Zapstore (Auto-updates)** alongside *"Android with NFC"* and a `44px` link to `/setup` (hidden while already on `/setup`).
 - **Showcase Stages (`Showcase.tsx`):** Every feature visual sits in a unified `aspect-[5/4] rounded-[24px] bg-sunken` stage — equalizing visual weight across studio hardware renders, the slashed `2.9% + 30¢ → 0%` `FeeStage`, and Android-styled payout notifications.
 - **BTCPay Live Sync (`BTCPayDemo.tsx`):** Responsive fluid table keeping `Date`, `Order ID`, `Status` (`Processing`→`Paid`), and `Amount` permanently visible at desktop and mobile without horizontal clipping; both mockups marked `inert`; full `prefers-reduced-motion` static fallback plus Pause/Replay controls.
-- **Setup Guide (`setup/page.tsx`, `PayoutSetupGuide.tsx`, `PreflightChecklist.tsx`):** Full `1200px` alternating-ground editorial guide (`Paper` header with 4-section jump links & hairline requirements strip → `Sunken` 4-screen Part one onboarding frieze + paired Signwriter's Ink recovery-phrase and mint custody band → `Paper` stacked 2-up Part two Steps 1–2 + Step 3 A/B/C workbench → `Sunken` Ready/test-sale walkthrough & `localStorage`-persisted preflight checklist → `Paper` optional BTCPay Server & Stripe contactless cards section → `/setup`-aware closing footer). Uses inline tabular numerals paired directly with consistent `text-h3` headings, baseline-locked tonal `PhoneFrame` stages matching `Showcase`, blur placeholders, and full-width screenshot callout outlines.
+- **Setup Guide (`setup/page.tsx`, `SetupSteps.tsx`):** Deliberately the quietest page on the site. The whole guide is set in **five type styles** (`text-display`, `text-lead` under the `h1` only, `text-h2`, `text-h3`, body) and **three gaps** (`mt-2` inside a unit, `mt-6` around it, `mt-12` between blocks); do not add a sixth style or a fourth gap. Body copy carries exactly one emphasis, `font-medium text-navy`, reserved for the on-screen label the reader has to find, and underlines appear only on the two download links. Grounds alternate `Paper` header → `Sunken` Open your till → `Paper` Automatic payouts → `Sunken` Optional extras → `/setup`-aware closing footer. Two layouts only: step sections share one `xl:grid-cols-4` grid of identical units (numbered `text-h3` title, one paragraph, one bottom-aligned `PhoneFrame` screenshot sitting directly on the section ground, no stage box and no caption, with an optional single `ring-navy` outline on the control to tap), and the closing split section puts the `h2` in the left half with a hairline-ruled list of the BTCPay Server and Stripe extras in the right half. No cards, badges, callout boxes, checklists, or lettered markers.
 
 ## Motion & Accessibility
 

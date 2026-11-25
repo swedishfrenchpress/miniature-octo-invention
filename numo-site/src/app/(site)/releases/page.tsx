@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FULL_RELEASE_NOTES_URL, releases } from "@/data/releases";
-import { ReleaseEntry } from "@/components/ReleaseEntry";
+import { ReleaseEntry, unbrokenHyphens } from "@/components/ReleaseEntry";
 import { ReleaseImage } from "@/components/ReleaseImage";
 import { Button } from "@/components/Button";
 
@@ -50,8 +50,8 @@ export default function ReleasesPage() {
             <time dateTime={latest.date}>{formatFullDate(latest.date)}</time>
           </p>
 
-          <h2 id="latest-title" className="text-h2 mt-4 max-w-[24ch] text-navy">
-            {latest.title}
+          <h2 id="latest-title" className="text-h2 mt-4 max-w-[14em] text-navy">
+            {unbrokenHyphens(latest.title)}
           </h2>
           <p className="text-lead mt-4 max-w-[38rem] text-navy/70">{latest.summary}</p>
 

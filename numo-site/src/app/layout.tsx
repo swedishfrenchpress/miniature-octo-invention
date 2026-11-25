@@ -11,7 +11,8 @@ const sora = Sora({
   weight: ["400", "500", "600"],
 });
 
-// Header display typeface (GC Protage), self-hosted locally.
+// Header display typeface (GC Protage), self-hosted locally. Only the two weights
+// the type scale uses are declared; Regular and Bold stay in src/fonts unshipped.
 // Disable automatic Arial fallback so missing demo glyphs fall back to Sora.
 const protage = localFont({
   variable: "--font-protage",
@@ -19,10 +20,8 @@ const protage = localFont({
   adjustFontFallback: false,
   fallback: ["var(--font-sora)", "system-ui", "sans-serif"],
   src: [
-    { path: "../fonts/GCProtage-Regular.ttf", weight: "400", style: "normal" },
     { path: "../fonts/GCProtage-Medium.ttf", weight: "500", style: "normal" },
     { path: "../fonts/GCProtage-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../fonts/GCProtage-Bold.ttf", weight: "700", style: "normal" },
   ],
 });
 

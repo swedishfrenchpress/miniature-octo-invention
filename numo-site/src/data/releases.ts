@@ -173,7 +173,7 @@ export const releases: Release[] = [
   {
     version: "1.8",
     date: "2026-07-20",
-    title: "More units. A safer way back.",
+    title: "More units. A\u00a0safer way back.",
     summary:
       "Numo now works in any base unit supported by your mint, with that unit carried through every sale, receipt, report, and export. Android wallets can also back up encrypted recovery data to Google, and the fiat currency picker is faster to scan.",
     heroImage: {

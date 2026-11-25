@@ -26,7 +26,7 @@ export function Logo({
         className={isLarge ? "h-8 w-8 lg:h-9 lg:w-9" : "h-[26px] w-[26px]"}
       />
       <span
-        className={`font-display font-semibold leading-none tracking-[-0.025em] transition-colors duration-200 ${
+        className={`font-display font-semibold leading-none tracking-normal transition-colors duration-200 ${
           isLarge ? "text-[1.3125rem] lg:text-[1.5625rem]" : "text-[1.125rem]"
         } ${tone === "ink" ? "text-navy" : "text-white"}`}
       >

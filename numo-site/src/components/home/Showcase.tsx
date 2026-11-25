@@ -197,7 +197,7 @@ export function Showcase() {
   return (
     <section id="features" className="section-anchor bg-paper py-20 md:py-28">
       <div className="mx-auto max-w-[1200px] px-6">
-        <h2 className="text-display max-w-[17ch] text-navy">
+        <h2 className="text-display max-w-[9.25em] text-navy">
           A full point of sale on any Android.
         </h2>
         <p className="text-lead mt-4 max-w-[34rem] text-navy/70">

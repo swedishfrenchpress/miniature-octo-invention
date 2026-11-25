@@ -119,13 +119,22 @@ body {
 }
 
 /* Type scale. GC Protage for display and section headings (falling back per-glyph
-   to Sora for characters absent from demo font files); Sora for body and UI. */
+   to Sora for characters absent from demo font files); Sora for body and UI.
+
+   GC Protage is drawn with very tight sidebearings (about 0.04em beside a stem,
+   0.02em beside a diagonal), so this scale is never tracked negative: at -0.025em pairs
+   like "al", "ll" and "rw" close up and the headline reads crushed. Tracking
+   stays slightly positive and opens as the size drops, and line height leaves
+   room for the face's tall x-height (0.55em) between lines. */
 .text-display {
   font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
-  font-size: clamp(2.625rem, 6.2vw, 5.25rem);
+  /* Phones scale with the viewport so the longest headline line (8.8em) still fits
+     inside the gutters at 360px; 2.625rem holds through tablets; 6.2vw takes over
+     from 680px up to the 5.25rem ceiling. */
+  font-size: clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem);
   font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.04;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
   text-wrap: balance;
 }
 
@@ -133,8 +142,8 @@ body {
   font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
   font-size: clamp(1.875rem, 4vw, 3.25rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  letter-spacing: 0.015em;
+  line-height: 1.14;
   text-wrap: balance;
 }
 
@@ -143,16 +152,18 @@ body {
   font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
   font-size: 1.5rem;
   font-weight: 500;
-  letter-spacing: -0.015em;
-  line-height: 1.24;
+  letter-spacing: 0.02em;
+  line-height: 1.28;
+  text-wrap: balance;
 }
 
 .text-h3 {
   font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 .text-lead {

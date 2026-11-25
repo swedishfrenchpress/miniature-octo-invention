@@ -13,6 +13,20 @@ function formatDate(iso: string) {
   });
 }
 
+/** Keeps a hyphenated word such as "in-app" on one line. A heading may wrap
+ *  between words, never at a hyphen, and the body face has no non-breaking hyphen. */
+export function unbrokenHyphens(text: string) {
+  return text.split(/(\S+-\S+)/).map((part, i) =>
+    i % 2 ? (
+      <span key={i} className="whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export function ReleaseEntry({ release }: Props) {
   const highlights = release.highlights ?? [];
   const releaseNotesHref = release.downloadUrl ?? FULL_RELEASE_NOTES_URL;
@@ -30,7 +44,7 @@ export function ReleaseEntry({ release }: Props) {
       </header>
 
       <div>
-        <h3 className="text-title max-w-[28ch] text-navy [text-wrap:balance]">{release.title}</h3>
+        <h3 className="text-title max-w-[15em] text-navy">{unbrokenHyphens(release.title)}</h3>
         <p className="mt-3 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{release.summary}</p>
 
         {release.heroImage && (
