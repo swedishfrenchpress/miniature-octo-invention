@@ -1,0 +1,542 @@
+/* The Numo Android app, depicted at its native density-independent sizes
+   (1px here = 1dp).
+
+   Sizes, colors, radii and strings are transcribed from the app's own layout
+   files (github.com/cashubtc/Numo, MIT): activity_modern_pos.xml,
+   activity_payment_request.xml, activity_payment_received.xml, dimens.xml and
+   colors.xml. Icons are the app's own vector drawables. Keep it a
+   transcription of the shipped app, not a redesign of it. */
+
+.screen {
+  --green: #00c244;
+  --dark: #0b1215;
+  --ink: #111111;
+  --secondary: #6f6f73;
+  --divider: #e5e5ea;
+  --status-bar: 40px;
+  --nav-inset: 20px;
+
+  position: relative;
+  width: 384px;
+  height: 832px;
+  overflow: hidden;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--font-android), Roboto, system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-align: left;
+  user-select: none;
+}
+
+/* Once a white screen has slid over the keypad, the surface under it turns
+   white too, so no green fringes the rounded corners. It is green again the
+   instant the keypad returns. */
+.screen:not([data-screen="keypad"]) {
+  background: #fff;
+  transition: background-color 0s linear 340ms;
+}
+
+.icon {
+  display: block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* ---- Android system chrome ---- */
+
+.statusBar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--status-bar);
+  padding: 0 22px 0 26px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  transition: color 200ms linear;
+}
+
+.screen:not([data-screen="keypad"]) .statusBar {
+  color: var(--ink);
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.statusIcons .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.navPill {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 5;
+  width: 108px;
+  height: 4px;
+  margin-left: -54px;
+  border-radius: 2px;
+  background: #fff;
+  opacity: 0.9;
+  transition: background-color 200ms linear;
+}
+
+.screen:not([data-screen="keypad"]) .navPill {
+  background: #5f6368;
+}
+
+/* ---- Keypad (ModernPOSActivity) ---- */
+
+.pos {
+  position: absolute;
+  inset: var(--status-bar) 0 var(--nav-inset);
+  display: flex;
+  flex-direction: column;
+}
+
+.posBar {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 8px;
+}
+
+.posBar > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 56px;
+}
+
+.posBar > :first-child {
+  margin-right: auto;
+}
+
+.posAmount {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.amount {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 75px;
+  font-variant-numeric: tabular-nums;
+}
+
+.secondary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  font-size: 22px;
+  line-height: 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+.secondary .icon {
+  width: 16px;
+  height: 16px;
+  transform: rotate(90deg);
+}
+
+.keypad {
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+  height: 360px;
+  margin: 0 32px 16px;
+}
+
+.key {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+}
+
+/* Android's borderless ripple: a circle that blooms under the finger. */
+.key::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 320ms linear,
+    transform 320ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.key[data-pressed]::before {
+  opacity: 0.22;
+  transform: scale(1);
+  transition-duration: 90ms;
+}
+
+.charge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  margin: 0 24px 24px;
+  border-radius: 26px;
+  background: rgb(255 255 255 / 0.34);
+  font-size: 18px;
+  font-weight: 700;
+  transition: background-color 120ms linear;
+}
+
+.charge[data-pressed] {
+  background: rgb(255 255 255 / 0.15);
+}
+
+.charge span {
+  transition: opacity 120ms linear;
+}
+
+.charge[data-busy] span {
+  opacity: 0;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--size, 32px);
+  height: var(--size, 32px);
+  margin: calc(var(--size, 32px) / -2) 0 0 calc(var(--size, 32px) / -2);
+  opacity: 0;
+  transition: opacity 160ms linear;
+  animation: spin 900ms linear infinite;
+}
+
+.spinner[data-shown] {
+  opacity: 1;
+}
+
+.spinner circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 80 126;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Pay and Received sit over the keypad, as Android activities do ---- */
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--status-bar) 0 var(--nav-inset);
+  background: #fff;
+  color: var(--ink);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(48px);
+  transition:
+    opacity 220ms linear,
+    transform 340ms cubic-bezier(0.2, 0, 0, 1),
+    visibility 0s linear 340ms;
+}
+
+.sheet[data-shown] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.sheetBar {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  padding: var(--bar-inset, 16px) var(--bar-inset, 16px) 0;
+}
+
+.sheetBar > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+/* PaymentRequestActivity */
+
+.payLabel {
+  margin-top: -6px;
+  color: var(--secondary);
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.payAmount {
+  margin-top: 4px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  font-variant-numeric: tabular-nums;
+}
+
+.payConverted {
+  margin-top: 4px;
+  color: var(--secondary);
+  font-size: 16px;
+  line-height: 19px;
+  font-variant-numeric: tabular-nums;
+}
+
+.qrCard {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin-top: 16px;
+  padding: 24px;
+  border: 1px solid var(--divider);
+  border-radius: 24px;
+  background: #fff;
+  color: var(--secondary);
+}
+
+.qr {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 260ms linear;
+}
+
+.qr[data-shown] {
+  opacity: 1;
+}
+
+.instruction {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.payStatus {
+  margin-top: 8px;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  margin: auto 0 24px;
+  padding: 5px;
+  border: 1px solid #e1e1e5;
+  border-radius: 26px;
+  background: #fff;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 48px;
+  padding: 0 14px;
+  border-radius: 100px;
+  color: var(--dark);
+}
+
+.tab[data-selected] {
+  min-width: 128px;
+  background: var(--dark);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tab .icon,
+.tab img {
+  width: 20px;
+  height: 20px;
+}
+
+/* PaymentReceivedActivity */
+
+.received {
+  --bar-inset: 8px;
+  z-index: 3;
+}
+
+.receivedBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.receivedAmount {
+  margin-bottom: 32px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 33px;
+  font-variant-numeric: tabular-nums;
+}
+
+.check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+}
+
+.check::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.check .icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+}
+
+/* The app's own choreography: the circle scales in over 400ms on a
+   DecelerateInterpolator(2), the tick follows 150ms later over 500ms on an
+   OvershootInterpolator(3). */
+.received[data-shown] .check::before {
+  animation: circle-in 400ms cubic-bezier(0.1, 0.7, 0.3, 1) 120ms both;
+}
+
+.received[data-shown] .check .icon {
+  animation: tick-in 500ms cubic-bezier(0.3, 1.9, 0.5, 1) 270ms both;
+}
+
+@keyframes circle-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@keyframes tick-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.textButton,
+.grayButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  height: 52px;
+  margin: 0 24px 8px;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.grayButton {
+  margin-bottom: 24px;
+  border-radius: 26px;
+  background: var(--secondary);
+  color: #fff;
+  font-size: 18px;
+  transition: background-color 120ms linear;
+}
+
+.grayButton[data-pressed] {
+  background: #55555a;
+}
+
+/* ---- The merchant's finger ---- */
+
+.touch {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 1.5px solid rgb(255 255 255 / 0.85);
+  border-radius: 50%;
+  background: rgb(11 18 21 / 0.34);
+  box-shadow: 0 2px 10px rgb(11 18 21 / 0.25);
+  opacity: 0;
+  transform: translate(var(--x), var(--y)) scale(var(--press, 1));
+  transition:
+    transform var(--travel, 360ms) cubic-bezier(0.45, 0, 0.1, 1),
+    opacity 220ms linear;
+  pointer-events: none;
+}
+
+.touch[data-shown] {
+  opacity: 1;
+}
+
+.screen[data-screen="keypad"] .touch {
+  border-color: rgb(255 255 255 / 0.9);
+  background: rgb(255 255 255 / 0.36);
+  box-shadow: 0 2px 10px rgb(0 60 20 / 0.3);
+}
+
+.touch[data-down] {
+  --press: 0.8;
+  --travel: 90ms;
+}
+
+/* Reduced motion and the paused demo hold a still frame. */
+.screen[data-still] *,
+.screen[data-still] *::before {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+}

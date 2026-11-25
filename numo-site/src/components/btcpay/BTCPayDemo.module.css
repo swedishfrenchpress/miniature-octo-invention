@@ -1,0 +1,117 @@
+/* The layout for the BTCPay demo: two real screens, set side by side.
+
+   No device frame and no backing plate. The Numo screen and the BTCPay page
+   sit straight on the section ground as two panels with shared top and bottom
+   edges, the till on the left where the sale starts and the store on the right
+   where it lands. Nothing overlaps and nothing is cropped.
+
+   Both are authored at their native sizes on a fixed canvas that scales to its
+   slot, so nothing inside them reflows as the page resizes. BTCPay is drawn at
+   1:1 at full width. Below an 800px slot the two stack, the till on top. */
+
+.root {
+  container: demo / inline-size;
+}
+
+.stage {
+  --dw: 1152;
+  --dh: 621;
+  /* One edge for both panels: a hairline for definition, then the site's
+     device shadow for lift. */
+  --panel-shadow: 0 0 0 1px rgb(10 37 64 / 0.07), var(--shadow-device);
+
+  position: relative;
+  aspect-ratio: var(--dw) / var(--dh);
+  container-type: inline-size;
+}
+
+/* tan(atan2(a, b)) is a / b as a plain number: the stage's width over the
+   design width, which is the scale that makes the canvas fill the stage. */
+.canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--dw) * 1px);
+  height: calc(var(--dh) * 1px);
+  transform: scale(tan(atan2(100cqw, calc(var(--dw) * 1px))));
+  transform-origin: 0 0;
+}
+
+/* The app's screen, at the 384 x 832dp it is laid out for. */
+.app {
+  --w: 287px;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--w);
+  height: calc(var(--w) * 832 / 384);
+  overflow: hidden;
+  border-radius: 30px;
+  box-shadow: var(--panel-shadow);
+}
+
+.appContent {
+  width: 384px;
+  height: 832px;
+  transform: scale(tan(atan2(var(--w), 384px)));
+  transform-origin: 0 0;
+}
+
+.store {
+  --zoom: 1;
+  --native-w: 832px;
+  --native-h: 621px;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: calc(var(--native-w) * var(--zoom));
+  height: calc(var(--native-h) * var(--zoom));
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--panel-shadow);
+}
+
+.storeContent {
+  width: var(--native-w);
+  height: var(--native-h);
+  transform: scale(var(--zoom));
+  transform-origin: 0 0;
+}
+
+.btcpay {
+  width: 100%;
+  height: 100%;
+}
+
+@container demo (max-width: 799px) {
+  .stage {
+    --dw: 358;
+    --dh: 733;
+
+    max-width: 448px;
+    margin-inline: auto;
+  }
+
+  .app {
+    --w: 204px;
+
+    left: 77px;
+    border-radius: 22px;
+  }
+
+  .store {
+    --zoom: 0.71;
+    --native-w: 504px;
+    --native-h: 376px;
+
+    top: 466px;
+    border-radius: 12px;
+  }
+}
+
+/* A paused demo holds its frame: looping CSS animation stops with the timeline. */
+.stage[data-paused] * {
+  animation-play-state: paused !important;
+}

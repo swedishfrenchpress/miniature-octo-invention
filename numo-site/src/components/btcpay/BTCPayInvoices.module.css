@@ -1,0 +1,358 @@
+/* BTCPay Server's Invoices page, depicted at its native pixel sizes.
+
+   Every value here is transcribed from BTCPay Server's own stylesheets
+   (github.com/btcpayserver/btcpayserver, MIT): the `--btcpay-*` tokens in
+   themes/default.css and the computed geometry of site.css and
+   Views/UIInvoice/ListInvoices.cshtml. Keep it a transcription. Do not restyle
+   it with site tokens: a depicted product carries its own scale and colors.
+
+   It is the page alone, without BTCPay's sidebar and top bar, so it can sit
+   on the site at the size BTCPay really draws it. Below 700px of its own width
+   it takes the shape the real table takes on a narrow screen. */
+
+.window {
+  position: relative;
+  container: btcpay / inline-size;
+  overflow: hidden;
+}
+
+/* The layout variables sit one level inside the container, because a container
+   query can restyle a container's descendants but never the container itself. */
+.view {
+  --primary: #51b13e;
+  --text: #292929;
+  --muted: #8f979e;
+  --body: #f8f9fa;
+  --line: #e9ecef;
+  --line-medium: #dee2e6;
+  --pad: 36px;
+  --row-h: 45.6px;
+  --rows: 8;
+
+  position: absolute;
+  inset: 0;
+  padding: var(--pad);
+  background: var(--body);
+  color: var(--text);
+  font-family: var(--font-btcpay), "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22.4px;
+  letter-spacing: normal;
+  -webkit-font-smoothing: auto;
+  text-align: left;
+  user-select: none;
+}
+
+.icon {
+  display: block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+/* ---- Page header and filters ---- */
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 40.4px;
+  margin-bottom: 32px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 33.6px;
+}
+
+.title .icon {
+  width: 19.2px;
+  height: 19.2px;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.pageActions {
+  display: flex;
+  gap: 16px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 40.4px;
+  padding: 8px 24px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.button[data-kind="secondary"] {
+  background: #fff;
+  border-color: var(--line-medium);
+  color: var(--primary);
+}
+
+.button .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.search {
+  width: 300px;
+  height: 40.4px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid var(--line-medium);
+  border-radius: 4px;
+  color: var(--muted);
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 112px;
+  height: 40.4px;
+  padding: 8px 12px 8px 16px;
+  background: #fff;
+  border: 1px solid var(--line-medium);
+  border-radius: 4px;
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---- Invoice table ---- */
+
+.table {
+  --columns: 33.5px 148px 226px 78px 93px 105px minmax(0, 1fr);
+  margin: 0 -8px;
+}
+
+.tableHead,
+.cells {
+  display: grid;
+  grid-template-columns: var(--columns);
+  align-items: center;
+}
+
+.tableHead {
+  height: 39.8px;
+  color: var(--muted);
+}
+
+.tableHead > *,
+.cells > * {
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.dateHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateHead .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+
+.amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The list shows a fixed number of whole rows. A new invoice opens at the top
+   and the oldest slides out under the soft lower edge, so no row is ever left
+   cut in half at rest. */
+.rows {
+  height: calc(var(--rows) * (var(--row-h) + 1px));
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 10px), transparent);
+}
+
+/* A row is a one-track grid so a new invoice can open its own height and carry
+   the rows beneath it down, instead of popping in and shoving them. */
+.row {
+  display: grid;
+  grid-template-rows: 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+.cells {
+  min-height: var(--row-h);
+  overflow: hidden;
+}
+
+.row[data-fresh] {
+  animation: row-open 560ms cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+.row[data-fresh] .cells {
+  min-height: 0;
+  animation: row-fill 560ms cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+@keyframes row-open {
+  from {
+    grid-template-rows: 0fr;
+    border-bottom-color: transparent;
+  }
+}
+
+/* The row's words fade up as its height opens, so the gap is never empty for
+   long and the moving edge never slices a fully opaque line. Keyframes are
+   global even inside a container query, so the height is a variable. */
+@keyframes row-fill {
+  0%,
+  15% {
+    opacity: 0;
+  }
+  to {
+    min-height: var(--row-h);
+  }
+}
+
+.checkbox {
+  width: 17.5px;
+  height: 17.5px;
+  border: 2px solid #ced4da;
+  border-radius: 3.5px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.tableHead .checkbox,
+.cells .checkbox {
+  padding: 0;
+  margin-left: 8px;
+}
+
+.date {
+  font-variant-numeric: tabular-nums;
+}
+
+.invoiceId {
+  color: var(--primary);
+  overflow-wrap: anywhere;
+}
+
+/* The status badge keeps one slot: its width, fill and label all travel
+   between states instead of one badge being swapped for another. */
+.badge {
+  position: relative;
+  display: block;
+  width: var(--badge-w);
+  height: 24px;
+  border-radius: 4px;
+  background: #d4edda;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 12px;
+  transition:
+    width 260ms cubic-bezier(0.45, 0, 0.1, 1),
+    background-color 200ms linear,
+    color 200ms linear;
+}
+
+.badge[data-status="New"] {
+  --badge-w: 53.2px;
+}
+
+.badge[data-status="Settled"] {
+  --badge-w: 67.7px;
+  background: var(--primary);
+  color: #fff;
+}
+
+.badgeLabel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 9px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 160ms linear;
+}
+
+.badge[data-status="New"] .badgeLabel[data-for="New"],
+.badge[data-status="Settled"] .badgeLabel[data-for="Settled"] {
+  opacity: 1;
+  transition-delay: 80ms;
+}
+
+/* Bootstrap's dropdown caret. */
+.badgeLabel::after {
+  content: "";
+  border: 3.6px solid transparent;
+  border-top-color: currentColor;
+  border-bottom: 0;
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.rowActions .icon:first-child {
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+}
+
+/* ---- Narrow: the shape the real table takes on a small screen ---- */
+
+@container btcpay (max-width: 699px) {
+  .view {
+    --pad: 16px;
+    --row-h: 61px;
+    --rows: 4;
+  }
+
+  /* Reporting is permission-gated in BTCPay, so a narrow header shows the one
+     primary action. The filter row has scrolled off above the table. */
+  .button[data-kind="secondary"],
+  .filters {
+    display: none;
+  }
+
+  .pageHeader {
+    margin-bottom: 16px;
+  }
+
+  /* The date and invoice id wrap onto two lines, and the empty Order Id column
+     gives up its track. */
+  .table {
+    --columns: 33.5px 92px minmax(0, 1fr) 86px 104px 44px;
+  }
+
+  .orderId,
+  .rowActions .icon:first-child {
+    display: none;
+  }
+}

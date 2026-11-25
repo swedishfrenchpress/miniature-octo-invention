@@ -24,9 +24,10 @@ src/app/(site)/   routes: / · /btcpay · /setup · /releases · /privacy
 src/app/globals.css   design tokens (@theme), type scale, reduced-motion block
 src/components/   Button · DownloadMenu · Logo · Navigation · SiteFooter ·
                   PhoneFrame · SetupSteps ·
-                  ReleaseEntry · ReleaseImage · home/* · btcpay/BTCPayDemo
+                  ReleaseEntry · ReleaseImage · home/* ·
+                  btcpay/* (BTCPayDemo · BTCPayInvoices · NumoApp)
 src/data/         releases.ts — the versioned changelog rendered by /releases
-public/           setup/ · releases/ · ui/ · wallets/ · logos/ assets
+public/           setup/ · releases/ · ui/ · wallets/ · logos/ · btcpay/ assets
 ```
 
 ## Commands
