@@ -23,39 +23,34 @@ const LIGHTNING_WALLETS = [
 
 type Wallet = { name: string; image: string };
 
-/** One tier of wallets: what the tier means on the left, who is in it on the right. */
+/** One tier of wallets: what the tier means on the left, who is in it on the right.
+ *  No frame — a single hairline separates the two tiers. */
 function WalletGroup({
   title,
   detail,
   wallets,
-  last,
 }: {
   title: string;
   detail: string;
   wallets: Wallet[];
-  last?: boolean;
 }) {
   return (
-    <div
-      className={`grid gap-6 p-7 md:grid-cols-[15rem_1fr] md:gap-10 md:p-9 ${
-        last ? "" : "border-b border-line"
-      }`}
-    >
+    <div className="grid gap-8 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-16 md:py-14">
       <div>
-        <h3 className="text-h3 text-navy">{title}</h3>
-        <p className="mt-1.5 text-sm text-navy/70 [text-wrap:pretty]">{detail}</p>
+        <h3 className="text-title text-navy">{title}</h3>
+        <p className="mt-2 max-w-[18rem] text-navy/70 [text-wrap:pretty]">{detail}</p>
       </div>
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-4">
         {wallets.map((wallet) => (
-          <li key={wallet.name} className="flex items-center gap-3">
+          <li key={wallet.name} className="flex items-center gap-3.5">
             <Image
               src={wallet.image}
               alt=""
-              width={32}
-              height={32}
-              className="h-8 w-8 shrink-0 rounded-[8px] object-cover ring-1 ring-line"
+              width={44}
+              height={44}
+              className="h-11 w-11 shrink-0 rounded-[11px] object-cover"
             />
-            <span className="text-sm font-medium text-navy">{wallet.name}</span>
+            <span className="font-medium text-navy">{wallet.name}</span>
           </li>
         ))}
       </ul>
@@ -65,15 +60,15 @@ function WalletGroup({
 
 export function Wallets() {
   return (
-    <section id="wallets" className="section-anchor border-t border-line py-24 md:py-32">
+    <section id="wallets" className="section-anchor py-24 md:py-40">
       <div className="mx-auto max-w-[1200px] px-6">
-        <h2 className="text-h2 text-navy">Supported wallets</h2>
-        <p className="text-lead mt-5 max-w-[34rem] text-navy/70">
+        <h2 className="text-display max-w-[15ch] text-navy">Your customers already have the wallet.</h2>
+        <p className="text-lead mt-6 max-w-[34rem] text-navy/70">
           Works with any Bitcoin Lightning wallet. Tap to pay is available for ecash
           wallets.
         </p>
 
-        <div className="mt-12 overflow-hidden rounded-card border border-line bg-surface md:mt-16">
+        <div className="mt-16 md:mt-24">
           <WalletGroup
             title="Tap to pay"
             detail="Cashu ecash wallets that pay with an NFC tap."
@@ -83,7 +78,6 @@ export function Wallets() {
             title="Scan to pay"
             detail="These, and every other Bitcoin Lightning wallet."
             wallets={LIGHTNING_WALLETS}
-            last
           />
         </div>
       </div>

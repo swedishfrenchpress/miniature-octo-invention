@@ -82,7 +82,7 @@ export function Faq() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section id="faq" className="section-anchor border-t border-line py-24 md:py-32">
+    <section id="faq" className="section-anchor py-24 md:py-40">
       <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:grid-cols-[1fr_1.7fr] md:gap-16">
         <h2 className="text-h2 text-navy">Frequently asked questions</h2>
 
