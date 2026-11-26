@@ -22,24 +22,26 @@ type ButtonProps = {
 };
 
 export const BUTTON_BASE =
-  "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-control font-medium tracking-[-0.005em] transition-[background-color,color,scale] duration-150 ease-[var(--ease-out-expo)] active:scale-[0.97]";
+  "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-control font-medium tracking-[-0.005em] [transition:background-color_200ms_ease,box-shadow_200ms_ease,color_200ms_ease,scale_150ms_var(--ease-out-expo)] active:scale-[0.97]";
 
 export const BUTTON_SIZE: Record<ButtonSize, string> = {
-  sm: "h-9 px-3.5 text-sm after:absolute after:-inset-y-1 after:inset-x-0 after:content-['']",
-  md: "h-11 px-5 text-[0.9375rem]",
-  lg: "h-12 px-6 text-[0.9375rem]",
+  // A pill's round ends eat into its sides, so each size carries a little more
+  // side padding than a squared button would.
+  sm: "h-9 px-4 text-sm after:absolute after:-inset-y-1 after:inset-x-0 after:content-['']",
+  md: "h-11 px-6 text-[0.9375rem]",
+  lg: "h-12 px-7 text-[0.9375rem]",
 };
 
+/* Hover (and, under a finger, press) never fades a button. A filled button's
+   colour takes one small step toward its opposite; an outlined button's outline
+   firms up. The colour eases over 200ms; the press shrink is quicker and snappier. */
 export const BUTTON_VARIANT: Record<ButtonVariant, string> = {
-  primary:
-    "bg-navy text-white hover:bg-navy-light",
-  secondary:
-    "bg-surface text-navy ring-1 ring-navy/50 hover:bg-sunken/70",
-  mint:
-    "bg-mint font-semibold text-navy hover:bg-[#7DFFD0]",
-  inverse: "bg-white text-navy hover:bg-white/90",
+  primary: "bg-navy text-white hover:bg-navy-light",
+  secondary: "bg-surface text-navy ring-1 ring-navy/50 hover:bg-surface-tint hover:ring-navy",
+  mint: "bg-mint font-semibold text-navy hover:bg-mint-deep",
+  inverse: "bg-white text-navy hover:bg-surface-tint",
   "ghost-inverse":
-    "bg-white/10 text-white ring-1 ring-inset ring-white/[0.22] hover:bg-white/[0.18]",
+    "bg-white/10 text-white ring-1 ring-inset ring-white/[0.22] hover:bg-white/[0.16] hover:ring-white/40",
 };
 
 export function Button({

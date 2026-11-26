@@ -113,7 +113,7 @@ export function Faq() {
                       className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors duration-200 ${
                         open
                           ? "border-navy bg-navy text-mint"
-                          : "border-line-strong bg-surface text-navy/70 group-hover:border-navy group-hover:bg-navy group-hover:text-white"
+                          : "border-line-strong bg-surface text-navy/70 group-hover:border-navy group-hover:text-navy"
                       }`}
                     >
                       <span className="relative block h-3.5 w-3.5">

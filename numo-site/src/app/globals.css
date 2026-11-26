@@ -11,6 +11,12 @@
   --mint: #5EFFC2;
   --mint-soft: #E6FFF4;
 
+  /* Hover and press steps. Pointing at a button moves its fill one small step
+     toward its opposite, so it gains weight instead of washing out: light fills
+     deepen toward ink (mint 8%, white 5%), the ink fill lifts (--navy-light). */
+  --mint-deep: #56ECB7;
+  --surface-tint: #F1F3F5;
+
   /* Editorial cut accent: exclusively for the slashed 2.9% + 30¢ fee graphic. */
   --slash: #D93829;
 
@@ -62,6 +68,8 @@
   --color-navy-light: var(--navy-light);
   --color-mint: var(--mint);
   --color-mint-soft: var(--mint-soft);
+  --color-mint-deep: var(--mint-deep);
+  --color-surface-tint: var(--surface-tint);
   --color-slash: var(--slash);
   --color-white: var(--white);
   --color-gray-50: var(--gray-50);
@@ -72,7 +80,10 @@
   --color-gray-500: var(--gray-500);
   --color-gray-600: var(--gray-600);
   --radius-chip: 6px;
-  --radius-control: 10px;
+  /* Controls are pills: buttons, the nav's links and its active highlight. It is
+     the shape of the app's own buttons, and it sits with the round pause and FAQ
+     controls. */
+  --radius-control: 9999px;
   --radius-card: 16px;
   --radius-frame: 24px;
   --font-sans: var(--font-sora);

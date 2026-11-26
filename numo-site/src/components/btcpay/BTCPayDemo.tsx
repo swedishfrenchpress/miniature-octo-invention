@@ -366,7 +366,7 @@ export function BTCPayDemo() {
             type="button"
             onClick={() => setIsPaused((p) => !p)}
             aria-label={isPaused ? "Play the demo" : "Pause the demo"}
-            className="relative flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-navy transition-[background-color,scale] duration-150 ease-[var(--ease-out-expo)] hover:bg-surface/60 active:scale-[0.97]"
+            className="relative flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-navy ring-1 ring-navy/0 [transition:box-shadow_200ms_ease,scale_150ms_var(--ease-out-expo)] hover:ring-navy/30 active:scale-[0.97]"
           >
             {/* Both icons are always there; the one that applies fades and grows
                 in as the other fades and shrinks out, so the swap is not a jump. */}

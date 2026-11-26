@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { LogoMark } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 
 /** Consistent warm sunken stage so hardware renders, the slashed fee graphic,
@@ -137,10 +138,17 @@ function FeeStage() {
           <span className="fee-strike-line pointer-events-none absolute inset-x-0 top-1/2 h-[4px] -translate-y-1/2 -rotate-[3deg] rounded-full bg-slash" />
         </div>
 
-        {/* Fresh Paint Mint payoff on Signwriter's Ink */}
-        <div className="fee-zero-badge flex w-full items-center justify-between gap-4 rounded-[18px] bg-navy px-6 py-5 text-left text-white">
-          <div className="text-base font-medium text-white/90">Numo fee</div>
-          <div className="tabular text-[clamp(2.5rem,4.2vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] text-mint">
+        {/* Numo's fee, on the same white card as the payout notifications in the
+            next row: app icon, two lines, and the figure where their timestamp sits. */}
+        <div className="fee-zero-badge flex w-full items-center gap-4 rounded-[18px] bg-surface px-4 py-4 text-left">
+          <AppIcon>
+            <LogoMark className="h-full w-full" />
+          </AppIcon>
+          <div className="min-w-0 flex-1">
+            <div className="text-[0.9375rem] font-semibold leading-tight text-navy">Numo fee</div>
+            <p className="mt-1 text-[0.9375rem] leading-snug text-navy/80">On Bitcoin sales</p>
+          </div>
+          <div className="tabular text-[2.5rem] font-semibold leading-none tracking-[-0.03em] text-navy">
             0%
           </div>
         </div>
