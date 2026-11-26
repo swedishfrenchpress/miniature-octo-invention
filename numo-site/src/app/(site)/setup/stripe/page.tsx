@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SHARE_IMAGE } from "@/lib/shareImage";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 
@@ -15,11 +16,13 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     type: "website",
     siteName: "Numo",
+    images: [SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Connect Stripe - Numo Setup",
     description: DESCRIPTION,
+    images: [SHARE_IMAGE.url],
   },
 };
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SHARE_IMAGE } from "@/lib/shareImage";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 
@@ -14,12 +15,14 @@ export const metadata: Metadata = {
       "Install Numo on Android, pick a mint, turn on automatic Lightning payouts, or connect BTCPay Server and Stripe cards.",
     type: "website",
     siteName: "Numo",
+    images: [SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Set up Numo - Merchant Guide",
     description:
       "Install Numo on Android, pick a mint, turn on automatic Lightning payouts, or connect BTCPay Server and Stripe cards.",
+    images: [SHARE_IMAGE.url],
   },
 };
 

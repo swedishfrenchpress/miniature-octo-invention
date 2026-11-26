@@ -80,6 +80,7 @@ Other real assets available:
 - Studio hardware renders — `numo-site/public/ui/till-tap.png`, `till-card.png`, `till-sales.png`, each trimmed to the device itself.
 - BTCPay Server logo — `numo-site/public/btcpay-logo.svg`.
 - Product video and imagery — `1.mp4`, `2.mp4`, `hero-poster.jpg`, `og-image.jpg`.
+- Brand marks — `numo-site/public/logos/numo-wordmark-white.svg` (the wordmark) and `numo-app-icon.svg` (the app icon), as supplied by the project.
 
 **Absences that must never be fabricated.** There are no testimonials, no named or pictured merchants, no case studies, no install or download counts, no transaction or volume figures, no press quotes, no uptime or benchmark numbers, and no "trusted by N merchants." The OpenCash support credit in the footer is factual shipped copy, but was not designated as a proof point to build marketing claims on. If a future section needs social proof, it must be sourced first — not written.
 

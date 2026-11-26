@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./Button";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "./DownloadMenu";
-import { Logo } from "./Logo";
+import { Logo, Wordmark } from "./Logo";
 
 /** The shared closing band and the site's dark Signwriter's Ink ground:
  *  the Fresh Paint Mint ask (adapted on `/setup` for merchants who just finished
@@ -151,13 +151,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* The architectural wordmark, cropped cleanly at the bottom edge. */}
-      <p
-        aria-hidden="true"
-        className="font-display pointer-events-none -mb-[0.18em] select-none text-center text-[clamp(7rem,27vw,25rem)] font-semibold leading-[0.82] tracking-[-0.03em] text-white/[0.06]"
-      >
-        Numo
-      </p>
+      {/* The wordmark at architectural scale, standing on the page's bottom edge. */}
+      <Wordmark className="pointer-events-none mx-auto block h-auto w-[min(80vw,40rem)] select-none text-white/[0.06]" />
     </footer>
   );
 }

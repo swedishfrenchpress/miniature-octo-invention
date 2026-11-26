@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Sora } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
+import { SHARE_IMAGE } from "@/lib/shareImage";
 import "./globals.css";
 
 // Body & UI typeface. Only the three weights used by the scale are loaded.
@@ -62,21 +63,14 @@ export const metadata: Metadata = {
       "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     type: "website",
     siteName: "Numo",
-    images: [
-      {
-        url: "https://numopay.org/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Numo - Bitcoin Payments Made Simple",
-      },
-    ],
+    images: [SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Numo - Bitcoin Payments Made Simple",
     description:
       "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
-    images: ["https://numopay.org/og-image.jpg"],
+    images: [SHARE_IMAGE.url],
   },
 };
 
