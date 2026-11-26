@@ -56,7 +56,7 @@ function NavLink({
   onDark?: boolean;
   mobile?: boolean;
 }) {
-  const desktopClass = `inline-flex h-11 items-center rounded-control px-2.5 text-sm font-medium transition-colors duration-150 lg:px-3.5 lg:text-[0.9375rem] xl:px-4 xl:text-base ${
+  const desktopClass = `inline-flex h-11 items-center rounded-control px-2.5 text-sm font-medium transition-colors duration-200 lg:px-3.5 lg:text-[0.9375rem] xl:px-4 xl:text-base ${
     onDark
       ? active
         ? "bg-white/15 text-white"
@@ -201,7 +201,9 @@ export function Navigation() {
   };
 
   /** Transparent editorial masthead over the home video hero; solid opaque paper
-   *  board everywhere else (never translucent frosted blur). */
+   *  board everywhere else (never translucent frosted blur). When it turns from
+   *  one to the other, everything in the bar changes colour over the same 200ms:
+   *  the ground, the wordmark, the links, the rule between them and the button. */
   const onDark = isHome && !isScrolled && !isMenuOpen;
   // No rule under the bar at rest, on any page. One appears only once content is
   // sliding beneath it, where it marks the edge of the bar.
@@ -241,7 +243,7 @@ export function Navigation() {
 
           <span
             aria-hidden="true"
-            className={`mx-1.5 h-5 w-px lg:mx-3 ${onDark ? "bg-white/25" : "bg-line-strong"}`}
+            className={`mx-1.5 h-5 w-px transition-colors duration-200 lg:mx-3 ${onDark ? "bg-white/25" : "bg-line-strong"}`}
           />
 
           <div className="flex items-center gap-0.5">
@@ -262,7 +264,7 @@ export function Navigation() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`hidden h-11 items-center gap-2 rounded-control px-3 text-[0.9375rem] font-medium transition-colors duration-150 lg:inline-flex xl:px-3.5 xl:text-base ${
+            className={`hidden h-11 items-center gap-2 rounded-control px-3 text-[0.9375rem] font-medium transition-colors duration-200 lg:inline-flex xl:px-3.5 xl:text-base ${
               onDark
                 ? "text-white/85 hover:bg-white/10 hover:text-white"
                 : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
@@ -287,7 +289,7 @@ export function Navigation() {
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className={`-mr-2 flex h-11 w-11 items-center justify-center rounded-control transition-colors duration-150 md:hidden ${
+            className={`-mr-2 flex h-11 w-11 items-center justify-center rounded-control transition-colors duration-200 md:hidden ${
               onDark ? "text-white hover:bg-white/10" : "text-navy hover:bg-navy/[0.05]"
             }`}
           >

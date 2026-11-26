@@ -88,6 +88,10 @@
   --radius-frame: 24px;
   --font-sans: var(--font-sora);
   --font-display: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  /* A colour or opacity change with no curve of its own uses `ease`, the same
+     curve the buttons name. So a link, the nav bar and the button inside it all
+     change colour in step. Movement always names one of the three curves above. */
+  --default-transition-timing-function: ease;
 }
 
 @media (min-width: 768px) {
@@ -340,7 +344,9 @@ body {
 }
 
 /* ===== Arrivals =====
-   The only entrances on the site, all on the home page. Reading pages have none.
+   The home page's four entrances. The only other one on the site is the partner
+   pair docking in the header of /btcpay and /setup/stripe (PartnerPair.module.css).
+   Nothing else on a reading page arrives.
 
    1. The hero's words arrive once as the page opens: headline, intro, buttons,
       70ms apart, then the logo strip. It is CSS alone, so it needs no script,
@@ -352,7 +358,7 @@ body {
 }
 
 .hero-fade {
-  animation: hero-fade 500ms linear 320ms backwards;
+  animation: hero-fade 500ms ease-out 320ms backwards;
 }
 
 @keyframes hero-rise {

@@ -205,12 +205,12 @@
 }
 
 .row[data-fresh] {
-  animation: row-open 560ms cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  animation: row-open 560ms var(--ease-smooth) both;
 }
 
 .row[data-fresh] .cells {
   min-height: 0;
-  animation: row-fill 560ms cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  animation: row-fill 560ms var(--ease-smooth) both;
 }
 
 @keyframes row-open {
@@ -258,12 +258,15 @@
 }
 
 /* The status badge keeps one slot: its width, fill and label all travel
-   between states instead of one badge being swapped for another. */
+   between states instead of one badge being swapped for another. The box is
+   always as wide as the longer label; the shorter one is shown by clipping the
+   right end off, so growing the badge moves no layout. */
 .badge {
   position: relative;
   display: block;
-  width: var(--badge-w);
+  width: 67.7px;
   height: 24px;
+  clip-path: inset(0 var(--badge-cut, 0px) 0 0 round 4px);
   border-radius: 4px;
   background: #d4edda;
   color: #000;
@@ -271,17 +274,17 @@
   font-weight: 600;
   line-height: 12px;
   transition:
-    width 260ms cubic-bezier(0.45, 0, 0.1, 1),
+    clip-path 260ms var(--ease-in-out),
     background-color 200ms linear,
     color 200ms linear;
 }
 
+/* "New" is 53.2px wide: 14.5px shorter than "Settled". */
 .badge[data-status="New"] {
-  --badge-w: 53.2px;
+  --badge-cut: 14.5px;
 }
 
 .badge[data-status="Settled"] {
-  --badge-w: 67.7px;
   background: var(--primary);
   color: #fff;
 }

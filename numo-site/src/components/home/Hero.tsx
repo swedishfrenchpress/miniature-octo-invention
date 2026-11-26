@@ -114,8 +114,12 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-[640px] flex-col justify-end bg-ink-deep pt-28 md:h-[90svh] md:max-h-[900px]"
     >
-      {/* Clipped media backdrop kept separate so the DownloadMenu popover never clips */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Clipped media backdrop kept separate so the DownloadMenu popover never clips.
+          When a clip ends, the next one fades in on top of it while the finished
+          clip stays solid underneath, and is dropped only once it is covered. Two
+          clips fading through each other would let the dark ground show between
+          them, a dip toward black at every swap. */}
+      <div className="absolute inset-0 isolate overflow-hidden" aria-hidden="true">
         {HERO_VIDEOS.map((src, index) => (
           <video
             key={src}
@@ -128,12 +132,14 @@ export function Hero() {
             playsInline
             onEnded={onEnded}
             preload={index === 0 ? "auto" : "metadata"}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-              index === current ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity ${
+              index === current
+                ? "z-10 opacity-100 duration-1000"
+                : "opacity-0 delay-1000 duration-0"
             }`}
           />
         ))}
-        <div className={`absolute inset-0 ${SCRIM}`} />
+        <div className={`absolute inset-0 z-20 ${SCRIM}`} />
       </div>
 
       <div className="shell relative z-10 pb-12 pt-16 md:pb-20">
