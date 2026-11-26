@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Button } from "@/components/Button";
 import { DownloadMenu } from "@/components/DownloadMenu";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { BTCPayDemo } from "@/components/btcpay/BTCPayDemo";
+import { BTCNUTSERVER_GITHUB_URL, BTCNUTSERVER_PLUGIN_URL } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Numo for BTCPay Server",
@@ -10,14 +12,34 @@ export const metadata: Metadata = {
     "Numo connects directly to your BTCPay Server store: it generates invoices, accepts Lightning or Cashu, and keeps your point-of-sale inventory in sync.",
 };
 
-const POINTS = [
+/* Links inside a sentence: marked by underline alone, at the paragraph's weight. */
+const linkClass =
+  "underline decoration-navy/40 underline-offset-[3px] transition-colors duration-150 hover:text-navy hover:decoration-navy active:opacity-60";
+
+function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+      {children}
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
+
+const POINTS: { title: string; body: ReactNode }[] = [
   {
     title: "Invoices from the till",
     body: "Every sale creates an invoice in your BTCPay store.",
   },
   {
     title: "Lightning or Cashu",
-    body: "Customers pay how they prefer. Both record to your store.",
+    body: (
+      <>
+        Customers pay how they prefer. Both record to your store. Taking Cashu needs the{" "}
+        <ExternalLink href={BTCNUTSERVER_PLUGIN_URL}>BTCNutServer plugin</ExternalLink> in your
+        store, which is in early beta. Its code is on{" "}
+        <ExternalLink href={BTCNUTSERVER_GITHUB_URL}>GitHub</ExternalLink>.
+      </>
+    ),
   },
   {
     title: "Inventory in sync",

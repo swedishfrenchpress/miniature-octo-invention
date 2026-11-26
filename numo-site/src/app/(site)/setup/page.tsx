@@ -5,6 +5,7 @@ import { SHARE_IMAGE } from "@/lib/shareImage";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 import { breakData } from "@/breakdata";
+import { BTCNUTSERVER_GITHUB_URL, BTCNUTSERVER_PLUGIN_URL } from "@/lib/links";
 import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 
 export const metadata: Metadata = {
@@ -181,7 +182,10 @@ export default async function SetupPage() {
               <p className="text-lead measure mt-3 text-navy/70">
                 Open Settings and tap BTCPay Server under Payments to link your store. Numo
                 generates store invoices at the till and syncs your catalog and your Lightning and
-                Cashu sales.
+                Cashu sales. To take Cashu, first install the{" "}
+                <ExternalLink href={BTCNUTSERVER_PLUGIN_URL}>BTCNutServer plugin</ExternalLink> in
+                your store. It is in early beta, and its code is on{" "}
+                <ExternalLink href={BTCNUTSERVER_GITHUB_URL}>GitHub</ExternalLink>.
               </p>
             </div>
             <div id="cards" className="section-anchor">
