@@ -2,42 +2,37 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 
 /** Consistent warm sunken stage so hardware renders, the slashed fee graphic,
- *  and payout notifications share the same architectural frame and visual gravity. */
+ *  and payout notifications share the same architectural frame and visual gravity.
+ *  `padding` replaces the default margin rather than adding to it. */
 function Stage({
   children,
-  className = "",
+  padding = "p-6 sm:p-8 lg:p-10",
 }: {
   children: ReactNode;
-  className?: string;
+  padding?: string;
 }) {
   return (
     <div
-      className={`relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden rounded-[24px] bg-sunken p-6 sm:p-8 lg:p-10 ${className}`}
+      className={`relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden rounded-[24px] bg-sunken ${padding}`}
     >
       {children}
     </div>
   );
 }
 
-/** Clean cut-out studio renders hosted inside the shared sunken stage. */
-function Render({
-  src,
-  alt,
-  scale = "",
-}: {
-  src: string;
-  alt: string;
-  scale?: string;
-}) {
+/** Cut-out studio renders hosted inside the shared sunken stage. The files are
+ *  trimmed to the device itself, so `object-contain` fits each one to the stage:
+ *  the device stands nearly as tall as its tile, with one even margin around it. */
+function Render({ src, alt }: { src: string; alt: string }) {
   return (
-    <Stage className="p-4 sm:p-6">
+    <Stage padding="p-4 sm:p-5 lg:p-6">
       <div className="relative h-full w-full">
         <Image
           src={src}
           alt={alt}
           fill
           sizes="(min-width: 1024px) 680px, (min-width: 768px) 52vw, 100vw"
-          className={`object-contain ${scale}`}
+          className="object-contain"
         />
       </div>
     </Stage>
@@ -151,11 +146,11 @@ function FeeStage() {
 
 function SpecList({ items }: { items: [string, string][] }) {
   return (
-    <dl className="mt-7 border-t border-line">
+    <dl className="@container mt-7 border-t border-line">
       {items.map(([term, detail]) => (
         <div
           key={term}
-          className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 sm:grid-cols-[11rem_1fr]"
+          className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 @md:grid-cols-[11rem_1fr]"
         >
           <dt className="font-semibold text-navy">{term}</dt>
           <dd className="text-navy/70">{detail}</dd>
@@ -179,7 +174,9 @@ function Row({
   return (
     <div
       className={`grid items-center gap-8 md:gap-12 lg:gap-20 ${
-        flip ? "md:grid-cols-[1fr_1.15fr]" : "md:grid-cols-[1.15fr_1fr]"
+        flip
+          ? "md:grid-cols-[1fr_1.15fr] xl:grid-cols-[1fr_1.3fr]"
+          : "md:grid-cols-[1.15fr_1fr] xl:grid-cols-[1.3fr_1fr]"
       }`}
     >
       <div className={flip ? "md:order-2" : ""}>{visual}</div>
@@ -200,7 +197,7 @@ export function Showcase() {
         <h2 className="text-display max-w-[9.25em] text-navy">
           A full point of sale on any Android.
         </h2>
-        <p className="text-lead mt-5 max-w-[34rem] text-navy/70 md:mt-6">
+        <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
           Use your own phone or a handheld Android terminal.
         </p>
 
@@ -209,9 +206,8 @@ export function Showcase() {
             title="Tap to pay"
             visual={
               <Render
-                src="/ui/numo-tap.png"
+                src="/ui/till-tap.png"
                 alt="A customer phone showing Cashu.me's Ready to Scan sheet held over a handheld till running Numo, whose screen displays an amount in sats, a QR code, and Scan or Tap to Pay"
-                scale="scale-[1.12]"
               />
             }
           >
@@ -223,12 +219,11 @@ export function Showcase() {
 
           <Row
             flip
-            title="Bitcoin and cards, one till."
+            title="Bitcoin & cards all in one."
             visual={
               <Render
-                src="/ui/numo-card-tap-2.png"
+                src="/ui/till-card.png"
                 alt="A contactless credit card held over the reader on a handheld till running Numo, showing Stripe's tap-to-pay prompt for $38.00"
-                scale="scale-[1.06]"
               />
             }
           >
@@ -264,9 +259,8 @@ export function Showcase() {
             title="Inventory, tax and reports, built in."
             visual={
               <Render
-                src="/ui/numo-sales.png"
+                src="/ui/till-sales.png"
                 alt="A handheld till running Numo's Sales screen: $1,470.00 over the last 7 days, a daily bar chart, and a list of itemised sales"
-                scale="scale-[1.04]"
               />
             }
           >

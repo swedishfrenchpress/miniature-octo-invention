@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Sora } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,6 +24,13 @@ const protage = localFont({
     { path: "../fonts/GCProtage-SemiBold.ttf", weight: "600", style: "normal" },
   ],
 });
+
+/** The page runs edge to edge on notched phones (the `shell` gutter clears the
+ *  notch), and mobile browser chrome takes the Paper ground. */
+export const viewport: Viewport = {
+  themeColor: "#FBFAF7",
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Numo - Bitcoin Payments Made Simple",

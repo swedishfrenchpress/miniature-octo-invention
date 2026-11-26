@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "@/components/Button";
+import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import { BTCPayInvoices, type Invoice } from "./BTCPayInvoices";
 import { NumoApp, type NumoAppState } from "./NumoApp";
@@ -211,14 +210,14 @@ function aim(screen: HTMLElement, target: string) {
  *  - Both products are depicted from their real interfaces, frameless and side
  *    by side, and wrapped in `inert` so no simulated control enters the tab order.
  *  - Sales accumulate instead of rewinding: each loop is the next customer.
- *  - Reduced motion holds a single settled frame. Pause and Replay are real. */
+ *  - Reduced motion holds a single settled frame. The one control pauses and
+ *    resumes the loop. */
 export function BTCPayDemo() {
   const reducedMotion = usePrefersReducedMotion();
   const [state, setState] = useState<DemoState>(OPENING);
   const [isPaused, setIsPaused] = useState(false);
   const [inView, setInView] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const [run, setRun] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
   const clockRef = useRef<Clock | null>(null);
 
@@ -331,12 +330,7 @@ export function BTCPayDemo() {
     });
 
     return () => clock.cancel();
-  }, [hasStarted, reducedMotion, run]);
-
-  const handleReplay = useCallback(() => {
-    setIsPaused(false);
-    setRun((n) => n + 1);
-  }, []);
+  }, [hasStarted, reducedMotion]);
 
   const shown = reducedMotion ? POSTER : state;
 
@@ -364,20 +358,29 @@ export function BTCPayDemo() {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-caption text-navy/70">Sample store and invoice data.</p>
-
-        {!reducedMotion && (
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" size="sm" onClick={() => setIsPaused((p) => !p)}>
-              {isPaused ? "Resume" : "Pause"}
-            </Button>
-            <Button variant="secondary" size="sm" onClick={handleReplay}>
-              Replay
-            </Button>
-          </div>
-        )}
-      </div>
+      {/* The demo's one control. Reduced motion holds a still frame, so there is
+          nothing to pause and the row is left out. */}
+      {!reducedMotion && (
+        <div className="mt-6 flex justify-end md:mt-8">
+          <button
+            type="button"
+            onClick={() => setIsPaused((p) => !p)}
+            aria-label={isPaused ? "Play the demo" : "Pause the demo"}
+            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-navy transition-[background-color,transform] duration-150 hover:bg-surface/60 active:scale-[0.94]"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" className="size-4">
+              {isPaused ? (
+                <path d="M4.75 2.87v10.26a.75.75 0 0 0 1.14.64l8.3-5.13a.75.75 0 0 0 0-1.28l-8.3-5.13a.75.75 0 0 0-1.14.64Z" />
+              ) : (
+                <>
+                  <rect x="3.25" y="2.5" width="3.25" height="11" rx="1" />
+                  <rect x="9.5" y="2.5" width="3.25" height="11" rx="1" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 
 const DESCRIPTION =
@@ -112,42 +113,45 @@ const keySteps: SetupStep[] = [
   },
 ];
 
+/* The app's own screens, captured on a phone that is already connected: the key
+   field shows a blurred key, and the pay screen's QR is a sample, not a request. */
 const connectSteps: SetupStep[] = [
   {
     title: "Paste the key",
     body: (
       <>
-        Back in Numo, tap Paste, then Next. Numo checks the key with Stripe. Only a restricted key
-        is accepted: a secret key that starts with sk_ is refused.
+        Back in Numo, tap the paste icon in the Restricted key field, then Next. Numo checks the key
+        with Stripe. Only a restricted key is accepted: a secret key that starts with sk_ is
+        refused.
       </>
     ),
-  },
-  {
-    title: "Choose a location",
-    body: (
-      <>
-        Stripe needs to know where this device takes cards. Pick one of your Stripe locations, or
-        tap Add a new location and enter the address.
-      </>
-    ),
+    image: "/setup/stripe/numo-01-paste.png",
+    alt: "Numo's Connect Stripe screen: Paste a restricted key, with a Restricted key field, a Create the key in Stripe button, and Next.",
+    outline: { left: 84.4, top: 26.1, width: 11.7, height: 5.3 },
   },
   {
     title: "Run the setup check",
     body: (
       <>
-        Numo checks three things: this device, your Stripe key, and the card reader. When it says
-        Everything works, card payments are on.
+        Stripe needs to know where this device takes cards, so pick one of your Stripe locations or
+        tap Add a new location. Numo then checks three things: Device, Stripe and Reader. When it
+        says Ready to take cards, card payments are on.
       </>
     ),
+    image: "/setup/stripe/numo-02-check.png",
+    alt: "Numo's Check setup screen with Device, Stripe and Reader all passed, reading Ready to take cards.",
   },
   {
     title: "Take a card payment",
     body: (
       <>
-        Start a sale and choose Card. Your customer taps a card, phone or watch on your device. No
-        card reader needed.
+        Start a sale and tap Pay with card. Your customer taps a card, phone or watch on your
+        device. No card reader needed.
       </>
     ),
+    image: "/setup/stripe/numo-03-pay.png",
+    alt: "Numo's payment screen showing a QR code, the amount, and a Pay with card button at the bottom.",
+    outline: { left: 5.8, top: 89, width: 88.4, height: 5.75 },
   },
 ];
 
@@ -200,7 +204,7 @@ function Pairs({ items }: { items: readonly (readonly [string, string])[] }) {
       {items.map(([title, body]) => (
         <div key={title}>
           <dt className="text-title text-navy">{title}</dt>
-          <dd className="text-lead mt-3 max-w-[30rem] text-navy/70">{body}</dd>
+          <dd className="text-lead measure mt-3 text-navy/70">{body}</dd>
         </div>
       ))}
     </dl>
@@ -211,17 +215,20 @@ export default function StripeSetupPage() {
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
-        <div className="shell header-y">
-          <h1 className="text-display max-w-[9em] text-navy">Take cards with Stripe.</h1>
-          <p className="text-lead mt-5 max-w-[38rem] text-navy/70 md:mt-6">
-            Connect your own Stripe account and the same phone takes contactless cards, Apple Pay
-            and Google Pay. You need a Stripe account, Android 13 or newer with NFC, and about five
-            minutes. New to Numo? Start with the{" "}
-            <Link href="/setup" className={linkClass}>
-              setup guide
-            </Link>
-            .
-          </p>
+        <div className={PARTNER_HEADER}>
+          <PartnerPair partner="stripe" />
+          <div>
+            <h1 className="text-display max-w-[9em] text-navy">Take cards with Stripe.</h1>
+            <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
+              Connect your own Stripe account and the same phone takes contactless cards, Apple Pay
+              and Google Pay. You need a Stripe account, Android 13 or newer with NFC, and about
+              five minutes. New to Numo? Start with the{" "}
+              <Link href="/setup" className={linkClass}>
+                setup guide
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </header>
 
@@ -240,6 +247,7 @@ export default function StripeSetupPage() {
           heading="Connect it in Numo."
           headingId="connect-heading"
           steps={connectSteps}
+          screen="phoneTall"
         />
       </section>
 
@@ -248,7 +256,7 @@ export default function StripeSetupPage() {
           <h2 id="fixes-heading" className="text-h2 text-navy">
             If the check finds a problem.
           </h2>
-          <p className="text-lead mt-5 max-w-[34rem] text-navy/70 md:mt-6">
+          <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
             Numo names what is wrong and offers the fix. These are the ones you are most likely to
             see.
           </p>

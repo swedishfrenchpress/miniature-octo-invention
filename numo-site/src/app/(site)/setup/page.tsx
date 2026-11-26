@@ -130,7 +130,7 @@ export default function SetupPage() {
       <header className="bg-paper pt-[72px] md:pt-[84px]">
         <div className="shell header-y">
           <h1 className="text-display max-w-[8em] text-navy">From download to first sale.</h1>
-          <p className="text-lead mt-5 max-w-[38rem] text-navy/70 md:mt-6">
+          <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
             Five minutes on an Android phone with NFC and internet. For payouts, bring a Lightning
             address from Strike, Alby Go, Blink, Wallet of Satoshi, or any wallet that provides one.
           </p>
@@ -163,7 +163,7 @@ export default function SetupPage() {
           <div className="mt-block grid gap-14 md:grid-cols-2 md:gap-16">
             <div>
               <h3 className="text-title text-navy">Connect BTCPay Server</h3>
-              <p className="text-lead mt-3 max-w-[30rem] text-navy/70">
+              <p className="text-lead measure mt-3 text-navy/70">
                 Open Settings and tap BTCPay Server under Payments to link your store. Numo
                 generates store invoices at the till and syncs your catalog and your Lightning and
                 Cashu sales.
@@ -171,7 +171,7 @@ export default function SetupPage() {
             </div>
             <div id="cards" className="section-anchor">
               <h3 className="text-title text-navy">Take contactless cards with Stripe</h3>
-              <p className="text-lead mt-3 max-w-[30rem] text-navy/70">
+              <p className="text-lead measure mt-3 text-navy/70">
                 Connect your own Stripe account in Settings to accept contactless cards, Apple Pay,
                 and Google Pay on the same device. Card sales settle directly to Stripe at
                 Stripe&rsquo;s standard card processing fees and stay separate from Bitcoin in Numo.

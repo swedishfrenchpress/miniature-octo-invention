@@ -77,7 +77,7 @@ Other real assets available:
 
 - Setup guide screenshots of actual app UI — `numo-site/public/setup/01-welcome.png` through `07-payout-details.png`.
 - Wallet logos — `numo-site/public/wallets/`.
-- Studio hardware renders — `numo-site/public/ui/numo-tap.png`, `numo-card-tap-2.png`, `numo-sales.png`.
+- Studio hardware renders — `numo-site/public/ui/till-tap.png`, `till-card.png`, `till-sales.png`, each trimmed to the device itself.
 - BTCPay Server logo — `numo-site/public/btcpay-logo.svg`.
 - Product video and imagery — `1.mp4`, `2.mp4`, `hero-poster.jpg`, `og-image.jpg`.
 

@@ -29,7 +29,7 @@ export default function ReleasesPage() {
       <header className="bg-paper pt-[72px] md:pt-[84px]">
         <div className="shell header-y">
           <h1 className="text-display max-w-[14ch] text-navy">What&rsquo;s new in Numo.</h1>
-          <p className="text-lead mt-5 md:mt-6 max-w-[32rem] text-navy/70">
+          <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
             What&rsquo;s shipping in Numo, written for shop owners.
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function ReleasesPage() {
           <h2 id="latest-title" className="text-h2 mt-4 max-w-[14em] text-navy">
             {unbrokenHyphens(latest.title)}
           </h2>
-          <p className="text-lead mt-4 max-w-[38rem] text-navy/70 md:mt-5">{latest.summary}</p>
+          <p className="text-lead measure mt-4 text-navy/70 md:mt-5">{latest.summary}</p>
 
           {latest.heroImage && (
             <div className="mt-10">

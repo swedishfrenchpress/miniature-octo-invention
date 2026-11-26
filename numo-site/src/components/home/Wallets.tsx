@@ -61,11 +61,11 @@ function WalletGroup({
         </div>
         <p className="mt-2.5 max-w-[19rem] text-navy/70 [text-wrap:pretty]">{detail}</p>
       </div>
-      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-2.5 min-[375px]:grid-cols-2 sm:gap-3 lg:grid-cols-4">
         {wallets.map((wallet) => (
           <li
             key={wallet.name}
-            className="flex items-center gap-3 rounded-[14px] border border-line bg-surface px-3.5 py-2.5"
+            className="flex items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3 py-2.5 sm:gap-3 sm:px-3.5"
           >
             <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-inset ring-navy/10">
               <Image
@@ -94,7 +94,7 @@ export function Wallets() {
         <h2 className="text-display max-w-[16ch] text-navy">
           Your customers already have the wallet.
         </h2>
-        <p className="text-lead mt-5 max-w-[34rem] text-navy/70 md:mt-6">
+        <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
           Works with any Lightning wallet. Tap to pay works with Cashu wallets.
         </p>
 

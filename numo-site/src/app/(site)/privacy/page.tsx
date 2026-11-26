@@ -23,7 +23,7 @@ export default function PrivacyPage() {
       <header className="bg-paper pt-[72px] md:pt-[84px]">
         <div className="shell header-y">
           <h1 className="text-display text-navy">Privacy policy</h1>
-          <p className="text-lead mt-5 md:mt-6 max-w-[34rem] text-navy/70">
+          <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
             Covers the Numo Android app. This website uses privacy-friendly Vercel Analytics.
           </p>
         </div>

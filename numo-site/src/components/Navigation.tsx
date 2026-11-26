@@ -19,8 +19,8 @@ const ANCHOR_LINKS: NavItem[] = [
 
 /** Dedicated routes (client-side page navigation). */
 const ROUTE_LINKS: NavItem[] = [
-  { label: "BTCPay", href: "/btcpay" },
   { label: "Setup", href: "/setup" },
+  { label: "Stripe", href: "/setup/stripe" },
   { label: "Releases", href: "/releases" },
 ];
 
@@ -179,10 +179,14 @@ export function Navigation() {
     return () => cancelAnimationFrame(frame);
   }, [isHome]);
 
+  // A route link is current on its own page and the pages beneath it, unless a
+  // more specific link claims the page: on /setup/stripe that is Stripe, not Setup.
+  const matches = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
   const isActive = (item: NavItem) =>
     item.id
       ? isHome && activeSection === item.id
-      : pathname === item.href || pathname.startsWith(`${item.href}/`);
+      : matches(item.href) &&
+        !ROUTE_LINKS.some((other) => other.href.length > item.href.length && matches(other.href));
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -269,8 +273,10 @@ export function Navigation() {
           </a>
 
           {/* Over the hero, keep nav Download quiet so the hero's Fresh Paint Mint
-              primary button owns the viewport; once scrolled, flip to solid navy. */}
-          <div className={onDark ? "hidden md:block" : "block"}>
+              primary button owns the viewport; once scrolled, flip to solid navy.
+              Below 360px there is no room for it beside the menu button, and the
+              menu carries both downloads, so it steps aside. */}
+          <div className={onDark ? "hidden md:block" : "hidden min-[360px]:block"}>
             <DownloadMenu variant={onDark ? "ghost-inverse" : "primary"} size="md" align="right" />
           </div>
 
