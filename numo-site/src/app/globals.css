@@ -46,6 +46,9 @@
   /* Motion curves: confident exponential deceleration, no elastic bounce. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  /* For a thing that stays on screen and changes shape or place, like the menu
+     icon turning into a cross: it eases out of one state and into the other. */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -107,6 +110,26 @@
    but short, and gets the stacked layout instead. */
 @custom-variant tall (@media (min-height: 40rem));
 
+/* `hover:` means two things here, so one class gives every control its feedback
+   on every kind of input:
+   - with a mouse or trackpad, the style shows on hover. The query asks for a
+     precise pointer as well as hover, because some touch phones claim they can
+     hover and would otherwise leave the style stuck on after a tap.
+   - under a finger there is no hover, so the same style shows while the control
+     is pressed and lets go the moment the finger lifts.
+   Tailwind's stock `hover:` does only the first half, which leaves a tapped
+   control with no response at all (the browser's own tap flash is switched off). */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+  &:active {
+    @slot;
+  }
+}
+
 /* The page column: 1152px of content, centered, with the gutter either side.
    The gutter widens on mid-width windows so content never hugs the edge. On a
    notched phone held sideways the page runs edge to edge (`viewport-fit=cover`)
@@ -151,6 +174,24 @@
 
 html {
   caret-color: var(--navy);
+}
+
+/* Touch. A control never needs double-tap zoom, so say so and its tap is acted
+   on at once instead of after the browser waits for a second tap. */
+a,
+button,
+summary,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* A control's label is not text to select: holding a finger on a button should
+   not highlight its words. Links and page copy stay selectable. */
+button,
+summary,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* No `scroll-behavior: smooth` on html. In-page anchors scroll explicitly
@@ -279,12 +320,89 @@ body {
   padding: 12px 16px;
   border-radius: 10px;
   font-size: 0.875rem;
+  /* No transition: it answers a keystroke, and a keystroke gets an instant reply. */
   transform: translateY(-200%);
-  transition: transform 0.2s var(--ease-out-expo);
 }
 
 .skip-link:focus-visible {
   transform: translateY(0);
+}
+
+/* ===== Arrivals =====
+   The only entrances on the site, all on the home page. Reading pages have none.
+
+   1. The hero's words arrive once as the page opens: headline, intro, buttons,
+      70ms apart, then the logo strip. It is CSS alone, so it needs no script,
+      and it fills backwards only, so once it has played nothing is left on the
+      elements. */
+.hero-rise {
+  animation: hero-rise 600ms var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.hero-fade {
+  animation: hero-fade 500ms linear 320ms backwards;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 2. A feature row arrives once as it scrolls into view (see Reveal.tsx): its
+      picture rises and fades in, its words 80ms behind. "Armed" is the hidden
+      start, set only on rows still below the window, with no transition so the
+      hiding is never seen. */
+[data-reveal] > .reveal-part {
+  transition:
+    opacity 700ms var(--ease-out-expo),
+    translate 700ms var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="armed"] > .reveal-part {
+  opacity: 0;
+  translate: 0 16px;
+  transition: none;
+}
+
+/* 3. Things that arrive inside a row, like the payout notifications, land from
+      just above once the row itself is in. */
+[data-reveal] .reveal-drop {
+  transition:
+    opacity 450ms var(--ease-out-expo),
+    translate 450ms var(--ease-out-expo),
+    scale 450ms var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="armed"] .reveal-drop {
+  opacity: 0;
+  translate: 0 -8px;
+  scale: 0.98;
+  transition: none;
+}
+
+/* 4. The fee strike waits for its row. While armed it has no animation, so the
+      loop begins from its first frame the moment the row arrives and the visitor
+      sees the fee being cut. */
+[data-reveal="armed"] .fee-strike-line,
+[data-reveal="armed"] .fee-old-value,
+[data-reveal="armed"] .fee-zero-badge {
+  animation: none;
+}
+
+[data-reveal="armed"] .fee-strike-line {
+  transform: scaleX(0);
+  opacity: 0;
 }
 
 /* ===== Fee Slash Visual =====
@@ -342,13 +460,17 @@ body {
 
 /* ===== Hero accepts marquee =====
    Four identical rows side by side; sliding by one row's width (25%) loops
-   seamlessly. Pauses cleanly on hover; static under reduced motion. */
+   seamlessly. Pauses under a mouse pointer; static under reduced motion. */
 .marquee-track {
   animation: marquee 36s linear infinite;
 }
 
-.marquee-mask:hover .marquee-track {
-  animation-play-state: paused;
+/* Only a real pointer can pause it. A finger has no hover: a tap would leave
+   the strip stuck paused until the next tap somewhere else. */
+@media (hover: hover) and (pointer: fine) {
+  .marquee-mask:hover .marquee-track {
+    animation-play-state: paused;
+  }
 }
 
 .marquee-mask {

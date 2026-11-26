@@ -62,11 +62,11 @@ function NavLink({
         ? "bg-white/15 text-white"
         : "text-white/85 hover:bg-white/10 hover:text-white"
       : active
-        ? "bg-sunken text-navy ring-1 ring-inset ring-navy/10"
+        ? "bg-sunken text-navy"
         : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
   }`;
 
-  const mobileClass = `flex min-h-[54px] w-full items-center justify-between text-[1.0625rem] font-medium transition-colors duration-150 ${
+  const mobileClass = `flex min-h-[54px] w-full items-center justify-between text-[1.0625rem] font-medium transition-colors duration-150 active:opacity-60 ${
     active ? "text-navy" : "text-navy/70"
   }`;
 
@@ -220,7 +220,7 @@ export function Navigation() {
         <Link
           href="/"
           aria-label="Numo home"
-          className="-ml-1.5 flex h-12 shrink-0 items-center rounded-control px-1.5"
+          className="-ml-1.5 flex h-12 shrink-0 items-center rounded-control px-1.5 active:opacity-60"
         >
           <Logo tone={onDark ? "inverse" : "ink"} size="lg" />
         </Link>
@@ -291,15 +291,19 @@ export function Navigation() {
               onDark ? "text-white hover:bg-white/10" : "text-navy hover:bg-navy/[0.05]"
             }`}
           >
+            {/* Both bars rest on the centre line and are only ever moved by
+                transform: apart for the menu icon, crossed for the close icon.
+                They travel the same distance in the same time, so the icon
+                folds evenly instead of one bar jumping. */}
             <span className="relative block h-3.5 w-[22px]" aria-hidden="true">
               <span
-                className={`absolute inset-x-0 h-[2px] rounded-full bg-current transition-all duration-300 ease-[var(--ease-smooth)] ${
-                  isMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                className={`absolute inset-x-0 top-1/2 -mt-px h-[2px] rounded-full bg-current transition-[translate,rotate] duration-200 ease-[var(--ease-in-out)] ${
+                  isMenuOpen ? "rotate-45" : "-translate-y-[6px]"
                 }`}
               />
               <span
-                className={`absolute inset-x-0 h-[2px] rounded-full bg-current transition-all duration-300 ease-[var(--ease-smooth)] ${
-                  isMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                className={`absolute inset-x-0 top-1/2 -mt-px h-[2px] rounded-full bg-current transition-[translate,rotate] duration-200 ease-[var(--ease-in-out)] ${
+                  isMenuOpen ? "-rotate-45" : "translate-y-[6px]"
                 }`}
               />
             </span>
@@ -307,7 +311,8 @@ export function Navigation() {
         </div>
       </div>
 
-      {/* Mobile disclosure panel */}
+      {/* Mobile disclosure panel. It can be taller than a short window (a phone on
+          its side), so it scrolls inside the screen instead of running off it. */}
       <div
         id="mobile-menu"
         className={`grid bg-paper transition-[grid-template-rows,visibility] duration-300 ease-[var(--ease-smooth)] md:hidden ${
@@ -316,7 +321,7 @@ export function Navigation() {
       >
         <div
           ref={panelRef}
-          className="overflow-hidden"
+          className="max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain"
           aria-hidden={!isMenuOpen}
           inert={!isMenuOpen}
         >
@@ -341,7 +346,7 @@ export function Navigation() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMenu}
-                  className="flex min-h-[54px] w-full items-center gap-2.5 text-[1.0625rem] font-medium text-navy/70"
+                  className="flex min-h-[54px] w-full items-center gap-2.5 text-[1.0625rem] font-medium text-navy/70 active:opacity-60"
                 >
                   <GitHubIcon className="h-[18px] w-[18px]" />
                   GitHub

@@ -50,7 +50,7 @@ function AcceptsRow({ hidden }: { hidden?: boolean }) {
  *  wide viewports full and loop seamlessly; static under reduced motion. */
 function AcceptsMarquee() {
   return (
-    <div className="relative">
+    <div className="hero-fade relative">
       <div
         className="marquee-mask shell overflow-hidden"
         aria-label="Numo accepts"
@@ -70,6 +70,9 @@ function AcceptsMarquee() {
 export function Hero() {
   const [current, setCurrent] = useState(0);
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
+  const section = useRef<HTMLElement>(null);
+  // Starts true: the hero is the top of the page, so it should not wait a tick to play.
+  const [inView, setInView] = useState(true);
   const reducedMotion = usePrefersReducedMotion();
 
   const onEnded = useCallback(() => {
@@ -77,20 +80,37 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
+    const el = section.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // A video starts from its first frame when its turn comes.
+  useEffect(() => {
+    const video = videos.current[current];
+    if (video) video.currentTime = 0;
+  }, [current]);
+
+  // It plays only while the hero is on screen. Scrolled away, it holds its
+  // frame instead of decoding video nobody is watching, and picks up where it
+  // stopped when the hero comes back.
+  useEffect(() => {
     const video = videos.current[current];
     if (!video) return;
-    if (reducedMotion) {
+    if (reducedMotion || !inView) {
       video.pause();
       return;
     }
-    video.currentTime = 0;
     video.play().catch(() => {
       // Autoplay can be refused; the poster frame stands in.
     });
-  }, [current, reducedMotion]);
+  }, [current, reducedMotion, inView]);
 
   return (
     <section
+      ref={section}
       id="hero"
       className="relative flex min-h-[640px] flex-col justify-end bg-ink-deep pt-28 md:h-[90svh] md:max-h-[900px]"
     >
@@ -117,14 +137,14 @@ export function Hero() {
       </div>
 
       <div className="shell relative z-10 pb-12 pt-16 md:pb-20">
-        <h1 className="text-display max-w-[48rem] text-white">
+        <h1 className="hero-rise text-display max-w-[48rem] text-white">
           Bitcoin payments as easy as Apple Pay.
         </h1>
-        <p className="text-lead mt-5 md:mt-6 max-w-[30rem] text-white/85">
+        <p className="hero-rise text-lead mt-5 max-w-[30rem] text-white/85 [--i:1] md:mt-6">
           Tap to take Bitcoin on any Android with&nbsp;NFC.{" "}
           <span className="whitespace-nowrap">Zero platform fees.</span>
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
+        <div className="hero-rise mt-8 flex flex-wrap items-center gap-3 [--i:2] md:mt-10">
           <DownloadMenu variant="mint" size="lg" align="left" direction="up" />
           <Button href="/setup" variant="ghost-inverse" size="lg">
             Setup guide

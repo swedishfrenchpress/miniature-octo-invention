@@ -28,6 +28,12 @@ type DownloadMenuProps = {
  *  transparent at the moment of click instead of dropping merchants cold onto
  *  a raw GitHub releases list. Implemented as a standard disclosure popover
  *  so keyboard Tab and screen-reader link navigation stay predictable. */
+/** The corner of the panel that touches its button, which it grows out of. */
+const ORIGIN = {
+  down: { left: "origin-top-left", right: "origin-top-right" },
+  up: { left: "origin-bottom-left", right: "origin-bottom-right" },
+} as const;
+
 export function DownloadMenu({
   variant,
   size = "md",
@@ -102,9 +108,9 @@ export function DownloadMenu({
         <div
           id={popoverId}
           aria-label="Download options for Android"
-          className={`absolute z-50 w-[296px] max-w-[calc(100vw-2rem)] rounded-card bg-surface p-2 text-left text-navy ring-1 ring-navy/15 ${
+          className={`absolute z-50 w-[296px] max-w-[calc(100vw-2rem)] rounded-card bg-surface p-2 text-left text-navy ring-1 ring-navy/15 transition-[opacity,scale] duration-150 ease-[var(--ease-out-expo)] starting:scale-[0.97] starting:opacity-0 ${
             direction === "up" ? "bottom-full mb-2.5" : "top-full mt-2.5"
-          } ${align === "right" ? "right-0" : "left-0"}`}
+          } ${align === "right" ? "right-0" : "left-0"} ${ORIGIN[direction][align]}`}
         >
           <a
             href={DOWNLOAD_APK_URL}

@@ -366,18 +366,30 @@ export function BTCPayDemo() {
             type="button"
             onClick={() => setIsPaused((p) => !p)}
             aria-label={isPaused ? "Play the demo" : "Pause the demo"}
-            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-navy transition-[background-color,transform] duration-150 hover:bg-surface/60 active:scale-[0.94]"
+            className="relative flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-navy transition-[background-color,scale] duration-150 ease-[var(--ease-out-expo)] hover:bg-surface/60 active:scale-[0.97]"
           >
-            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" className="size-4">
-              {isPaused ? (
-                <path d="M4.75 2.87v10.26a.75.75 0 0 0 1.14.64l8.3-5.13a.75.75 0 0 0 0-1.28l-8.3-5.13a.75.75 0 0 0-1.14.64Z" />
-              ) : (
-                <>
-                  <rect x="3.25" y="2.5" width="3.25" height="11" rx="1" />
-                  <rect x="9.5" y="2.5" width="3.25" height="11" rx="1" />
-                </>
-              )}
-            </svg>
+            {/* Both icons are always there; the one that applies fades and grows
+                in as the other fades and shrinks out, so the swap is not a jump. */}
+            {[true, false].map((play) => (
+              <svg
+                key={play ? "play" : "pause"}
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden="true"
+                className={`absolute size-4 transition-[opacity,scale,filter] duration-150 ease-[var(--ease-out-expo)] ${
+                  play === isPaused ? "" : "scale-75 opacity-0 blur-[2px]"
+                }`}
+              >
+                {play ? (
+                  <path d="M4.75 2.87v10.26a.75.75 0 0 0 1.14.64l8.3-5.13a.75.75 0 0 0 0-1.28l-8.3-5.13a.75.75 0 0 0-1.14.64Z" />
+                ) : (
+                  <>
+                    <rect x="3.25" y="2.5" width="3.25" height="11" rx="1" />
+                    <rect x="9.5" y="2.5" width="3.25" height="11" rx="1" />
+                  </>
+                )}
+              </svg>
+            ))}
           </button>
         </div>
       )}

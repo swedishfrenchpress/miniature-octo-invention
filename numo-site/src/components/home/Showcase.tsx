@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { Reveal } from "@/components/Reveal";
 
 /** Consistent warm sunken stage so hardware renders, the slashed fee graphic,
  *  and payout notifications share the same architectural frame and visual gravity.
@@ -94,10 +95,14 @@ function PayoutNotifications() {
           aria-label="Example notifications as payments land in a Lightning wallet and in Stripe"
           className="flex flex-col gap-3.5"
         >
-          {NOTIFICATIONS.map((n) => (
+          {/* They land one after the other once the row is in, like two
+              payments arriving: the first as the tile settles, the second a beat later. */}
+          {NOTIFICATIONS.map((n, index) => (
             <li
               key={n.app}
-              className="flex items-center gap-4 rounded-[18px] bg-surface px-4 py-4"
+              className={`reveal-drop flex items-center gap-4 rounded-[18px] bg-surface px-4 py-4 ${
+                index === 0 ? "[--reveal-delay:300ms]" : "[--reveal-delay:650ms]"
+              }`}
             >
               {n.icon}
               <div className="min-w-0 flex-1">
@@ -172,19 +177,19 @@ function Row({
   flip?: boolean;
 }) {
   return (
-    <div
+    <Reveal
       className={`grid items-center gap-8 md:gap-12 lg:gap-20 ${
         flip
           ? "md:grid-cols-[1fr_1.15fr] xl:grid-cols-[1fr_1.3fr]"
           : "md:grid-cols-[1.15fr_1fr] xl:grid-cols-[1.3fr_1fr]"
       }`}
     >
-      <div className={flip ? "md:order-2" : ""}>{visual}</div>
-      <div className="max-w-[32rem]">
+      <div className={`reveal-part ${flip ? "md:order-2" : ""}`}>{visual}</div>
+      <div className="reveal-part max-w-[32rem] [--reveal-delay:80ms]">
         <h3 className="text-h2 text-navy">{title}</h3>
         {children}
       </div>
-    </div>
+    </Reveal>
   );
 }
 

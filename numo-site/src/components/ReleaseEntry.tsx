@@ -78,7 +78,7 @@ export function ReleaseEntry({ release }: Props) {
           href={releaseNotesHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex min-h-11 items-center text-sm font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy"
+          className="mt-8 inline-flex min-h-11 items-center text-sm font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60"
         >
           Full release notes on GitHub
         </a>

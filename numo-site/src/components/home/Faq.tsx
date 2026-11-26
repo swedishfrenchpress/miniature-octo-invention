@@ -6,7 +6,7 @@ import Link from "next/link";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 
 const linkClass =
-  "font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy";
+  "font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
 
 const FAQ_DATA: { id: string; q: string; a: ReactNode }[] = [
   {

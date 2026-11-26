@@ -31,7 +31,7 @@ export const metadata: Metadata = {
    written as the app capitalizes them, and that is enough to pick them out. */
 const section = "section-anchor section-y border-t border-line";
 const linkClass =
-  "underline decoration-navy/40 underline-offset-[3px] transition-colors duration-150 hover:text-navy hover:decoration-navy";
+  "underline decoration-navy/40 underline-offset-[3px] transition-colors duration-150 hover:text-navy hover:decoration-navy active:opacity-60";
 
 function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
   return (

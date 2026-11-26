@@ -44,7 +44,7 @@ export function Logo({
   return (
     <Wordmark
       className={`block w-auto transition-colors duration-200 ${
-        size === "lg" ? "h-6 lg:h-7" : "h-[22px]"
+        size === "lg" ? "h-6 lg:h-7" : "h-8"
       } ${tone === "ink" ? "text-navy" : "text-white"}`}
     />
   );

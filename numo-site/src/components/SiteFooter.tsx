@@ -101,7 +101,7 @@ export function SiteFooter() {
         {/* Every destination */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 py-16 md:py-20 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" aria-label="Numo home" className="inline-flex min-h-11 items-center">
+            <Link href="/" aria-label="Numo home" className="inline-flex min-h-11 items-center active:opacity-60">
               <Logo tone="inverse" />
             </Link>
             <p className="mt-3 max-w-[19rem] text-sm leading-relaxed text-white/70">

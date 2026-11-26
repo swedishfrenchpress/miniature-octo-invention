@@ -253,7 +253,7 @@ export function SetupSequence({
               }}
               data-index={index}
               data-current={index === current}
-              className="group grid grid-cols-[2.25rem_minmax(0,1fr)] content-start pb-14 last:pb-0 md:tall:min-h-[34vh] md:tall:pb-12 md:tall:last:pb-0 lg:grid-cols-[3rem_minmax(0,1fr)]"
+              className="group grid grid-cols-[2.25rem_minmax(0,1fr)] content-start pb-14 last:pb-0 md:tall:min-h-[34svh] md:tall:pb-12 md:tall:last:pb-0 lg:grid-cols-[3rem_minmax(0,1fr)]"
             >
               <span
                 aria-hidden="true"
@@ -278,7 +278,9 @@ export function SetupSequence({
       </div>
 
       {/* One pinned screen, centered in the window under the nav. The steps'
-          screenshots are stacked in it and cross-fade as the current step changes.
+          screenshots are stacked in it. When the step changes, the new screen
+          fades in on top while the old one stays solid underneath and is only
+          dropped once it is covered, so two screens never show through each other.
           It is as tall as the window allows and never wider than its column. */}
       <div className="hidden md:tall:block">
         <div
@@ -293,8 +295,10 @@ export function SetupSequence({
               outline={step.outline}
               kind={screen}
               sizes="(min-width: 768px) 480px, 1px"
-              className={`absolute inset-0 transition-opacity duration-500 ease-[var(--ease-smooth)] ${
-                index === current ? "opacity-100" : "opacity-0"
+              className={`absolute inset-0 transition-opacity ${
+                index === current
+                  ? "z-10 opacity-100 duration-500 ease-[var(--ease-smooth)]"
+                  : "opacity-0 delay-500 duration-0"
               }`}
             />
           ))}

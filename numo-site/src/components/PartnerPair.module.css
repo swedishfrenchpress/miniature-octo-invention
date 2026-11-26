@@ -1,10 +1,10 @@
 /* The pair's one entrance: the two tiles slide together once, as if docking. */
 .left {
-  animation: dock-left 420ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: dock-left 420ms var(--ease-out-expo) both;
 }
 
 .right {
-  animation: dock-right 420ms cubic-bezier(0.23, 1, 0.32, 1) 60ms both;
+  animation: dock-right 420ms var(--ease-out-expo) 60ms both;
 }
 
 @keyframes dock-left {

@@ -22,7 +22,7 @@ type ButtonProps = {
 };
 
 export const BUTTON_BASE =
-  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-control font-medium tracking-[-0.005em] transition-[background-color,color,transform] duration-150 active:scale-[0.98]";
+  "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-control font-medium tracking-[-0.005em] transition-[background-color,color,scale] duration-150 ease-[var(--ease-out-expo)] active:scale-[0.97]";
 
 export const BUTTON_SIZE: Record<ButtonSize, string> = {
   sm: "h-9 px-3.5 text-sm after:absolute after:-inset-y-1 after:inset-x-0 after:content-['']",
