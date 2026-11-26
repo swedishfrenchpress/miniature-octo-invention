@@ -4,7 +4,7 @@
   /* Ink: primary typography, primary controls on light, and the closing footer ground. */
   --navy: #0A2540;
   --navy-light: #1a3a5c; /* primary button hover */
-  /* Device bezels: a shade deeper than navy so dark app screens still carry an edge. */
+  /* The hero's ground under its video: a shade deeper than navy. */
   --ink-deep: #06182B;
 
   /* Accent (One Coat Rule): logo tile, dark-surface primary CTA, success confirmation, focus ring. */
@@ -189,6 +189,11 @@
 
 html {
   caret-color: var(--navy);
+  /* With the clip on body below, this is what keeps the page exactly as wide as
+     the window. If the root were left to scroll sideways, one thing too wide
+     anywhere on a page would make a phone widen the whole page to fit it, and
+     the fixed nav bar, with its menu button, would stretch off the screen. */
+  overflow-x: hidden;
 }
 
 /* Touch. A control never needs double-tap zoom, so say so and its tap is acted
@@ -229,7 +234,13 @@ summary,
 body {
   background: var(--paper);
   color: var(--navy);
-  overflow-x: hidden;
+  /* Clip, not hidden: clipping does not make body a scroll box, so the pinned
+     screens in the guides still stick to the window. */
+  overflow-x: clip;
+  /* A string with nowhere to break (a link, a Lightning address, a file name,
+     one very long word in a translated heading) breaks where it must instead of
+     running out of its column. Ordinary words are never split. */
+  overflow-wrap: anywhere;
   line-height: 1.6;
 }
 

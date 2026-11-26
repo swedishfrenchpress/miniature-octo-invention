@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { SHARE_IMAGE } from "@/lib/shareImage";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
+import { breakData } from "@/breakdata";
+import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 
 export const metadata: Metadata = {
   title: "Set up Numo - Merchant Guide",
@@ -127,7 +129,13 @@ const payoutSteps: SetupStep[] = [
   },
 ];
 
-export default function SetupPage() {
+// Warns if a screenshot is missing or is not the shape of its frame.
+checkGuide("src/app/(site)/setup/page.tsx", "Open your till.", tillSteps, "phone");
+checkGuide("src/app/(site)/setup/page.tsx", "Automatic payouts.", payoutSteps, "phone");
+
+export default async function SetupPage() {
+  const swap = await breakData();
+
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
@@ -145,7 +153,11 @@ export default function SetupPage() {
         aria-labelledby="onboarding-heading"
         className={`${section} bg-sunken`}
       >
-        <SetupSequence heading="Open your till." headingId="onboarding-heading" steps={tillSteps} />
+        <SetupSequence
+          heading="Open your till."
+          headingId="onboarding-heading"
+          steps={withExistingScreenshots(swap.tillSteps ?? tillSteps)}
+        />
       </section>
 
       <section id="lightning" aria-labelledby="lightning-heading" className={`${section} bg-paper`}>
@@ -153,7 +165,7 @@ export default function SetupPage() {
           heading="Automatic payouts."
           headingId="lightning-heading"
           intro="Enter your Lightning address, which reads like you@wallet.com, and sales sweep to your own wallet automatically."
-          steps={payoutSteps}
+          steps={withExistingScreenshots(swap.payoutSteps ?? payoutSteps)}
         />
       </section>
 

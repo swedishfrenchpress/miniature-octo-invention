@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { FULL_RELEASE_NOTES_URL, releases } from "@/data/releases";
-import { ReleaseEntry, unbrokenHyphens } from "@/components/ReleaseEntry";
+import {
+  ReleaseEntry,
+  formatReleaseDate,
+  unbrokenHyphens,
+  versionTag,
+} from "@/components/ReleaseEntry";
 import { ReleaseImage } from "@/components/ReleaseImage";
 import { Button } from "@/components/Button";
+import { breakData } from "@/breakdata";
+import { checkReleases, withExistingReleasePictures } from "@/data/checkContent";
 
 export const metadata: Metadata = {
   title: "Releases - Numo",
@@ -12,17 +19,14 @@ export const metadata: Metadata = {
 
 const DEFAULT_DOWNLOAD = FULL_RELEASE_NOTES_URL;
 
-function formatFullDate(iso: string) {
-  return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-}
+// Warns about a date that is not real, a version listed twice, an empty title,
+// or a picture that is missing or the wrong shape. It does not stop the build.
+checkReleases(releases);
 
-export default function ReleasesPage() {
-  const [latest, ...older] = releases;
+export default async function ReleasesPage() {
+  const [latest, ...older] = withExistingReleasePictures((await breakData()).releases ?? releases);
   const latestHighlights = latest.highlights ?? [];
+  const latestDate = formatReleaseDate(latest.date);
 
   return (
     <>
@@ -37,7 +41,7 @@ export default function ReleasesPage() {
 
       {/* Featured latest release on warm sunken ground */}
       <section
-        id={`v${latest.version}`}
+        id={versionTag(latest.version)}
         aria-labelledby="latest-title"
         className="section-y scroll-mt-28 border-t border-line bg-sunken"
       >
@@ -46,8 +50,8 @@ export default function ReleasesPage() {
             <span className="tabular inline-flex items-center rounded-full bg-mint-soft px-2.5 py-0.5 font-semibold text-navy ring-1 ring-inset ring-navy/10">
               Latest
             </span>
-            <span className="tabular font-semibold text-navy">v{latest.version}</span>
-            <time dateTime={latest.date}>{formatFullDate(latest.date)}</time>
+            <span className="tabular font-semibold text-navy">{versionTag(latest.version)}</span>
+            {latestDate && <time dateTime={latest.date}>{latestDate}</time>}
           </p>
 
           <h2 id="latest-title" className="text-h2 mt-4 max-w-[14em] text-navy">
@@ -66,7 +70,9 @@ export default function ReleasesPage() {
               {latestHighlights.map((h, i) => (
                 <div key={i}>
                   <dt className="text-h3 max-w-[35rem] text-navy">{h.title}</dt>
-                  <dd className="mt-2 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
+                  {h.body && (
+                    <dd className="mt-2 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
+                  )}
                   {h.image && (
                     <div className="mt-6 max-w-[720px]">
                       <ReleaseImage image={h.image} />
@@ -84,7 +90,7 @@ export default function ReleasesPage() {
 
           <div className="mt-12">
             <Button href={latest.downloadUrl ?? DEFAULT_DOWNLOAD} variant="primary" size="md" external>
-              Download v{latest.version}
+              Download {versionTag(latest.version)}
             </Button>
           </div>
         </div>
@@ -101,8 +107,10 @@ export default function ReleasesPage() {
               Earlier releases
             </h2>
             <div>
-              {older.map((release) => (
-                <ReleaseEntry key={release.version} release={release} />
+              {/* The position is part of the key, so a version listed twice by
+                  mistake still draws both entries. */}
+              {older.map((release, i) => (
+                <ReleaseEntry key={`${release.version}-${i}`} release={release} />
               ))}
             </div>
           </div>

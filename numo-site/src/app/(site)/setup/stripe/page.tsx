@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { SHARE_IMAGE } from "@/lib/shareImage";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
+import { breakData } from "@/breakdata";
+import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 
 const DESCRIPTION =
   "Create a restricted Stripe key, paste it into Numo, choose a location and run the setup check to take contactless cards on the same Android phone.";
@@ -214,7 +216,13 @@ function Pairs({ items }: { items: readonly (readonly [string, string])[] }) {
   );
 }
 
-export default function StripeSetupPage() {
+// Warns if a screenshot is missing or is not the shape of its frame.
+checkGuide("src/app/(site)/setup/stripe/page.tsx", "Create a key in Stripe.", keySteps, "mobileWeb");
+checkGuide("src/app/(site)/setup/stripe/page.tsx", "Connect it in Numo.", connectSteps, "phoneTall");
+
+export default async function StripeSetupPage() {
+  const swap = await breakData();
+
   return (
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
@@ -240,7 +248,7 @@ export default function StripeSetupPage() {
           heading="Create a key in Stripe."
           headingId="key-heading"
           intro="Numo connects with a restricted key: a Stripe key that can only do what you allow. This one can start the card reader and list your locations. It can't move money."
-          steps={keySteps}
+          steps={withExistingScreenshots(swap.keySteps ?? keySteps)}
           screen="mobileWeb"
         />
       </section>
@@ -249,7 +257,7 @@ export default function StripeSetupPage() {
         <SetupSequence
           heading="Connect it in Numo."
           headingId="connect-heading"
-          steps={connectSteps}
+          steps={withExistingScreenshots(swap.connectSteps ?? connectSteps)}
           screen="phoneTall"
         />
       </section>

@@ -6,9 +6,11 @@ import Link from "next/link";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 
 const linkClass =
-  "font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
+  "text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
 
-const FAQ_DATA: { id: string; q: string; a: ReactNode }[] = [
+export type FaqItem = { id: string; q: string; a: ReactNode };
+
+const FAQ_DATA: FaqItem[] = [
   {
     id: "what",
     q: "What is Numo?",
@@ -86,7 +88,7 @@ const FAQ_DATA: { id: string; q: string; a: ReactNode }[] = [
   },
 ];
 
-export function Faq() {
+export function Faq({ items = FAQ_DATA }: { items?: FaqItem[] }) {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
@@ -95,7 +97,7 @@ export function Faq() {
         <h2 className="text-h2 text-navy">Frequently asked questions</h2>
 
         <div className="border-t border-line">
-          {FAQ_DATA.map((faq) => {
+          {items.map((faq) => {
             const open = openId === faq.id;
             return (
               <div key={faq.id} className="border-b border-line">

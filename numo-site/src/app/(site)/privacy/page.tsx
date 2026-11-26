@@ -15,7 +15,7 @@ const NETWORK_SERVICES = [
 ];
 
 const linkClass =
-  "font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
+  "text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
 
 export default function PrivacyPage() {
   return (

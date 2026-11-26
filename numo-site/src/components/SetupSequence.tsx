@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { SCREEN_SIZE, type ScreenKind } from "./setupScreens";
 
 /** Warm paper blur placeholder so a screenshot settles gently instead of
  *  flashing an empty rounded rectangle before it decodes. */
@@ -15,8 +16,8 @@ type Outline = { left: number; top: number; width: number; height: number };
 export type SetupStep = {
   title: string;
   body: ReactNode;
-  /** A real screenshot of this step. A sequence either illustrates every step
-   *  or none of them. */
+  /** A real screenshot of this step. A step may go without one: it is then shown
+   *  as words alone, and beside it the screen of the step before stays up. */
   image?: string;
   alt?: string;
   /** The control this step asks the reader to tap. */
@@ -24,31 +25,41 @@ export type SetupStep = {
   /** The same step captured as a whole desktop browser window, for a web page
    *  the reader may just as well open on a computer. When every step has one,
    *  phones keep `image` and anything wider shows this, so the screenshot always
-   *  looks like the screen the reader is on. */
+   *  looks like the screen the reader is on. If any step lacks one, every width
+   *  gets the phone captures. */
   desktop?: { image: string; outline?: Outline };
 };
 
 /** What the screenshots in a sequence are of. Every image in one sequence shares
  *  the shape, so they can stack and cross-fade in one frame. */
 const SCREENS = {
-  /** A phone screen, 1080 x 2340. */
-  phone: { width: 1080, height: 2340, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
-  /** A taller phone screen, 1080 x 2400. */
-  phoneTall: { width: 1080, height: 2400, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
-  /** A web page as it appears in a phone's browser, cropped to the page itself:
-   *  824 x 1358. */
-  mobileWeb: { width: 824, height: 1358, radius: "rounded-[1.5rem]", inline: "max-w-[20rem]" },
-  /** A whole desktop browser window, top bar to bottom bar, 16:9: 2176 x 1224.
-   *  It is never set wider than fits in the window under the nav. */
+  phone: { ...SCREEN_SIZE.phone, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
+  phoneTall: { ...SCREEN_SIZE.phoneTall, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
+  mobileWeb: { ...SCREEN_SIZE.mobileWeb, radius: "rounded-[1.5rem]", inline: "max-w-[20rem]" },
+  /** A desktop window is never set wider than fits in the window under the nav. */
   desktopWeb: {
-    width: 2176,
-    height: 1224,
+    ...SCREEN_SIZE.desktopWeb,
     radius: "rounded-card",
     inline: "md:tall:max-w-[calc((100svh-84px-4rem)*16/9)]",
   },
 } as const;
 
-export type ScreenKind = keyof typeof SCREENS;
+export type { ScreenKind };
+
+/* Which file the browser loads for each copy of a screenshot. A copy that is
+   hidden asks for a 1px file, so only the copy on screen costs a download.
+
+   These must say exactly what the layout says, or the visible copy loads the
+   1px file and shows as a blur. The layout pins from `md` in a window at least
+   `tall` (40rem) high, so the hints test both, and in `em`, which is what the
+   `rem` breakpoints resolve to. A phone on its side is wide but short: it gets
+   the stacked copy, at full size. */
+const PINS = "(min-width: 48em) and (min-height: 40em)";
+const STACKED = `${PINS} 1px, 420px`;
+const PINNED = `${PINS} 480px, 1px`;
+/* In a guide with desktop captures the phone copy steps aside from `md` at any height. */
+const STACKED_FROM_MD = "(min-width: 48em) 1px, 420px";
+const DESKTOP_WINDOW = "(min-width: 80em) 1152px, (min-width: 48em) 92vw, 1px";
 
 /** A real screenshot shown bare: rounded like the screen it came from and edged
  *  with one hairline, with no drawn device, browser or shadow around it. */
@@ -127,7 +138,11 @@ function StepText({ step, titleClass = "" }: { step: SetupStep; titleClass?: str
  *  the steps also carry a `desktop` capture, each step is followed by its whole
  *  window at the full width of the page, and phones keep the phone capture.
  *
- *  When the steps have no screenshots yet, they set in two quiet columns. */
+ *  A step with no screenshot does not cost the others theirs. On a phone it is
+ *  simply words; beside the pinned screen, the screen of the last step that had
+ *  one stays up while that step is read.
+ *
+ *  When none of the steps has a screenshot yet, they set in two quiet columns. */
 export function SetupSequence({
   heading,
   headingId,
@@ -144,9 +159,14 @@ export function SetupSequence({
 }) {
   const [current, setCurrent] = useState(0);
   const items = useRef<(HTMLLIElement | null)[]>([]);
-  const illustrated = steps.every((step) => step.image);
-  const hasDesktop = illustrated && steps.every((step) => step.desktop);
+  const illustrated = steps.some((step) => step.image);
+  const hasDesktop = illustrated && steps.every((step) => step.image && step.desktop);
   const pins = illustrated && !hasDesktop;
+  // The pinned screen shows the current step's screenshot, or failing that the
+  // nearest earlier one, or failing that the first there is.
+  let pinned = current;
+  while (pinned >= 0 && !steps[pinned]?.image) pinned -= 1;
+  if (pinned < 0) pinned = steps.findIndex((step) => step.image);
 
   useEffect(() => {
     if (!pins) return;
@@ -218,7 +238,7 @@ export function SetupSequence({
                   alt={step.alt}
                   outline={step.outline}
                   kind={screen}
-                  sizes="(min-width: 768px) 1px, 420px"
+                  sizes={STACKED_FROM_MD}
                   className={`mt-8 w-full md:hidden ${SCREENS[screen].inline}`}
                 />
               </div>
@@ -228,7 +248,7 @@ export function SetupSequence({
                 alt={step.alt}
                 outline={step.desktop!.outline}
                 kind="desktopWeb"
-                sizes="(min-width: 1280px) 1152px, (min-width: 768px) 92vw, 1px"
+                sizes={DESKTOP_WINDOW}
                 className={`col-span-2 mt-10 hidden w-full md:block lg:mt-12 ${SCREENS.desktopWeb.inline}`}
               />
             </li>
@@ -263,14 +283,16 @@ export function SetupSequence({
               </span>
               <div>
                 <StepText step={step} titleClass="md:tall:group-data-[current=false]:text-navy/55" />
-                <Screen
-                  image={step.image!}
-                  alt={step.alt}
-                  outline={step.outline}
-                  kind={screen}
-                  sizes="(min-width: 768px) 1px, 420px"
-                  className={`mt-8 w-full md:tall:hidden ${inline}`}
-                />
+                {step.image && (
+                  <Screen
+                    image={step.image}
+                    alt={step.alt}
+                    outline={step.outline}
+                    kind={screen}
+                    sizes={STACKED}
+                    className={`mt-8 w-full md:tall:hidden ${inline}`}
+                  />
+                )}
               </div>
             </li>
           ))}
@@ -287,21 +309,24 @@ export function SetupSequence({
           className="sticky top-[calc(84px+(100svh-84px-var(--screen-h))/2)] mx-auto aspect-(--screen-ratio) w-[min(100%,calc(var(--screen-h)*var(--screen-ratio)))] [--screen-h:min(34rem,calc(100svh-84px-6rem))] lg:[--screen-h:min(40rem,calc(100svh-84px-6rem))]"
           style={{ "--screen-ratio": width / height } as CSSProperties}
         >
-          {steps.map((step, index) => (
-            <Screen
-              key={step.title}
-              image={step.image!}
-              alt={step.alt}
-              outline={step.outline}
-              kind={screen}
-              sizes="(min-width: 768px) 480px, 1px"
-              className={`absolute inset-0 transition-opacity ${
-                index === current
-                  ? "z-10 opacity-100 duration-500 ease-[var(--ease-smooth)]"
-                  : "opacity-0 delay-500 duration-0"
-              }`}
-            />
-          ))}
+          {steps.map(
+            (step, index) =>
+              step.image && (
+                <Screen
+                  key={step.title}
+                  image={step.image}
+                  alt={step.alt}
+                  outline={step.outline}
+                  kind={screen}
+                  sizes={PINNED}
+                  className={`absolute inset-0 transition-opacity ${
+                    index === pinned
+                      ? "z-10 opacity-100 duration-500 ease-[var(--ease-smooth)]"
+                      : "opacity-0 delay-500 duration-0"
+                  }`}
+                />
+              ),
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { checkWalletIcons, hasPicture } from "@/data/checkContent";
 
 const NFC_WALLETS = [
   { name: "eNuts", image: "/wallets/enuts.png" },
@@ -23,6 +24,23 @@ const LIGHTNING_WALLETS = [
 
 type Wallet = { name: string; image: string };
 
+export type WalletGroupData = {
+  title: string;
+  detail: string;
+  wallets: Wallet[];
+  /** Shows the NFC mark beside the title. */
+  nfc?: boolean;
+};
+
+const GROUPS: WalletGroupData[] = [
+  { title: "Tap to pay", detail: "Cashu ecash wallets.", wallets: NFC_WALLETS, nfc: true },
+  { title: "Scan to pay", detail: "Any Bitcoin Lightning wallet.", wallets: LIGHTNING_WALLETS },
+];
+
+// Warns if an icon file is missing or is not square. Icons are square app icons:
+// a wide logo would be cropped to its middle.
+checkWalletIcons([...NFC_WALLETS, ...LIGHTNING_WALLETS]);
+
 function NfcIcon() {
   return (
     <svg
@@ -41,17 +59,7 @@ function NfcIcon() {
   );
 }
 
-function WalletGroup({
-  title,
-  detail,
-  wallets,
-  nfc,
-}: {
-  title: string;
-  detail: string;
-  wallets: Wallet[];
-  nfc?: boolean;
-}) {
+function WalletGroup({ title, detail, wallets, nfc }: WalletGroupData) {
   return (
     <div className="grid gap-8 border-t border-line py-12 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-16">
       <div>
@@ -61,22 +69,29 @@ function WalletGroup({
         </div>
         <p className="mt-2.5 max-w-[19rem] text-navy/70 [text-wrap:pretty]">{detail}</p>
       </div>
-      <ul className="grid grid-cols-1 gap-2.5 min-[375px]:grid-cols-2 sm:gap-3 lg:grid-cols-4">
+      {/* A tile has to hold a 40px icon and a name like "Macadamia" on one line.
+          Four across only fits from `xl`; at `lg` the column is too narrow for
+          it, so three. The two-up step is 375px written in rem, so it still starts
+          on a 375px phone and also waits for room when text is enlarged. */}
+      <ul className="grid grid-cols-1 gap-2.5 min-[23.4375rem]:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-4">
         {wallets.map((wallet) => (
           <li
             key={wallet.name}
             className="flex items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3 py-2.5 sm:gap-3 sm:px-3.5"
           >
             <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-inset ring-navy/10">
-              <Image
-                src={wallet.image}
-                alt=""
-                width={40}
-                height={40}
-                className="h-full w-full object-cover"
-              />
+              {/* A missing icon file leaves the box empty, not a broken image. */}
+              {hasPicture(wallet.image) && (
+                <Image
+                  src={wallet.image}
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="h-full w-full object-cover"
+                />
+              )}
             </span>
-            <span className="text-sm font-medium leading-tight text-navy">{wallet.name}</span>
+            <span className="min-w-0 text-sm font-medium leading-tight text-navy">{wallet.name}</span>
           </li>
         ))}
       </ul>
@@ -84,7 +99,7 @@ function WalletGroup({
   );
 }
 
-export function Wallets() {
+export function Wallets({ groups = GROUPS }: { groups?: WalletGroupData[] }) {
   return (
     <section
       id="wallets"
@@ -99,17 +114,9 @@ export function Wallets() {
         </p>
 
         <div className="mt-block">
-          <WalletGroup
-            title="Tap to pay"
-            detail="Cashu ecash wallets."
-            wallets={NFC_WALLETS}
-            nfc
-          />
-          <WalletGroup
-            title="Scan to pay"
-            detail="Any Bitcoin Lightning wallet."
-            wallets={LIGHTNING_WALLETS}
-          />
+          {groups.map((group) => (
+            <WalletGroup key={group.title} {...group} />
+          ))}
         </div>
       </div>
     </section>

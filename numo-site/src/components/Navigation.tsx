@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./Button";
@@ -8,7 +8,7 @@ import { DownloadMenu, DOWNLOAD_APK_URL, ZAPSTORE_URL } from "./DownloadMenu";
 import { Logo } from "./Logo";
 import { prefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
-type NavItem = { label: string; href: string; id?: string };
+export type NavItem = { label: string; href: string; id?: string };
 
 /** On-page anchors (scroll in place on home). */
 const ANCHOR_LINKS: NavItem[] = [
@@ -56,7 +56,7 @@ function NavLink({
   onDark?: boolean;
   mobile?: boolean;
 }) {
-  const desktopClass = `inline-flex h-11 items-center rounded-control px-2.5 text-sm font-medium transition-colors duration-200 lg:px-3.5 lg:text-[0.9375rem] xl:px-4 xl:text-base ${
+  const desktopClass = `inline-flex h-11 items-center whitespace-nowrap rounded-control px-2.5 text-sm font-medium transition-colors duration-200 lg:px-3.5 lg:text-[0.9375rem] xl:px-4 xl:text-base ${
     onDark
       ? active
         ? "bg-white/15 text-white"
@@ -91,7 +91,7 @@ function NavLink({
   return item.id ? <a {...props}>{content}</a> : <Link {...props}>{content}</Link>;
 }
 
-export function Navigation() {
+export function Navigation({ routeLinks = ROUTE_LINKS }: { routeLinks?: NavItem[] }) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -99,6 +99,17 @@ export function Navigation() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(false);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
+  // Whether the row of links fits in the bar. It always does in English. It may
+  // not once a browser has translated the page (German runs a third longer), a
+  // visitor has raised their text size, or a link has been added. When it does
+  // not fit, the bar falls back to the menu button at any width, instead of
+  // pushing Download off the edge of the window.
+  const [railFits, setRailFits] = useState(true);
+  const railFitsRef = useRef(true);
 
   const isHome = pathname === "/";
 
@@ -136,13 +147,51 @@ export function Navigation() {
     };
   }, [isHome]);
 
+  useLayoutEffect(() => {
+    const row = rowRef.current;
+    const logo = logoRef.current;
+    const rail = railRef.current;
+    const tools = toolsRef.current;
+    if (!row || !logo || !rail || !tools) return;
+
+    const wide = window.matchMedia("(min-width: 48rem)");
+    const measure = () => {
+      // Below `md` the links are in the menu whatever their width.
+      let fits = true;
+      if (wide.matches) {
+        const style = getComputedStyle(row);
+        const room = row.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        const gap = parseFloat(style.columnGap) || 0;
+        // The links are laid out even while they are hidden, so this is always
+        // their natural width. A row that is over by a few pixels just leans
+        // into the page margin, which nobody sees, so it is allowed up to half
+        // the margin before the bar gives up its links.
+        const lean = parseFloat(style.paddingRight) / 2;
+        fits = logo.offsetWidth + rail.offsetWidth + tools.offsetWidth + 2 * gap <= room + lean;
+      }
+      railFitsRef.current = fits;
+      setRailFits(fits);
+      // The links are back in the bar, so the menu that stood in for them closes.
+      if (fits && wide.matches) setIsMenuOpen(false);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    for (const el of [row, logo, rail, tools]) observer.observe(el);
+    wide.addEventListener("change", measure);
+    return () => {
+      observer.disconnect();
+      wide.removeEventListener("change", measure);
+    };
+  }, []);
+
   useEffect(() => {
     if (!isMenuOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsMenuOpen(false);
     };
     const onResize = () => {
-      if (window.innerWidth >= 768) setIsMenuOpen(false);
+      if (window.innerWidth >= 768 && railFitsRef.current) setIsMenuOpen(false);
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
@@ -186,7 +235,7 @@ export function Navigation() {
     item.id
       ? isHome && activeSection === item.id
       : matches(item.href) &&
-        !ROUTE_LINKS.some((other) => other.href.length > item.href.length && matches(other.href));
+        !routeLinks.some((other) => other.href.length > item.href.length && matches(other.href));
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -218,8 +267,12 @@ export function Navigation() {
           : `bg-paper ${showLine ? "border-line" : "border-transparent"}`
       }`}
     >
-      <div className="shell flex h-[72px] items-center justify-between gap-4 md:h-[84px]">
+      <div
+        ref={rowRef}
+        className="shell relative flex h-[72px] items-center justify-between gap-4 md:h-[84px]"
+      >
         <Link
+          ref={logoRef}
           href="/"
           aria-label="Numo home"
           className="-ml-1.5 flex h-12 shrink-0 items-center rounded-control px-1.5 active:opacity-60"
@@ -227,8 +280,17 @@ export function Navigation() {
           <Logo tone={onDark ? "inverse" : "ink"} size="lg" />
         </Link>
 
-        {/* Desktop rail: anchors | hairline | dedicated pages */}
-        <div className="hidden items-center md:flex">
+        {/* Desktop rail: anchors | hairline | dedicated pages. When it does not
+            fit it is taken out of the row but still laid out, unseen and out of
+            reach, so its width can be measured to know when it fits again. */}
+        <div
+          ref={railRef}
+          inert={!railFits}
+          aria-hidden={!railFits || undefined}
+          className={`hidden items-center md:flex ${
+            railFits ? "" : "md:invisible md:absolute md:left-0 md:top-0"
+          }`}
+        >
           <div className="flex items-center gap-0.5">
             {ANCHOR_LINKS.map((item) => (
               <NavLink
@@ -247,7 +309,7 @@ export function Navigation() {
           />
 
           <div className="flex items-center gap-0.5">
-            {ROUTE_LINKS.map((item) => (
+            {routeLinks.map((item) => (
               <NavLink
                 key={item.href}
                 item={item}
@@ -260,26 +322,29 @@ export function Navigation() {
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`hidden h-11 items-center gap-2 rounded-control px-3 text-[0.9375rem] font-medium transition-colors duration-200 lg:inline-flex xl:px-3.5 xl:text-base ${
-              onDark
-                ? "text-white/85 hover:bg-white/10 hover:text-white"
-                : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
-            }`}
-          >
-            <GitHubIcon className="h-[18px] w-[18px]" />
-            GitHub
-          </a>
+          <div ref={toolsRef} className="flex items-center gap-2">
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`hidden h-11 items-center gap-2 rounded-control px-3 text-[0.9375rem] font-medium transition-colors duration-200 lg:inline-flex xl:px-3.5 xl:text-base ${
+                onDark
+                  ? "text-white/85 hover:bg-white/10 hover:text-white"
+                  : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
+              }`}
+            >
+              <GitHubIcon className="h-[18px] w-[18px]" />
+              GitHub
+            </a>
 
-          {/* Over the hero, keep nav Download quiet so the hero's Fresh Paint Mint
-              primary button owns the viewport; once scrolled, flip to solid navy.
-              Below 360px there is no room for it beside the menu button, and the
-              menu carries both downloads, so it steps aside. */}
-          <div className={onDark ? "hidden md:block" : "hidden min-[360px]:block"}>
-            <DownloadMenu variant={onDark ? "ghost-inverse" : "primary"} size="md" align="right" />
+            {/* Over the hero, keep nav Download quiet so the hero's Fresh Paint Mint
+                primary button owns the viewport; once scrolled, flip to solid navy.
+                Below 22.5rem (360px at the usual text size) there is no room for it
+                beside the menu button, and the menu carries both downloads, so it
+                steps aside. In rem, so it also steps aside when text is enlarged. */}
+            <div className={onDark ? "hidden md:block" : "hidden min-[22.5rem]:block"}>
+              <DownloadMenu variant={onDark ? "ghost-inverse" : "primary"} size="md" align="right" />
+            </div>
           </div>
 
           <button
@@ -289,9 +354,9 @@ export function Navigation() {
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className={`-mr-2 flex h-11 w-11 items-center justify-center rounded-control transition-colors duration-200 md:hidden ${
-              onDark ? "text-white hover:bg-white/10" : "text-navy hover:bg-navy/[0.05]"
-            }`}
+            className={`-mr-2 flex h-11 w-11 items-center justify-center rounded-control transition-colors duration-200 ${
+              railFits ? "md:hidden" : ""
+            } ${onDark ? "text-white hover:bg-white/10" : "text-navy hover:bg-navy/[0.05]"}`}
           >
             {/* Both bars rest on the centre line and are only ever moved by
                 transform: apart for the menu icon, crossed for the close icon.
@@ -317,9 +382,9 @@ export function Navigation() {
           its side), so it scrolls inside the screen instead of running off it. */}
       <div
         id="mobile-menu"
-        className={`grid bg-paper transition-[grid-template-rows,visibility] duration-300 ease-[var(--ease-smooth)] md:hidden ${
-          isMenuOpen ? "visible grid-rows-[1fr]" : "invisible grid-rows-[0fr]"
-        }`}
+        className={`grid bg-paper transition-[grid-template-rows,visibility] duration-300 ease-[var(--ease-smooth)] ${
+          railFits ? "md:hidden" : ""
+        } ${isMenuOpen ? "visible grid-rows-[1fr]" : "invisible grid-rows-[0fr]"}`}
       >
         <div
           ref={panelRef}
@@ -334,7 +399,7 @@ export function Navigation() {
                   <NavLink item={item} active={isActive(item)} onClick={onLinkClick(item)} mobile />
                 </li>
               ))}
-              {ROUTE_LINKS.map((item, i) => (
+              {routeLinks.map((item, i) => (
                 <li
                   key={item.href}
                   className={`border-b border-line ${i === 0 ? "border-t border-t-line-strong" : ""}`}

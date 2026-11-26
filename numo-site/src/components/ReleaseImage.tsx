@@ -22,7 +22,16 @@ const BLUR = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjE
 export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) {
   return (
     <figure>
-      <div className="overflow-hidden rounded-card border border-line bg-sunken">
+      {/* A wide picture fills the column. Two kinds are held back, by a limit on
+          the frame's width worked out from the size the picture is listed at, so
+          its space is still reserved before it loads:
+          - a tall one (a phone screenshot dropped in as it came) is never more
+            than 44rem high, instead of running three screens tall;
+          - a small one is never stretched past its own width until it blurs. */}
+      <div
+        className="overflow-hidden rounded-card border border-line bg-sunken"
+        style={{ maxWidth: `min(${image.width}px, calc(44rem * ${image.width} / ${image.height}))` }}
+      >
         <Image
           src={image.src}
           alt={image.alt}
@@ -32,7 +41,7 @@ export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) 
           sizes={sizes}
           placeholder="blur"
           blurDataURL={BLUR}
-          className="block w-full h-auto"
+          className="block h-auto w-full"
         />
       </div>
       {image.caption && (
