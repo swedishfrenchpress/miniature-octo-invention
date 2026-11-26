@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Button } from "@/components/Button";
-import { DownloadMenu } from "@/components/DownloadMenu";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { BTCPayDemo } from "@/components/btcpay/BTCPayDemo";
 import { BTCNUTSERVER_GITHUB_URL, BTCNUTSERVER_PLUGIN_URL } from "@/lib/links";
@@ -61,10 +60,14 @@ export default function BTCPayPage() {
               Connect Numo to ring up in-person sales directly into BTCPay. In Numo, open Settings
               and tap BTCPay Server under Payments to link your store.
             </p>
+            {/* The two things this page is for: the plugin's listing in BTCPay's own
+                plugin directory, and its source. */}
             <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
-              <DownloadMenu variant="primary" size="md" align="left" />
-              <Button href="/setup" variant="secondary" size="md">
-                Setup guide
+              <Button href={BTCNUTSERVER_PLUGIN_URL} variant="primary" size="md" external>
+                Get the plugin
+              </Button>
+              <Button href={BTCNUTSERVER_GITHUB_URL} variant="secondary" size="md" external>
+                GitHub
               </Button>
             </div>
           </div>
