@@ -56,6 +56,24 @@ function StripeMark({ className = "" }: { className?: string }) {
   );
 }
 
+/** A partner's own app-icon tile, flat: BTCPay's mark on white with a hairline,
+ *  Stripe's S on Stripe's purple. Give it a size with `className`. */
+export function PartnerTile({ partner, className = "" }: { partner: Partner; className?: string }) {
+  return partner === "btcpay" ? (
+    <span
+      className={`flex items-center justify-center rounded-[27%] bg-surface ring-1 ring-inset ring-navy/10 ${className}`}
+    >
+      <BTCPayMark className="h-[64%] w-auto" />
+    </span>
+  ) : (
+    <span
+      className={`flex items-center justify-center rounded-[27%] bg-[#635BFF] text-white ${className}`}
+    >
+      <StripeMark className="h-[54%] w-auto" />
+    </span>
+  );
+}
+
 /** Numo working with a partner, shown as two app-icon tiles of the same size:
  *  Numo's mint tile and the partner's own. The two tiles slide together once as
  *  the page opens.
@@ -76,19 +94,7 @@ export function PartnerPair({ partner, className = "" }: { partner: Partner; cla
       <span className={`${styles.left} block ${tile}`}>
         <LogoMark className="block h-full w-full" />
       </span>
-      {partner === "btcpay" ? (
-        <span
-          className={`${styles.right} flex items-center justify-center rounded-[27%] bg-surface ring-1 ring-inset ring-navy/10 ${tile}`}
-        >
-          <BTCPayMark className="h-[64%] w-auto" />
-        </span>
-      ) : (
-        <span
-          className={`${styles.right} flex items-center justify-center rounded-[27%] bg-[#635BFF] text-white ${tile}`}
-        >
-          <StripeMark className="h-[54%] w-auto" />
-        </span>
-      )}
+      <PartnerTile partner={partner} className={`${styles.right} ${tile}`} />
     </div>
   );
 }

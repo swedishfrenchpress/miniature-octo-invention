@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { SHARE_IMAGE } from "@/lib/shareImage";
+import { SetupExtras } from "@/components/SetupExtras";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 import { breakData } from "@/breakdata";
-import { BTCNUTSERVER_GITHUB_URL, BTCNUTSERVER_PLUGIN_URL } from "@/lib/links";
 import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 
 export const metadata: Metadata = {
@@ -170,39 +169,9 @@ export default async function SetupPage() {
         />
       </section>
 
-      {/* `#btcpay` is linked from /btcpay; `#cards` is kept as a stable anchor. */}
+      {/* `#btcpay` is linked from /btcpay; `#cards` is kept inside as a stable anchor. */}
       <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-sunken`}>
-        <div className="shell">
-          <h2 id="extras-heading" className="text-h2 text-navy">
-            Optional extras.
-          </h2>
-          <div className="mt-block grid gap-14 md:grid-cols-2 md:gap-16">
-            <div>
-              <h3 className="text-title text-navy">Connect BTCPay Server</h3>
-              <p className="text-lead measure mt-3 text-navy/70">
-                Open Settings and tap BTCPay Server under Payments to link your store. Numo
-                generates store invoices at the till and syncs your catalog and your Lightning and
-                Cashu sales. To take Cashu, first install the{" "}
-                <ExternalLink href={BTCNUTSERVER_PLUGIN_URL}>BTCNutServer plugin</ExternalLink> in
-                your store. It is in early beta, and its code is on{" "}
-                <ExternalLink href={BTCNUTSERVER_GITHUB_URL}>GitHub</ExternalLink>.
-              </p>
-            </div>
-            <div id="cards" className="section-anchor">
-              <h3 className="text-title text-navy">Take contactless cards with Stripe</h3>
-              <p className="text-lead measure mt-3 text-navy/70">
-                Connect your own Stripe account in Settings to accept contactless cards, Apple Pay,
-                and Google Pay on the same device. Card sales settle directly to Stripe at
-                Stripe&rsquo;s standard card processing fees and stay separate from Bitcoin in Numo.
-                The{" "}
-                <Link href="/setup/stripe" className={linkClass}>
-                  Stripe guide
-                </Link>{" "}
-                walks through it.
-              </p>
-            </div>
-          </div>
-        </div>
+        <SetupExtras />
       </section>
     </>
   );

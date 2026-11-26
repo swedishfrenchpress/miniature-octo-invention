@@ -58,11 +58,12 @@ export default function BTCPayPage() {
               The till for your BTCPay Server store.
             </h1>
             <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
-              Connect Numo to ring up in-person sales directly into BTCPay.
+              Connect Numo to ring up in-person sales directly into BTCPay. In Numo, open Settings
+              and tap BTCPay Server under Payments to link your store.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
               <DownloadMenu variant="primary" size="md" align="left" />
-              <Button href="/setup#btcpay" variant="secondary" size="md">
+              <Button href="/setup" variant="secondary" size="md">
                 Setup guide
               </Button>
             </div>
