@@ -42,6 +42,12 @@ npm run build
 npm run lint
 ```
 
+## Branches and deploys
+
+`main` is what the live site, numopay.org, serves: Vercel builds production from it. `redesign` is the working branch until Erik says the redesign ships. Commit and push there; its Vercel preview rebuilds on every push and is where the work is reviewed. **"Deploy" means that preview.** Never merge into `main`, open a PR into it, or promote a deployment to production unless Erik asks for numopay.org to change.
+
+<!-- 2026-11-27: "commit and push and deploy" was taken to mean production, and the redesign went live by mistake until it was rolled back. Erik: "we should not deployed all these changes into the live site yet, i just want them in the redesign branch". -->
+
 ## Conventions
 
 - **Fonts** are loaded in `src/app/layout.tsx` via `next/font/google` and exposed as CSS variables consumed in `globals.css`. Declare only the weights actually used — each one is a self-hosted file shipped to every visitor.
