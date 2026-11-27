@@ -112,7 +112,7 @@ export function Hero() {
     <section
       ref={section}
       id="hero"
-      className="relative flex min-h-[640px] flex-col justify-end bg-ink-deep pt-28 md:h-[90svh] md:max-h-[900px]"
+      className="relative flex min-h-[640px] flex-col justify-end bg-ink-deep pt-28 md:h-svh md:max-h-[1000px]"
     >
       {/* Clipped media backdrop kept separate so the DownloadMenu popover never clips.
           When a clip ends, the next one fades in on top of it while the finished
@@ -142,8 +142,10 @@ export function Hero() {
         <div className={`absolute inset-0 z-20 ${SCRIM}`} />
       </div>
 
-      <div className="shell relative z-10 pb-12 pt-16 md:pb-20">
-        <h1 className="hero-rise text-display max-w-[48rem] text-white">
+      {/* From md the hero is the window's height, and text-hero sizes the
+          headline to it; the nav clearance above is the section's own pt-28. */}
+      <div className="shell relative z-10 pb-12 pt-10 md:pb-14 md:pt-0">
+        <h1 className="hero-rise text-hero text-white">
           Bitcoin payments as easy as Apple Pay.
         </h1>
         <p className="hero-rise text-lead mt-5 max-w-[30rem] text-white/85 [--i:1] md:mt-6">

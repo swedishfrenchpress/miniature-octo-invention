@@ -279,6 +279,36 @@ body {
   text-wrap: balance;
 }
 
+/* The home hero's headline, a step of its own above display: as large as the
+   window allows, up to 8rem. Its longest line, "Bitcoin payments", is 8.51em,
+   so the size is the width inside the gutters over 9em, and the column is
+   capped at 9.1em so the lines break as "Bitcoin payments / as easy as /
+   Apple Pay." From md the hero fills the window, so the size is also held by
+   the hero's height (640px to 1000px): 440px for the nav clearance, intro,
+   buttons and logo strip, and 3.3em for three lines at 1.1. That keeps the
+   headline clear of the nav in a short laptop window and on a phone held
+   sideways. */
+.text-hero {
+  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-size: min(calc((100vw - 2 * var(--gutter)) / 9), 8rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-wrap: balance;
+  max-width: 9.1em;
+}
+
+/* 48rem is Tailwind's md, where the hero takes the window's height. */
+@media (min-width: 48rem) {
+  .text-hero {
+    font-size: min(
+      calc((100vw - 2 * var(--gutter)) / 9),
+      calc((clamp(640px, 100svh, 1000px) - 440px) / 3.3),
+      8rem
+    );
+  }
+}
+
 .text-h2 {
   font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
   font-size: clamp(1.875rem, 4vw, 3.25rem);

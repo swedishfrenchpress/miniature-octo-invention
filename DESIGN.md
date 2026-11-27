@@ -21,6 +21,12 @@ colors:
   gray-500: "#71717A"
   gray-600: "#52525B"
 typography:
+  hero:
+    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontSize: "min((100vw - 2 gutters) / 9, (hero height - 440px) / 3.3 from md, 8rem)"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "0.01em"
   display:
     fontFamily: "GC Protage, Sora, system-ui, sans-serif"
     fontSize: "clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)"
@@ -174,7 +180,10 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because every page 
 **Display Font:** GC Protage (`500`, `600`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Sora)
 **Body & UI Font:** Sora (`400`, `500`, `600`, self-hosted via `next/font/google`)
 
-- **`.text-display`**: `clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)`, weight `500`, tracking `0.01em`, line-height `1.1` — Page `h1` and major section anchors (`text-wrap: balance`). Scales with the viewport below `428px` so the longest headline line still fits a `360px` phone.
+- **`.text-hero`**: the home hero's headline only, a step above display. Weight `500` (the weight of every other display heading, never SemiBold), tracking `0.01em`, line-height `1.1`, column capped at `9.1em` so it breaks as `Bitcoin payments` / `as easy as` / `Apple Pay.`. It is as large as the window allows, up to `8rem` (`128px`): the width inside the gutters over `9em` (its longest line is `8.51em`), and from `md`, where the hero is the window's height (`h-svh`, `640px` to `1000px`), also that height less `440px`, over `3.3em`. So it is `128px` on a `1440 x 900` screen, about `85px` in a `1280 x 720` window, and on a phone exactly as wide as `Bitcoin payments` allows (`38px` at `390px`); it never runs under the nav, in a short laptop window or on a phone held sideways. Do not change the headline without measuring its longest line again.
+  Why: Erik wanted the hero to "hit harder". Of the versions he flipped through, he picked this one: "keep medium. i like that."
+  <!-- 2026-11-27. He asked "Do you think our hero would hit harder if it was in al caps? or would that be wierd since we have no all caps anywhere else". A prototype round compared Current (84px), Larger (SemiBold, up to 128px, full-window hero) and Capitals; he took the recommendation of Larger and asked for a riff. Round two compared Larger, Medium (same size, weight 500) and Peek (the old 90% hero height, smaller headline); he kept Medium. The old hero (84px text-display on a 90svh hero) ran up under the nav in a 1280 x 720 window. -->
+- **`.text-display`**: `clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)`, weight `500`, tracking `0.01em`, line-height `1.1` — Page `h1` on every page but home, and major section anchors (`text-wrap: balance`). Scales with the viewport below `428px` so the longest headline line still fits a `360px` phone.
 - **`.text-h2`**: `clamp(1.875rem, 4vw, 3.25rem)`, weight `500`, tracking `0.015em`, line-height `1.14` — Section and Showcase headings.
 - **`.text-title`**: `1.5rem`, weight `500`, tracking `0.02em`, line-height `1.28` — Release titles, wallet groups.
 - **`.text-h3`**: `1.25rem`, weight `600`, tracking `0.02em`, line-height `1.35` — Step headings, card headings, highlight titles, privacy headings.
