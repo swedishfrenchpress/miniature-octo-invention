@@ -11,9 +11,9 @@ import {
   type ButtonVariant,
 } from "./Button";
 
-export const DOWNLOAD_APK_URL = "https://github.com/cashubtc/Numo/releases";
-export const ZAPSTORE_URL =
-  "https://zapstore.dev/apps/naddr1qqtkxmmd9ejkcetrw3exjcmywfjkzmtn9eh82mt0qyv8wumn8ghj7un9d3shjtn6v9c8xar0wfjjuer9wcpzpcluvulut7vuc42dpl68w4ne2erayh9kuejclyfdz99wvs5axhf4qvzqqqr7pvu7jrcc";
+import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/lib/links";
+
+export { DOWNLOAD_APK_URL, ZAPSTORE_URL };
 
 type DownloadMenuProps = {
   variant: ButtonVariant;

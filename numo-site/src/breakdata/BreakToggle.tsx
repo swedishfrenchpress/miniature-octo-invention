@@ -35,6 +35,11 @@ export function BreakToggle({ mode }: { mode: BreakMode }) {
 
   useEffect(() => {
     if (mode !== "german") return;
+    // Mark the page the way Chrome's translator does, so anything keyed to a
+    // translated page (hyphenation in globals.css) shows here too.
+    const root = document.documentElement;
+    root.lang = "de";
+    root.classList.add("translated-ltr");
     translate(document.body);
     // Content that mounts later (the download menu, a page change) is translated too.
     const observer = new MutationObserver(() => translate(document.body));

@@ -114,6 +114,19 @@ export function checkWalletIcons(wallets: { name: string; image: string }[]) {
   report("src/components/home/Wallets.tsx", problems);
 }
 
+/** Wallet groups: a group with no wallets is left off the page. */
+export function checkWalletGroups(groups: { title: string; wallets: unknown[] }[]) {
+  const problems = groups
+    .filter((group) => group.wallets.length === 0)
+    .map((group) => `the "${group.title}" group has no wallets, so the page leaves it out`);
+  report("src/components/home/Wallets.tsx", problems);
+}
+
+/** The FAQ: with no questions the section and its nav and footer links are left out. */
+export function checkFaq(items: unknown[]) {
+  report("src/data/faq.tsx", items.length === 0 ? ["the FAQ has no questions, so the page leaves the section out"] : []);
+}
+
 /** One part of a guide: every screenshot must exist and be the shape of its frame. */
 export function checkGuide(
   file: string,
@@ -122,6 +135,7 @@ export function checkGuide(
   screen: ScreenKind,
 ) {
   const problems: string[] = [];
+  if (steps.length === 0) problems.push(`"${heading}" has no steps, so the page leaves the whole part out`);
   const size = SCREEN_SIZE[screen];
   for (const step of steps) {
     const where = `"${heading}", step "${step.title}"`;

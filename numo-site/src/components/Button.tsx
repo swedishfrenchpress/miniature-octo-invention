@@ -22,14 +22,19 @@ type ButtonProps = {
 };
 
 export const BUTTON_BASE =
-  "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-control font-medium tracking-[-0.005em] [transition:background-color_200ms_ease,box-shadow_200ms_ease,color_200ms_ease,scale_150ms_var(--ease-out-expo)] active:scale-[0.97]";
+  "relative inline-flex max-w-full shrink-0 cursor-pointer select-none items-center justify-center gap-2 text-center [text-wrap:balance] rounded-control font-medium tracking-[-0.005em] [transition:background-color_200ms_ease,box-shadow_200ms_ease,color_200ms_ease,scale_150ms_var(--ease-out-expo)] active:scale-[0.97]";
 
 export const BUTTON_SIZE: Record<ButtonSize, string> = {
   // A pill's round ends eat into its sides, so each size carries a little more
   // side padding than a squared button would.
-  sm: "h-9 px-4 text-sm after:absolute after:-inset-y-1 after:inset-x-0 after:content-['']",
-  md: "h-11 px-6 text-[0.9375rem]",
-  lg: "h-12 px-7 text-[0.9375rem]",
+  //
+  // A label stays on one line unless the button would be wider than its column
+  // (a long translated label on a phone with enlarged text); then it wraps,
+  // balanced, and the pill grows taller. So each size is a minimum height plus
+  // the padding that gives exactly that height on one line, never a fixed one.
+  sm: "min-h-9 py-2 px-4 text-sm after:absolute after:-inset-y-1 after:inset-x-0 after:content-['']",
+  md: "min-h-11 py-2.5 px-6 text-[0.9375rem]",
+  lg: "min-h-12 py-3 px-7 text-[0.9375rem]",
 };
 
 /* Hover (and, under a finger, press) never fades a button. A filled button's

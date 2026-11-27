@@ -28,6 +28,7 @@ src/components/   Button · DownloadMenu · Logo · Navigation · SiteFooter ·
                   btcpay/* (BTCPayDemo · BTCPayInvoices · NumoApp)
 src/data/         releases.ts — the versioned changelog rendered by /releases
                   checkContent.ts — build-time warnings for slips in hand-written content
+                  faq.tsx — the home page's questions and answers
 src/breakdata/    development-only stress-test content and its on-page switch (never ships)
 public/           setup/ · releases/ · ui/ · wallets/ · logos/ · btcpay/ assets
 ```

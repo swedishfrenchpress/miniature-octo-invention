@@ -222,6 +222,9 @@ checkGuide("src/app/(site)/setup/stripe/page.tsx", "Connect it in Numo.", connec
 
 export default async function StripeSetupPage() {
   const swap = await breakData();
+  // A part with no steps is left out whole; checkGuide warns about it at build.
+  const key = withExistingScreenshots(swap.keySteps ?? keySteps);
+  const connect = withExistingScreenshots(swap.connectSteps ?? connectSteps);
 
   return (
     <>
@@ -243,24 +246,28 @@ export default async function StripeSetupPage() {
         </div>
       </header>
 
-      <section id="key" aria-labelledby="key-heading" className={`${section} bg-paper`}>
-        <SetupSequence
-          heading="Create a key in Stripe."
-          headingId="key-heading"
-          intro="Numo connects with a restricted key: a Stripe key that can only do what you allow. This one can start the card reader and list your locations. It can't move money."
-          steps={withExistingScreenshots(swap.keySteps ?? keySteps)}
-          screen="mobileWeb"
-        />
-      </section>
+      {key.length > 0 && (
+        <section id="key" aria-labelledby="key-heading" className={`${section} bg-paper`}>
+          <SetupSequence
+            heading="Create a key in Stripe."
+            headingId="key-heading"
+            intro="Numo connects with a restricted key: a Stripe key that can only do what you allow. This one can start the card reader and list your locations. It can't move money."
+            steps={key}
+            screen="mobileWeb"
+          />
+        </section>
+      )}
 
-      <section id="connect" aria-labelledby="connect-heading" className={`${section} bg-paper`}>
-        <SetupSequence
-          heading="Connect it in Numo."
-          headingId="connect-heading"
-          steps={withExistingScreenshots(swap.connectSteps ?? connectSteps)}
-          screen="phoneTall"
-        />
-      </section>
+      {connect.length > 0 && (
+        <section id="connect" aria-labelledby="connect-heading" className={`${section} bg-paper`}>
+          <SetupSequence
+            heading="Connect it in Numo."
+            headingId="connect-heading"
+            steps={connect}
+            screen="phoneTall"
+          />
+        </section>
+      )}
 
       <section id="fixes" aria-labelledby="fixes-heading" className={`${section} bg-paper`}>
         <div className="shell">

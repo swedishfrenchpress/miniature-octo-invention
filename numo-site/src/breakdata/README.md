@@ -16,7 +16,7 @@ the window:
 | Empty | Wallet groups with no wallets, an FAQ with no questions, guides with no steps. |
 | One | One release, one wallet per group, one question, one step per guide. |
 | Many | 60 releases, 24 wallets per group, 24 questions, 12 steps per guide. |
-| German | The site's headings, labels and buttons in German, the way a browser's translator would show them (`german.ts`). |
+| German | The site's headings, labels and buttons in German, the way a browser's translator would show them (`german.ts`), with the page marked translated the way Chrome marks it (`lang="de"`, `translated-ltr`). |
 
 The choice is kept in a cookie, so it holds from page to page and across reloads.
 Switch back to Demo data when you are done.

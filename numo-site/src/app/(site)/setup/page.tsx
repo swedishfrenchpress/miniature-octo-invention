@@ -135,6 +135,9 @@ checkGuide("src/app/(site)/setup/page.tsx", "Automatic payouts.", payoutSteps, "
 
 export default async function SetupPage() {
   const swap = await breakData();
+  // A part with no steps is left out whole; checkGuide warns about it at build.
+  const till = withExistingScreenshots(swap.tillSteps ?? tillSteps);
+  const payouts = withExistingScreenshots(swap.payoutSteps ?? payoutSteps);
 
   return (
     <>
@@ -148,26 +151,26 @@ export default async function SetupPage() {
         </div>
       </header>
 
-      <section
-        id="onboarding"
-        aria-labelledby="onboarding-heading"
-        className={`${section} bg-paper`}
-      >
-        <SetupSequence
-          heading="Open your till."
-          headingId="onboarding-heading"
-          steps={withExistingScreenshots(swap.tillSteps ?? tillSteps)}
-        />
-      </section>
+      {till.length > 0 && (
+        <section
+          id="onboarding"
+          aria-labelledby="onboarding-heading"
+          className={`${section} bg-paper`}
+        >
+          <SetupSequence heading="Open your till." headingId="onboarding-heading" steps={till} />
+        </section>
+      )}
 
-      <section id="lightning" aria-labelledby="lightning-heading" className={`${section} bg-paper`}>
-        <SetupSequence
-          heading="Automatic payouts."
-          headingId="lightning-heading"
-          intro="Enter your Lightning address, which reads like you@wallet.com, and sales sweep to your own wallet automatically."
-          steps={withExistingScreenshots(swap.payoutSteps ?? payoutSteps)}
-        />
-      </section>
+      {payouts.length > 0 && (
+        <section id="lightning" aria-labelledby="lightning-heading" className={`${section} bg-paper`}>
+          <SetupSequence
+            heading="Automatic payouts."
+            headingId="lightning-heading"
+            intro="Enter your Lightning address, which reads like you@wallet.com, and sales sweep to your own wallet automatically."
+            steps={payouts}
+          />
+        </section>
+      )}
 
       {/* `#btcpay` is linked from /btcpay; `#cards` is kept inside as a stable anchor. */}
       <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-paper`}>

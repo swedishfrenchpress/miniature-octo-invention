@@ -91,8 +91,16 @@ function NavLink({
   return item.id ? <a {...props}>{content}</a> : <Link {...props}>{content}</Link>;
 }
 
-export function Navigation({ routeLinks = ROUTE_LINKS }: { routeLinks?: NavItem[] }) {
+export function Navigation({
+  routeLinks = ROUTE_LINKS,
+  hiddenAnchors = [],
+}: {
+  routeLinks?: NavItem[];
+  /** Ids of home sections the page leaves out because they are empty. */
+  hiddenAnchors?: string[];
+}) {
   const pathname = usePathname();
+  const anchorLinks = ANCHOR_LINKS.filter((item) => !item.id || !hiddenAnchors.includes(item.id));
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -292,7 +300,7 @@ export function Navigation({ routeLinks = ROUTE_LINKS }: { routeLinks?: NavItem[
           }`}
         >
           <div className="flex items-center gap-0.5">
-            {ANCHOR_LINKS.map((item) => (
+            {anchorLinks.map((item) => (
               <NavLink
                 key={item.href}
                 item={item}
@@ -394,7 +402,7 @@ export function Navigation({ routeLinks = ROUTE_LINKS }: { routeLinks?: NavItem[
         >
           <div className="shell pb-6">
             <ul className="border-t border-line">
-              {ANCHOR_LINKS.map((item) => (
+              {anchorLinks.map((item) => (
                 <li key={item.href} className="border-b border-line">
                   <NavLink item={item} active={isActive(item)} onClick={onLinkClick(item)} mobile />
                 </li>

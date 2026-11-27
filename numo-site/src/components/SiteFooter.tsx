@@ -86,8 +86,9 @@ const CLOSING_LINKS: FooterLink[] = [
 ];
 
 // 44x44px minimum touch targets even on short labels ("X", "FAQ", "Nostr").
+// A label wraps rather than run past the panel's edge, where it would be cut off.
 const linkClass =
-  "inline-flex min-h-11 min-w-11 items-center whitespace-nowrap text-[0.9375rem] text-white/65 transition-colors duration-150 hover:text-white";
+  "inline-flex min-h-11 min-w-11 items-center text-[0.9375rem] text-white/65 transition-colors duration-150 hover:text-white";
 
 const closingLinkClass =
   "inline-flex min-h-11 min-w-11 items-center whitespace-nowrap text-white/60 transition-colors duration-150 hover:text-white";
@@ -122,7 +123,12 @@ function sentences(text: string) {
   return text.split(/(?<=\.)\s+/);
 }
 
-export function SiteFooter() {
+export function SiteFooter({ hiddenAnchors = [] }: { hiddenAnchors?: string[] }) {
+  // A home section left out for being empty takes its footer link with it.
+  const groups = GROUPS.map((group) => ({
+    ...group,
+    links: group.links.filter((link) => !hiddenAnchors.some((id) => link.href === `/#${id}`)),
+  }));
   const pathname = usePathname();
   const isSetup = pathname === "/setup" || pathname.startsWith("/setup/");
   const ask = isSetup ? SETUP_ASK : HOME_ASK;
@@ -163,12 +169,14 @@ export function SiteFooter() {
           </div>
 
           {/* Three columns set from the heading's left edge, not spread to fill
-              the width, so they read as one block under the ask. */}
+              the width, so they read as one block under the ask. Below 22.5rem
+              (360px at the usual text size) a half-width column cannot hold a
+              long label such as a translated "Setup guide", so the groups stack. */}
           <nav
             aria-label="Footer"
-            className="mt-block grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[repeat(3,minmax(0,13rem))] md:gap-x-12"
+            className="mt-block grid grid-cols-1 gap-x-6 gap-y-10 min-[22.5rem]:grid-cols-2 md:grid-cols-[repeat(3,minmax(0,13rem))] md:gap-x-12"
           >
-            {GROUPS.map((group) => (
+            {groups.map((group) => (
               <div key={group.title}>
                 <h3 className="text-[0.9375rem] font-medium text-white">{group.title}</h3>
                 <ul className="mt-2">

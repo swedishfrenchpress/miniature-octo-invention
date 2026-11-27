@@ -1,95 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import type { ReactNode } from "react";
-import Link from "next/link";
-import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
+import { FAQ_ITEMS, type FaqItem } from "@/data/faq";
 
-const linkClass =
-  "text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60";
+export type { FaqItem };
 
-export type FaqItem = { id: string; q: string; a: ReactNode };
-
-const FAQ_DATA: FaqItem[] = [
-  {
-    id: "what",
-    q: "What is Numo?",
-    a: "A Bitcoin point-of-sale app for Android. Take Bitcoin with an NFC tap or Lightning QR code, and optionally connect Stripe to take cards on the same device.",
-  },
-  {
-    id: "customer-app",
-    q: "Do my customers need a special app?",
-    a: "No. Any Bitcoin Lightning wallet works by QR scan. Cashu wallets pay with an NFC tap, and cards work if you connect Stripe.",
-  },
-  {
-    id: "hardware",
-    q: "Do I need any extra hardware?",
-    a: "No. Any Android phone with NFC works. Handheld Android terminals work too.",
-  },
-  {
-    id: "price",
-    q: "Is it really free?",
-    a: "Yes. Numo charges 0% on Bitcoin sales, with only tiny network fees (usually under a cent). Card payments through your Stripe account follow Stripe's standard fees.",
-  },
-  {
-    id: "custody",
-    q: "Is Numo custodial?",
-    a: (
-      <>
-        Yes. Bitcoin sales are Cashu ecash backed by the mint you choose during{" "}
-        <Link href="/setup" className={linkClass}>
-          setup
-        </Link>
-        . That mint holds the backing bitcoin, not Numo. Withdraw to your own Lightning
-        address any time, or turn on auto-withdraw.
-      </>
-    ),
-  },
-  {
-    id: "offline",
-    q: "What if I have bad internet?",
-    a: "Taking a new payment requires internet so the mint can verify it. If your connection drops, Numo shows an offline banner and waits until you reconnect.",
-  },
-  {
-    id: "get-started",
-    q: "How do I get started?",
-    a: (
-      <>
-        Install Numo from{" "}
-        <a
-          href={DOWNLOAD_APK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={linkClass}
-        >
-          GitHub releases
-        </a>{" "}
-        or{" "}
-        <a
-          href={ZAPSTORE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={linkClass}
-        >
-          Zapstore
-        </a>
-        , then follow the{" "}
-        <Link href="/setup" className={linkClass}>
-          setup guide
-        </Link>
-        . Four screens and your till is open.
-      </>
-    ),
-  },
-  {
-    id: "play-store",
-    q: "Can I download Numo on the Google Play Store?",
-    a: "Not yet, it's coming soon. Until then, install from GitHub releases or Zapstore.",
-  },
-];
-
-export function Faq({ items = FAQ_DATA }: { items?: FaqItem[] }) {
+export function Faq({ items = FAQ_ITEMS }: { items?: FaqItem[] }) {
   const [openId, setOpenId] = useState<string | null>(null);
+  // No questions: no section. The layout hides the nav's FAQ link to match.
+  if (items.length === 0) return null;
 
   return (
     <section id="faq" className="section-anchor section-y bg-paper">

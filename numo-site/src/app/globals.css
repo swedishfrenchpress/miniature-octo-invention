@@ -259,6 +259,16 @@ body {
   line-height: 1.6;
 }
 
+/* A page a browser has translated hyphenates. Chrome and Safari set <html lang>
+   to the new language, and Chrome also adds translated-ltr or translated-rtl.
+   A long compound such as "Plattformgebühren" then breaks at a syllable, with
+   a hyphen, instead of at whatever letter overflow-wrap reaches, which can
+   leave a lone "n" on a line of its own. The English site never hyphenates
+   (the Whole Word Rule). */
+:root:is(.translated-ltr, .translated-rtl, :not(:lang(en))) body {
+  hyphens: auto;
+}
+
 /* Section anchor offset for the fixed nav (72px mobile / 84px desktop) */
 .section-anchor {
   scroll-margin-top: 72px;
