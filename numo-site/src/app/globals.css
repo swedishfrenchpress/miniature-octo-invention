@@ -90,8 +90,8 @@
   --radius-control: 9999px;
   --radius-card: 16px;
   --radius-frame: 24px;
-  --font-sans: var(--font-sora);
-  --font-display: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-protage), var(--font-body), system-ui, sans-serif;
   /* A colour or opacity change with no curve of its own uses `ease`, the same
      curve the buttons name. So a link, the nav bar and the button inside it all
      change colour in step. Movement always names one of the three curves above. */
@@ -238,6 +238,12 @@ summary,
 body {
   background: var(--paper);
   color: var(--navy);
+  /* Red Hat Text's lowercase is short, 0.488 of the size. It is drawn larger, to
+     a 0.534 x-height, so a 16px paragraph reads at the size the type scale was
+     set for (Sora's x-height, the face it replaced). Layout in em is unchanged.
+     The GC Protage headings opt out in their own styles, and so do the depicted
+     app and BTCPay screens, which keep their native pixel sizes. */
+  font-size-adjust: 0.534;
   /* Clip, not hidden: clipping does not make body a scroll box, so the pinned
      screens in the guides still stick to the window. */
   overflow-x: clip;
@@ -260,7 +266,9 @@ body {
 }
 
 /* Type scale. GC Protage for display and section headings (falling back per-glyph
-   to Sora for characters absent from demo font files); Sora for body and UI.
+   to Red Hat Text for characters absent from demo font files); Red Hat Text for
+   body and UI. Every heading style sets font-size-adjust back to none: the x-height
+   matching on body below is for Red Hat Text, and GC Protage keeps its own size.
 
    GC Protage is drawn with very tight sidebearings (about 0.04em beside a stem,
    0.02em beside a diagonal), so this scale is never tracked negative: at -0.025em pairs
@@ -268,7 +276,8 @@ body {
    stays slightly positive and opens as the size drops, and line height leaves
    room for the face's tall x-height (0.55em) between lines. */
 .text-display {
-  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-family: var(--font-protage), var(--font-body), system-ui, sans-serif;
+  font-size-adjust: none;
   /* Phones scale with the viewport so the longest headline line (8.8em) still fits
      inside the gutters at 360px; 2.625rem holds through tablets; 6.2vw takes over
      from 680px up to the 5.25rem ceiling. */
@@ -289,7 +298,8 @@ body {
    headline clear of the nav in a short laptop window and on a phone held
    sideways. */
 .text-hero {
-  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-family: var(--font-protage), var(--font-body), system-ui, sans-serif;
+  font-size-adjust: none;
   font-size: min(calc((100vw - 2 * var(--gutter)) / 9), 8rem);
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -310,7 +320,8 @@ body {
 }
 
 .text-h2 {
-  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-family: var(--font-protage), var(--font-body), system-ui, sans-serif;
+  font-size-adjust: none;
   font-size: clamp(1.875rem, 4vw, 3.25rem);
   font-weight: 500;
   letter-spacing: 0.015em;
@@ -320,7 +331,8 @@ body {
 
 /* Step titles, release titles, wallet group headers. */
 .text-title {
-  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-family: var(--font-protage), var(--font-body), system-ui, sans-serif;
+  font-size-adjust: none;
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -329,7 +341,8 @@ body {
 }
 
 .text-h3 {
-  font-family: var(--font-protage), var(--font-sora), system-ui, sans-serif;
+  font-family: var(--font-protage), var(--font-body), system-ui, sans-serif;
+  font-size-adjust: none;
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.02em;

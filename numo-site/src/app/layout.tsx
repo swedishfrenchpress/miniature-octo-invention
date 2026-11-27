@@ -1,25 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Sora } from "next/font/google";
+import { Red_Hat_Text } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SHARE_IMAGE } from "@/lib/shareImage";
 import "./globals.css";
 
-// Body & UI typeface. Only the three weights used by the scale are loaded.
-const sora = Sora({
-  variable: "--font-sora",
+// Body & UI typeface. Only the three weights used by the scale are loaded. The
+// variable is named for its role, so changing the face never renames it.
+const bodyFont = Red_Hat_Text({
+  variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
 // Header display typeface (GC Protage), self-hosted locally. Only the two weights
 // the type scale uses are declared; Regular and Bold stay in src/fonts unshipped.
-// Disable automatic Arial fallback so missing demo glyphs fall back to Sora.
+// Disable automatic Arial fallback so missing demo glyphs fall back to the body face.
 const protage = localFont({
   variable: "--font-protage",
   display: "swap",
   adjustFontFallback: false,
-  fallback: ["var(--font-sora)", "system-ui", "sans-serif"],
+  fallback: ["var(--font-body)", "system-ui", "sans-serif"],
   src: [
     { path: "../fonts/GCProtage-Medium.ttf", weight: "500", style: "normal" },
     { path: "../fonts/GCProtage-SemiBold.ttf", weight: "600", style: "normal" },
@@ -81,7 +82,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sora.variable} ${protage.variable} antialiased font-sans`}>
+      <body className={`${bodyFont.variable} ${protage.variable} antialiased font-sans`}>
         <link rel="manifest" href="/favicon/site.webmanifest" />
         {children}
         <Analytics />

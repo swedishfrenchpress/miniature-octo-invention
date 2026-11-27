@@ -1,6 +1,6 @@
 ---
 name: Numo
-description: A Bitcoin point-of-sale site built like a merchant counter in daylight — GC Protage display headers paired with Sora body, ink on plain white with one light tint, one fresh coat of mint.
+description: A Bitcoin point-of-sale site built like a merchant counter in daylight — GC Protage display headers paired with Red Hat Text body, ink on plain white with one light tint, one fresh coat of mint.
 colors:
   signwriters-ink: "#0A2540"
   ink-light: "#1a3a5c"
@@ -22,49 +22,49 @@ colors:
   gray-600: "#52525B"
 typography:
   hero:
-    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontFamily: "GC Protage, Red Hat Text, system-ui, sans-serif"
     fontSize: "min((100vw - 2 gutters) / 9, (hero height - 440px) / 3.3 from md, 8rem)"
     fontWeight: 500
     lineHeight: 1.1
     letterSpacing: "0.01em"
   display:
-    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontFamily: "GC Protage, Red Hat Text, system-ui, sans-serif"
     fontSize: "clamp(1.875rem, max(min(9.8vw, 2.625rem), 6.2vw), 5.25rem)"
     fontWeight: 500
     lineHeight: 1.1
     letterSpacing: "0.01em"
   h2:
-    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontFamily: "GC Protage, Red Hat Text, system-ui, sans-serif"
     fontSize: "clamp(1.875rem, 4vw, 3.25rem)"
     fontWeight: 500
     lineHeight: 1.14
     letterSpacing: "0.015em"
   title:
-    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontFamily: "GC Protage, Red Hat Text, system-ui, sans-serif"
     fontSize: "1.5rem"
     fontWeight: 500
     lineHeight: 1.28
     letterSpacing: "0.02em"
   h3:
-    fontFamily: "GC Protage, Sora, system-ui, sans-serif"
+    fontFamily: "GC Protage, Red Hat Text, system-ui, sans-serif"
     fontSize: "1.25rem"
     fontWeight: 600
     lineHeight: 1.35
     letterSpacing: "0.02em"
   lead:
-    fontFamily: "Sora, system-ui, sans-serif"
+    fontFamily: "Red Hat Text, system-ui, sans-serif"
     fontSize: "1.0625rem / 1.1875rem md"
     fontWeight: 400
     lineHeight: 1.55
     letterSpacing: "normal"
   body:
-    fontFamily: "Sora, system-ui, sans-serif"
+    fontFamily: "Red Hat Text, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
   caption:
-    fontFamily: "Sora, system-ui, sans-serif"
+    fontFamily: "Red Hat Text, system-ui, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 400
     lineHeight: 1.45
@@ -114,12 +114,12 @@ components:
 
 **Creative North Star: "Warm Counter Editorial"**
 
-Numo's website is built for daylight on a real shop counter, not a dark crypto trading terminal or an anonymous B2B SaaS template. It pairs expressive, sentence-case **GC Protage** display headings with calm **Sora** body typography, plain white grounds (**Paper** `#FFFFFF`) with one light tint for the surfaces that need a tone of their own (**Sunken** `#F4F6F8`), deep **Signwriter's Ink** (`#0A2540`) for language and bookends, and a disciplined coat of **Fresh Paint Mint** (`#5EFFC2`) reserved strictly for brand authorship, primary dark-ground CTAs, and active/success confirmations.
+Numo's website is built for daylight on a real shop counter, not a dark crypto trading terminal or an anonymous B2B SaaS template. It pairs expressive, sentence-case **GC Protage** display headings with warm, open **Red Hat Text** body typography, plain white grounds (**Paper** `#FFFFFF`) with one light tint for the surfaces that need a tone of their own (**Sunken** `#F4F6F8`), deep **Signwriter's Ink** (`#0A2540`) for language and bookends, and a disciplined coat of **Fresh Paint Mint** (`#5EFFC2`) reserved strictly for brand authorship, primary dark-ground CTAs, and active/success confirmations.
 
 The atmosphere is **calm, declarative, and concrete**. Calm, because every page sits on plain white, parted by hairlines and generous space, rather than stacking heavy boxes, tinted bands, or glossy gradients. Declarative, because headlines sit in medium-weight sentence case with generous breathing room and short, verifiable statements. Concrete, because every claim is backed by real hardware renders, live payment illustrations (`FeeStage`, `BTCPayDemo`), authentic app screenshots, and a dated changelog.
 
 **Key Characteristics:**
-- **GC Protage** self-hosted display headers paired with **Sora** (`400 / 500 / 600`) body and UI copy
+- **GC Protage** self-hosted display headers paired with **Red Hat Text** (`400 / 500 / 600`) body and UI copy
 - One ground between two ink bookends: Dark Ink Hero, then white for every section (Showcase with tinted stages, Wallets with hairline-edged tiles, FAQ), parted by hairlines, then the Ink Footer Panel
 - **One Coat Mint (`#5EFFC2`)**: app icon tile, Hero & Footer dark-surface primary CTAs, active indicators, success confirmation, focus ring, and text selection
 - Flat page architecture with no shadows anywhere; edges are a hairline or a change of tone
@@ -177,8 +177,10 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because every page 
 
 ## Typography
 
-**Display Font:** GC Protage (`500`, `600`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Sora)
-**Body & UI Font:** Sora (`400`, `500`, `600`, self-hosted via `next/font/google`)
+**Display Font:** GC Protage (`500`, `600`, self-hosted locally via `next/font/local` from `src/fonts/`, with per-glyph fallback to Red Hat Text)
+**Body & UI Font:** Red Hat Text (`400`, `500`, `600`, self-hosted via `next/font/google`, exposed as `--font-body`), a humanist sans: open, slightly calligraphic shapes drawn for reading text. GC Protage is wide and round, and a body face that is also wide and geometric (Sora, before it) sits close to it without matching; Red Hat Text differs from it in kind, so the two read as a pair. Its lowercase is short (`0.488` of the size), so `body` sets `font-size-adjust: 0.534` and every size in the scale reads at the x-height it was set for; layout in `em` is unchanged. The GC Protage heading styles set `font-size-adjust: none`, and so do the depicted app and BTCPay screens, which keep their native pixel sizes. Its figures are true tabular figures with `tnum`.
+  Why: Erik's words, "i don't love SORA i think it's just not the right pairing", and of the faces he flipped through, "i think humanist is the best".
+  <!-- 2026-11-27. A prototype round put the whole home page under four body faces with GC Protage unchanged, each set to Sora's x-height: Current (Sora), Narrow (Instrument Sans), Humanist (Red Hat Text), Editorial (Instrument Sans with Newsreader for reading text). Eighteen faces were sampled first; Inter and Geist were passed over as defaults, Figtree, DM Sans, Albert Sans and Onest as too close to Sora's geometry. -->
 
 - **`.text-hero`**: the home hero's headline only, a step above display. Weight `500` (the weight of every other display heading, never SemiBold), tracking `0.01em`, line-height `1.1`, column capped at `9.1em` so it breaks as `Bitcoin payments` / `as easy as` / `Apple Pay.`. It is as large as the window allows, up to `8rem` (`128px`): the width inside the gutters over `9em` (its longest line is `8.51em`), and from `md`, where the hero is the window's height (`h-svh`, `640px` to `1000px`), also that height less `440px`, over `3.3em`. So it is `128px` on a `1440 x 900` screen, about `85px` in a `1280 x 720` window, and on a phone exactly as wide as `Bitcoin payments` allows (`38px` at `390px`); it never runs under the nav, in a short laptop window or on a phone held sideways. Do not change the headline without measuring its longest line again.
   Why: Erik wanted the hero to "hit harder". Of the versions he flipped through, he picked this one: "keep medium. i like that."
@@ -187,8 +189,8 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because every page 
 - **`.text-h2`**: `clamp(1.875rem, 4vw, 3.25rem)`, weight `500`, tracking `0.015em`, line-height `1.14` — Section and Showcase headings.
 - **`.text-title`**: `1.5rem`, weight `500`, tracking `0.02em`, line-height `1.28` — Release titles, wallet groups.
 - **`.text-h3`**: `1.25rem`, weight `600`, tracking `0.02em`, line-height `1.35` — Step headings, card headings, highlight titles, privacy headings.
-- **`.text-lead`**: `1.0625rem` → `1.1875rem` (`md`), weight `400`, line-height `1.55` — Section intros (Sora).
-- **Body (`text-base`)**: `1rem`, weight `400`, line-height `1.6` — Editorial prose capped at **`max-w-[35rem]`–`36rem`** (`64–70` characters per line in 16px Sora).
+- **`.text-lead`**: `1.0625rem`, `1.1875rem` from `md`, weight `400`, line-height `1.55` — Section intros.
+- **Body (`text-base`)**: `1rem`, weight `400`, line-height `1.6` — Editorial prose capped at **`max-w-[35rem]`–`36rem`** (`66–72` characters per line in 16px Red Hat Text).
 - **`.text-caption`**: `0.8125rem`, weight `400`, line-height `1.45` — Captions, timestamps, and metadata.
 - **`.tabular`**: `font-variant-numeric: tabular-nums` on every price, satoshi amount, date, version tag, and step numeral.
 
@@ -197,7 +199,7 @@ The atmosphere is **calm, declarative, and concrete**. Calm, because every page 
 1. **The Open Tracking Rule.** GC Protage is drawn with very tight sidebearings (about `0.04em` beside a stem), so the heading scale is never tracked negative. Tracking stays slightly positive and opens as the size drops (`0.01em` display → `0.02em` title and `h3`), and line height never goes below `1.1`. Negative tracking makes pairs like `al`, `ll`, and `rw` collide and the headline reads crushed. The logo wordmark is the only exception: it is drawn as paths, so no tracking ever applies to it.
 2. **The Em Measure Rule.** Cap headline widths in `em`, not `ch`. The shipped GC Protage files have no `0` glyph, so `1ch` silently resolves to a `0.5em` guess. Measure the longest line that must stay whole and leave about `0.4em` of slack.
 3. **The Whole Word Rule.** Headings break between phrases only: never at a hyphen (`unbrokenHyphens` in `ReleaseEntry.tsx`) and never after a one-letter word (bind it to its noun with a non-breaking space in the data).
-4. **The Demo Glyph Rule.** The font files in `src/fonts/` are the GC Protage demo cut: `A–Z`, `a–z`, space, comma, and period only. Digits, apostrophes, hyphens, question marks, and every other mark in a heading render in Sora. Keep numerals and symbol-heavy strings out of display headings where copy allows, until the full family is licensed.
+4. **The Demo Glyph Rule.** The font files in `src/fonts/` are the GC Protage demo cut: `A–Z`, `a–z`, space, comma, and period only. Digits, apostrophes, hyphens, question marks, and every other mark in a heading render in Red Hat Text, the body face. Keep numerals and symbol-heavy strings out of display headings where copy allows, until the full family is licensed.
 5. **The Plain Copy Rule.** Running copy (paragraphs, list items, guide steps, FAQ answers) never changes weight for emphasis: no `<strong>` or `<b>`, and no `font-medium` or `font-semibold` on a span or link inside a sentence. An on-screen label is written the way the product capitalizes it (Create New Wallet, Continue) and left plain. An inline link is marked by its underline alone. Labels that stand on their own (a version tag, a chip, a list term, an FAQ question) may carry weight. `npm run lint` fails on any `<strong>` or `<b>` element.
    Why: Erik's words, bold in copy "looks like AI slop".
    <!-- 2026-11-25, on /setup steps where on-screen labels were set in medium weight: "we don't need to BOLD stuff in this guide. that looks like AI slop." He said it about the guide; applying it to all running copy was proposed in the 2026-11-26 report and accepted with "write all". -->

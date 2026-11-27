@@ -23,6 +23,8 @@
   background: var(--green);
   color: #fff;
   font-family: var(--font-android), Roboto, system-ui, sans-serif;
+  /* Native pixel sizes: the site's x-height matching stops here. */
+  font-size-adjust: none;
   font-weight: 400;
   letter-spacing: normal;
   text-align: left;
