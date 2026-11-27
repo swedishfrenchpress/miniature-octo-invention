@@ -244,6 +244,13 @@ body {
   line-height: 1.6;
 }
 
+/* The footer is a panel set into the page with a margin all round it. The
+   margin takes the ground of the section above, so a page that ends on Sunken
+   Cream (/setup, /privacy) runs straight into the panel with no Paper stripe. */
+main:has(> .bg-sunken:last-child) + .site-footer {
+  background: var(--sunken);
+}
+
 /* Section anchor offset for the fixed nav (72px mobile / 84px desktop) */
 .section-anchor {
   scroll-margin-top: 72px;
