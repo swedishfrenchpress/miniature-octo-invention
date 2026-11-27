@@ -20,9 +20,13 @@
   /* Editorial cut accent: exclusively for the slashed 2.9% + 30¢ fee graphic. */
   --slash: #D93829;
 
-  /* Grounds: warm paper alternating with richer sunken cream; pure white for crisp cards/stages. */
-  --paper: #FBFAF7;
-  --sunken: #F2EEE6;
+  /* Grounds. Every page and section is plain white (paper). Sunken is the one
+     tint, a light grey leaning toward the ink's blue, never cream: it is for
+     things that need a tone of their own on white (the showcase stages, the
+     nav's active pill, a menu row under the pointer, an image still loading),
+     never for a whole section. */
+  --paper: #FFFFFF;
+  --sunken: #F4F6F8;
   --surface: #FFFFFF;
 
   /* Structural hairlines */
@@ -244,13 +248,6 @@ body {
   line-height: 1.6;
 }
 
-/* The footer is a panel set into the page with a margin all round it. The
-   margin takes the ground of the section above, so a page that ends on Sunken
-   Cream (/setup, /privacy) runs straight into the panel with no Paper stripe. */
-main:has(> .bg-sunken:last-child) + .site-footer {
-  background: var(--sunken);
-}
-
 /* Section anchor offset for the fixed nav (72px mobile / 84px desktop) */
 .section-anchor {
   scroll-margin-top: 72px;
@@ -335,7 +332,7 @@ main:has(> .bg-sunken:last-child) + .site-footer {
 }
 
 /* Two-tone accessible focus ring: mint core + navy backing stays visible on
-   paper, sunken cream, white cards, and dark navy sections alike. */
+   white grounds, tinted stages, and dark navy panels alike. */
 :where(a, button, input, select, textarea, [role="button"]):focus-visible {
   outline: 2px solid var(--mint);
   outline-offset: 2px;

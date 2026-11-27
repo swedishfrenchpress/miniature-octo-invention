@@ -74,7 +74,7 @@ export default function BTCPayPage() {
         </div>
       </header>
 
-      <section className="section-y border-t border-line bg-sunken">
+      <section className="section-y border-t border-line bg-paper">
         <div className="shell">
           <BTCPayDemo />
         </div>

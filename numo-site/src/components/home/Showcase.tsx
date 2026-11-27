@@ -3,7 +3,7 @@ import Image from "next/image";
 import { LogoMark } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 
-/** Consistent warm sunken stage so hardware renders, the slashed fee graphic,
+/** One tinted stage so hardware renders, the slashed fee graphic,
  *  and payout notifications share the same architectural frame and visual gravity.
  *  `padding` replaces the default margin rather than adding to it. */
 function Stage({

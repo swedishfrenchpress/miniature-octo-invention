@@ -103,7 +103,7 @@ export function Wallets({ groups = GROUPS }: { groups?: WalletGroupData[] }) {
   return (
     <section
       id="wallets"
-      className="section-anchor section-y border-y border-line bg-sunken"
+      className="section-anchor section-y border-y border-line bg-paper"
     >
       <div className="shell">
         <h2 className="text-display max-w-[16ch] text-navy">

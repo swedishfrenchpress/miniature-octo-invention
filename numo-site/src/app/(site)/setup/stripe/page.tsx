@@ -243,7 +243,7 @@ export default async function StripeSetupPage() {
         </div>
       </header>
 
-      <section id="key" aria-labelledby="key-heading" className={`${section} bg-sunken`}>
+      <section id="key" aria-labelledby="key-heading" className={`${section} bg-paper`}>
         <SetupSequence
           heading="Create a key in Stripe."
           headingId="key-heading"
@@ -262,7 +262,7 @@ export default async function StripeSetupPage() {
         />
       </section>
 
-      <section id="fixes" aria-labelledby="fixes-heading" className={`${section} bg-sunken`}>
+      <section id="fixes" aria-labelledby="fixes-heading" className={`${section} bg-paper`}>
         <div className="shell">
           <h2 id="fixes-heading" className="text-h2 text-navy">
             If the check finds a problem.

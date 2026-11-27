@@ -14,10 +14,10 @@ const DEFAULT_SIZES = "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px
 /* Release screenshots are plain paths, so next/image has no build-time blur to
    derive. Without a placeholder the reserved box paints nothing and /releases
    arrives as a column of holes — sixteen of them, of which three had loaded a
-   full four seconds in. A single paper tone is enough: these are app
-   screenshots on light grounds, so the page reads as paper settling rather than
+   full four seconds in. A single tone is enough: the light tint, the same as the
+   frame behind the picture, so the page reads as a picture settling rather than
    as gaps waiting to fill. */
-const BLUR = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjExLjEwMAD/2wBDAAgYGBwYHCEhISEhISckJygoKCcnJycoKCgrKyszMzMrKysoKCsrMDAzMzc5NzQ0MzQ5OTw8PEhIRUVUVFdnZ3z/xABMAAEBAAAAAAAAAAAAAAAAAAAABwEBAQAAAAAAAAAAAAAAAAAAAgMQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/wAARCAAGAAgDASIAAhEAAxEA/9oADAMBAAIRAxEAPwC4gJG//9k=";
+const BLUR = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAGAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AK8AH//Z";
 
 export function ReleaseImage({ image, priority, sizes = DEFAULT_SIZES }: Props) {
   return (

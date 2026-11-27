@@ -128,9 +128,7 @@ export function SiteFooter() {
   const ask = isSetup ? SETUP_ASK : HOME_ASK;
 
   return (
-    // `site-footer` lets globals.css give the margin the ground of the section
-    // above it, so a page ending on Sunken Cream gets no Paper stripe.
-    <footer id="get-started" className="site-footer section-anchor bg-paper p-2 md:p-3">
+    <footer id="get-started" className="section-anchor bg-paper p-2 md:p-3">
       <div className="overflow-hidden rounded-frame bg-navy text-white">
         <div className="shell pt-16 md:pt-24">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">

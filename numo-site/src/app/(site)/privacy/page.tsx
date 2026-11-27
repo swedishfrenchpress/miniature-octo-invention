@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         </div>
       </header>
 
-      <div className="section-y border-t border-line bg-sunken">
+      <div className="section-y border-t border-line bg-paper">
         <div className="shell">
           <div className="max-w-[36rem] space-y-12 md:space-y-14">
             <section>

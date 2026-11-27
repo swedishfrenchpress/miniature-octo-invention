@@ -151,7 +151,7 @@ export default async function SetupPage() {
       <section
         id="onboarding"
         aria-labelledby="onboarding-heading"
-        className={`${section} bg-sunken`}
+        className={`${section} bg-paper`}
       >
         <SetupSequence
           heading="Open your till."
@@ -170,7 +170,7 @@ export default async function SetupPage() {
       </section>
 
       {/* `#btcpay` is linked from /btcpay; `#cards` is kept inside as a stable anchor. */}
-      <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-sunken`}>
+      <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-paper`}>
         <SetupExtras />
       </section>
     </>

@@ -39,11 +39,11 @@ export default async function ReleasesPage() {
         </div>
       </header>
 
-      {/* Featured latest release on warm sunken ground */}
+      {/* Featured latest release, set apart by its hairline and its space */}
       <section
         id={versionTag(latest.version)}
         aria-labelledby="latest-title"
-        className="section-y scroll-mt-28 border-t border-line bg-sunken"
+        className="section-y scroll-mt-28 border-t border-line bg-paper"
       >
         <div className="shell">
           <p className="flex flex-wrap items-center gap-x-3 text-sm text-navy/70">

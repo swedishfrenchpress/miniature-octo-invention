@@ -29,7 +29,7 @@ const protage = localFont({
 /** The page runs edge to edge on notched phones (the `shell` gutter clears the
  *  notch), and mobile browser chrome takes the Paper ground. */
 export const viewport: Viewport = {
-  themeColor: "#FBFAF7",
+  themeColor: "#FFFFFF",
   viewportFit: "cover",
 };
 
