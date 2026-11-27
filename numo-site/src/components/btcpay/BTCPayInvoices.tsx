@@ -1,11 +1,15 @@
 import { Open_Sans } from "next/font/google";
 import styles from "./BTCPayInvoices.module.css";
 
-// BTCPay Server's interface face. Loaded only on the route that depicts it.
+// BTCPay Server's interface face. Loaded only on the route that depicts it, and
+// not preloaded: a preload hint travels in the route's prefetch, so any page
+// linking to /btcpay would fetch the face for a demo it never shows. The demo's
+// own text asks for it as soon as it is laid out.
 const openSans = Open_Sans({
   variable: "--font-btcpay",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  preload: false,
 });
 
 export type InvoiceStatus = "New" | "Settled";

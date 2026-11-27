@@ -4,11 +4,13 @@ import type { CSSProperties } from "react";
 import styles from "./NumoApp.module.css";
 
 // Android's system face, which the Numo app is set in. Loaded only on the
-// route that depicts the app.
+// route that depicts the app, and not preloaded, for the reason given beside
+// Open Sans in BTCPayInvoices.tsx.
 const roboto = Roboto({
   variable: "--font-android",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+  preload: false,
 });
 
 export type NumoScreen = "keypad" | "pay" | "received";

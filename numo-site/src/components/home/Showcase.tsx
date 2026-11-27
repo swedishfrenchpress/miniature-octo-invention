@@ -22,10 +22,30 @@ function Stage({
   );
 }
 
+/** How wide a row's picture column is, as a share of the page less what goes
+ *  around it, at each width (see `Row`): 1.15fr of 2.15 beside a 3rem gap from
+ *  `md`, a 5rem gap from `lg`, 1.3fr of 2.3 from `xl`, and the page's own gutters
+ *  (1.5, 2.5, then 3rem a side) up to its 72rem. Widest first, in `em`. */
+const STAGE_WIDTH: [media: string, scale: number, less: string][] = [
+  ["(min-width: 80em)", 1.3 / 2.3, "67em"],
+  ["(min-width: 64em)", 1.15 / 2.15, "(100vw - 11em)"],
+  ["(min-width: 48em)", 1.15 / 2.15, "(100vw - 8em)"],
+  ["", 1, "(100vw - 3em)"],
+];
+
 /** Cut-out studio renders hosted inside the shared sunken stage. The files are
  *  trimmed to the device itself, so `object-contain` fits each one to the stage:
- *  the device stands nearly as tall as its tile, with one even margin around it. */
-function Render({ src, alt }: { src: string; alt: string }) {
+ *  the device stands nearly as tall as its tile, with one even margin around it.
+ *
+ *  Every device is taller than the 5:4 stage, so it is drawn as tall as the stage
+ *  and only part of its width; `sizes` says that part, or a phone downloads a
+ *  file twice the width it shows. `width` and `height` are the file's own. */
+function Render({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) {
+  const share = Math.min(1, (4 / 5) * (width / height));
+  const sizes = STAGE_WIDTH.map(([media, scale, less]) =>
+    `${media} calc(${(scale * share).toFixed(3)} * ${less})`.trim(),
+  ).join(", ");
+
   return (
     <Stage padding="p-4 sm:p-5 lg:p-6">
       <div className="relative h-full w-full">
@@ -33,7 +53,7 @@ function Render({ src, alt }: { src: string; alt: string }) {
           src={src}
           alt={alt}
           fill
-          sizes="(min-width: 1024px) 680px, (min-width: 768px) 52vw, 100vw"
+          sizes={sizes}
           className="object-contain"
         />
       </div>
@@ -220,6 +240,8 @@ export function Showcase() {
             visual={
               <Render
                 src="/ui/till-tap.png"
+                width={869}
+                height={987}
                 alt="A customer phone showing Cashu.me's Ready to Scan sheet held over a handheld till running Numo, whose screen displays an amount in sats, a QR code, and Scan or Tap to Pay"
               />
             }
@@ -236,6 +258,8 @@ export function Showcase() {
             visual={
               <Render
                 src="/ui/till-card.png"
+                width={1013}
+                height={1155}
                 alt="A contactless credit card held over the reader on a handheld till running Numo, showing Stripe's tap-to-pay prompt for $38.00"
               />
             }
@@ -273,6 +297,8 @@ export function Showcase() {
             visual={
               <Render
                 src="/ui/till-sales.png"
+                width={721}
+                height={1158}
                 alt="A handheld till running Numo's Sales screen: $1,470.00 over the last 7 days, a daily bar chart, and a list of itemised sales"
               />
             }

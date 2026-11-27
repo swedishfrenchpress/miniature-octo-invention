@@ -64,7 +64,7 @@ export function ReleaseEntry({ release }: Props) {
 
         {release.heroImage && (
           <div className="mt-8">
-            <ReleaseImage image={release.heroImage} />
+            <ReleaseImage image={release.heroImage} column="entry" />
           </div>
         )}
 
@@ -78,12 +78,12 @@ export function ReleaseEntry({ release }: Props) {
                 )}
                 {h.image && (
                   <div className="mt-5 max-w-[640px]">
-                    <ReleaseImage image={h.image} />
+                    <ReleaseImage image={h.image} column="entryHighlight" />
                   </div>
                 )}
                 {h.secondImage && (
                   <div className="mt-4 max-w-[640px]">
-                    <ReleaseImage image={h.secondImage} />
+                    <ReleaseImage image={h.secondImage} column="entryHighlight" />
                   </div>
                 )}
               </div>

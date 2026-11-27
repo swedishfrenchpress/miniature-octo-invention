@@ -15,15 +15,17 @@ const bodyFont = Red_Hat_Text({
 
 // Header display typeface (GC Protage), self-hosted locally. Only the two weights
 // the type scale uses are declared; Regular and Bold stay in src/fonts unshipped.
-// Disable automatic Arial fallback so missing demo glyphs fall back to the body face.
+// They ship as WOFF2, converted losslessly from the TTF masters beside them (a
+// third of the size, and both are preloaded on every page). Disable automatic
+// Arial fallback so missing demo glyphs fall back to the body face.
 const protage = localFont({
   variable: "--font-protage",
   display: "swap",
   adjustFontFallback: false,
   fallback: ["var(--font-body)", "system-ui", "sans-serif"],
   src: [
-    { path: "../fonts/GCProtage-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../fonts/GCProtage-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../fonts/GCProtage-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/GCProtage-SemiBold.woff2", weight: "600", style: "normal" },
   ],
 });
 

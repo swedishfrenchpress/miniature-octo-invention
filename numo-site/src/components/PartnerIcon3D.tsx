@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
-import { PartnerTile, type Partner } from "./PartnerPair";
+import { PartnerTile, type Partner } from "./PartnerTile";
 
 /* A partner's app icon as a real 3D object, drawn live in the page with three.js.
 

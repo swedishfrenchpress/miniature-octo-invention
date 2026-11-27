@@ -31,16 +31,18 @@ export type SetupStep = {
 };
 
 /** What the screenshots in a sequence are of. Every image in one sequence shares
- *  the shape, so they can stack and cross-fade in one frame. */
+ *  the shape, so they can stack and cross-fade in one frame. `inlineEm` is the
+ *  `inline` limit again, as a number, for the `sizes` hints below. */
 const SCREENS = {
-  phone: { ...SCREEN_SIZE.phone, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
-  phoneTall: { ...SCREEN_SIZE.phoneTall, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]" },
-  mobileWeb: { ...SCREEN_SIZE.mobileWeb, radius: "rounded-[1.5rem]", inline: "max-w-[20rem]" },
+  phone: { ...SCREEN_SIZE.phone, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]", inlineEm: 17.5 },
+  phoneTall: { ...SCREEN_SIZE.phoneTall, radius: "rounded-[2.25rem]", inline: "max-w-[17.5rem]", inlineEm: 17.5 },
+  mobileWeb: { ...SCREEN_SIZE.mobileWeb, radius: "rounded-[1.5rem]", inline: "max-w-[20rem]", inlineEm: 20 },
   /** A desktop window is never set wider than fits in the window under the nav. */
   desktopWeb: {
     ...SCREEN_SIZE.desktopWeb,
     radius: "rounded-card",
     inline: "md:tall:max-w-[calc((100svh-84px-4rem)*16/9)]",
+    inlineEm: undefined,
   },
 } as const;
 
@@ -53,12 +55,18 @@ export type { ScreenKind };
    1px file and shows as a blur. The layout pins from `md` in a window at least
    `tall` (40rem) high, so the hints test both, and in `em`, which is what the
    `rem` breakpoints resolve to. A phone on its side is wide but short: it gets
-   the stacked copy, at full size. */
+   the stacked copy, at full size.
+
+   The widths are the screen's own limits, also in `em`, so they grow with a
+   raised text size exactly as the layout does: a stacked copy is at most its
+   `inline` width, and the pinned one at most 40rem tall. Anything wider makes
+   a phone download a file twice the size it shows. */
 const PINS = "(min-width: 48em) and (min-height: 40em)";
-const STACKED = `${PINS} 1px, 420px`;
-const PINNED = `${PINS} 480px, 1px`;
+const stackedSizes = (kind: ScreenKind) => `${PINS} 1px, ${SCREENS[kind].inlineEm ?? 26.25}em`;
+const pinnedSizes = (kind: ScreenKind) =>
+  `${PINS} ${Math.ceil((40 * SCREENS[kind].width) / SCREENS[kind].height * 10) / 10}em, 1px`;
 /* In a guide with desktop captures the phone copy steps aside from `md` at any height. */
-const STACKED_FROM_MD = "(min-width: 48em) 1px, 420px";
+const stackedFromMdSizes = (kind: ScreenKind) => `(min-width: 48em) 1px, ${SCREENS[kind].inlineEm ?? 26.25}em`;
 const DESKTOP_WINDOW = "(min-width: 80em) 1152px, (min-width: 48em) 92vw, 1px";
 
 /** A real screenshot shown bare: rounded like the screen it came from and edged
@@ -238,7 +246,7 @@ export function SetupSequence({
                   alt={step.alt}
                   outline={step.outline}
                   kind={screen}
-                  sizes={STACKED_FROM_MD}
+                  sizes={stackedFromMdSizes(screen)}
                   className={`mt-8 w-full md:hidden ${SCREENS[screen].inline}`}
                 />
               </div>
@@ -289,7 +297,7 @@ export function SetupSequence({
                     alt={step.alt}
                     outline={step.outline}
                     kind={screen}
-                    sizes={STACKED}
+                    sizes={stackedSizes(screen)}
                     className={`mt-8 w-full md:tall:hidden ${inline}`}
                   />
                 )}
@@ -318,7 +326,7 @@ export function SetupSequence({
                   alt={step.alt}
                   outline={step.outline}
                   kind={screen}
-                  sizes={PINNED}
+                  sizes={pinnedSizes(screen)}
                   className={`absolute inset-0 transition-opacity ${
                     index === pinned
                       ? "z-10 opacity-100 duration-300 ease-[var(--ease-smooth)]"

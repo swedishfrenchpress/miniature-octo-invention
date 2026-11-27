@@ -418,7 +418,7 @@ body {
 
 /* ===== Arrivals =====
    The home page's four entrances. The only other one on the site is the partner
-   pair docking in the header of /btcpay and /setup/stripe (PartnerPair.module.css).
+   pair docking in the header of /btcpay and /setup/stripe (5, at the end).
    Nothing else on a reading page arrives.
 
    1. The hero's words arrive once as the page opens: headline, intro, buttons,
@@ -493,6 +493,40 @@ body {
 [data-reveal="armed"] .fee-strike-line {
   transform: scaleX(0);
   opacity: 0;
+}
+
+/* 5. The partner pair (PartnerPair.tsx) docks once as the page opens: the two
+      tiles slide together. It lives here rather than in a CSS module because a
+      module shared by /btcpay and /setup/stripe made the bundler merge it with
+      the BTCPay demo's styles, and the Stripe guide then blocked on CSS for a
+      demo it does not show. */
+.partner-dock-left {
+  animation: partner-dock-left 420ms var(--ease-out-expo) both;
+}
+
+.partner-dock-right {
+  animation: partner-dock-right 420ms var(--ease-out-expo) 60ms both;
+}
+
+@keyframes partner-dock-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+@keyframes partner-dock-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-dock-left,
+  .partner-dock-right {
+    animation: none;
+  }
 }
 
 /* ===== Fee Slash Visual =====

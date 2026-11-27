@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Button } from "./Button";
 import { PartnerIcon3D } from "./PartnerIcon3D";
-import type { Partner } from "./PartnerPair";
+import type { Partner } from "./PartnerTile";
 
 /** One optional extra: the partner's app icon as a live 3D object on a dark
  *  stage, a faint halo of its own colour behind it, and under it the question a

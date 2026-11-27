@@ -61,7 +61,7 @@ export default async function ReleasesPage() {
 
           {latest.heroImage && (
             <div className="mt-10">
-              <ReleaseImage image={latest.heroImage} priority />
+              <ReleaseImage image={latest.heroImage} column="page" priority />
             </div>
           )}
 
@@ -75,12 +75,12 @@ export default async function ReleasesPage() {
                   )}
                   {h.image && (
                     <div className="mt-6 max-w-[720px]">
-                      <ReleaseImage image={h.image} />
+                      <ReleaseImage image={h.image} column="pageHighlight" />
                     </div>
                   )}
                   {h.secondImage && (
                     <div className="mt-4 max-w-[720px]">
-                      <ReleaseImage image={h.secondImage} />
+                      <ReleaseImage image={h.secondImage} column="pageHighlight" />
                     </div>
                   )}
                 </div>
