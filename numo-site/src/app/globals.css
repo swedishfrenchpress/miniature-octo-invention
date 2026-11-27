@@ -221,7 +221,13 @@ summary,
 /* No `scroll-behavior: smooth` on html. In-page anchors scroll explicitly
    from Navigation.tsx, honoring prefers-reduced-motion per call. */
 
-/* Respect user's motion preferences - CRITICAL for accessibility */
+/* Reduced motion means less movement, not none. Keyframe animations (the
+   arrivals, the fee loop, the marquee) stop. Transitions keep only opacity and
+   colour: a screenshot swap still cross-fades instead of cutting, a hover still
+   eases, and every translate, rotate, scale, height and clip-path change is
+   instant. Each element keeps its own durations, which the browser hands to
+   this property list in order, so a fade may borrow a sibling property's time;
+   every value is one the element already uses. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -229,8 +235,7 @@ summary,
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     animation-delay: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0.01ms !important;
+    transition-property: opacity, color, background-color, border-color, text-decoration-color, box-shadow !important;
     scroll-behavior: auto !important;
   }
 }
@@ -416,7 +421,7 @@ body {
 }
 
 .hero-fade {
-  animation: hero-fade 500ms ease-out 320ms backwards;
+  animation: hero-fade 500ms var(--ease-out-expo) 320ms backwards;
 }
 
 @keyframes hero-rise {

@@ -193,11 +193,7 @@
   mask-image: linear-gradient(to bottom, #000 calc(100% - 10px), transparent);
 }
 
-/* A row is a one-track grid so a new invoice can open its own height and carry
-   the rows beneath it down, instead of popping in and shoving them. */
 .row {
-  display: grid;
-  grid-template-rows: 1fr;
   border-bottom: 1px solid var(--line);
 }
 
@@ -206,32 +202,31 @@
   overflow: hidden;
 }
 
-.row[data-fresh] {
-  animation: row-open 560ms var(--ease-smooth) both;
+/* A new invoice carries the rows down by sliding the whole list, not by
+   opening its own height: every row is the same height, so the list simply
+   starts one row higher and settles. It moves by translate alone, so nothing
+   is laid out again while it moves. Keyframes are global even inside a
+   container query, so the row height is a variable. */
+.track[data-shift] {
+  animation: rows-shift 560ms var(--ease-smooth) both;
 }
 
-.row[data-fresh] .cells {
-  min-height: 0;
-  animation: row-fill 560ms var(--ease-smooth) both;
-}
-
-@keyframes row-open {
+@keyframes rows-shift {
   from {
-    grid-template-rows: 0fr;
-    border-bottom-color: transparent;
+    translate: 0 calc(-1 * (var(--row-h) + 1px));
   }
 }
 
-/* The row's words fade up as its height opens, so the gap is never empty for
-   long and the moving edge never slices a fully opaque line. Keyframes are
-   global even inside a container query, so the height is a variable. */
+/* The new row's words fade in as it slides down from under the header, so the
+   top edge never slices a fully opaque line. */
+.row[data-fresh] .cells {
+  animation: row-fill 560ms var(--ease-smooth) both;
+}
+
 @keyframes row-fill {
   0%,
   15% {
     opacity: 0;
-  }
-  to {
-    min-height: var(--row-h);
   }
 }
 

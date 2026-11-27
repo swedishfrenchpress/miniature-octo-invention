@@ -91,7 +91,7 @@ export function DownloadMenu({
       >
         <span>{label}</span>
         <svg
-          className={`h-3.5 w-3.5 opacity-75 transition-transform duration-200 ease-[var(--ease-out-expo)] ${
+          className={`h-3.5 w-3.5 opacity-75 transition-transform duration-150 ease-[var(--ease-in-out)] ${
             open ? "rotate-180" : ""
           }`}
           viewBox="0 0 16 16"

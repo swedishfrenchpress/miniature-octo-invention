@@ -84,32 +84,40 @@ export function BTCPayInvoices({
           </div>
 
           <div className={styles.rows}>
-            {invoices.map((invoice) => (
-              <div key={invoice.id} className={styles.row} data-fresh={invoice.fresh || undefined}>
-                <div className={styles.cells}>
-                  <span className={styles.checkbox} />
-                  <span className={styles.date}>{invoice.date}</span>
-                  <span className={styles.invoiceId}>{invoice.id}</span>
-                  <span className={styles.orderId} />
-                  <span>
-                    <span className={styles.badge} data-status={invoice.status}>
-                      {STATUSES.map((status) => (
-                        <span key={status} className={styles.badgeLabel} data-for={status}>
-                          {status}
-                        </span>
-                      ))}
+            {/* A new invoice slides the whole list down by one row. Keyed on the
+                newest invoice, so the slide runs once for each sale. */}
+            <div
+              key={invoices[0]?.id}
+              className={styles.track}
+              data-shift={invoices[0]?.fresh || undefined}
+            >
+              {invoices.map((invoice) => (
+                <div key={invoice.id} className={styles.row} data-fresh={invoice.fresh || undefined}>
+                  <div className={styles.cells}>
+                    <span className={styles.checkbox} />
+                    <span className={styles.date}>{invoice.date}</span>
+                    <span className={styles.invoiceId}>{invoice.id}</span>
+                    <span className={styles.orderId} />
+                    <span>
+                      <span className={styles.badge} data-status={invoice.status}>
+                        {STATUSES.map((status) => (
+                          <span key={status} className={styles.badgeLabel} data-for={status}>
+                            {status}
+                          </span>
+                        ))}
+                      </span>
                     </span>
-                  </span>
-                  <span className={styles.amount}>
-                    {invoice.sats.toLocaleString("en-US")} SATS
-                  </span>
-                  <span className={styles.rowActions}>
-                    <Icon name="actions-comment" />
-                    <Icon name="caret-down" />
-                  </span>
+                    <span className={styles.amount}>
+                      {invoice.sats.toLocaleString("en-US")} SATS
+                    </span>
+                    <span className={styles.rowActions}>
+                      <Icon name="actions-comment" />
+                      <Icon name="caret-down" />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

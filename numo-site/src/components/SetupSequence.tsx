@@ -321,8 +321,8 @@ export function SetupSequence({
                   sizes={PINNED}
                   className={`absolute inset-0 transition-opacity ${
                     index === pinned
-                      ? "z-10 opacity-100 duration-500 ease-[var(--ease-smooth)]"
-                      : "opacity-0 delay-500 duration-0"
+                      ? "z-10 opacity-100 duration-300 ease-[var(--ease-smooth)]"
+                      : "opacity-0 delay-300 duration-0"
                   }`}
                 />
               ),
