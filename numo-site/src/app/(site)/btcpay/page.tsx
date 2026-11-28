@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import type { ReactNode } from "react";
 import { Button } from "@/components/Button";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { BTCPayDemo } from "@/components/btcpay/BTCPayDemo";
 import { BTCNUTSERVER_GITHUB_URL, BTCNUTSERVER_PLUGIN_URL } from "@/lib/links";
 
-export const metadata: Metadata = {
-  title: "Numo for BTCPay Server",
+export const metadata: Metadata = pageMetadata({
+  title: "BTCPay Server - Numo",
   description:
     "Numo connects directly to your BTCPay Server store: it generates invoices, accepts Lightning or Cashu, and keeps your point-of-sale inventory in sync.",
-};
+});
 
 /* Links inside a sentence: marked by underline alone, at the paragraph's weight. */
 const linkClass =
@@ -53,7 +54,7 @@ export default function BTCPayPage() {
         <div className={PARTNER_HEADER}>
           <PartnerPair partner="btcpay" />
           <div>
-            <h1 className="text-display max-w-[16ch] text-navy">
+            <h1 className="text-display max-w-[8em] text-navy">
               The till for your BTCPay Server store.
             </h1>
             <p className="text-lead measure mt-5 text-navy/70 md:mt-6">

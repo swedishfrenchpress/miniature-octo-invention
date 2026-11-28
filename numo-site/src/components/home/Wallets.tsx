@@ -66,7 +66,9 @@ function NfcIcon() {
 
 function WalletGroup({ title, detail, wallets, nfc }: WalletGroupData) {
   return (
-    <div className="grid gap-8 border-t border-line py-12 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-16">
+    // The last group drops its bottom padding: nothing follows it inside the
+    // section, so the section's own space is the whole gap to the next hairline.
+    <div className="grid gap-8 border-t border-line py-12 last:pb-0 md:grid-cols-[1fr_2.1fr] md:gap-14 md:py-16 md:last:pb-0">
       <div>
         <div className="flex items-center gap-2">
           <h3 className="text-title text-navy">{title}</h3>
@@ -86,9 +88,12 @@ function WalletGroup({ title, detail, wallets, nfc }: WalletGroupData) {
               key={wallet.name}
               className="flex items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3 py-2.5 sm:gap-3 sm:px-3.5"
             >
-              <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-inset ring-navy/10">
+              <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px] bg-surface after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:ring-navy/10 after:content-['']">
                 {/* A missing icon file shows the wallet's first letter, not a
-                    broken image or an empty box. The build warns about the file. */}
+                    broken image or an empty box. The build warns about the file.
+                    The hairline is drawn over the icon, not under it: an icon on
+                    white (Phoenix, Fedi) covers a ring painted beneath it and loses
+                    its tile's edge against the white tile. */}
                 {hasPicture(wallet.image) ? (
                   <Image
                     src={wallet.image}
@@ -127,7 +132,7 @@ export function Wallets({ groups = WALLET_GROUPS }: { groups?: WalletGroupData[]
       className="section-anchor section-y border-y border-line bg-paper"
     >
       <div className="shell">
-        <h2 className="text-display max-w-[16ch] text-navy">
+        <h2 className="text-display max-w-[8em] text-navy">
           Your customers already have the wallet.
         </h2>
         <p className="text-lead measure mt-5 text-navy/70 md:mt-6">

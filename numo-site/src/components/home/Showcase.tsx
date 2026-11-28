@@ -15,7 +15,7 @@ function Stage({
 }) {
   return (
     <div
-      className={`relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden rounded-[24px] bg-sunken ${padding}`}
+      className={`relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden rounded-frame bg-sunken ${padding}`}
     >
       {children}
     </div>
@@ -183,7 +183,7 @@ function SpecList({ items }: { items: [string, string][] }) {
       {items.map(([term, detail]) => (
         <div
           key={term}
-          className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 @md:grid-cols-[11rem_1fr]"
+          className="grid gap-x-6 gap-y-0.5 border-b border-line py-3.5 @md:grid-cols-[9rem_1fr]"
         >
           <dt className="font-semibold text-navy">{term}</dt>
           <dd className="text-navy/70">{detail}</dd>
@@ -236,7 +236,7 @@ export function Showcase() {
 
         <div className="mt-block space-y-20 md:space-y-28 lg:space-y-36">
           <Row
-            title="Tap to pay"
+            title="Tap to pay."
             visual={
               <Render
                 src="/ui/till-tap.png"
@@ -254,7 +254,7 @@ export function Showcase() {
 
           <Row
             flip
-            title="Bitcoin & cards all in one."
+            title={"Bitcoin and\u00A0cards, all in one."}
             visual={
               <Render
                 src="/ui/till-card.png"
@@ -278,14 +278,14 @@ export function Showcase() {
             />
           </Row>
 
-          <Row title="Zero platform fees" visual={<FeeStage />}>
+          <Row title="Zero platform fees." visual={<FeeStage />}>
             <p className={body}>
               Numo takes 0% on Bitcoin sales. Pay only tiny network fees, usually under a
               cent. Instant settlement, no chargebacks.
             </p>
           </Row>
 
-          <Row flip title="Automatic payouts" visual={<PayoutNotifications />}>
+          <Row flip title="Automatic payouts." visual={<PayoutNotifications />}>
             <p className={body}>
               Set a threshold. Once reached, Bitcoin sweeps automatically to your Lightning
               address, like Strike or Blink. Card sales land in Stripe.

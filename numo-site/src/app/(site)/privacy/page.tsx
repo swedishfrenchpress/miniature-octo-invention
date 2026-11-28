@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 
-export const metadata: Metadata = {
-  title: "Privacy & Terms - Numo",
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy policy - Numo",
   description:
-    "Privacy policy and terms for the Numo Android app — a Bitcoin point-of-sale app built on Cashu ecash.",
-};
+    "Privacy policy for the Numo Android app, a Bitcoin point-of-sale app built on Cashu ecash.",
+});
 
 const NETWORK_SERVICES = [
   "Cashu mints (to issue and redeem ecash tokens)",
@@ -34,7 +35,7 @@ export default function PrivacyPage() {
           <div className="max-w-[36rem] space-y-12 md:space-y-14">
             <section>
               <h2 className="text-h3 text-navy">Data collection</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 Numo does not collect, store, or transmit any personal data. The app runs
                 entirely on your device.
               </p>
@@ -42,7 +43,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-h3 text-navy">Wallet data</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 Your seed phrase and wallet data are stored locally on your device. We have no
                 access to this information.
               </p>
@@ -50,27 +51,27 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-h3 text-navy">Network communications</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70">The app communicates with:</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 leading-[1.6] text-navy/70">
+              <p className="mt-3 text-navy/70">The app communicates with:</p>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-navy/70">
                 {NETWORK_SERVICES.map((service) => (
                   <li key={service}>{service}</li>
                 ))}
               </ul>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 These services operate independently and have their own privacy policies.
               </p>
             </section>
 
             <section>
               <h2 className="text-h3 text-navy">Analytics</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 The Numo Android app does not include any analytics or tracking SDKs.
               </p>
             </section>
 
             <section>
               <h2 className="text-h3 text-navy">Third-party mints</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 When using ecash mints, the mint operator may see transaction amounts and
                 timing. Choose mints you trust.
               </p>
@@ -78,7 +79,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-h3 text-navy">Backup</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70 [text-wrap:pretty]">
+              <p className="mt-3 text-navy/70 [text-wrap:pretty]">
                 If you enable optional Nostr or encrypted cloud backup, encrypted wallet data is
                 stored externally so you can restore your till. Only you can decrypt this data
                 with your recovery phrase.
@@ -87,7 +88,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-h3 text-navy">Contact</h2>
-              <p className="mt-3 leading-[1.65] text-navy/70">
+              <p className="mt-3 text-navy/70">
                 For privacy questions:{" "}
                 <a href="mailto:numopay@proton.me" className={linkClass}>
                   numopay@proton.me
@@ -95,7 +96,7 @@ export default function PrivacyPage() {
               </p>
             </section>
 
-            <p className="border-t border-line pt-8 text-sm text-navy/70">
+            <p className="text-caption border-t border-line pt-8 text-navy/70">
               Last updated: November 2026
             </p>
           </div>

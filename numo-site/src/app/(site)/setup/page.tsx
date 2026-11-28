@@ -1,32 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import type { ReactNode } from "react";
-import { SHARE_IMAGE } from "@/lib/shareImage";
 import { SetupExtras } from "@/components/SetupExtras";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { DOWNLOAD_APK_URL, ZAPSTORE_URL } from "@/components/DownloadMenu";
 import { breakData } from "@/breakdata";
 import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 
-export const metadata: Metadata = {
-  title: "Set up Numo - Merchant Guide",
+export const metadata: Metadata = pageMetadata({
+  title: "Setup guide - Numo",
   description:
     "Install Numo on Android, pick a mint, turn on automatic Lightning payouts, or connect BTCPay Server and Stripe cards.",
-  openGraph: {
-    title: "Set up Numo - Merchant Guide",
-    description:
-      "Install Numo on Android, pick a mint, turn on automatic Lightning payouts, or connect BTCPay Server and Stripe cards.",
-    type: "website",
-    siteName: "Numo",
-    images: [SHARE_IMAGE],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Set up Numo - Merchant Guide",
-    description:
-      "Install Numo on Android, pick a mint, turn on automatic Lightning payouts, or connect BTCPay Server and Stripe cards.",
-    images: [SHARE_IMAGE.url],
-  },
-};
+});
 
 /* The guide is set in four type styles (display, h2, title, lead) and shows one
    screen at a time. Step copy carries no bold or emphasis: on-screen labels are
@@ -69,7 +54,7 @@ const tillSteps: SetupStep[] = [
     body: (
       <>
         Keep the default or choose another, then tap Continue. Your mint, not Numo, holds the
-        bitcoin backing incoming ecash. You can switch anytime in Settings.
+        bitcoin backing incoming ecash. You can switch any time in Settings.
       </>
     ),
     image: "/setup/03-select-mint.png",
@@ -172,7 +157,8 @@ export default async function SetupPage() {
         </section>
       )}
 
-      {/* `#btcpay` is linked from /btcpay; `#cards` is kept inside as a stable anchor. */}
+      {/* `#btcpay` and `#cards` (inside) are kept as stable anchors for links from
+          outside the site; nothing on the site links to them now. */}
       <section id="btcpay" aria-labelledby="extras-heading" className={`${section} bg-paper`}>
         <SetupExtras />
       </section>

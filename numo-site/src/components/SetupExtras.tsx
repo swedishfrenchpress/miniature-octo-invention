@@ -25,7 +25,7 @@ function Extra({
 }) {
   return (
     <div id={id} className={id ? "section-anchor" : undefined}>
-      <div className="relative aspect-[5/4] overflow-hidden rounded-[24px] bg-ink-deep">
+      <div className="relative aspect-[5/4] overflow-hidden rounded-frame bg-ink-deep">
         <div
           aria-hidden="true"
           className="absolute inset-0"
@@ -70,7 +70,7 @@ export function SetupExtras() {
           glow="rgb(99 91 255 / 0.3)"
           label="The Stripe app icon"
           title="Want to take cards?"
-          body="Connect your Stripe account, and the same phone takes contactless cards, Apple Pay and Google Pay."
+          body="Connect your Stripe account, and the same phone takes contactless cards, Apple Pay, and Google Pay."
           action={
             <Button href="/setup/stripe" variant="primary" size="lg">
               Set up Stripe

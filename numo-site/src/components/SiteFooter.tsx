@@ -100,6 +100,7 @@ function FooterAnchor({ link, className }: { link: FooterLink; className: string
     return (
       <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
         {link.label}
+        <span className="sr-only"> (opens in a new tab)</span>
       </a>
     );
   }

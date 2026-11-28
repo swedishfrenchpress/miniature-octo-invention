@@ -60,10 +60,10 @@ function NavLink({
     onDark
       ? active
         ? "bg-white/15 text-white"
-        : "text-white/85 hover:bg-white/10 hover:text-white"
+        : "text-white/80 hover:text-white"
       : active
         ? "bg-sunken text-navy"
-        : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
+        : "text-navy/65 hover:text-navy"
   }`;
 
   const mobileClass = `flex min-h-[54px] w-full items-center justify-between text-[1.0625rem] font-medium transition-colors duration-150 active:opacity-60 ${
@@ -337,12 +337,13 @@ export function Navigation({
               rel="noopener noreferrer"
               className={`hidden h-11 items-center gap-2 rounded-control px-3 text-[0.9375rem] font-medium transition-colors duration-200 lg:inline-flex xl:px-3.5 xl:text-base ${
                 onDark
-                  ? "text-white/85 hover:bg-white/10 hover:text-white"
-                  : "text-navy/65 hover:bg-navy/[0.04] hover:text-navy"
+                  ? "text-white/80 hover:text-white"
+                  : "text-navy/65 hover:text-navy"
               }`}
             >
               <GitHubIcon className="h-[18px] w-[18px]" />
               GitHub
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
 
             {/* Over the hero, keep nav Download quiet so the hero's Fresh Paint Mint
@@ -425,6 +426,7 @@ export function Navigation({
                 >
                   <GitHubIcon className="h-[18px] w-[18px]" />
                   GitHub
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>
             </ul>

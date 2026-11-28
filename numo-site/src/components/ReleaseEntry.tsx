@@ -73,19 +73,22 @@ export function ReleaseEntry({ release }: Props) {
             {highlights.map((h, i) => (
               <div key={i}>
                 <dt className="max-w-[35rem] font-semibold text-navy">{h.title}</dt>
-                {h.body && (
-                  <dd className="mt-1.5 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
-                )}
-                {h.image && (
-                  <div className="mt-5 max-w-[640px]">
-                    <ReleaseImage image={h.image} column="entryHighlight" />
-                  </div>
-                )}
-                {h.secondImage && (
-                  <div className="mt-4 max-w-[640px]">
-                    <ReleaseImage image={h.secondImage} column="entryHighlight" />
-                  </div>
-                )}
+                {/* Words and pictures share one dd: a dl may hold only dt and dd. */}
+                <dd>
+                  {h.body && (
+                    <p className="mt-1.5 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</p>
+                  )}
+                  {h.image && (
+                    <div className="mt-5 max-w-[640px]">
+                      <ReleaseImage image={h.image} column="entryHighlight" />
+                    </div>
+                  )}
+                  {h.secondImage && (
+                    <div className="mt-4 max-w-[640px]">
+                      <ReleaseImage image={h.secondImage} column="entryHighlight" />
+                    </div>
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
@@ -98,6 +101,7 @@ export function ReleaseEntry({ release }: Props) {
           className="mt-8 inline-flex min-h-11 items-center text-sm font-medium text-navy underline decoration-navy/30 underline-offset-[3px] transition-colors duration-150 hover:decoration-navy active:opacity-60"
         >
           Full release notes on GitHub
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
       </div>
     </article>

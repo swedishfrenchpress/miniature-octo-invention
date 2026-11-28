@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { FULL_RELEASE_NOTES_URL, releases } from "@/data/releases";
 import {
   ReleaseEntry,
@@ -11,11 +12,11 @@ import { Button } from "@/components/Button";
 import { breakData } from "@/breakdata";
 import { checkReleases, withExistingReleasePictures } from "@/data/checkContent";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Releases - Numo",
   description:
-    "Release notes for Numo: what's shipping in the Bitcoin POS app, new features, improvements, and the story behind each version.",
-};
+    "Release notes for Numo: what’s shipping in the Bitcoin POS app, new features, improvements, and the story behind each version.",
+});
 
 const DEFAULT_DOWNLOAD = FULL_RELEASE_NOTES_URL;
 
@@ -32,7 +33,7 @@ export default async function ReleasesPage() {
     <>
       <header className="bg-paper pt-[72px] md:pt-[84px]">
         <div className="shell header-y">
-          <h1 className="text-display max-w-[14ch] text-navy">What&rsquo;s new in Numo.</h1>
+          <h1 className="text-display max-w-[7em] text-navy">What&rsquo;s new in Numo.</h1>
           <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
             What&rsquo;s shipping in Numo, written for shop owners.
           </p>
@@ -47,7 +48,7 @@ export default async function ReleasesPage() {
       >
         <div className="shell">
           <p className="flex flex-wrap items-center gap-x-3 text-sm text-navy/70">
-            <span className="tabular inline-flex items-center rounded-full bg-mint-soft px-2.5 py-0.5 font-semibold text-navy ring-1 ring-inset ring-navy/10">
+            <span className="tabular inline-flex items-center rounded-full bg-mint-soft px-2.5 py-0.5 font-semibold text-navy">
               Latest
             </span>
             <span className="tabular font-semibold text-navy">{versionTag(latest.version)}</span>
@@ -70,19 +71,22 @@ export default async function ReleasesPage() {
               {latestHighlights.map((h, i) => (
                 <div key={i}>
                   <dt className="text-h3 max-w-[35rem] text-navy">{h.title}</dt>
-                  {h.body && (
-                    <dd className="mt-2 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</dd>
-                  )}
-                  {h.image && (
-                    <div className="mt-6 max-w-[720px]">
-                      <ReleaseImage image={h.image} column="pageHighlight" />
-                    </div>
-                  )}
-                  {h.secondImage && (
-                    <div className="mt-4 max-w-[720px]">
-                      <ReleaseImage image={h.secondImage} column="pageHighlight" />
-                    </div>
-                  )}
+                  {/* Words and pictures share one dd: a dl may hold only dt and dd. */}
+                  <dd>
+                    {h.body && (
+                      <p className="mt-2 max-w-[35rem] text-navy/70 [text-wrap:pretty]">{h.body}</p>
+                    )}
+                    {h.image && (
+                      <div className="mt-6 max-w-[720px]">
+                        <ReleaseImage image={h.image} column="pageHighlight" />
+                      </div>
+                    )}
+                    {h.secondImage && (
+                      <div className="mt-4 max-w-[720px]">
+                        <ReleaseImage image={h.secondImage} column="pageHighlight" />
+                      </div>
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>

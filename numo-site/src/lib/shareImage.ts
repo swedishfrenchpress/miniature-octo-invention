@@ -7,5 +7,5 @@ export const SHARE_IMAGE = {
   url: "https://numopay.org/og-image.jpg",
   width: 1200,
   height: 630,
-  alt: "Numo. Bitcoin payments as easy as Apple Pay. A customer's phone tapped on a handheld till running Numo.",
+  alt: "Numo. Bitcoin payments as easy as Apple Pay. A customer’s phone tapped on a handheld till running Numo.",
 };

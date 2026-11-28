@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Numo - Bitcoin Payments Made Simple",
+  title: "Numo - Bitcoin payments as easy as Apple Pay",
   description:
     "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay — no extra hardware, no platform fees.",
   keywords: [
@@ -52,16 +52,17 @@ export const metadata: Metadata = {
     "lightning",
     "merchant",
   ],
+  // `src/app/favicon.ico` is served at /favicon.ico and listed first on its
+  // own; it is the same mint N as the files in public/favicon.
   icons: {
     icon: [
-      { url: "/favicon/favicon.ico" },
       { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
     apple: "/favicon/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Numo - Bitcoin Payments Made Simple",
+    title: "Numo - Bitcoin payments as easy as Apple Pay",
     description:
       "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     type: "website",
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Numo - Bitcoin Payments Made Simple",
+    title: "Numo - Bitcoin payments as easy as Apple Pay",
     description:
       "Accept Bitcoin with a tap. Numo turns an NFC Android phone into a point of sale that feels as natural as Apple Pay.",
     images: [SHARE_IMAGE.url],

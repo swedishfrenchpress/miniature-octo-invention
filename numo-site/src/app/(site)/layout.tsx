@@ -4,8 +4,9 @@ import { breakData } from "@/breakdata";
 import { FAQ_ITEMS } from "@/data/faq";
 import { WALLET_GROUPS } from "@/components/home/Wallets";
 
-/** Chrome shared by every public page: skip link, bar, footer. `/export/offline`
- *  sits outside this group on purpose — it is a bare capture surface. */
+/** Chrome shared by every public page: skip link, bar, footer. The 404 page
+ *  (`src/app/not-found.tsx`) sits outside this group and brings the same chrome
+ *  itself. */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   // Stress-test switch (see src/breakdata). In a production build `breakData`
   // returns nothing and the switch is never imported.

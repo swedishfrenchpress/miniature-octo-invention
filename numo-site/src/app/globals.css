@@ -391,7 +391,7 @@ body {
 
 /* Two-tone accessible focus ring: mint core + navy backing stays visible on
    white grounds, tinted stages, and dark navy panels alike. */
-:where(a, button, input, select, textarea, [role="button"]):focus-visible {
+:where(a, button, summary, input, select, textarea, [role="button"]):focus-visible {
   outline: 2px solid var(--mint);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px var(--navy);
@@ -591,6 +591,10 @@ body {
 
 /* Only a real pointer can pause it. A finger has no hover: a tap would leave
    the strip stuck paused until the next tap somewhere else. */
+.marquee-mask[data-paused] .marquee-track {
+  animation-play-state: paused;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .marquee-mask:hover .marquee-track {
     animation-play-state: paused;

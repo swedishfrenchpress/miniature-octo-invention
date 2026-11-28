@@ -48,13 +48,14 @@ function AcceptsRow({ hidden }: { hidden?: boolean }) {
 
 /** Slow rolling monochrome band along the foot of the hero. Four copies keep
  *  wide viewports full and loop seamlessly; static under reduced motion. */
-function AcceptsMarquee() {
+function AcceptsMarquee({ paused }: { paused: boolean }) {
   return (
     <div className="hero-fade relative">
       <div
         className="marquee-mask shell overflow-hidden"
         aria-label="Numo accepts"
         role="group"
+        data-paused={paused || undefined}
       >
         <div className="marquee-track flex w-max py-5">
           <AcceptsRow />
@@ -69,6 +70,7 @@ function AcceptsMarquee() {
 
 export function Hero() {
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
   const section = useRef<HTMLElement>(null);
   // Starts true: the hero is the top of the page, so it should not wait a tick to play.
@@ -93,20 +95,20 @@ export function Hero() {
     if (video) video.currentTime = 0;
   }, [current]);
 
-  // It plays only while the hero is on screen. Scrolled away, it holds its
-  // frame instead of decoding video nobody is watching, and picks up where it
-  // stopped when the hero comes back.
+  // It plays only while the hero is on screen and not paused. Scrolled away or
+  // paused, it holds its frame instead of decoding video nobody is watching,
+  // and picks up where it stopped when playing resumes.
   useEffect(() => {
     const video = videos.current[current];
     if (!video) return;
-    if (reducedMotion || !inView) {
+    if (reducedMotion || !inView || isPaused) {
       video.pause();
       return;
     }
     video.play().catch(() => {
       // Autoplay can be refused; the poster frame stands in.
     });
-  }, [current, reducedMotion, inView]);
+  }, [current, reducedMotion, inView, isPaused]);
 
   return (
     <section
@@ -152,15 +154,47 @@ export function Hero() {
           Tap to take Bitcoin on any Android with&nbsp;NFC.{" "}
           <span className="whitespace-nowrap">Zero platform fees.</span>
         </p>
-        <div className="hero-rise mt-8 flex flex-wrap items-center gap-3 [--i:2] md:mt-10">
-          <DownloadMenu variant="mint" size="lg" align="left" direction="up" />
-          <Button href="/setup" variant="ghost-inverse" size="lg">
-            Setup guide
-          </Button>
+        <div className="hero-rise mt-8 flex flex-wrap items-center justify-between gap-3 [--i:2] md:mt-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <DownloadMenu variant="mint" size="lg" align="left" direction="up" />
+            <Button href="/setup" variant="ghost-inverse" size="lg">
+              Setup guide
+            </Button>
+          </div>
+          {!reducedMotion && (
+            <button
+              type="button"
+              onClick={() => setIsPaused((p) => !p)}
+              aria-label={isPaused ? "Play background motion" : "Pause background motion"}
+              aria-pressed={isPaused}
+              className="relative flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/20 [transition:box-shadow_200ms_ease,scale_150ms_var(--ease-out-expo)] hover:ring-white/45 active:scale-[0.97]"
+            >
+              {[true, false].map((play) => (
+                <svg
+                  key={play ? "play" : "pause"}
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className={`absolute size-4 transition-[opacity,scale,filter] duration-150 ease-[var(--ease-out-expo)] ${
+                    play === isPaused ? "" : "scale-75 opacity-0 blur-[2px]"
+                  }`}
+                >
+                  {play ? (
+                    <path d="M4.75 2.87v10.26a.75.75 0 0 0 1.14.64l8.3-5.13a.75.75 0 0 0 0-1.28l-8.3-5.13a.75.75 0 0 0-1.14.64Z" />
+                  ) : (
+                    <>
+                      <rect x="3.25" y="2.5" width="3.25" height="11" rx="1" />
+                      <rect x="9.5" y="2.5" width="3.25" height="11" rx="1" />
+                    </>
+                  )}
+                </svg>
+              ))}
+            </button>
+          )}
         </div>
       </div>
 
-      <AcceptsMarquee />
+      <AcceptsMarquee paused={isPaused} />
     </section>
   );
 }

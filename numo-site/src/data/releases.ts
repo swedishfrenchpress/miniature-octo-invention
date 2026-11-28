@@ -90,7 +90,7 @@ export const releases: Release[] = [
       },
       {
         title: "Offline, spelled out",
-        body: "A connection indicator shows what still works. A pending Lightning payment can be confirmed once you're back online. New charges still need internet.",
+        body: "A connection indicator shows what still works. A pending Lightning payment can be confirmed once you’re back online. New charges still need internet.",
         image: {
           src: "/releases/v1.10/offline-1.png",
           alt: "Numo v1.10 keypad with an Offline banner reading New charges need internet",
@@ -150,7 +150,7 @@ export const releases: Release[] = [
       },
       {
         title: "Large tokens, one scannable flow",
-        body: "Withdrawal tokens that exceed a single QR code's capacity now play as animated QR codes. Choose slow, normal, or fast, or tap the code to expand it full screen for easier scanning.",
+        body: "Withdrawal tokens that exceed a single QR code’s capacity now play as animated QR codes. Choose slow, normal, or fast, or tap the code to expand it full screen for easier scanning.",
         image: {
           src: "/releases/v1.9/animated-qr.png",
           alt: "Numo v1.9 animated QR export with slow, normal, and fast speed controls",
@@ -185,8 +185,8 @@ export const releases: Release[] = [
     downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.8",
     highlights: [
       {
-        title: "Price and sell in your mint's unit",
-        body: "Choose a base unit in mint settings, and Numo uses it across payment requests, received payments, tips, catalog pricing, receipts, transaction history, insights, and CSV exports. Custom units turn off fiat conversion; recognized fiat units keep their standard formatting. Numo also skips Lightning mints that don't support the active unit.",
+        title: "Price and sell in your mint’s unit",
+        body: "Choose a base unit in mint settings, and Numo uses it across payment requests, received payments, tips, catalog pricing, receipts, transaction history, insights, and CSV exports. Custom units turn off fiat conversion; recognized fiat units keep their standard formatting. Numo also skips Lightning mints that don’t support the active unit.",
         image: {
           src: "/releases/v1.8/custom-unit.png",
           alt: "Numo mint settings with a dialog for selecting sat or usd as the base unit",
@@ -196,7 +196,7 @@ export const releases: Release[] = [
       },
       {
         title: "An encrypted way back on Android",
-        body: "Opt in to back up your encrypted seed phrase and mint list to your Google account, protected by a separate recovery password of at least 12 characters. The backup refreshes whenever your recovery data changes and can restore your wallet on a new device. Android cloud backup and a device screen lock must be enabled, and Numo can't recover a forgotten recovery password.",
+        body: "Opt in to back up your encrypted seed phrase and mint list to your Google account, protected by a separate recovery password of at least 12 characters. The backup refreshes whenever your recovery data changes and can restore your wallet on a new device. Android cloud backup and a device screen lock must be enabled, and Numo can’t recover a forgotten recovery password.",
         image: {
           src: "/releases/v1.8/android-recovery.png",
           alt: "Numo Security and Privacy and encrypted device backup screens",
@@ -215,7 +215,7 @@ export const releases: Release[] = [
     date: "2026-06-11",
     title: "BTCPay Server arrives",
     summary:
-      "Numo now connects directly to BTCPay Server. It generates invoices, accepts Lightning or Cashu, and syncs your Point-of-Sale inventory automatically. Plus a fix for NFC taps that were triggering Apple Pay on nearby iPhones, and broader support for mints that don't speak Lightning.",
+      "Numo now connects directly to BTCPay Server. It generates invoices, accepts Lightning or Cashu, and syncs your Point-of-Sale inventory automatically. Plus a fix for NFC taps that were triggering Apple Pay on nearby iPhones, and broader support for mints that don’t speak Lightning.",
     downloadUrl: "https://github.com/cashubtc/Numo/releases/tag/v1.7",
     highlights: [
       {
@@ -224,11 +224,11 @@ export const releases: Release[] = [
       },
       {
         title: "No more surprise Apple Pay",
-        body: "Numo could accidentally trigger the Apple Pay prompt on a nearby iPhone just by listening for NFC. That's fixed. Numo stays quiet until your customer actually taps to pay.",
+        body: "Numo could accidentally trigger the Apple Pay prompt on a nearby iPhone just by listening for NFC. That’s fixed. Numo stays quiet until your customer actually taps to pay.",
       },
       {
         title: "Works with mints that skip Lightning",
-        body: "If your mint doesn't support BOLT11 invoices, Numo now detects that automatically and routes the sale through Cashu instead. No more dead end on the Lightning tab.",
+        body: "If your mint doesn’t support BOLT11 invoices, Numo now detects that automatically and routes the sale through Cashu instead. No more dead end on the Lightning tab.",
       },
       {
         title: "Plus",
@@ -257,8 +257,8 @@ export const releases: Release[] = [
         body: "A new onboarding banner invites you to add your location to BTCMap, the open directory of places that take Bitcoin, so nearby customers can find you.",
       },
       {
-        title: "Auto-withdrawals that don't bounce",
-        body: "Your auto-withdraw threshold is now checked against your Lightning address's minimum before it runs. Sweeps to your wallet stop failing on amounts that were too small to send.",
+        title: "Auto-withdrawals that don’t bounce",
+        body: "Your auto-withdraw threshold is now checked against your Lightning address’s minimum before it runs. Sweeps to your wallet stop failing on amounts that were too small to send.",
       },
     ],
   },
@@ -276,8 +276,8 @@ export const releases: Release[] = [
     },
     highlights: [
       {
-        title: "Taps that don't drop",
-        body: "NFC now survives retries and survives the app coming back from the background. And when you're offline, Numo won't let you generate a payment request your customer can't pay.",
+        title: "Taps that don’t drop",
+        body: "NFC now survives retries and survives the app coming back from the background. And when you’re offline, Numo won’t let you generate a payment request your customer can’t pay.",
         image: {
           src: "/releases/v1.5/nfc.jpg",
           alt: "Numo v1.5 — NFC and payment reliability",
@@ -346,7 +346,7 @@ export const releases: Release[] = [
       },
       {
         title: "Redesigned onboarding",
-        body: "A short explainer carousel walks new merchants through mint selection, so you know what you're picking before you pick it.",
+        body: "A short explainer carousel walks new merchants through mint selection, so you know what you’re picking before you pick it.",
         image: {
           src: "/releases/v1.4/onboarding.jpg",
           alt: "Numo v1.4 — redesigned onboarding flow",
@@ -398,7 +398,7 @@ export const releases: Release[] = [
         body: "Label each payment directly from the POS. Keep track of what every transaction was for. No need to leave the app.",
         image: {
           src: "/releases/v1.3/tags.jpg",
-          alt: "Tag every transaction with a label — shop tags for Farmer's Market, Catering Deposit, Patio Tab, Inventory Raw Milk, Food Truck",
+          alt: "Tag every transaction with a label — shop tags for Farmer’s Market, Catering Deposit, Patio Tab, Inventory Raw Milk, Food Truck",
           width: 1200,
           height: 675,
         },

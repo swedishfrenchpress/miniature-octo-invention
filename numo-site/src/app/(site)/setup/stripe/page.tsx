@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { SHARE_IMAGE } from "@/lib/shareImage";
 import { PARTNER_HEADER, PartnerPair } from "@/components/PartnerPair";
 import { SetupSequence, type SetupStep } from "@/components/SetupSequence";
 import { breakData } from "@/breakdata";
@@ -10,23 +10,10 @@ import { checkGuide, withExistingScreenshots } from "@/data/checkContent";
 const DESCRIPTION =
   "Create a restricted Stripe key, paste it into Numo, choose a location and run the setup check to take contactless cards on the same Android phone.";
 
-export const metadata: Metadata = {
-  title: "Connect Stripe - Numo Setup",
+export const metadata: Metadata = pageMetadata({
+  title: "Stripe guide - Numo",
   description: DESCRIPTION,
-  openGraph: {
-    title: "Connect Stripe - Numo Setup",
-    description: DESCRIPTION,
-    type: "website",
-    siteName: "Numo",
-    images: [SHARE_IMAGE],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Connect Stripe - Numo Setup",
-    description: DESCRIPTION,
-    images: [SHARE_IMAGE.url],
-  },
-};
+});
 
 /** The form Numo itself opens from "Create the key in Stripe": a new restricted
  *  key named Numo with the two Terminal permissions already set to Write. */
@@ -50,7 +37,7 @@ function ExternalLink({ href, children }: { href: string; children: ReactNode })
 
 const keySteps: SetupStep[] = [
   {
-    title: "Open Stripe's key form",
+    title: "Open Stripe’s key form",
     body: (
       <>
         In Numo, open Settings, then Card payments. Tap Connect Stripe, then Create the key in
@@ -60,7 +47,7 @@ const keySteps: SetupStep[] = [
       </>
     ),
     image: "/setup/stripe/01-key-form.png",
-    alt: "Stripe's Create restricted API key form with the key name set to Numo.",
+    alt: "Stripe’s Create restricted API key form with the key name set to Numo.",
     outline: { left: 8.3, top: 34.2, width: 75.8, height: 5.6 },
     desktop: {
       image: "/setup/stripe/01-key-form-desktop.png",
@@ -109,7 +96,7 @@ const keySteps: SetupStep[] = [
       </>
     ),
     image: "/setup/stripe/04-key.png",
-    alt: "Stripe's API keys page listing the new Numo key under Restricted keys, with the key itself blurred.",
+    alt: "Stripe’s API keys page listing the new Numo key under Restricted keys, with the key itself blurred.",
     outline: { left: 4.9, top: 70.9, width: 90.2, height: 12.6 },
     desktop: {
       image: "/setup/stripe/04-key-desktop.png",
@@ -119,7 +106,7 @@ const keySteps: SetupStep[] = [
 ];
 
 /* The app's own screens, captured on a phone that is already connected: the key
-   field shows a blurred key, and the pay screen's QR is a sample, not a request. */
+   field shows a blurred key, and the pay screen’s QR is a sample, not a request. */
 const connectSteps: SetupStep[] = [
   {
     title: "Paste the key",
@@ -131,7 +118,7 @@ const connectSteps: SetupStep[] = [
       </>
     ),
     image: "/setup/stripe/numo-01-paste.png",
-    alt: "Numo's Connect Stripe screen: Paste a restricted key, with a Restricted key field, a Create the key in Stripe button, and Next.",
+    alt: "Numo’s Connect Stripe screen: Paste a restricted key, with a Restricted key field, a Create the key in Stripe button, and Next.",
     outline: { left: 84.4, top: 26.1, width: 11.7, height: 5.3 },
   },
   {
@@ -144,7 +131,7 @@ const connectSteps: SetupStep[] = [
       </>
     ),
     image: "/setup/stripe/numo-02-check.png",
-    alt: "Numo's Check setup screen with Device, Stripe and Reader all passed, reading Ready to take cards.",
+    alt: "Numo’s Check setup screen with Device, Stripe and Reader all passed, reading Ready to take cards.",
   },
   {
     title: "Take a card payment",
@@ -155,7 +142,7 @@ const connectSteps: SetupStep[] = [
       </>
     ),
     image: "/setup/stripe/numo-03-pay.png",
-    alt: "Numo's payment screen showing a QR code, the amount, and a Pay with card button at the bottom.",
+    alt: "Numo’s payment screen showing a QR code, the amount, and a Pay with card button at the bottom.",
     outline: { left: 5.8, top: 89, width: 88.4, height: 5.75 },
   },
 ];
@@ -163,25 +150,25 @@ const connectSteps: SetupStep[] = [
 const FIXES: [problem: string, fix: string][] = [
   [
     "NFC is switched off",
-    "This device reads cards over NFC. Switch it on in Android's settings, then check again.",
+    "This device reads cards over NFC. Switch it on in Android’s settings, then check again.",
   ],
   [
-    "Numo can't use location",
-    "Stripe won't take card payments without location access. Allow it for Numo, then check again.",
+    "Numo can’t use location",
+    "Stripe won’t take card payments without location access. Allow it for Numo, then check again.",
   ],
   [
-    "Your key can't start the reader",
-    "The key is missing Write access to Terminal Connection tokens. Create a new key with it and paste that in.",
+    "Your key can’t start the reader",
+    "The key is missing Write access to Terminal Connection Tokens. Create a new key with it and paste that in.",
   ],
   [
-    "This key can't see your locations",
+    "This key can’t see your locations",
     "In Stripe, give the key Write access to Terminal Locations, then paste it again.",
   ],
   [
-    "Stripe doesn't recognise your key",
+    "Stripe doesn’t recognise your key",
     "Check that you copied all of it, or create a new key in Stripe.",
   ],
-  ["This device can't take cards", "Tap to Pay needs Android 13 or newer and an NFC chip."],
+  ["This device can’t take cards", "Tap to Pay needs Android 13 or newer and an NFC chip."],
 ];
 
 const NOTES: [title: string, body: string][] = [
@@ -191,11 +178,11 @@ const NOTES: [title: string, body: string][] = [
   ],
   [
     "Try it in test mode first",
-    "A key that starts with rk_test_ connects Stripe's test mode. Numo shows Ready for test payments and no real money moves. Connect a live key when you want to take real cards.",
+    "A key that starts with rk_test_ connects Stripe’s test mode. Numo shows Ready for test payments and no real money moves. Connect a live key when you want to take real cards.",
   ],
   [
     "Where the money goes",
-    "Card payments go to your Stripe account at Stripe's standard card processing fees, and Stripe pays them out to your bank. They stay separate from your bitcoin in Numo.",
+    "Card payments go to your Stripe account at Stripe’s standard card processing fees, and Stripe pays them out to your bank. They stay separate from your bitcoin in Numo.",
   ],
   [
     "Disconnecting",
@@ -234,7 +221,7 @@ export default async function StripeSetupPage() {
           <div>
             <h1 className="text-display max-w-[9em] text-navy">Take cards with Stripe.</h1>
             <p className="text-lead measure mt-5 text-navy/70 md:mt-6">
-              Connect your own Stripe account and the same phone takes contactless cards, Apple Pay
+              Connect your own Stripe account and the same phone takes contactless cards, Apple Pay,
               and Google Pay. You need a Stripe account, Android 13 or newer with NFC, and about
               five minutes. New to Numo? Start with the{" "}
               <Link href="/setup" className={linkClass}>
@@ -251,7 +238,7 @@ export default async function StripeSetupPage() {
           <SetupSequence
             heading="Create a key in Stripe."
             headingId="key-heading"
-            intro="Numo connects with a restricted key: a Stripe key that can only do what you allow. This one can start the card reader and list your locations. It can't move money."
+            intro="Numo connects with a restricted key: a Stripe key that can only do what you allow. This one can start the card reader and list your locations. It can’t move money."
             steps={key}
             screen="mobileWeb"
           />

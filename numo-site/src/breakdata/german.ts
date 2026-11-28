@@ -67,7 +67,7 @@ export const GERMAN: Record<string, string> = {
   "Do my customers need a special app?": "Benötigen meine Kunden eine spezielle App?",
   "Do I need any extra hardware?": "Benötige ich zusätzliche Hardware?",
   "Is it really free?": "Ist es wirklich kostenlos?",
-  "Is Numo custodial?": "Ist Numo eine Verwahrungslösung?",
+  "Who holds the funds?": "Wer verwahrt das Guthaben?",
   "What if I have bad internet?": "Was ist, wenn ich eine schlechte Internetverbindung habe?",
   "How do I get started?": "Wie fange ich an?",
   "Can I download Numo on the Google Play Store?": "Kann ich Numo im Google Play Store herunterladen?",

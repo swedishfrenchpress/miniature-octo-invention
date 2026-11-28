@@ -30,19 +30,19 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: "price",
     q: "Is it really free?",
-    a: "Yes. Numo charges 0% on Bitcoin sales, with only tiny network fees (usually under a cent). Card payments through your Stripe account follow Stripe's standard fees.",
+    a: "Yes. Numo charges 0% on Bitcoin sales, with only tiny network fees (usually under a cent). Card payments through your Stripe account follow Stripe’s standard fees.",
   },
   {
     id: "custody",
-    q: "Is Numo custodial?",
+    q: "Who holds the funds?",
     a: (
       <>
-        Yes. Bitcoin sales are Cashu ecash backed by the mint you choose during{" "}
+        The mint you choose during{" "}
         <Link href="/setup" className={linkClass}>
           setup
         </Link>
-        . That mint holds the backing bitcoin, not Numo. Withdraw to your own Lightning
-        address any time, or turn on auto-withdraw.
+        , not Numo. Bitcoin sales are Cashu ecash backed by that mint. Withdraw to your own
+        Lightning address any time, or turn on auto-withdraw.
       </>
     ),
   },
@@ -64,6 +64,7 @@ export const FAQ_ITEMS: FaqItem[] = [
           className={linkClass}
         >
           GitHub releases
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>{" "}
         or{" "}
         <a
@@ -73,6 +74,7 @@ export const FAQ_ITEMS: FaqItem[] = [
           className={linkClass}
         >
           Zapstore
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
         , then follow the{" "}
         <Link href="/setup" className={linkClass}>
@@ -85,6 +87,6 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: "play-store",
     q: "Can I download Numo on the Google Play Store?",
-    a: "Not yet, it's coming soon. Until then, install from GitHub releases or Zapstore.",
+    a: "Not yet, it’s coming soon. Until then, install from GitHub releases or Zapstore.",
   },
 ];
